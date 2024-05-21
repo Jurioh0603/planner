@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MyPage {
 
-    @GetMapping("/com/triplan/planner/user/myPage")
+    @GetMapping("/user/myPage")
     public String MyPageForm(){
-        return "com/triplan/planner/user/myPage";
+        return "/user/myPage";
     }
 }

@@ -1,0 +1,110 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+/*마이페이지 상단*/
+.text-h2 {
+    font-size: 44px;
+    font-weight: bold;
+    margin-bottom: 70px;
+}
+
+.ico-my {
+    float: left;
+    width: 32px;
+    height: auto;
+}
+/*배경색*/
+.background-section {
+    background-color: #F3F5F7;
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 200%;
+    z-index: -1;
+}
+
+/*프로필 상자*/
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 70px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .text-bg {
+        height: 80px;
+        margin-bottom: 10px;
+    }
+}
+
+.box-text {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 70px;
+}
+
+.box-text:hover {
+    color: gray;
+}
+
+.box-welcome {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.box-align{
+    text-align: center;
+}
+
+.text-bg {
+    color: white;
+    background-color: #022C6C;
+    width: 80%;
+    height: 500px;
+}
+
+/*스크롤 시 프로필 같이 내려오는것 아직 적용 안됨*/
+.scroll {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/*리스트 관련*/
+.list-group-my {
+    width: 120%;
+    max-width: 120%;
+    margin-inline: -4rem;
+}
+
+.list-text{
+    margin-left: 10px;
+    font-size: 30px;
+}
+
+/*나의 여정 글자*/
+.intro{
+    display: inline-block!important;
+    font-size: 30px;
+    font-weight: bold;
+    justify-content: flex-end;
+    margin-top: -55px;
+    margin-bottom: 15px;
+}
