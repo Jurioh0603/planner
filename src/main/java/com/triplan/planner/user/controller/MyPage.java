@@ -7,6 +7,6 @@ public class MyPage {
 
     @GetMapping("/user/myPage")
     public String MyPageForm(){
-        return "user/myPage";
+        return "/user/myPage";
     }
 }
