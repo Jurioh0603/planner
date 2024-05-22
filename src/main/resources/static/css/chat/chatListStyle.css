@@ -1,0 +1,31 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.main-text{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: 40px;
+}
+
+.bold-hr {
+    border: none;
+    height: 5px;
+    background-color: black;
+}
+
+.thin-hr {
+    border: none;
+    height: 2px;
+    background-color: #282828;
+}
+
+.room-count{
+    font-size: 20px;
+    padding: 15px;
+}
