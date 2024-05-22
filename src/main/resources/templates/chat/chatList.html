@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>여정-채팅</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -18,7 +18,7 @@
     <div class="room-count">총 3건</div>
     <hr class="thin-hr">
     <div class="d-flex">
-        <a href="#" class="chat-box">
+        <a href="/chat/chatRoom" class="chat-box" onclick="window.open(this.href, 'popup', 'width=450,height=550'); return false;">
             <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
             <div class="chat-container-50"></div>
             <div class="text-container">
@@ -31,7 +31,7 @@
             <div class="chat-container-10"></div>
             <div class="date-text">now</div>
         </a>
-        <a href="#" class="chat-box">
+        <a href="/chat/chatRoom" class="chat-box" onclick="window.open(this.href, 'popup', 'width=400,height=500'); return false;">
             <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
             <div class="chat-container-50"></div>
             <div class="text-container">
@@ -44,7 +44,7 @@
             <div class="chat-container-10"></div>
             <div class="date-text">어제</div>
         </a>
-        <a href="#" class="chat-box">
+        <a href="/chat/chatRoom" class="chat-box" onclick="window.open(this.href, 'popup', 'width=400,height=400'); return false;">
             <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
             <div class="chat-container-50"></div>
             <div class="text-container">

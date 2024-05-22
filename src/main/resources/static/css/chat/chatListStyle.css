@@ -79,6 +79,7 @@
     text-overflow: ellipsis;
 }
 
+
 .date-text{
     font-size: 15px;
     color: #3c3c3c;
@@ -92,7 +93,7 @@
 }
 
 /*여백*/
-.chat-container-50{
+.chat-container-20{
     padding-left: 20px;
 }
 
@@ -111,6 +112,7 @@
     align-items: flex-start;
     color: #3c3c3c;
 }
+
 /*채팅방 인원수 css*/
 .num{
     margin-left: 10px;
