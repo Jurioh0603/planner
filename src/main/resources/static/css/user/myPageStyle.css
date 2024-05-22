@@ -1,0 +1,196 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+/*마이페이지 상단*/
+.text-h2 {
+    font-size: 44px;
+    font-weight: bold;
+    margin-bottom: 70px;
+}
+
+.ico-my {
+    float: left;
+    width: 32px;
+    height: auto;
+}
+
+/*배경색*/
+.background-section {
+    background-color: #F3F5F7;
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+}
+
+/*프로필 상자*/
+.profile-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 70px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.box-text {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+.box-text:hover {
+    color: #bebebe;
+}
+
+.box-welcome {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.box-align{
+    text-align: center;
+}
+
+.text-bg {
+    color: white;
+    background-color: #022C6C;
+    width: 350px;
+    height: 470px;
+    margin-right: -300px;
+}
+
+@media (max-width: 600px) { /* 화면 너비가 600px 이하일 때 적용 */
+    .text-bg {
+        width: 100%; /* 화면 너비에 꽉 차도록 설정 */
+        height: auto; /* 내용에 맞춰 높이 자동 조정 */
+    }
+}
+
+/*리스트 관련*/
+.list-group-my {
+    width: 100%;
+    max-width: 100%;
+}
+
+.list-text{
+    padding: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+    letter-spacing: 1.5px;
+    color: #3c3c3c;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.list-text-exit{
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: right;
+    color: #3c3c3c;
+    text-decoration: none !important;
+}
+
+.list-text-exit:hover {
+    color: #6e6e6e; /* 호버 시 색상 변경 */
+}
+
+.inline-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.list-group-items {
+    position: relative;
+    display: block;
+    color: var(--bs-list-group-color);
+    text-decoration: none;
+    background-color: var(--bs-list-group-bg);
+    border: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
+}
+
+/*나의 여정 글자*/
+.intro{
+    display: inline-block!important;
+    font-size: 30px;
+    font-weight: bold;
+    justify-content: flex-end;
+    letter-spacing: 3px;
+    margin-top: -55px;
+    margin-bottom: 15px;
+}
+
+
+/*리스트 아이콘*/
+
+.list-text::before {
+    content: "";
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    background-image: url('/images/my-list-fav.png'); /* 이미지 경로 */
+    background-size: cover;
+    background-position: 0 0;
+    margin-right: 20px; /* 이미지와 텍스트 사이의 간격 */
+}
+.icon-1::before {
+    background-position: 0 0; /* 스프라이트 이미지의 첫 번째 아이콘 위치 */
+}
+
+.icon-2::before {
+    background-position: 0 -50px; /* 스프라이트 이미지의 두 번째 아이콘 위치 */
+}
+
+.icon-3::before {
+    background-position: 0 -101px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.icon-4::before {
+    background-position: 0 -152px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.icon-5::before {
+    background-position: 0 -203px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.list-group-items{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.line{
+    border-bottom: 1px solid #dcdcdc;
+    margin: 0 auto;
+    width: 95%;
+}
+.list-group-items-last {
+    border-bottom: none; /* 마지막 글에는 선 제거 */
+    width: 95%;
+    margin: 0 auto;
+}
+.jus-end{
+    justify-content: flex-start;
+}
