@@ -11,6 +11,7 @@
 .text-h2 {
     font-size: 44px;
     font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 70px;
 }
 
@@ -24,7 +25,7 @@
 .background-section {
     background-color: #F3F5F7;
     position: absolute;
-    top: 8%;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
@@ -49,8 +50,8 @@
     text-decoration: none;
     display: inline-block;
     vertical-align: bottom;
-    margin-top: 70px;
-    margin-bottom: 10px;
+    margin-top: 60px;
+    margin-bottom: 30px;
 }
 
 .box-text:hover {
@@ -81,6 +82,18 @@
         height: auto; /* 내용에 맞춰 높이 자동 조정 */
     }
 }
+
+/*나의 여정 글자*/
+.intro{
+    display: inline-block!important;
+    font-size: 30px;
+    font-weight: bold;
+    justify-content: flex-end;
+    letter-spacing: 3px;
+    margin-top: -55px;
+    margin-bottom: 15px;
+}
+
 
 /*리스트 관련*/
 .list-group-my {
@@ -129,17 +142,6 @@
     border: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
 }
 
-/*나의 여정 글자*/
-.intro{
-    display: inline-block!important;
-    font-size: 30px;
-    font-weight: bold;
-    justify-content: flex-end;
-    letter-spacing: 3px;
-    margin-top: -55px;
-    margin-bottom: 15px;
-}
-
 
 /*리스트 아이콘*/
 
@@ -167,11 +169,11 @@
 }
 
 .icon-4::before {
-    background-position: 0 -152px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+    background-position: 0 -150px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
 }
 
 .icon-5::before {
-    background-position: 0 -203px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+    background-position: 0 -200px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
 }
 
 .list-group-items{
@@ -190,7 +192,4 @@
     border-bottom: none; /* 마지막 글에는 선 제거 */
     width: 95%;
     margin: 0 auto;
-}
-.jus-end{
-    justify-content: flex-start;
 }
