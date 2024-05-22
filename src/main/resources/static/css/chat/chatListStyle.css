@@ -1,12 +1,14 @@
+/*폰트*/
 * {
     font-family: "Noto Sans KR", sans-serif;
 }
 
-#contents {
-    width: 980px;
+/*사이트여백*/
+#chat-contents {
+    width: 750px;
     margin: 0 auto;
 }
-
+/*상단 글과 선*/
 .main-text{
     padding-top: 30px;
     padding-bottom: 30px;
@@ -25,7 +27,92 @@
     background-color: #282828;
 }
 
+/*채팅방 갯수*/
 .room-count{
     font-size: 20px;
     padding: 15px;
+}
+
+/*채팅창 a 태그*/
+.chat-box{
+    display: flex;
+    align-items: flex-start;
+    text-decoration: none;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.chat-box:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}
+
+/*프로필상자*/
+.profile-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+/*닉네임*/
+.name-text{
+    font-size: 20px;
+    color: #3c3c3c;
+    max-height: 2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.content-text{
+    font-size: 20px;
+    color: #3c3c3c;
+    margin-right: 10px;
+    width: 480px;
+    max-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date-text{
+    font-size: 15px;
+    color: #3c3c3c;
+    margin-left: auto;
+}
+
+/*글자 수직정렬*/
+.text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/*여백*/
+.chat-container-50{
+    padding-left: 20px;
+}
+
+.chat-container-10{
+    padding-left: 10px;
+}
+
+/*a태그 세로정렬*/
+.d-flex {
+    display: flex;
+    flex-direction: column;
+}
+/*채팅방인원수 가로정렬*/
+.num-text{
+    display: flex;
+    align-items: flex-start;
+    color: #3c3c3c;
+}
+/*채팅방 인원수 css*/
+.num{
+    margin-left: 10px;
+    margin-top: 3px;
 }
