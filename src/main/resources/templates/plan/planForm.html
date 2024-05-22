@@ -23,6 +23,15 @@
         $(".sortable").sortable({
             revert: true
         });
+
+        function openPopup() {
+            var url = "/plan/addAttr";
+            var width = 500;
+            var height = 600;
+            var left = (screen.width - width) / 2;
+            var top = (screen.height - height) / 2;
+            var pop = window.open(url, "장소 추가", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + ",resizable=no");
+        }
     </script>
 </head>
 <body>
@@ -147,13 +156,13 @@
 
         <h3>day 2 - 11.11</h3>
         <ul>
-            <li class="ui-state-default">
+            <li class="ui-state-default" onclick="openPopup()">
                 <div><img src="/images/plus.png" class="hamburgerMenu me-4"/></div>
                 <div><h4 class="mb-0">장소 추가</h4></div>
             </li>
         </ul>
 
-        <div class="buttonContainer mt-5">
+        <div id="buttonContainer" class="mt-5">
             <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>
             <button class="btn btn-lg btn-primary" type="button">저장</button>
         </div>

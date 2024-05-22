@@ -23,4 +23,21 @@ public class PlanController {
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         return "plan/planForm";
     }
+
+    @GetMapping("/addAttr")
+    public String addAttr() {
+        return "plan/addAttraction";
+    }
+
+    @GetMapping("/addMyPlace")
+    public String addMyPlace(Model model) {
+        model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
+        return "plan/addMyPlace";
+    }
+
+    @GetMapping("/addOnMap")
+    public String addOnMap(Model model) {
+        model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
+        return "plan/addOnMap";
+    }
 }

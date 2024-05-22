@@ -80,10 +80,10 @@ input.deleteBtn {
 
 .ui-state-default:hover {
     cursor: pointer;
-    background-color: #D3D3D3;
+    background-color: #DCDCDC;
 }
 
-.buttonContainer {
+#buttonContainer {
     display: flex;
     justify-content: flex-end;
 }
