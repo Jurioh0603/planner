@@ -9,15 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/user/myPage.css">
+    <link rel="stylesheet" type="text/css" href="/css/user/myPageStyle.css">
 </head>
 <body>
 <div id="contents">
     <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
     <h1 class="text-h2">마이페이지</h1>
     <div class="background-section"></div>
-    <div class="d-flex justify-content-between">
-        <div class="d-flex col-md-6">
+    <div class="inline-list">
+        <div class="d-flex">
+            <div class="jus-end">
             <div class="p-5 text-bg rounded-3">
                 <div class="scroll">
                     <div class="box-align">
@@ -28,53 +29,59 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
         <div class="d-flex flex-column py-md-5 align-items-center">
             <div class="list-group list-group-my">
                 <div class="intro">나의여정</div>
-                <a href="#" class="list-group-item list-group-item-action d-flex py-3 rounded-top-4" aria-current="true">
-                    <div class="d-flex w-100 ">
-                        <div>
-                            <h6 class="list-text">나의 여행 계획</h6>
+                <a href="#" class="list-group-items rounded-top-4" aria-current="true">
+                    <div class="list-group-item-action d-flex py-3 line">
+                        <div class=" d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-4">
+                                나의 여행 계획
+                            </div>
+                            <div class=""></div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex " aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0 list-text">내가 쓴 글</h6>
+                <a href="#" class="list-group-items" aria-current="true">
+                    <div class="list-group-item-action d-flex py-3 line">
+                        <div class="d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-3">
+                                내가 쓴 글
+                            </div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0 list-text">즐겨찾기</h6>
+                <a href="#" class="list-group-items" aria-current="true">
+                    <div class="list-group-item-action d-flex py-3 line">
+                        <div class="d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-1">
+                                즐겨찾기
+                            </div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0 list-text">여행톡</h6>
+                <a href="#" class="list-group-items" aria-current="true">
+                    <div class="list-group-item-action d-flex py-3 line">
+                        <div class="d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-5">
+                                여행톡
+                            </div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex py-3" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0 list-text">내 정보 보기</h6>
-                            <p class="mb-0 opacity-75"></p>
+                <a href="#" class="list-group-items rounded-bottom-4" aria-current="true">
+                    <div class="list-group-item-action list-group-items-last  d-flex py-3">
+                        <div class="d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-2">
+                                내 정보 보기
+                            </div>
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-item list-group-item-action d-flex py-3 rounded-bottom-4" aria-current="true">
-                    <div class="d-flex w-100 justify-content-between">
-                        <div>
-                            <h6 class="mb-0 list-text">회원탈퇴</h6>
-                            <p class="mb-0 opacity-75"></p>
-                        </div>
-                    </div>
+                <a href="#" class="list-text-exit" style="text-decoration: none;">
+                    회원탈퇴
                 </a>
             </div>
         </div>
