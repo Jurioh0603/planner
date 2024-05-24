@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>홈화면!</title>
+</head>
+<body>
+    <ul>
+        <li class="nav-item" th:if="${session.loginMemberInfo == null}" ><a class="nav-link" href="/user/login">로그인</a></li>
+        <li class="nav-item" th:if="${session.loginMemberInfo == null}" ><a class="nav-link" href="/user/join">회원가입</a></li>
+    </ul>
+
+</body>
+</html>
