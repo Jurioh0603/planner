@@ -1,5 +1,7 @@
 package com.triplan.planner.plan.controller;
 
+import com.triplan.planner.plan.repository.PlanMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,5 +41,15 @@ public class PlanController {
     public String addOnMap(Model model) {
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         return "plan/addOnMap";
+    }
+
+    @Autowired
+    PlanMapper planMapper;
+
+    @GetMapping("/test")
+    public String DBConnectionTest() {
+        System.out.println("DBConnectionTest 호출");
+        planMapper.test();
+        return "redirect:/";
     }
 }
