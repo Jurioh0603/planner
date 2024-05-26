@@ -7,10 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.co.login.mapper.MemberMapper;
-import kr.co.login.vo.LoginVo;
-import kr.co.login.vo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
+import user.dto.LoginDto;
+import user.dto.UserDto;
+import user.repository.MemberMapper;
 
 @Slf4j
 @Service
@@ -23,20 +23,20 @@ public class UserService {
 	
 	//회원가입-저장처리
 	@Transactional
-	public int insertMember(MemberVo memberVo) {
+	public int insertMember(UserDto userDto) {
 		
-		log.info(">>>>>>>>>>>>>>>>>>>> 회원가입 정보 : "+memberVo.toString());
+		log.info(">>>>>>>>>>>>>>>>>>>> 회원가입 정보 : "+UserDto.toString());
 		
-		log.info("1. 암호화 전 비밀번호는 ? : "+memberVo.getPassword().toString());
+		log.info("1. 암호화 전 비밀번호는 ? : "+userDto.getPassword().toString());
 		// 암호화 모듈로 들어가서 리턴된 값이 String encodePw에 들어감
-		String encodePw = passwordEncoder.encode(memberVo.getPassword());
+		String encodePw = passwordEncoder.encode(userDto.getPassword());
 		log.info("2. 암호화 후 비밀번호는 ? : "+encodePw.toString());
 		
 		//암호화한 비밀번호를 dto에 탑재
-		memberVo.setPassword(encodePw);
+		userDto.setPassword(encodePw);
 		
 		//정상 회원가입
-		int result = memberMapper.insertMember(memberVo);
+		int result = memberMapper.insertMember(userDto);
 		
 		//비정상 회원가입(고의 에러발생)
 		//memberMapper.insertMember2();
@@ -45,31 +45,31 @@ public class UserService {
 	}
 	
 	//회원가입-중복아이디 체크
-	public int insertCheck(MemberVo memberVo) throws Exception{
-		return memberMapper.insertCheck(memberVo);
+	public int insertCheck(UserDto userDto) throws Exception{
+		return memberMapper.insertCheck(userDto);
 	}
 	
 	//관리자페이지-회원목록 조회
-	public List<MemberVo> selecMemberList(){
+	public List<UserDto> selecMemberList(){
 		return memberMapper.selecMemberList();
 	}
 
 	//관리자페이지-회원상태 변경
-	public int updateStatus(MemberVo memberVo) {
-		return memberMapper.updateStatus(memberVo);
+	public int updateStatus(UserDto userDto) {
+		return memberMapper.updateStatus(userDto);
 	}
 	
 	//회원정보 조회
-	public MemberVo selectLogin(MemberVo memberVo) {
+	public UserDto selectLogin(UserDto userDto) {
 		
 		log.info(":::: MemberService.selectLogin ::::");;
-		log.info(":::: 일반회원 비밀번호 검증시작 1. 로그인 페이지에서 입력한 비밀번호 값 : "+memberVo.getPassword());
-		String frontPassword = memberVo.getPassword();
+		log.info(":::: 일반회원 비밀번호 검증시작 1. 로그인 페이지에서 입력한 비밀번호 값 : "+userDto.getPassword());
+		String frontPassword = userDto.getPassword();
 		
-		MemberVo loginInfo = new LoginVo();
+		UserDto loginInfo = new LoginDto();
 
 		//회원 아이디로 정보 조회 
-		loginInfo = memberMapper.selectLogin(memberVo.getId());
+		loginInfo = memberMapper.selectLogin(userDto.member_id());
 		
 		if(loginInfo != null) {
 			
@@ -91,11 +91,11 @@ public class UserService {
 	}
 	
 	//sns회원정보 조회
-	public MemberVo selectSnsUser(String snsId, String snsType) {
-		MemberVo paramVo = new MemberVo();
-		paramVo.setSnsId(snsId);
-		paramVo.setSnsType(snsType);
-		return memberMapper.selectSnsUser(paramVo);
+	public UserDto selectSnsUser(String snsId, String snsType) {
+		UserDto paramDto = new UserDto();
+		paramDto.setSnsId(snsId);
+		paramDto.setSnsType(snsType);
+		return memberMapper.selectSnsUser(paramDto);
 	}
 
 }

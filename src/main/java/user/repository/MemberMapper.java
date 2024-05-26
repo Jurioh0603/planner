@@ -1,28 +1,27 @@
 package user.repository;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
+import user.dto.UserDto;
 
-import kr.co.login.vo.MemberVo;
+import java.util.List;
 
 @Mapper
 public interface MemberMapper {
 	//회원가입
-	public int insertMember(MemberVo memberVo);
+	public int insertMember(UserDto userDto);
 	//회원가입-중복아이디 체크
-	public int insertCheck(MemberVo memberVo) throws Exception;
+	public int insertCheck(UserDto userDto) throws Exception;
 	//회원목록 조회
-	public List<MemberVo> selecMemberList();
+	public List<UserDto> selecMemberList();
 	//회원상태 수정
-	public int updateStatus(MemberVo memberVo); 
+	public int updateStatus(UserDto userDto);
 	//로그인 조회
-	public MemberDto selectLogin(String id);
+	public UserDto selectLogin(String id);
 	//트랜잭션테스트용-회원가입
 	public int insertMember2();
 	//회원정보조회
-	public MemberVo selectMember(String id);
+	public UserDto selectMember(String id);
 	//SNS 회원 정보 조회
-	public MemberVo selectSnsUser(MemberVo memberVo);
+	public UserDto selectSnsUser(UserDto userDto);
 
 }

@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class LoginDto extends MemberDto {
+public class LoginDto extends UserDto {
 	private String loginIp;
     private String loginDate;	
     

@@ -2,9 +2,12 @@ package user.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 //import kr.co.common.ReturnUtil;
 //import kr.co.enums.SnsType;
-import kr.co.login.vo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
+import user.dto.UserDto;
 import user.service.KakaoService;
 import user.service.UserService;
 
@@ -30,7 +33,7 @@ public class KakaoController {
 	@Autowired
     UserService userService;
 	
-	private static final String SNS_TYPE = SnsType.KAKAO.getType();
+	//private static final String SNS_TYPE = SnsType.KAKAO.getType();
 	
 	@GetMapping("/member/kakao_callback")
     public void kakaoCallback(@RequestParam String code, HttpServletResponse response,  HttpSession session)  throws Exception{
@@ -53,28 +56,28 @@ public class KakaoController {
         log.info(" ■■■kakao■■■ snsId : {} SNS_TYPE : {}" ,snsId, SNS_TYPE);
         
         // 분기
-        MemberVo memberVo = new MemberVo();
+        UserDto userDto = new UserDto();
         // 일치하는 snsId 없을 시 회원가입
         System.out.println(userService.selectSnsUser(snsId, SNS_TYPE));
 
         if (userService.selectSnsUser(snsId, SNS_TYPE) == null) {
             
         	log.info(" ■■■kakao■■■ 카카오로 회원가입 START");
-            
-        	memberVo.setId(email);
-            memberVo.setPassword(userpw);
-            memberVo.setName(userName);
-            memberVo.setSnsId(snsId);
-            memberVo.setEmail(email);
-            memberVo.setSnsType(SNS_TYPE);
 
-            log.info(" ■■■kakao■■■ insert 전 memberVo의 값 == > "+memberVo.toString());
+            userDto.setMember_id(email);
+            userDto.setPassword(userpw);
+            userDto.setName(userName);
+            userDto.setSnsId(snsId);
+            userDto.setEmail(email);
+            userDto.setSnsType(SNS_TYPE);
 
-            userService.insertMember(memberVo);
+            log.info(" ■■■kakao■■■ insert 전 memberVo의 값 == > "+userDto.toString());
+
+            userService.insertMember(userDto);
         }
 
         // 일치하는 snsId가 있으면 맴버 객체를 세션에 저장
-        MemberVo memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
+        UserDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
         
         // 회원정보 세션담기
 		session.setAttribute("loginMemberInfo", memberInfo);

@@ -6,9 +6,12 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,16 +21,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.co.common.ReturnUtil;
-import kr.co.enums.SnsType;
-import kr.co.login.service.MemberService;
-import kr.co.login.service.NaverService;
-import kr.co.login.vo.MemberVo;
+//import kr.co.common.ReturnUtil;
+//import kr.co.enums.SnsType;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import user.dto.UserDto;
+import user.service.NaverService;
+import user.service.UserService;
 
 @Slf4j
 @AllArgsConstructor
@@ -38,7 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class NaverController {
 	
 	@Autowired
-    MemberService memberService;
+	UserService userService;
 	
 	@Autowired
 	NaverService naverService;
@@ -104,36 +107,36 @@ public class NaverController {
         String userpw = snsId;
 		
 	    // 분기
-        MemberVo memberVo = new MemberVo();
+		UserDto userDto = new UserDto();
         
         // 일치하는 snsId 없을 시 회원가입 처리
-        System.out.println(memberService.selectSnsUser(snsId, SNS_TYPE));
+        System.out.println(userService.selectSnsUser(snsId, SNS_TYPE));
 
-        if (memberService.selectSnsUser(snsId, SNS_TYPE) == null) {
+        if (userService.selectSnsUser(snsId, SNS_TYPE) == null) {
             
         	log.info(" ■■■naver■■■ 네이버로 회원가입 START");
-            
-        	memberVo.setId(email);
-            memberVo.setPassword(userpw);
-            memberVo.setName(userName);
-            memberVo.setSnsId(snsId);
-            memberVo.setEmail(email);
-            memberVo.setTel(mobile);
-            memberVo.setSnsType(SNS_TYPE);
 
-            log.info(" ■■■naver■■■ insert 전 memberVo의 값 == > "+memberVo.toString());
+        	userDto.member_id(email);
+			userDto.setPassword(userpw);
+			userDto.setName(userName);
+			userDto.setSnsId(snsId);
+			userDto.setEmail(email);
+			userDto.setTel(mobile);
+			userDto.setSnsType(SNS_TYPE);
+
+            log.info(" ■■■naver■■■ insert 전 memberVo의 값 == > "+userDto.toString());
             
-            memberService.insertMember(memberVo);
+            userService.insertMember(userDto);
         }
         // 일치하는 snsId가 있으면 맴버 객체를 세션에 저장
-        MemberVo memberInfo = memberService.selectSnsUser(snsId, SNS_TYPE);
+        userDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
         // 회원정보 세션담기
 		session.setAttribute("loginMemberInfo", memberInfo);
 		// 로그아웃 처리 시, 사용할 토큰 값
 		session.setAttribute("naverToken", accessToken);
 		log.info(" ■■■naver■■■ naverToken : "+accessToken);
 		
-		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/");
+		//ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/");
         
     }
 	

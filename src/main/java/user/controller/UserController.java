@@ -1,7 +1,6 @@
 package user.controller;
 
-import kr.co.common.ReturnUtil;
-import kr.co.login.vo.MemberVo;
+//import kr.co.common.ReturnUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+import user.dto.UserDto;
 import user.service.UserService;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+//import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -34,11 +37,11 @@ import java.net.http.HttpResponse;
   */
 @Slf4j
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
-	UserService memberService;
+	UserService userService;
 	
 	//카카오
     @Value("${kakao.api.callback.uri}")	//카카오 콜백URL
@@ -58,7 +61,7 @@ public class UserController {
     //공통 로그인 페이지 이동
 	@GetMapping("/login")
 	public String login(Model model) {
-    	log.info("Controller @GetMapping( /member/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
+    	log.info("Controller @GetMapping( /user/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
     	model.addAttribute("kakaoCallbackUri", kakaoCallbackUri);
     	model.addAttribute("kakaoJavascriptKey", kakaoJavascriptKey);
     	return "user/login";
@@ -66,9 +69,10 @@ public class UserController {
 	
     //일반회원 로그인 처리
 	@PostMapping("/login")
-	public void selectLogin(MemberVo memberVo, HttpServletResponse response,  HttpSession session) {
-		
-		MemberVo loginInfo = memberService.selectLogin(memberVo);
+	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session) {
+
+		UserDto loginInfo = userService.selectLogin(userDto);
+		//MemberVo loginInfo = memberService.selectLogin(memberVo);
         		
         //회원정보가 있으면 로그인 처리
         if(loginInfo != null) {
@@ -86,7 +90,7 @@ public class UserController {
 	@GetMapping("/logout")
 	public void logout(HttpServletResponse response, HttpSession session) {
 
-		log.info("Controller @GetMapping( /member/logout ) 로그아웃 처리 >>>>>>>>>>>>>>> ");
+		log.info("Controller @GetMapping( /user/logout ) 로그아웃 처리 >>>>>>>>>>>>>>> ");
 		//카카오 로그인일시
 		String kakaoLogoutUrl = "https://kapi.kakao.com/v1/user/logout";
 		String kakaoAccessToken  = (String) session.getAttribute("kakaoToken");
@@ -183,25 +187,26 @@ public class UserController {
 	//회원가입 페이지 이동
 	@GetMapping("/join")
 	public String join() {
-    	log.info("Controller @GetMapping(/member/join) 회원가입 화면이동");
+    	log.info("Controller @GetMapping(/user/join) 회원가입 화면이동");
 		return "user/join";
 	}
 
 	//회원 등록처리
 	@PostMapping("/insertMember")
-	public void insertMember(HttpServletResponse response, MemberVo memberVo) throws Exception {
+	public void insertMember(HttpServletResponse response, UserDto userDto) throws Exception {
 
-    	log.info("Controller @PostMapping(/member/insertMember) 회원가입 처리");
+    	log.info("Controller @PostMapping(/user/insertMember) 회원가입 처리");
 		
-		MemberVo chkMemberVo = new MemberVo();
-		
-		chkMemberVo.setId(memberVo.getId());
+		//MemberVo chkMemberVo = new MemberVo();
+		UserDto chkMemberDto = new UserDto();
+
+		chkMemberDto.setMember_id(userDto.getMember_id());
 		
 		//중복아이디 검사
 		
 		try {
 		
-		int chkCnt = memberService.insertCheck(chkMemberVo);
+		int chkCnt = userService.insertCheck(chkMemberDto);
 		
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> chkCnt " +chkCnt);
 		
@@ -211,7 +216,7 @@ public class UserController {
 
 		}else {
 
-			int result = memberService.insertMember(memberVo);
+			int result = userService.insertMember(userDto);
 			
 			//마이바티스에서 insert를 성공하면 숫자 1을 반환하고 실패시 0을 반환한다.
 			//1이라면 메인페이지로 이동. 0이라면 회원가입 페이지로 다시 이동
@@ -231,11 +236,11 @@ public class UserController {
 	}	
 
 	@GetMapping("/updateStatus")
-	public void updateStatue(HttpServletResponse response, MemberVo memberVo){
+	public void updateStatue(HttpServletResponse response, UserDto userDto){
 
 		//ReturnUtil returnUtil = new ReturnUtil();
-		
-		int result = memberService.updateStatus(memberVo);
+
+		int result = userService.updateStatus(userDto);
 		
 		//마이바티스에서 insert를 성공하면 숫자 1을 반환하고 실패시 0을 반환한다.
 		//1이라면 메인페이지로 이동. 0이라면 회원가입 페이지로 다시 이동
@@ -250,9 +255,9 @@ public class UserController {
 	
 	@GetMapping("/mypage")
 	public ModelAndView mypage() {
-    	log.info("Controller @GetMapping(/member/mypage) 마이페이지 화면이동");
+    	log.info("Controller @GetMapping(/user/mypage) 마이페이지 화면이동");
     	ModelAndView mv = new ModelAndView("member/mypage");
-    	mv.addObject("memberList", memberService.selecMemberList());
+    	mv.addObject("memberList", userService.selecMemberList());
     	return mv;
 	}
 }
