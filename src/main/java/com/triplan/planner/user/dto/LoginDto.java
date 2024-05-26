@@ -1,4 +1,4 @@
-package user.dto;
+package com.triplan.planner.user.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

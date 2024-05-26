@@ -1,4 +1,4 @@
-package user.service;
+package com.triplan.planner.user.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,9 +24,6 @@ import java.util.Map;
 
 @Slf4j
 @Service
-////https://cobook.tistory.com/31
-//http://yoonbumtae.com/?p=1818
-//https://velog.io/@jaeygun/Spring-boot-Naver-Login-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0feat.-Thymeleaf
 public class NaverService {
 
 	@Value("${naver.api.client.id}")

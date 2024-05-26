@@ -1,31 +1,22 @@
-package user.controller;
+package com.triplan.planner.user.controller;
 
-import java.util.Map;
-
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
+import com.triplan.planner.user.common.ReturnUtil;
+import com.triplan.planner.user.common.SnsType;
+import com.triplan.planner.user.dto.UserDto;
+import com.triplan.planner.user.service.KakaoService;
+import com.triplan.planner.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import org.apache.catalina.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-//import kr.co.common.ReturnUtil;
-//import kr.co.enums.SnsType;
-import lombok.extern.slf4j.Slf4j;
-import user.dto.UserDto;
-import user.service.KakaoService;
-import user.service.UserService;
+import java.util.Map;
 
 @Controller
 @Slf4j
-//https://201230.tistory.com/109
-//http://yoonbumtae.com/?p=1841 시큐리티넣기
-//https://daegwonkim.tistory.com/268
-//https://tweety1121.tistory.com/entry/Spring-Boot-security-Oauth2-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%97%B0%EB%8F%99-%EA%B5%AC%EA%B8%80%EC%B9%B4%EC%B9%B4%EC%98%A4
 public class KakaoController {
 	
 	@Autowired
@@ -33,7 +24,7 @@ public class KakaoController {
 	@Autowired
     UserService userService;
 	
-	//private static final String SNS_TYPE = SnsType.KAKAO.getType();
+	private static final String SNS_TYPE = SnsType.KAKAO.getType();
 	
 	@GetMapping("/member/kakao_callback")
     public void kakaoCallback(@RequestParam String code, HttpServletResponse response,  HttpSession session)  throws Exception{
@@ -64,7 +55,7 @@ public class KakaoController {
             
         	log.info(" ■■■kakao■■■ 카카오로 회원가입 START");
 
-            userDto.setMember_id(email);
+            userDto.setMemberId(email);
             userDto.setPassword(userpw);
             userDto.setName(userName);
             userDto.setSnsId(snsId);

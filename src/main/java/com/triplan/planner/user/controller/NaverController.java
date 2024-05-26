@@ -1,4 +1,22 @@
-package user.controller;
+package com.triplan.planner.user.controller;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.triplan.planner.user.common.ReturnUtil;
+import com.triplan.planner.user.common.SnsType;
+import com.triplan.planner.user.dto.UserDto;
+import com.triplan.planner.user.service.NaverService;
+import com.triplan.planner.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -6,38 +24,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-//import kr.co.common.ReturnUtil;
-//import kr.co.enums.SnsType;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import user.dto.UserDto;
-import user.service.NaverService;
-import user.service.UserService;
-
 @Slf4j
 @AllArgsConstructor
 @Controller
-//https://cobook.tistory.com/31
-//https://velog.io/@jaeygun/Spring-boot-Naver-Login-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0feat.-Thymeleaf
-//http://yoonbumtae.com/?p=1818
 public class NaverController {
 	
 	@Autowired
@@ -116,7 +105,7 @@ public class NaverController {
             
         	log.info(" ■■■naver■■■ 네이버로 회원가입 START");
 
-        	userDto.member_id(email);
+        	userDto.setMemberId(email);
 			userDto.setPassword(userpw);
 			userDto.setName(userName);
 			userDto.setSnsId(snsId);
@@ -129,14 +118,14 @@ public class NaverController {
             userService.insertMember(userDto);
         }
         // 일치하는 snsId가 있으면 맴버 객체를 세션에 저장
-        userDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
+        UserDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
         // 회원정보 세션담기
 		session.setAttribute("loginMemberInfo", memberInfo);
 		// 로그아웃 처리 시, 사용할 토큰 값
 		session.setAttribute("naverToken", accessToken);
 		log.info(" ■■■naver■■■ naverToken : "+accessToken);
 		
-		//ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/");
+		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/");
         
     }
 	

@@ -1,16 +1,13 @@
-package user.service;
+package com.triplan.planner.user.service;
 
-import java.util.List;
-
+import com.triplan.planner.user.dto.LoginDto;
+import com.triplan.planner.user.dto.UserDto;
+import com.triplan.planner.user.repository.MemberMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
-import user.dto.LoginDto;
-import user.dto.UserDto;
-import user.repository.MemberMapper;
 
 @Slf4j
 @Service
@@ -25,7 +22,7 @@ public class UserService {
 	@Transactional
 	public int insertMember(UserDto userDto) {
 		
-		log.info(">>>>>>>>>>>>>>>>>>>> 회원가입 정보 : "+UserDto.toString());
+		log.info(">>>>>>>>>>>>>>>>>>>> 회원가입 정보 : "+userDto.toString());
 		
 		log.info("1. 암호화 전 비밀번호는 ? : "+userDto.getPassword().toString());
 		// 암호화 모듈로 들어가서 리턴된 값이 String encodePw에 들어감
@@ -48,17 +45,6 @@ public class UserService {
 	public int insertCheck(UserDto userDto) throws Exception{
 		return memberMapper.insertCheck(userDto);
 	}
-	
-	//관리자페이지-회원목록 조회
-	public List<UserDto> selecMemberList(){
-		return memberMapper.selecMemberList();
-	}
-
-	//관리자페이지-회원상태 변경
-	public int updateStatus(UserDto userDto) {
-		return memberMapper.updateStatus(userDto);
-	}
-	
 	//회원정보 조회
 	public UserDto selectLogin(UserDto userDto) {
 		
@@ -69,7 +55,7 @@ public class UserService {
 		UserDto loginInfo = new LoginDto();
 
 		//회원 아이디로 정보 조회 
-		loginInfo = memberMapper.selectLogin(userDto.member_id());
+		loginInfo = memberMapper.selectLogin(userDto.getMemberId());
 		
 		if(loginInfo != null) {
 			

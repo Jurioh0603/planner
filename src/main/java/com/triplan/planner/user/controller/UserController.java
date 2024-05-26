@@ -1,6 +1,10 @@
-package user.controller;
+package com.triplan.planner.user.controller;
 
-//import kr.co.common.ReturnUtil;
+import com.triplan.planner.user.common.ReturnUtil;
+import com.triplan.planner.user.dto.UserDto;
+import com.triplan.planner.user.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,16 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
-import user.dto.UserDto;
-import user.service.UserService;
-
-//import javax.servlet.http.HttpServletResponse;
-//import javax.servlet.http.HttpSession;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.net.URI;
@@ -27,14 +23,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-/**
-  * @FileName : MemberController.java
-  * @Project : SpringBoot2Jdk11MybatisOracleSocialLoginNoSecuritySample
-  * @Date : 
-  * @작성자 : 
-  * @변경이력 :
-  * @프로그램 설명 : 로그인 컨트롤러
-  */
 @Slf4j
 @Controller
 @RequestMapping("/user")
@@ -72,13 +60,12 @@ public class UserController {
 	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session) {
 
 		UserDto loginInfo = userService.selectLogin(userDto);
-		//MemberVo loginInfo = memberService.selectLogin(memberVo);
-        		
+
         //회원정보가 있으면 로그인 처리
         if(loginInfo != null) {
             // 회원정보 세션담기
     		session.setAttribute("loginMemberInfo", loginInfo);
-    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", "/");        	
+    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", "/");
         }else {
     		ReturnUtil.setReturnMessage(response, "로그인을 실패하였습니다.", "", "error", "/");        	
         }
@@ -200,7 +187,7 @@ public class UserController {
 		//MemberVo chkMemberVo = new MemberVo();
 		UserDto chkMemberDto = new UserDto();
 
-		chkMemberDto.setMember_id(userDto.getMember_id());
+		chkMemberDto.setMemberId(userDto.getMemberId());
 		
 		//중복아이디 검사
 		
@@ -233,31 +220,15 @@ public class UserController {
 			throw new Exception(e);
 		}
 		
-	}	
-
-	@GetMapping("/updateStatus")
-	public void updateStatue(HttpServletResponse response, UserDto userDto){
-
-		//ReturnUtil returnUtil = new ReturnUtil();
-
-		int result = userService.updateStatus(userDto);
-		
-		//마이바티스에서 insert를 성공하면 숫자 1을 반환하고 실패시 0을 반환한다.
-		//1이라면 메인페이지로 이동. 0이라면 회원가입 페이지로 다시 이동
-		if(result > 0) {
-			ReturnUtil.setReturnMessage(response, "회원상태를 변경하였습니다.","", "success", "/notiles/admin/main");
-		}else {
-			ReturnUtil.setReturnMessage(response, "회원상태 변경을 실패였습니다.","", "error", "/notiles/admin/main");
-		}		
-		
 	}
 
-	
-	@GetMapping("/mypage")
-	public ModelAndView mypage() {
-    	log.info("Controller @GetMapping(/user/mypage) 마이페이지 화면이동");
-    	ModelAndView mv = new ModelAndView("member/mypage");
-    	mv.addObject("memberList", userService.selecMemberList());
-    	return mv;
-	}
+	//test
+//	@Autowired
+//	TestMapper testMapper;
+//	@GetMapping("/test")
+//	public String DBConnectionTest() {
+//		System.out.println("DBConnectionTest 호출");
+//		testMapper.test();
+//		return "redirect:/";
+//	}
 }
