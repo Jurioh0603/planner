@@ -13,24 +13,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="/css/plan/planFormStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/plan/modifyFormStyle.css">
 
     <script>
         $(function() {
             // Initialize sortable
-            $("#sortable").sortable({
-                stop: function(event, ui) {
-                    updateNumbers();
-                }
+            $(".sortable").each(function() {
+                var $sortable = $(this);
+                $sortable.sortable({
+                    stop: function(event, ui) {
+                        updateNumbers($sortable);
+                        loadMap();
+                    }
+                });
+
+                // Call updateNumbers initially
+                updateNumbers($sortable);
             });
 
             // Function to update the numbers
-            function updateNumbers() {
-                $("#sortable li").each(function(index) {
+            function updateNumbers($sortable) {
+                $sortable.find("li").each(function(index) {
                     $(this).find(".num-span").text(index + 1);
                 });
             }
+
+            loadMap();
         });
+
+        function getMapByDay(index) {
+            sortableIdx = "sortable-" + index;
+            loadMap();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // 'smooth' 옵션을 사용하여 부드럽게 스크롤됩니다.
+        }
 
         function openPopup() {
             var url = "/plan/addAttr";
@@ -46,7 +64,7 @@
     <div id="contents">
         <div id="planTitle">
             <div>
-                <h2 class="mt-3 mb-3">나의 여행 스케줄</h2>
+                <h2 class="mt-3 mb-3" th:text="${scheduleList.schedule.scheduleTitle}">나의 여행 스케줄</h2>
             </div>
             <div>
                 <h6>
@@ -57,7 +75,7 @@
 
         <div id="planDay">
             <div>
-                <h5 class="mb-3">2024.11.10 - 11.15</h5>
+                <h5 class="mb-3">[[${#dates.format(scheduleList.schedule.startDay, 'yyyy-MM-dd')}]] - [[${#dates.format(scheduleList.schedule.endDay, 'yyyy-MM-dd')}]]</h5>
             </div>
             <div>
                 <h6>
@@ -79,6 +97,8 @@
             document.head.appendChild(script);
         </script>
         <script>
+            var sortableIdx = "sortable-0";
+
             script.onload = function() {
                 loadMap();
             };
@@ -90,27 +110,9 @@
 
                     var markers = []; // 마커를 담을 배열입니다
 
-                    // 마커를 표시할 위치와 title 객체 배열입니다
-                    var positions = [
-                        {
-                            title: '카카오',
-                            latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-                        },
-                        {
-                            title: '생태연못',
-                            latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-                        },
-                        {
-                            title: '텃밭',
-                            latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-                        },
-                        {
-                            title: '근린공원',
-                            latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-                        }
-                    ];
+                    var positions = getPositions(sortableIdx);
 
-                    for (var i = 0; i < positions.length; i ++) {
+                    for (var i = 0; i < positions.length; i++) {
                         // 마커 이미지의 이미지 주소입니다
                         var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
                             imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
@@ -146,6 +148,25 @@
                 });
             }
 
+            function getPositions(sortableIdx) {
+                var positions = [];
+
+                $("#" + sortableIdx + " li").each(function() {
+                    var placeName = $(this).data("place-name");
+                    var latitude = parseFloat($(this).data("latitude"));
+                    var longitude = parseFloat($(this).data("longitude"));
+
+                    if (placeName && !isNaN(latitude) && !isNaN(longitude)) {
+                        positions.push({
+                            title: placeName,
+                            latlng: new kakao.maps.LatLng(latitude, longitude)
+                        });
+                    }
+                });
+
+                return positions;
+            }
+
             function drawMap() {
                 var container = document.getElementById('map'); //지도를 표시할 div
                 var options = {
@@ -178,26 +199,28 @@
         </script>
         <hr/>
 
-        <h3>day 1 - 11.10</h3>
-        <ul id="sortable">
-            <th:block th:each="num:${#numbers.sequence(1,5)}">
-            <li class="ui-state-default">
-                <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
-                <div class="centered-circle"><span class="num-span" th:text="${num}"></span></div>
-                <div class="planDetail"><h4>해운대</h4>물에 들어갈까 말까?!</div>
-                <input type="button" class="deleteBtn" onclick="addMarker()"/>
-            </li>
-            </th:block>
-        </ul>
-        <hr/>
-
-        <h3>day 2 - 11.11</h3>
-        <ul>
-            <li class="ui-state-default" onclick="openPopup()">
-                <div><img src="/images/plus.png" class="hamburgerMenu me-4"/></div>
-                <div><h4 class="mb-0">장소 추가</h4></div>
-            </li>
-        </ul>
+        <th:block th:each="day, dStat : ${scheduleList.travelDay}">
+            <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToTop()|">day [[${dStat.index + 1}]] - [[${#dates.format(day, 'MM-dd')}]]</h3>
+            <ul class="sortable" th:id="'sortable-'+${dStat.index}">
+                <th:block th:each="schedule, scStat : ${scheduleList.detailScheduleList}">
+                    <th:block th:if="${schedule.detailDay == dStat.index}">
+                        <li class="ui-state-default" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                            <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
+                            <div class="centered-circle"><span class="num-span"></span></div>
+                            <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
+                            <input type="button" class="deleteBtn" onclick=""/>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+            <ul>
+                <li class="ui-state-default" onclick="openPopup()">
+                    <div><img src="/images/plus.png" class="hamburgerMenu me-4"/></div>
+                    <div><h4 class="mb-0">장소 추가</h4></div>
+                </li>
+            </ul>
+            <hr/>
+        </th:block>
 
         <div id="buttonContainer" class="mt-5">
             <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>

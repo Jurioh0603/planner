@@ -11,6 +11,50 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/css/plan/myPlanListStyle.css">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // 현재 날짜를 얻습니다.
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정하여 정확한 비교를 합니다.
+
+            // 모든 dDay 요소를 선택합니다.
+            const startDayElements = document.querySelectorAll('.startDay');
+
+            // 각 요소를 순회하며 d-day를 계산합니다.
+            startDayElements.forEach((element, index) => {
+                // 요소의 텍스트 내용을 읽어와서 날짜로 변환합니다.
+                const scheduleDate = new Date(element.textContent.trim());
+                scheduleDate.setHours(0, 0, 0, 0); // 시간을 00:00:00으로 설정합니다.
+
+                // d-day를 계산합니다.
+                const timeDiff = scheduleDate - today;
+                const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // 밀리초를 일수로 변환합니다.
+
+                // 해당 요소의 하위 요소인 dDay 요소를 선택합니다.
+                const dDayElement = element.parentElement.querySelector('.dDay');
+
+                // d-day를 해당 요소에 표시합니다.
+                if (dayDiff === 0) {
+                    dDayElement.textContent = 'D-day';
+                } else if (dayDiff > 0) {
+                    dDayElement.textContent = 'D-' + dayDiff;
+                } else {
+                    dDayElement.textContent = 'D+' + Math.abs(dayDiff);
+                }
+            });
+        });
+
+        function openFileUploader(index) {
+            // div 클릭 시 파일 업로드 창 열기
+            document.getElementById('file_' + index).click();
+
+            // 파일이 선택되면 form을 자동으로 제출하기
+            document.getElementById('file_' + index).addEventListener('change', function() {
+                document.getElementById('uploadForm_' + index).submit();
+            });
+        }
+    </script>
 </head>
 <body>
     <div id="contents">
@@ -29,25 +73,43 @@
         </a>
 
         <hr/>
-        <p>총 5건</p>
+        <p>총 [[${planList.count}]]건</p>
         <hr/>
 
-        <div class="planListContainer">
-            <div class="planListImgBox me-3 ms-3">
-                <img src="/images/busan-sample.jpg" alt="경애와 떠나는 부산 여행" class="planListImg"/>
-            </div>
-            <div>
-                <a href="#"><p class="fs-4 mb-2">경애와 떠나는 부산 여행</p></a>
-                <p class="mb-5">2024.11.10 - 11.15 | D-100</p>
-                <div>
-                    <span>#해운대</span>
-                    <span>#태종대</span>
-                    <span>#이재모피자</span>
+        <block th:each="schedule, iterStat : ${planList.scheduleList}">
+
+            <form action="/list/upload" method="post" enctype="multipart/form-data" th:id="'uploadForm_' + ${iterStat.index}">
+                <input type="hidden" name="scheduleNo" id="scheduleNo" th:value="${schedule.scheduleNo}"/>
+                <input type="file" name="planImg" th:id="'file_' + ${iterStat.index}" style="display:none"/>
+            </form>
+
+            <div class="planListContainer">
+                <div class="planListImgBox me-3 ms-3" th:attr="onclick=|openFileUploader(${iterStat.index})|">
+                    <img src="/images/busan-sample.jpg" alt="경애와 떠나는 부산 여행" class="planListImg"/>
                 </div>
+                <div>
+                    <a th:href="@{/plan/modify(scheduleNo=${schedule.scheduleNo})}"><p class="fs-4 mb-2" th:text="${schedule.scheduleTitle}">새로운 여정</p></a>
+                    <div class="dateInfo">
+                        <p class="mb-5 startDay">
+                            [[${#dates.format(schedule.startDay, 'yyyy-MM-dd')}]]
+                        </p>
+                        <p class="mb-5 endDay">
+                            &nbsp;- [[${#dates.format(schedule.endDay, 'yyyy-MM-dd')}]] |&nbsp;
+                        </p>
+                        <p class="mb-5 dDay"></p>
+                    </div>
+
+                    <div>
+                        <span>#해운대</span>
+                        <span>#태종대</span>
+                        <span>#이재모피자</span>
+                    </div>
+                </div>
+                <input type="button" class="deleteBtn" onclick="location.href='#'"/>
             </div>
-            <input type="button" class="deleteBtn" onclick="location.href='#'"/>
-        </div>
-        <hr/>
+            <hr/>
+
+        </block>
     </div>
 </body>
 </html>
