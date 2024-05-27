@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>일일 날씨</title>
+    <style>
+        .daliyboxlist{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 1px solid black;
+        }
+        .icon{
+            grid-row: 1/3;
+            grid-column: 1/2;
+            border: 1px solid black;
+            width: 200px;
+        }
+        .place{
+            border: 1px solid black;
+            width: 200px;
+        }
+        .temp{
+            border: 1px solid black;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<button class="button" type="button">현재 날씨는?</button>
+<br/><br/>
+<div class="daliyboxlist">
+    <img class="icon" alt="Weather Icon" />
+    <div class="place">장소</div>
+    <div class="temp">온도</div>
+</div>
+<div class="desc"></div>
+<script src="/js/weather.js"></script>
+</body>
+</html>

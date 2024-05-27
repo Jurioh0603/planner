@@ -25,7 +25,7 @@ import java.net.http.HttpResponse;
 
 @Slf4j
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/templates/user")
 public class UserController {
 
 	@Autowired
@@ -52,7 +52,7 @@ public class UserController {
     	log.info("Controller @GetMapping( /user/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
     	model.addAttribute("kakaoCallbackUri", kakaoCallbackUri);
     	model.addAttribute("kakaoJavascriptKey", kakaoJavascriptKey);
-    	return "user/login";
+    	return "templates/user/login";
 	}
 	
     //일반회원 로그인 처리
@@ -175,7 +175,7 @@ public class UserController {
 	@GetMapping("/join")
 	public String join() {
     	log.info("Controller @GetMapping(/user/join) 회원가입 화면이동");
-		return "user/join";
+		return "templates/user/join";
 	}
 
 	//회원 등록처리
@@ -230,5 +230,10 @@ public class UserController {
 //		System.out.println("DBConnectionTest 호출");
 //		testMapper.test();
 //		return "redirect:/";
+//	}
+	//Weather test
+//	@GetMapping("/weather")
+//	public String weather() {
+//		return "weather/dailyWeather";
 //	}
 }
