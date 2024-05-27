@@ -1,5 +1,6 @@
 package com.triplan.planner.plan.dto;
 
+import com.triplan.planner.plan.domain.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

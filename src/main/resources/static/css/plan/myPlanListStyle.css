@@ -83,3 +83,7 @@ span {
     color: gray;
     margin-bottom: 0px;
 }
+
+.modal-body {
+    align-items: center;
+}

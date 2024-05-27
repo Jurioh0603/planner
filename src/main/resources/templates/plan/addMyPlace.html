@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="searchContainer">
-        <div id="backBtnContainer"><input type="button" id="backIcon" onclick="location.href='/plan/addAttr'"/></div>
+        <div id="backBtnContainer"><input type="button" id="backIcon" th:attr="onclick=|location.href='@{/plan/addAttr(day=${day})}'|"/></div>
         <div id="address_kakao">
             <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="주소 검색" readonly/></div>
             <div id="searchIconContainer"><input type="button" id="searchIcon"/></div>
@@ -28,6 +28,7 @@
     </div>
     <script th:inline="javascript">
         var appkey = [[${KAKAO_API_KEY}]];
+        var day = [[${day}]];
     </script>
     <script>
         var script = document.createElement('script');
@@ -36,6 +37,8 @@
         document.head.appendChild(script);
     </script>
     <script>
+        var marker = null;
+
         //default
         script.onload = function() {
             updateMap('제주특별자치도 제주시 첨단로 242');
@@ -72,7 +75,7 @@
                         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                         // 마커를 생성합니다
-                        var marker = new kakao.maps.Marker({
+                        marker = new kakao.maps.Marker({
                             position: coords,
                             image: markerImage // 마커이미지 설정
                         });
@@ -86,10 +89,33 @@
                 });
             });
         };
+
+        // 추가 버튼에 클릭 이벤트 추가
+        var addButton = document.getElementById('select');
+        addButton.addEventListener('click', function() {
+            var latlng = marker.getPosition();
+            var lat = latlng.getLat();
+            var lng = latlng.getLng();
+
+            var placeName = prompt("장소 이름:");
+            var memo = prompt("장소 메모:");
+
+            if (placeName) {
+                sendSchedule(day, placeName, lat, lng, memo);
+            }
+        });
+
+        function sendSchedule(day, placeName, placeLatitude, placeLongitude, memo) {
+            // 부모 창의 addLocation 함수 호출
+            window.opener.addLocation(day, placeName, placeLatitude, placeLongitude, memo);
+
+            // 팝업 창 닫기
+            window.close();
+        }
     </script>
 
     <hr/>
-    <a href="/plan/addOnMap">
+    <a th:href="@{/plan/addOnMap(day=${day})}">
         <div class="attractionContainer" id="addBtn">
             <div>
                 <img src="/images/plus.png" alt="추가" id="plus"/>

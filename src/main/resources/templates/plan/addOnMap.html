@@ -14,17 +14,18 @@
 </head>
 <body>
     <div id="popUpHeader">
-        <div id="backBtnContainer"><input type="button" id="backIcon" onclick="location.href='/plan/addMyPlace'"/></div>
+        <div id="backBtnContainer"><input type="button" id="backIcon" th:attr="onclick=|location.href='@{/plan/addMyPlace(day=${day})}'|"/></div>
         <div><h3>지도에서 위치 선택</h3></div>
     </div>
     <hr/>
 
     <div id="mapContainer">
-        <div id="map" style="width:550px; height:500px;"></div>
+        <div id="map" style="width:550px; height:585px;"></div>
+        <button id="select">추가</button>
     </div>
-    <div id="clickLatlng"></div>
     <script th:inline="javascript">
         var appkey = [[${KAKAO_API_KEY}]];
+        var day = [[${day}]];
     </script>
     <script>
         var script = document.createElement('script');
@@ -33,6 +34,8 @@
         document.head.appendChild(script);
     </script>
     <script>
+        var marker = null;
+
         //default
         script.onload = function() {
             kakao.maps.load(function() {
@@ -54,7 +57,7 @@
                 markerPosition = new kakao.maps.LatLng(33.450701, 126.570667); // 마커가 표시될 위치입니다
 
                 // 지도를 클릭한 위치에 표출할 마커입니다
-                var marker = new kakao.maps.Marker({
+                marker = new kakao.maps.Marker({
                     // 지도 중심좌표에 마커를 생성합니다
                     position: map.getCenter(),
                     image: markerImage // 마커이미지 설정
@@ -72,15 +75,32 @@
 
                     // 마커 위치를 클릭한 위치로 옮깁니다
                     marker.setPosition(latlng);
-
-                    var message = '위도: ' + latlng.getLat() + ', ';
-                    message += '경도: ' + latlng.getLng();
-
-                    var resultDiv = document.getElementById('clickLatlng');
-                    resultDiv.innerHTML = message;
                 });
             });
         };
+
+        // 추가 버튼에 클릭 이벤트 추가
+        var addButton = document.getElementById('select');
+        addButton.addEventListener('click', function() {
+            var latlng = marker.getPosition();
+            var lat = latlng.getLat();
+            var lng = latlng.getLng();
+
+            var placeName = prompt("장소 이름:");
+            var memo = prompt("장소 메모:");
+
+            if (placeName) {
+                sendSchedule(day, placeName, lat, lng, memo);
+            }
+        });
+
+        function sendSchedule(day, placeName, placeLatitude, placeLongitude, memo) {
+            // 부모 창의 addLocation 함수 호출
+            window.opener.addLocation(day, placeName, placeLatitude, placeLongitude, memo);
+
+            // 팝업 창 닫기
+            window.close();
+        }
     </script>
 
 </body>

@@ -1,5 +1,6 @@
 package com.triplan.planner.plan.controller;
 
+import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.*;
 import com.triplan.planner.plan.file.FileStore;
 import com.triplan.planner.plan.service.PlanService;
@@ -78,18 +79,18 @@ public class PlanController {
     }
 
     @GetMapping("/addAttr")
-    public String addAttr() {
+    public String addAttr(@ModelAttribute("day") int day) {
         return "plan/addAttraction";
     }
 
     @GetMapping("/addMyPlace")
-    public String addMyPlace(Model model) {
+    public String addMyPlace(@ModelAttribute("day") int day, Model model) {
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         return "plan/addMyPlace";
     }
 
     @GetMapping("/addOnMap")
-    public String addOnMap(Model model) {
+    public String addOnMap(@ModelAttribute("day") int day, Model model) {
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         return "plan/addOnMap";
     }

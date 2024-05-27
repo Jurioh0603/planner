@@ -110,11 +110,49 @@
                         </th:block>
                     </div>
                 </div>
-                <input type="button" class="deleteBtn" th:attr="onclick=|location.href='@{/plan/delete(no=${schedule.scheduleNo})}'|"/>
+<!--                <input type="button" class="deleteBtn" th:attr="onclick=|location.href='@{/plan/delete(no=${schedule.scheduleNo})}'|"/>-->
+                <input type="button" class="deleteBtn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" th:attr="data-schedule-no=${schedule.scheduleNo}"/>
             </div>
             <hr/>
 
         </block>
     </div>
+
+    <div class="modal" id="confirmDeleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">일정 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    해당 일정을 사용한 여행기도 함께 삭제됩니다.<br/>
+                    정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // 모달이 열릴 때 data-schedule-no 값을 가져와서 confirmDeleteBtn에 저장
+        var deleteBtns = document.querySelectorAll('.deleteBtn');
+        var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+        var confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        confirmDeleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget; // 모달을 연 버튼
+            var scheduleNo = button.getAttribute('data-schedule-no');
+            confirmDeleteBtn.setAttribute('data-schedule-no', scheduleNo);
+        });
+
+        // confirmDeleteBtn 클릭 시 scheduleNo를 사용하여 삭제 링크로 이동
+        confirmDeleteBtn.addEventListener('click', function () {
+            var scheduleNo = this.getAttribute('data-schedule-no');
+            location.href = '/plan/delete?no=' + scheduleNo;
+        });
+    </script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package com.triplan.planner.plan.repository;
 
 import com.triplan.planner.plan.dto.PlanList;
-import com.triplan.planner.plan.dto.ScheduleImage;
+import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.ScheduleList;
 
 public interface PlanRepository {

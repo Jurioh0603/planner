@@ -1,5 +1,8 @@
 package com.triplan.planner.plan.repository;
 
+import com.triplan.planner.plan.domain.DetailSchedule;
+import com.triplan.planner.plan.domain.Schedule;
+import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,6 +20,8 @@ public class PlanRepositoryImpl implements PlanRepository {
 
     public PlanList findPlanList(String memberId) {
         int count = planMapper.getCount(memberId);
+        if(count == 0)
+            return new PlanList(0, null, null, null);
         List<Schedule> scheduleList = planMapper.getSchedules(memberId);
 
         long[] scheduleNoArray = new long[count];

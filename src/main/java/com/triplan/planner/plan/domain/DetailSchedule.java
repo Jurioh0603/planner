@@ -1,4 +1,4 @@
-package com.triplan.planner.plan.dto;
+package com.triplan.planner.plan.domain;
 
 import lombok.Data;
 

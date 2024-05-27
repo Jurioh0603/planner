@@ -1,5 +1,8 @@
 package com.triplan.planner.plan.repository;
 
+import com.triplan.planner.plan.domain.DetailSchedule;
+import com.triplan.planner.plan.domain.Schedule;
+import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
