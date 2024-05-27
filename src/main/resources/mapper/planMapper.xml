@@ -3,8 +3,67 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.triplan.planner.plan.repository.PlanMapper">
-    <insert id="test">
-        insert into testTable
-        values ( '삽입되면 성공!' );
+    <select id="getCount" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM SCHEDULE
+        WHERE MEMBER_ID=#{memberId};
+    </select>
+
+    <select id="getSchedules" parameterType="string" resultType="Schedule">
+        SELECT *
+        FROM SCHEDULE
+        WHERE MEMBER_ID=#{memberId}
+        ORDER BY START_DAY ASC;
+    </select>
+
+    <select id="getPlaces" parameterType="long" resultType="PlaceList">
+        SELECT DISTINCT SCHEDULE_NO, PLACE_NAME
+        FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO IN
+        <foreach collection="scheduleNoArray" item="scheduleNo" index="index" open="(" close=")" separator=",">
+            #{scheduleNo}
+        </foreach>
+    </select>
+
+    <select id="getImages" parameterType="string" resultType="ScheduleImage">
+        SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
+        FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
+        ON A.SCHEDULE_NO=B.SCHEDULE_NO
+        WHERE A.MEMBER_ID=#{memberId}
+        ORDER BY START_DAY ASC;
+    </select>
+
+    <select id="getScheduleByNo" parameterType="long" resultType="Schedule">
+        SELECT *
+        FROM SCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo};
+    </select>
+
+    <select id="getDetailSchedules" parameterType="long" resultType="DetailSchedule">
+        SELECT *
+        FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+        ORDER BY DETAIL_DAY ASC, PLACE_PROC ASC;
+    </select>
+
+    <select id="isImageExist" parameterType="long" resultType="ScheduleImage">
+        SELECT *
+        FROM SCHEDULEIMAGE
+        WHERE SCHEDULE_NO=#{scheduleNo};
+    </select>
+
+    <delete id="deleteImage" parameterType="long">
+        DELETE FROM SCHEDULEIMAGE
+        WHERE SCHEDULE_NO=#{scheduleNo};
+    </delete>
+
+    <insert id="save" parameterType="ScheduleImage">
+        INSERT INTO SCHEDULEIMAGE
+        VALUES(#{uploadName}, #{storeName}, #{scheduleNo});
     </insert>
+
+    <delete id="deleteScheduleByNo" parameterType="long">
+        DELETE FROM SCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo};
+    </delete>
 </mapper>

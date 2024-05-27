@@ -61,171 +61,175 @@
     </script>
 </head>
 <body>
-    <div id="contents">
-        <div id="planTitle">
-            <div>
-                <h2 class="mt-3 mb-3" th:text="${scheduleList.schedule.scheduleTitle}">나의 여행 스케줄</h2>
-            </div>
-            <div>
-                <h6>
-                    <input type="button" value="편집" class="mb-3 editBtn" onclick="#"/>
-                </h6>
-            </div>
+<div id="contents">
+    <div id="planTitle">
+        <div>
+            <h2 class="mt-3 mb-3" th:text="${scheduleList.schedule.scheduleTitle}">나의 여행 스케줄</h2>
         </div>
-
-        <div id="planDay">
-            <div>
-                <h5 class="mb-3">[[${#dates.format(scheduleList.schedule.startDay, 'yyyy-MM-dd')}]] - [[${#dates.format(scheduleList.schedule.endDay, 'yyyy-MM-dd')}]]</h5>
-            </div>
-            <div>
-                <h6>
-                    <input type="button" value="편집" class="mb-2 editBtn" onclick="#"/>
-                </h6>
-            </div>
-        </div>
-
-        <div id="mapContainer">
-            <div id="map" style="width:800px; height:400px;"></div>
-        </div>
-        <script th:inline="javascript">
-            var appkey = [[${KAKAO_API_KEY}]];
-        </script>
-        <script>
-            var script = document.createElement('script');
-            script.type = "text/javascript";
-            script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + appkey + "&autoload=false";
-            document.head.appendChild(script);
-        </script>
-        <script>
-            var sortableIdx = "sortable-0";
-
-            script.onload = function() {
-                loadMap();
-            };
-
-            function loadMap() {
-                kakao.maps.load(function() {
-
-                    var map = drawMap(); //지도 생성
-
-                    var markers = []; // 마커를 담을 배열입니다
-
-                    var positions = getPositions(sortableIdx);
-
-                    for (var i = 0; i < positions.length; i++) {
-                        // 마커 이미지의 이미지 주소입니다
-                        var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-                            imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
-                            imgOptions =  {
-                                spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-                                spriteOrigin : new kakao.maps.Point(0, (i*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-                                offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-                            },
-                            markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-                                marker = new kakao.maps.Marker({
-                                position: positions[i].latlng, // 마커의 위치
-                                image: markerImage
-                            });
-
-                        // 마커를 생성합니다
-                        var marker = new kakao.maps.Marker({
-                            map: map, // 마커를 표시할 지도
-                            position: positions[i].latlng, // 마커를 표시할 위치
-                            title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                            image : markerImage // 마커 이미지
-                        });
-
-                    }
-
-                    var polyline = [];
-                    for (var i = 0; i < positions.length; i++) {
-                        polyline.push(positions[i].latlng);
-                    }
-
-                    //마커 연결
-                    drawLine(map, polyline);
-
-                });
-            }
-
-            function getPositions(sortableIdx) {
-                var positions = [];
-
-                $("#" + sortableIdx + " li").each(function() {
-                    var placeName = $(this).data("place-name");
-                    var latitude = parseFloat($(this).data("latitude"));
-                    var longitude = parseFloat($(this).data("longitude"));
-
-                    if (placeName && !isNaN(latitude) && !isNaN(longitude)) {
-                        positions.push({
-                            title: placeName,
-                            latlng: new kakao.maps.LatLng(latitude, longitude)
-                        });
-                    }
-                });
-
-                return positions;
-            }
-
-            function drawMap() {
-                var container = document.getElementById('map'); //지도를 표시할 div
-                var options = {
-                    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
-                    level: 3 //지도의 확대 레벨
-                };
-
-                return new kakao.maps.Map(container, options);
-            }
-
-            function drawLine(map, polyline) {
-                    var linePath = new kakao.maps.Polyline({
-                        path: polyline,       // 선을 구성하는 좌표배열입니다
-                        strokeWeight: 3,      // 선의 두께입니다
-                        strokeColor: 'black', // 선의 색깔입니다
-                        strokeOpacity: 0.7,   // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-                        strokeStyle: 'solid'  // 선의 스타일입니다
-                    });
-
-                    linePath.setMap(map);
-            }
-
-            // 지도 위에 표시되고 있는 마커를 모두 제거합니다
-            function removeMarker() {
-                for ( var i = 0; i < markers.length; i++ ) {
-                    markers[i].setMap(null);
-                }
-                markers = [];
-            }
-        </script>
-        <hr/>
-
-        <th:block th:each="day, dStat : ${scheduleList.travelDay}">
-            <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToTop()|">day [[${dStat.index + 1}]] - [[${#dates.format(day, 'MM-dd')}]]</h3>
-            <ul class="sortable" th:id="'sortable-'+${dStat.index}">
-                <th:block th:each="schedule, scStat : ${scheduleList.detailScheduleList}">
-                    <th:block th:if="${schedule.detailDay == dStat.index}">
-                        <li class="ui-state-default" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
-                            <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
-                            <div class="centered-circle"><span class="num-span"></span></div>
-                            <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
-                            <input type="button" class="deleteBtn" onclick=""/>
-                        </li>
-                    </th:block>
-                </th:block>
-            </ul>
-            <ul>
-                <li class="ui-state-default" onclick="openPopup()">
-                    <div><img src="/images/plus.png" class="hamburgerMenu me-4"/></div>
-                    <div><h4 class="mb-0">장소 추가</h4></div>
-                </li>
-            </ul>
-            <hr/>
-        </th:block>
-
-        <div id="buttonContainer" class="mt-5">
-            <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>
-            <button class="btn btn-lg btn-primary" type="button">저장</button>
+        <div>
+            <h6>
+                <input type="button" value="편집" class="mb-3 editBtn" onclick="#"/>
+            </h6>
         </div>
     </div>
+
+    <div id="planDay">
+        <div>
+            <h5 class="mb-3">[[${#dates.format(scheduleList.schedule.startDay, 'yyyy-MM-dd')}]] - [[${#dates.format(scheduleList.schedule.endDay, 'yyyy-MM-dd')}]]</h5>
+        </div>
+        <div>
+            <h6>
+                <input type="button" value="편집" class="mb-2 editBtn" onclick="#"/>
+            </h6>
+        </div>
+    </div>
+
+    <div id="mapContainer">
+        <div id="map" style="width:800px; height:400px;"></div>
+    </div>
+    <script th:inline="javascript">
+        var appkey = [[${KAKAO_API_KEY}]];
+    </script>
+    <script>
+        var script = document.createElement('script');
+        script.type = "text/javascript";
+        script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + appkey + "&autoload=false";
+        document.head.appendChild(script);
+    </script>
+    <script>
+        var sortableIdx = "sortable-0";
+        var markers = []; // 마커를 담을 배열입니다
+
+        script.onload = function() {
+            loadMap();
+        };
+
+        function loadMap() {
+            kakao.maps.load(function() {
+
+                var map = drawMap(); //지도 생성
+
+                var positions = getPositions(sortableIdx);
+
+                removeMarker(); // 지도에 표시되고 있는 마커를 제거합니다
+
+                for (var i = 0; i < positions.length; i++) {
+                    // 마커 이미지의 이미지 주소입니다
+                    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                        imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+                        imgOptions =  {
+                            spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+                            spriteOrigin : new kakao.maps.Point(0, (i*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+                            offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+                        },
+                        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+                            marker = new kakao.maps.Marker({
+                            position: positions[i].latlng, // 마커의 위치
+                            image: markerImage
+                        });
+
+                    markers.push(marker);
+                    console.log(markers);
+
+                    // 마커를 생성합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map, // 마커를 표시할 지도
+                        position: positions[i].latlng, // 마커를 표시할 위치
+                        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                        image : markerImage // 마커 이미지
+                    });
+
+                }
+
+                var polyline = [];
+                for (var i = 0; i < positions.length; i++) {
+                    polyline.push(positions[i].latlng);
+                }
+
+                //마커 연결
+                drawLine(map, polyline);
+
+            });
+        }
+
+        function getPositions(sortableIdx) {
+            var positions = [];
+
+            $("#" + sortableIdx + " li").each(function() {
+                var placeName = $(this).data("place-name");
+                var latitude = parseFloat($(this).data("latitude"));
+                var longitude = parseFloat($(this).data("longitude"));
+
+                if (placeName && !isNaN(latitude) && !isNaN(longitude)) {
+                    positions.push({
+                        title: placeName,
+                        latlng: new kakao.maps.LatLng(latitude, longitude)
+                    });
+                }
+            });
+
+            return positions;
+        }
+
+        function drawMap() {
+            var container = document.getElementById('map'); //지도를 표시할 div
+            var options = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
+                level: 3 //지도의 확대 레벨
+            };
+
+            return new kakao.maps.Map(container, options);
+        }
+
+        function drawLine(map, polyline) {
+                var linePath = new kakao.maps.Polyline({
+                    path: polyline,       // 선을 구성하는 좌표배열입니다
+                    strokeWeight: 3,      // 선의 두께입니다
+                    strokeColor: 'black', // 선의 색깔입니다
+                    strokeOpacity: 0.7,   // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                    strokeStyle: 'solid'  // 선의 스타일입니다
+                });
+
+                linePath.setMap(map);
+        }
+
+        // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+        function removeMarker() {
+            for ( var i = 0; i < markers.length; i++ ) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+    </script>
+    <hr/>
+
+    <th:block th:each="day, dStat : ${scheduleList.travelDay}">
+        <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToTop()|">day [[${dStat.index + 1}]] - [[${#dates.format(day, 'MM-dd')}]]</h3>
+        <ul class="sortable" th:id="'sortable-'+${dStat.index}">
+            <th:block th:each="schedule, scStat : ${scheduleList.detailScheduleList}">
+                <th:block th:if="${schedule.detailDay == dStat.index}">
+                    <li class="ui-state-default" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                        <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
+                        <div class="centered-circle"><span class="num-span"></span></div>
+                        <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
+                        <input type="button" class="deleteBtn" onclick=""/>
+                    </li>
+                </th:block>
+            </th:block>
+        </ul>
+        <ul>
+            <li class="ui-state-default" onclick="openPopup()">
+                <div><img src="/images/plus.png" class="hamburgerMenu me-4"/></div>
+                <div><h4 class="mb-0">장소 추가</h4></div>
+            </li>
+        </ul>
+        <hr/>
+    </th:block>
+
+    <div id="buttonContainer" class="mt-5">
+        <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>
+        <button class="btn btn-lg btn-primary" type="button">저장</button>
+    </div>
+</div>
 </body>
 </html>

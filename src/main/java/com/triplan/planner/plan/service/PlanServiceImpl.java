@@ -1,6 +1,7 @@
 package com.triplan.planner.plan.service;
 
 import com.triplan.planner.plan.dto.PlanList;
+import com.triplan.planner.plan.dto.ScheduleImage;
 import com.triplan.planner.plan.repository.PlanRepository;
 import com.triplan.planner.plan.dto.ScheduleList;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,13 @@ public class PlanServiceImpl implements PlanService {
         scheduleList.setTravelDay(travelDay);
 
         return scheduleList;
+    }
+
+    public void save(ScheduleImage scheduleImage) {
+        planRepository.save(scheduleImage);
+    }
+
+    public void deletePlan(Long scheduleNo) {
+        planRepository.deleteScheduleByNo(scheduleNo);
     }
 }

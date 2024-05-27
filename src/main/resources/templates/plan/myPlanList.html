@@ -78,17 +78,22 @@
 
         <block th:each="schedule, iterStat : ${planList.scheduleList}">
 
-            <form action="/list/upload" method="post" enctype="multipart/form-data" th:id="'uploadForm_' + ${iterStat.index}">
+            <form action="/plan/upload" method="post" enctype="multipart/form-data" th:id="'uploadForm_' + ${iterStat.index}">
                 <input type="hidden" name="scheduleNo" id="scheduleNo" th:value="${schedule.scheduleNo}"/>
-                <input type="file" name="planImg" th:id="'file_' + ${iterStat.index}" style="display:none"/>
+                <input type="file" name="uploadFile" th:id="'file_' + ${iterStat.index}" style="display:none"/>
             </form>
 
             <div class="planListContainer">
                 <div class="planListImgBox me-3 ms-3" th:attr="onclick=|openFileUploader(${iterStat.index})|">
-                    <img src="/images/busan-sample.jpg" alt="경애와 떠나는 부산 여행" class="planListImg"/>
+                    <block th:if="${planList.imageList[iterStat.index].storeName != null}">
+                        <img th:src="|/plan/images/${planList.imageList[iterStat.index].storeName}|" alt="계획 섬네일" class="planListImg"/>
+                    </block>
+                    <block th:if="${planList.imageList[iterStat.index].storeName == null}">
+                        <p class="noImg">대표 이미지를 설정해주세요.</p>
+                    </block>
                 </div>
                 <div>
-                    <a th:href="@{/plan/modify(scheduleNo=${schedule.scheduleNo})}"><p class="fs-4 mb-2" th:text="${schedule.scheduleTitle}">새로운 여정</p></a>
+                    <a th:href="@{/plan/modify(no=${schedule.scheduleNo})}"><p class="fs-4 mb-2" th:text="${schedule.scheduleTitle}">새로운 여정</p></a>
                     <div class="dateInfo">
                         <p class="mb-5 startDay">
                             [[${#dates.format(schedule.startDay, 'yyyy-MM-dd')}]]
@@ -100,12 +105,12 @@
                     </div>
 
                     <div>
-                        <span>#해운대</span>
-                        <span>#태종대</span>
-                        <span>#이재모피자</span>
+                        <th:block th:each="place : ${planList.placeList.get(schedule.scheduleNo)}">
+                            <span>#[[${place}]]</span>
+                        </th:block>
                     </div>
                 </div>
-                <input type="button" class="deleteBtn" onclick="location.href='#'"/>
+                <input type="button" class="deleteBtn" th:attr="onclick=|location.href='@{/plan/delete(no=${schedule.scheduleNo})}'|"/>
             </div>
             <hr/>
 

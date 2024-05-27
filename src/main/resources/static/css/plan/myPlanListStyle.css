@@ -34,6 +34,8 @@
     height: 150px;
     overflow: hidden;
     border-radius: 5px;
+    border: 1px solid gray;
+    align-items: center;
 }
 
 .planListImgBox:hover {
@@ -75,4 +77,9 @@ span {
 .dateInfo {
     display: flex;
     align-items: center;
+}
+
+.noImg {
+    color: gray;
+    margin-bottom: 0px;
 }
