@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/user/css/user.css">
+    <link th:href="@{/css/join.css}" rel="stylesheet" />
     <title>Join</title>
 </head>
 <body>
 <div class="login-wrapper">
-    <h2>Login</h2>
+    <h2>Join</h2>
     <form method="post" action="#" id="login-form">
-        <input type="text" name="userName" placeholder="Email" class="input_box">
-        <input type="password" name="userPassword" placeholder="Password" class="input_box">
-        <label for="remember-check">
-            <input type="checkbox" id="remember-check">아이디 저장하기
-        </label>
-        <input type="submit" value="Login">
-        <input style="background-color:#F5EEF8" type="submit" value="JOIN">
+        <!--id / pw-->
+        <input type="text" name="memberId" placeholder="Id" class="input_box">
+        <input type="password" name="password" placeholder="Password" class="input_box">
+
+        <!-- name / nickname -->
+        <input type="text" name="name" placeholder="Name" class="input_box">
+        <input type="text" name="nickname" placeholder="Nickname" class="input_box">
+
+        <!--email-->
+        <input type="email" name="email" placeholder="Email" class="input_box">
+
+        <!--tel / gender-->
+        <input type="tel" name="tel" placeholder="Tel" class="input_box">
+        <select name="gender" class="genderselect">
+            <option value="W"> Woman
+            <option value="M"> Man
+        </select>
+
+        <input type="submit" value="회원가입">
     </form>
 </div>
 </body>

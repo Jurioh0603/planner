@@ -2,21 +2,62 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/user.css}" rel="stylesheet" />
+    <link th:href="@{/css/login.css}" rel="stylesheet" />
     <title>login</title>
 </head>
 <body>
 <div class="login-wrapper">
     <h2>Login</h2>
     <form method="post" action="#" id="login-form">
-        <input type="text" name="userName" placeholder="Email" class="input_box">
+        <input type="text" name="userName" placeholder="Id" class="input_box">
         <input type="password" name="userPassword" placeholder="Password" class="input_box">
         <label for="remember-check">
             <input type="checkbox" id="remember-check">아이디 저장하기
         </label>
         <input type="submit" value="Login">
-        <input style="background-color:#F5EEF8" type="submit" value="JOIN">
+        <input type="button" style="background-color:#F5EEF8 font-size: 16px;" onclick="window.location.href='/user/join'" value="JOIN">
+        <p class="snssimple"> SNS 계정으로 간편하게 시작하기</p>
+        <div class="d-grid">
+            <div class="btn" style="background-color: rgb(255, 255, 0);">
+                <img  alt="카카오로그인" src="/static/img/kakao_login.jpg" onclick="javascript:loginWithKakao();">
+            </div>
+            <div class="btn"  style="background-color: #2DB400">
+                <img  height="48px;" alt="네이버로그인" src="/static/img/naver_login.png" onclick="javascript:loginWithNaver();">
+            </div>
+        </div>
     </form>
 </div>
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+<script th:inline="javascript">
+    //application.properties 파일에 정의한 변수
+    let KAKAO_CALLBACK_URI = /*[[${kakaoCallbackUri}]]*/ 'default';
+    let KAKAO_JAVASCRIPT_KEY = /*[[${kakaoJavascriptKey}]]*/ 'default';
+
+     console.log("KAKAO_CALLBACK_URI : "+KAKAO_CALLBACK_URI);
+     console.log("KAKAO_JAVASCRIPT_KEY : "+KAKAO_JAVASCRIPT_KEY);
+
+    $(document).ready(function(){
+        //카카오 로그인연동 자바스크립트 초기화
+        console.log("카카오 연동 초기화");
+        Kakao.init(KAKAO_JAVASCRIPT_KEY);	//본인의 JavaScript 키 입력
+        Kakao.isInitialized();
+    });
+
+    //카카오 로그인 페이지 호출
+    //https://developers.kakao.com/docs/latest/ko/kakaologin/js#login
+    function loginWithKakao() {
+        Kakao.Auth.authorize({
+            redirectUri: KAKAO_CALLBACK_URI // 등록한 리다이렉트uri 입력
+            , prompts : 'login'	//기존 로그인 여부와 상관없이 로그인하기
+        });
+    }
+
+    //네이버 로그인 페이지 호출
+    function loginWithNaver() {
+        location.href="/member/naver_login";
+    }
+</script>
+
+
 </body>
 </html>
