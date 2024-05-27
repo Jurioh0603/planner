@@ -7,7 +7,16 @@
     <link rel="stylesheet" type="text/css" href="/css/chat/main.css">
 </head>
 <body>
-    <div id="username-page">
+
+
+    <div id="room-selection-page">
+        <form id="roomForm">
+            <input type="text" id="roomId" placeholder="Enter Room ID" required/>
+            <button type="submit">Join Room</button>
+        </form>
+    </div>
+
+    <div id="username-page" class="hidden">
         <div class="username-page-container">
             <h1 class="title">Type your username to enter the Chatroom</h1>
             <form id="usernameForm" name="usernameForm">
