@@ -13,6 +13,12 @@ public class AdminController {
     @GetMapping("/adminPage")
     public String adPage() { return "admin/adminPage"; }
 
+    @GetMapping("/boardList")
+    public String boardList() { return "admin/boardPage"; }
+
+
+
+    //DB연결테스트용
     @Autowired
     AdminMapper adminMapper;
 
@@ -22,6 +28,8 @@ public class AdminController {
         adminMapper.test();
         return "redirect:/";
     }
+
+
 
 
 
