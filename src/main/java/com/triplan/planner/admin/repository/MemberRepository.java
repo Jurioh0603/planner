@@ -16,4 +16,6 @@ public interface MemberRepository {
     void updateMember(@Param("memberId") String memberId,
                       @Param("nickName") String nickName,
                       @Param("grade") int grade);
+
+    Member selectById(@Param("memberId") String memberId);
 }

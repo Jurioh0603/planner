@@ -63,8 +63,6 @@
 </section>
 <!-- SIDEBAR -->
 
-
-
 <!-- CONTENT -->
 <section id="content">
     <!-- NAVBAR -->
@@ -81,9 +79,9 @@
             <i class='bx bxs-bell' ></i>
             <span class="num">8</span>
         </a>
-<!--        <a href="#" class="profile">
-            <img src="img/people.png">
-        </a>-->
+        <!--        <a href="#" class="profile">
+                    <img src="img/people.png">
+                </a>-->
     </nav>
     <!-- NAVBAR -->
 
@@ -131,6 +129,8 @@
                         <td th:text="${member.email}"></td>
                         <td th:text="${member.gender}"></td>
                         <td th:text="${member.tel}"></td>
+
+                        <!-- HTML: 회원 등급 변경을 위한 드롭다운 버튼 -->
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle grade-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
@@ -138,13 +138,14 @@
                                         th:text="${member.grade == 9999 ? '관리자' : (member.grade == 1111 ? '일반' : (member.grade == 2222 ? '탈퇴' : '블랙'))}">
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <li><a class="dropdown-item" href="#" onclick="updateGrade('1111')">일반</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateGrade('2222')">탈퇴</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateGrade('9999')">관리자</a></li>
-                                    <li><a class="dropdown-item" href="#" onclick="updateGrade('0000')">블랙</a></li>
+                                    <li><a class="dropdown-item" href="#" data-grade="1111">일반</a></li>
+                                    <li><a class="dropdown-item" href="#" data-grade="2222">탈퇴</a></li>
+                                    <li><a class="dropdown-item" href="#" data-grade="9999">관리자</a></li>
+                                    <li><a class="dropdown-item" href="#" data-grade="0000">블랙</a></li>
                                 </ul>
                             </div>
                         </td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -156,62 +157,99 @@
 <!-- CONTENT -->
 
 
-<script src="script.js">
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-allSideMenu.forEach(item=> {
-	const li = item.parentElement;
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
 
-	item.addEventListener('click', function () {
-		allSideMenu.forEach(i=> {
-			i.parentElement.classList.remove('active');
-		})
-		li.classList.add('active');
-	})
-});
+            item.addEventListener('click', function() {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                })
+                li.classList.add('active');
+            });
+        });
 
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
 
-// TOGGLE SIDEBAR
-const menuBar = document.querySelector('#content nav .bx.bx-menu');
-const sidebar = document.getElementById('sidebar');
+        menuBar.addEventListener('click', function() {
+            sidebar.classList.toggle('hide');
+        });
 
-menuBar.addEventListener('click', function () {
-	sidebar.classList.toggle('hide');
-})
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
 
-const searchButton = document.querySelector('#content nav form .form-input button');
-const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-const searchForm = document.querySelector('#content nav form');
+        searchButton.addEventListener('click', function(e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
 
-searchButton.addEventListener('click', function (e) {
-	if(window.innerWidth < 576) {
-		e.preventDefault();
-		searchForm.classList.toggle('show');
-		if(searchForm.classList.contains('show')) {
-			searchButtonIcon.classList.replace('bx-search', 'bx-x');
-		} else {
-			searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		}
-	}
-})
+        if (window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if (window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
 
-if(window.innerWidth < 768) {
-	sidebar.classList.add('hide');
-} else if(window.innerWidth > 576) {
-	searchButtonIcon.classList.replace('bx-x', 'bx-search');
-	searchForm.classList.remove('show');
-}
+        window.addEventListener('resize', function() {
+            if (this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        });
 
+        // 회원등급변경 스크립트
+        const dropdownItems = document.querySelectorAll('.dropdown-menu a');
 
-window.addEventListener('resize', function () {
-	if(this.innerWidth > 576) {
-		searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		searchForm.classList.remove('show');
-	}
-})
+        dropdownItems.forEach(item => {
+            item.addEventListener('click', function(event) {
+                event.preventDefault();
 
+                const newGrade = item.getAttribute('data-grade');
+                const memberRow = item.closest('tr');
+                const memberId = memberRow.querySelector('td').innerText;
 
+                console.log('변경할 회원 ID:', memberId);
+                console.log('변경할 새 등급:', newGrade);
 
+                fetch('/admin/updateMemberGrade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: memberId, grade: newGrade })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('서버 응답:', data);
+                    if (data.success) {
+                        const gradeButton = memberRow.querySelector('.grade-btn');
+                        gradeButton.textContent = newGrade === '9999' ? '관리자' : newGrade === '1111' ? '일반' : newGrade === '2222' ? '탈퇴' : '블랙';
+                        gradeButton.className = 'btn dropdown-toggle grade-btn';
+                        gradeButton.classList.add(newGrade === '9999' ? 'admin' : newGrade === '1111' ? 'general' : newGrade === '2222' ? 'withdrawn' : 'black');
+                    } else {
+                        alert('등급 변경 실패');
+                    }
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    alert('등급 변경 실패: ' + error.message);
+                });
+            });
+        });
+    });
 </script>
 </body>
 </html>
