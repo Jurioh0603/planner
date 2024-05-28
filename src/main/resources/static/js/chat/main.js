@@ -48,7 +48,7 @@ function connect(event) { // 사용자가 채팅에 연결할 때 호출되는 �
 }
 
 // 이 함수는 채팅 서버에 연결 되었을 때 수행되는 작업들을 정의 - 공개 주제를 구독하고, 사용자 이름과 참여유형을 서버에 알라고, 연결 상태를 나타내는 요소를 숨김
-function onConnected() {
+function onConnected(roomId) {
     console.log('Connected to WebSocket server');
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/' + roomId, function (message) {
