@@ -66,4 +66,17 @@
         DELETE FROM SCHEDULE
         WHERE SCHEDULE_NO=#{scheduleNo};
     </delete>
+
+    <delete id="deleteDetailScheduleByScheduleNo" parameterType="long">
+        DELETE FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO=#{schduleNo};
+    </delete>
+
+    <insert id="insertDetailSchedules" parameterType="list">
+        INSERT INTO DETAILSCHEDULE(SCHEDULE_NO, DETAIL_DAY, PLACE_PROC, PLACE_NAME, PLACE_LATITUDE, PLACE_LONGITUDE, PLACE_MEMO)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.scheduleNo}, #{item.detailDay}, #{item.placeProc}, #{item.placeName}, #{item.placeLatitude}, #{item.placeLongitude}, #{item.placeMemo})
+        </foreach>
+    </insert>
 </mapper>

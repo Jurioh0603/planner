@@ -1,9 +1,11 @@
 package com.triplan.planner.plan.controller;
 
+import com.triplan.planner.file.FileStore;
 import com.triplan.planner.file.UploadFile;
 import com.triplan.planner.plan.domain.ScheduleImage;
-import com.triplan.planner.plan.dto.*;
-import com.triplan.planner.file.FileStore;
+import com.triplan.planner.plan.dto.PlanList;
+import com.triplan.planner.plan.dto.ScheduleList;
+import com.triplan.planner.plan.dto.imageUploadForm;
 import com.triplan.planner.plan.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,12 +77,32 @@ public class PlanController {
 
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         model.addAttribute("scheduleList", scheduleList);
+        model.addAttribute("scheduleNo", scheduleNo);
 
         return "plan/modifyForm";
     }
 
+//    @PostMapping("/save")
+//    public void saveSchedule(@RequestBody List<Map<String, String>> scheduleArray) {
+//        List<DetailSchedule> detailScheduleList = new ArrayList<>();
+//        for (Map<String, String> schedule : scheduleArray) {
+//            DetailSchedule detailSchedule = new DetailSchedule(0L,
+//                    Long.parseLong(schedule.get("scheduleNo")),
+//                    Integer.parseInt(schedule.get("detailDay")),
+//                    Integer.parseInt(schedule.get("placeProc")),
+//                    schedule.get("placeName"),
+//                    Double.parseDouble(schedule.get("placeLatitude")),
+//                    Double.parseDouble(schedule.get("placeLongitude")),
+//                    schedule.get("placeMemo"));
+//            detailScheduleList.add(detailSchedule);
+//        }
+//
+//        planService.saveSchedule(detailScheduleList);
+//    }
+
     @GetMapping("/addAttr")
-    public String addAttr(@ModelAttribute("day") int day) {
+    public String addAttr(@ModelAttribute("day") int day, @ModelAttribute("keyword") String keyword, Model model) {
+        model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         return "plan/addAttraction";
     }
 

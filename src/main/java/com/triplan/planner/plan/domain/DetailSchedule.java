@@ -1,8 +1,10 @@
 package com.triplan.planner.plan.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class DetailSchedule {
 
     private long detailscheduleNo;

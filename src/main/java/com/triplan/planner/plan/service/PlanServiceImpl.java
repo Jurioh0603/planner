@@ -1,5 +1,6 @@
 package com.triplan.planner.plan.service;
 
+import com.triplan.planner.plan.domain.DetailSchedule;
 import com.triplan.planner.plan.dto.PlanList;
 import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.repository.PlanRepository;
@@ -47,5 +48,10 @@ public class PlanServiceImpl implements PlanService {
 
     public void deletePlan(Long scheduleNo) {
         planRepository.deleteScheduleByNo(scheduleNo);
+    }
+
+    @Override
+    public void saveSchedule(List<DetailSchedule> detailScheduleList) {
+        planRepository.insertDetailSchedules(detailScheduleList);
     }
 }

@@ -32,40 +32,34 @@
             }
         });
 
-        $(function() {
-            // Initialize sortable
-            $(".sortable").each(function() {
-                var $sortable = $(this);
-                $sortable.sortable({
-                    stop: function(event, ui) {
-                        updateNumbers($sortable);
-                        updateMap();
-                    }
-                });
+        $(document).ready(function() {
+            // Initialize day
+            $(".day").each(function() {
+                var $day = $(this);
 
                 // Call updateNumbers initially
-                updateNumbers($sortable);
+                updateNumbers($day);
             });
 
             // Function to update the numbers
-            function updateNumbers($sortable) {
-                $sortable.find("li").each(function(index) {
+            function updateNumbers($day) {
+                $day.find("li").each(function(index) {
                     $(this).find(".num-span").text(index + 1);
                 });
             }
-
-            // Make updateNumbers function globally available
-            window.updateNumbers = updateNumbers;
         });
 
-
         function getMapByDay(index) {
-            sortableIdx = "sortable-" + index;
+            dayIdx = "day-" + index;
             updateMap();
         }
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // 'smooth' 옵션을 사용하여 부드럽게 스크롤됩니다.
+        function scrollToElement(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                var elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+            }
         }
     </script>
 </head>
@@ -130,9 +124,10 @@
         </script>
         <script>
             var map = null;
-            var sortableIdx = "sortable-0";
+            var dayIdx = "day-0";
             var markers = []; // 마커를 담을 배열입니다
             var linePath = null; // 마커 연결선
+            var points = []; // 지도 범위를 재설정하기 위한 배열
 
             script.onload = function() {
                 loadMap();
@@ -143,8 +138,12 @@
 
                     map = drawMap(); //지도 생성
 
-                    var positions = getPositions(sortableIdx); //장소 정보 가져오기
-                    console.log(positions);
+                    var positions = getPositions(dayIdx); //장소 정보 가져오기
+
+                    if(positions.length > 0) {
+                        setBounds();
+                    }
+
                     displayPlaces(positions); //마커 생성 및 그리기
                     displayLines(positions); //마커 연결선 생성 및 그리기
                 });
@@ -154,10 +153,22 @@
 
                 removeMarker(); //마커와 연결선 제거
 
-                var positions = getPositions(sortableIdx); //장소 정보 가져오기
+                var positions = getPositions(dayIdx); //장소 정보 가져오기
+
+                if(positions.length > 0) {
+                    setBounds();
+                }
 
                 displayPlaces(positions); //마커 생성 및 그리기
                 displayLines(positions); //마커 연결선 생성 및 그리기
+            }
+
+            function setBounds() {
+                var bounds = new kakao.maps.LatLngBounds();
+                for(var i = 0; i < points.length; i++) {
+                    bounds.extend(points[i]);
+                }
+                map.setBounds(bounds);
             }
 
             function drawMap() {
@@ -170,10 +181,11 @@
                 return new kakao.maps.Map(container, options);
             }
 
-            function getPositions(sortableIdx) {
+            function getPositions(dayIdx) {
                 var positions = [];
+                points = [];
 
-                $("li").each(function() {
+                $("#" + dayIdx + " li").each(function() {
                     var placeName = $(this).data("place-name");
                     var latitude = parseFloat($(this).data("latitude"));
                     var longitude = parseFloat($(this).data("longitude"));
@@ -183,6 +195,7 @@
                             title: placeName,
                             latlng: new kakao.maps.LatLng(latitude, longitude)
                         });
+                        points.push(new kakao.maps.LatLng(latitude, longitude));
                     }
                 });
 
@@ -258,15 +271,17 @@
         <hr/>
 
         <th:block th:each="day, dStat : ${tlogInfo.travelDay}">
-            <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToTop()|">day [[${dStat.index + 1}]]</h3>
-            <th:block th:each="schedule, scStat : ${tlogInfo.detailScheduleList}">
-                <th:block th:if="${schedule.detailDay == dStat.index}">
-                    <li class="ui-state-default" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
-                        <div class="centered-circle"><span class="num-span"></span></div>
-                        <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
-                    </li>
+            <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToElement('mapContainer')|">day [[${dStat.index + 1}]]</h3>
+            <ul th:id="'day-'+${dStat.index}" class="day">
+                <th:block th:each="schedule, scStat : ${tlogInfo.detailScheduleList}">
+                    <th:block th:if="${schedule.detailDay == dStat.index}">
+                        <li class="ui-state-default" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                            <div class="centered-circle"><span class="num-span"></span></div>
+                            <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
+                        </li>
+                    </th:block>
                 </th:block>
-            </th:block>
+            </ul>
             <hr/>
         </th:block>
 

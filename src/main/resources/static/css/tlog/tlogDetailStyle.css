@@ -119,3 +119,8 @@ ul {
     background-color: #99CCFF;
     opacity: 1;
 }
+
+h3:hover {
+    color: #3e77b6;
+    cursor: pointer;
+}

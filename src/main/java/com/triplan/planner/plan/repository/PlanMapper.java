@@ -24,4 +24,7 @@ public interface PlanMapper {
     public void save(ScheduleImage scheduleImage);
 
     public void deleteScheduleByNo(Long scheduleNo);
+
+    public void deleteDetailScheduleByScheduleNo(long scheduleNo);
+    public void insertDetailSchedules(List<DetailSchedule> detailScheduleList);
 }

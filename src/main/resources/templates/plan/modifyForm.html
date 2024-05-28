@@ -62,9 +62,9 @@
         }
 
         function openPopup(day) {
-            var url = "/plan/addAttr?day=" + day;
+            var url = "/plan/addAttr?keyword=강남+맛집&day=" + day;
             //var url = "/plan/addOnMap?day=" + day;
-            var width = 500;
+            var width = 800;
             var height = 600;
             var left = (screen.width - width) / 2;
             var top = (screen.height - height) / 2;
@@ -76,7 +76,7 @@
             var $sortable = $('#sortable-' + dayIndex);
 
             var newLi = `
-                <li class="ui-state-default" data-place-name="${placeName}" data-latitude="${placeLatitude}" data-longitude="${placeLongitude}">
+                <li class="ui-state-default" data-place-name="${placeName}" data-latitude="${placeLatitude}" data-longitude="${placeLongitude}" data-place-memo="${memo}">
                     <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
                     <div class="centered-circle"><span class="num-span"></span></div>
                     <div class="planDetail"><h4>${placeName}</h4>${memo}</div>
@@ -88,6 +88,50 @@
 
             updateNumbers($sortable);
             getMapByDay(dayIndex);
+        }
+
+        // "저장" 버튼 클릭 시 배열 생성 및 로깅
+        function saveScheduleArray() {
+            const scheduleArray = [];
+
+            // 각 ul 태그를 순회하며 li 데이터를 추출하여 배열에 추가
+            document.querySelectorAll('ul.sortable').forEach(ul => {
+                const scheduleNo = ul.getAttribute('data-schedule-no');
+                const detailDay = ul.getAttribute('data-detail-day');
+
+                ul.querySelectorAll('li.ui-state-default').forEach(li => {
+                    const placeProc = li.querySelector('.num-span').textContent;
+                    const placeName = li.getAttribute('data-place-name');
+                    const placeLatitude = li.getAttribute('data-latitude');
+                    const placeLongitude = li.getAttribute('data-longitude');
+                    const placeMemo = li.getAttribute('data-place-memo');
+
+                    scheduleArray.push({
+                        scheduleNo: scheduleNo,
+                        detailDay: detailDay,
+                        placeProc: placeProc,
+                        placeName: placeName,
+                        placeLatitude: placeLatitude,
+                        placeLongitude: placeLongitude,
+                        placeMemo: placeMemo
+                    });
+                });
+            });
+
+            // AJAX 요청
+            fetch('/plan/save', { // 요청 URL, 요청 옵션 객체
+                method: 'POST', // HTTP POST
+                headers: { // 전송 데이터 형식
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(scheduleArray) // 배열을 JSON으로 변환하여 포함
+            })
+            .then(data => {
+                alert('저장 완료!');
+            })
+            .catch((error) => {
+                alert('저장 실패');
+            });
         }
     </script>
 </head>
@@ -120,6 +164,7 @@
     </div>
     <script th:inline="javascript">
         var appkey = [[${KAKAO_API_KEY}]];
+        var no = [[${no}]];
     </script>
     <script>
         var script = document.createElement('script');
@@ -132,6 +177,7 @@
         var sortableIdx = "sortable-0";
         var markers = []; // 마커를 담을 배열입니다
         var linePath = null; // 마커 연결선
+        var points = []; // 지도 범위를 재설정하기 위한 배열
 
         script.onload = function() {
             loadMap();
@@ -144,6 +190,10 @@
 
                 var positions = getPositions(sortableIdx); //장소 정보 가져오기
 
+                if(positions.length > 0) {
+                    setBounds();
+                }
+
                 displayPlaces(positions); //마커 생성 및 그리기
                 displayLines(positions); //마커 연결선 생성 및 그리기
             });
@@ -155,8 +205,20 @@
 
             var positions = getPositions(sortableIdx); //장소 정보 가져오기
 
+            if(positions.length > 0) {
+                setBounds();
+            }
+
             displayPlaces(positions); //마커 생성 및 그리기
             displayLines(positions); //마커 연결선 생성 및 그리기
+        }
+
+        function setBounds() {
+            var bounds = new kakao.maps.LatLngBounds();
+            for(var i = 0; i < points.length; i++) {
+                bounds.extend(points[i]);
+            }
+            map.setBounds(bounds);
         }
 
         function drawMap() {
@@ -171,6 +233,7 @@
 
         function getPositions(sortableIdx) {
             var positions = [];
+            points = [];
 
             $("#" + sortableIdx + " li").each(function() {
                 var placeName = $(this).data("place-name");
@@ -182,6 +245,7 @@
                         title: placeName,
                         latlng: new kakao.maps.LatLng(latitude, longitude)
                     });
+                    points.push(new kakao.maps.LatLng(latitude, longitude));
                 }
             });
 
@@ -258,13 +322,14 @@
 
     <th:block th:each="day, dStat : ${scheduleList.travelDay}">
         <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToTop()|">day [[${dStat.index + 1}]] - [[${#dates.format(day, 'MM-dd')}]]</h3>
-        <ul class="sortable" th:id="'sortable-'+${dStat.index}">
+        <ul class="sortable" th:id="'sortable-'+${dStat.index}" th:attr="data-schedule-no=${scheduleNo}, data-detail-day=${dStat.index}">
             <th:block th:each="schedule, scStat : ${scheduleList.detailScheduleList}">
                 <th:block th:if="${schedule.detailDay == dStat.index}">
-                    <li class="ui-state-default" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                    <li class="ui-state-default" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},
+                    data-longitude=${schedule.placeLongitude}, data-place-memo=${schedule.placeMemo}">
                         <div><img src="/images/hamburger.png" class="hamburgerMenu"/></div>
                         <div class="centered-circle"><span class="num-span"></span></div>
-                        <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
+                        <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4><p class="m-0">[[${schedule.placeMemo}]]</p></div>
                         <input type="button" class="deleteBtn" onclick="deleteItem(this)"/>
                     </li>
                 </th:block>
@@ -280,8 +345,8 @@
     </th:block>
 
     <div id="buttonContainer" class="mt-5">
-        <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>
-        <button class="btn btn-lg btn-primary" type="button">저장</button>
+        <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;" onclick="location.href='/plan/list'">목록</button>
+        <button class="btn btn-lg btn-primary" type="button" onclick="saveScheduleArray()">저장</button>
     </div>
 </div>
 </body>
