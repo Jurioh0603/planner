@@ -23,6 +23,7 @@ body{
     font-weight : 600;
     align-items: center;
     text-align : center;
+    margin-bottom : 10px;
 }
 .login-wrapper > h2{
     font-size: 24px;
@@ -48,6 +49,10 @@ body{
     background-color: #F8EEEE;
     margin-top: 10px;
 }
+#login-form > input[type="button"]{
+    font-size: 16px;
+    background-color: #F5EEF8;
+}
 #login-form > input[type="checkbox"]{
     display: none;
 }
@@ -65,4 +70,22 @@ body{
     background-image: url("checkbox-active.png");
     background-repeat: no-repeat;
     background-size: contain;
+}
+.d-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px; /* 버튼 사이의 간격 */
+}
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px; /* 버튼의 높이 */
+    border-radius: 12px; /* 이미지 바깥을 둥글게 */
+    overflow: hidden; /* 둥근 모서리가 이미지에 적용되도록 */
+}
+
+.btn img {
+    max-height: 100%; /* 이미지가 버튼 높이에 맞게 조정됨 */
+    max-width: 100%; /* 이미지가 버튼 너비에 맞게 조정됨 */
 }

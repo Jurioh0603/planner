@@ -25,7 +25,7 @@ import java.net.http.HttpResponse;
 
 @Slf4j
 @Controller
-@RequestMapping("/templates/user")
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
@@ -52,7 +52,7 @@ public class UserController {
     	log.info("Controller @GetMapping( /user/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
     	model.addAttribute("kakaoCallbackUri", kakaoCallbackUri);
     	model.addAttribute("kakaoJavascriptKey", kakaoJavascriptKey);
-    	return "templates/user/login";
+    	return "user/login";
 	}
 	
     //일반회원 로그인 처리
@@ -174,8 +174,8 @@ public class UserController {
 	//회원가입 페이지 이동
 	@GetMapping("/join")
 	public String join() {
-    	log.info("Controller @GetMapping(/user/join) 회원가입 화면이동");
-		return "templates/user/join";
+		log.info("Controller @GetMapping(/user/join) 회원가입 화면이동");
+		return "user/join";
 	}
 
 	//회원 등록처리
@@ -208,7 +208,7 @@ public class UserController {
 			//마이바티스에서 insert를 성공하면 숫자 1을 반환하고 실패시 0을 반환한다.
 			//1이라면 메인페이지로 이동. 0이라면 회원가입 페이지로 다시 이동
 			if(result > 0) {
-				ReturnUtil.setReturnMessage(response, "회원가입을 하였습니다.","로그인 후 이용해주세요.", "success", "/");
+				ReturnUtil.setReturnMessage(response, "회원가입을 하였습니다.","로그인 후 이용해주세요.", "success", "/user/login");
 			}else {
 				ReturnUtil.setReturnMessage(response, "회원가입을 실패였습니다.", "", "error", "/tiles/member/join");
 			}

@@ -91,8 +91,10 @@ public class NaverController {
 		
         String snsId = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("id");
         String userName = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("name");
-        String email = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("email");
+		String email = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("email");
+        String nickName = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("nickname");
         String mobile = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("mobile");
+		String gender = (String) ((HashMap<?, ?>) resultUserMap.get("response")).get("gender");
         String userpw = snsId;
 		
 	    // 분기
@@ -108,7 +110,9 @@ public class NaverController {
         	userDto.setMemberId(email);
 			userDto.setPassword(userpw);
 			userDto.setName(userName);
+			userDto.setNickname(nickName);
 			userDto.setSnsId(snsId);
+			userDto.setGender(gender);
 			userDto.setEmail(email);
 			userDto.setTel(mobile);
 			userDto.setSnsType(SNS_TYPE);

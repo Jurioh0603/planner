@@ -129,19 +129,36 @@ public class KakaoService {
     	        JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
     	        JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-    	        String id = element.getAsJsonObject().get("id").getAsString();
-    	        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-    	        String email = kakao_account.getAsJsonObject().get("email").getAsString();
-    	        String profileImageUrl = properties.getAsJsonObject().get("profile_image").getAsString();
-    	        
+				String id = element.getAsJsonObject().get("id").getAsString();
+				String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+				String email = kakao_account.getAsJsonObject().get("email").getAsString();
+				String name = kakao_account.getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString();
+				String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+				if ("female".equalsIgnoreCase(gender)) {
+					gender = "W";
+				} else if ("male".equalsIgnoreCase(gender)) {
+					gender = "M";
+				} else {
+					gender = "U";
+				}
+				String tel = kakao_account.getAsJsonObject().get("phone_number").getAsString();
+				String profileImageUrl = properties.getAsJsonObject().get("profile_image").getAsString();
+
     	        log.info(" ■■■kakao■■■ id : {}", id);
+				log.info(" ■■■kakao■■■ name : {}", name);
     	        log.info(" ■■■kakao■■■ email : {}",	email);
-    	        log.info(" ■■■kakao■■■ nickname : {}",	nickname);
+				log.info(" ■■■kakao■■■ tel : {}", tel);
+				log.info(" ■■■kakao■■■ gender : {}", gender);
+    	        log.info(" ■■■kakao■■■ nickname : {}", nickname);
     	        log.info(" ■■■kakao■■■ profileImageUrl : {}", profileImageUrl);
-    	        
+
                 resultMap.put("id", id);
                 resultMap.put("email", email);
                 resultMap.put("nickname", nickname);
+				resultMap.put("name",name);
+				resultMap.put("tel",tel);
+				resultMap.put("gender",gender);
+				resultMap.put("profileImageUrl",profileImageUrl);
 
                 return resultMap;
 

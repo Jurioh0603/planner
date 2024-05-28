@@ -8,26 +8,34 @@
 <body>
 <div class="login-wrapper">
     <h2>Join</h2>
-    <form method="post" action="#" id="login-form">
+    <form method="post" action="/user/insertMember" id="login-form">
         <!--id / pw-->
-        <input type="text" name="memberId" placeholder="Id" class="input_box">
-        <input type="password" name="password" placeholder="Password" class="input_box">
+        <div class="form-row">
+            <input type="text" name="memberId" placeholder="Id" class="input_box">
+            <input type="password" name="password" placeholder="Password" class="input_box">
+        </div>
 
         <!-- name / nickname -->
-        <input type="text" name="name" placeholder="Name" class="input_box">
-        <input type="text" name="nickname" placeholder="Nickname" class="input_box">
+        <div class="form-row">
+            <input type="text" name="name" placeholder="Name" class="input_box">
+            <input type="text" name="nickname" placeholder="Nickname" class="input_box">
+        </div>
 
         <!--email-->
-        <input type="email" name="email" placeholder="Email" class="input_box">
+        <div class="form-row">
+            <input type="email" name="email" placeholder="Email" class="input_box full-width">
+        </div>
 
         <!--tel / gender-->
-        <input type="tel" name="tel" placeholder="Tel" class="input_box">
-        <select name="gender" class="genderselect">
-            <option value="W"> Woman
-            <option value="M"> Man
-        </select>
+        <div class="form-row">
+            <input type="tel" name="tel" placeholder="Tel" class="input_box">
+            <select name="gender" class="input_box genderselect">
+                <option value="W"> Woman</option>
+                <option value="M"> Man</option>
+            </select>
+        </div>
 
-        <input type="submit" value="회원가입">
+        <input type="submit" value="회원가입" class="submit-btn">
     </form>
 </div>
 </body>

@@ -62,7 +62,7 @@
 			, SNS_ID
 			, GRADE
 		) VALUES(
-			${memberId}
+			#{memberId}
 			, #{nickname}
 			, #{password}
 			, #{name}
@@ -81,7 +81,7 @@
 	<select id="insertCheck" 	parameterType="com.triplan.planner.user.dto.UserDto" resultType="Integer">
 		/* 아이디 중복체크 SQL */
 		SELECT 
-			COUNT(ID) AS CNT
+			COUNT(MEMBER_ID) AS CNT
 		FROM MEMBER
 		WHERE 1=1
 		<if test="memberId != null and memberId != '' ">

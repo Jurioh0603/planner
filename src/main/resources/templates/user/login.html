@@ -8,25 +8,26 @@
 <body>
 <div class="login-wrapper">
     <h2>Login</h2>
-    <form method="post" action="#" id="login-form">
-        <input type="text" name="userName" placeholder="Id" class="input_box">
-        <input type="password" name="userPassword" placeholder="Password" class="input_box">
+    <form method="post" action="/user/login" id="login-form" >
+        <input type="text" name="memberId" placeholder="Id" class="input_box">
+        <input type="password" name="password" placeholder="Password" class="input_box">
         <label for="remember-check">
             <input type="checkbox" id="remember-check">아이디 저장하기
         </label>
         <input type="submit" value="Login">
-        <input type="button" style="background-color:#F5EEF8 font-size: 16px;" onclick="window.location.href='/user/join'" value="JOIN">
+        <input type="button" onclick="window.location.href='/user/join'" value="Join">
         <p class="snssimple"> SNS 계정으로 간편하게 시작하기</p>
         <div class="d-grid">
-            <div class="btn" style="background-color: rgb(255, 255, 0);">
-                <img  alt="카카오로그인" src="/img/kakao_login.jpg" onclick="javascript:loginWithKakao();">
+            <div class="btn">
+                <img height="48px;"  alt="카카오로그인" src="/img/kakao_login.jpg" onclick="javascript:loginWithKakao();">
             </div>
-            <div class="btn"  style="background-color: #2DB400">
-                <img  height="48px;" alt="네이버로그인" src="/img/naver_login.png" onclick="javascript:loginWithNaver();">
+            <div class="btn" >
+                <img height="48px;" alt="네이버로그인" src="/img/naver_login.png" onclick="javascript:loginWithNaver();">
             </div>
         </div>
     </form>
 </div>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
 <script th:inline="javascript">
     //application.properties 파일에 정의한 변수

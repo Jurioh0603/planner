@@ -40,8 +40,11 @@ public class KakaoController {
         log.info(" ■■■kakao■■■ result : {}",result);
 
         String snsId = (String) result.get("id");
-        String userName = (String) result.get("nickname");
+        String userName = (String) result.get("name");
         String email = (String) result.get("email");
+        String tel = (String) result.get("tel");
+        String gender = (String) result.get("gender");
+        String nickname = (String) result.get("nickname");
         String userpw = snsId;
 
         log.info(" ■■■kakao■■■ snsId : {} SNS_TYPE : {}" ,snsId, SNS_TYPE);
@@ -58,6 +61,9 @@ public class KakaoController {
             userDto.setMemberId(email);
             userDto.setPassword(userpw);
             userDto.setName(userName);
+            userDto.setNickname(nickname);
+            userDto.setGender(gender);
+            userDto.setTel(tel);
             userDto.setSnsId(snsId);
             userDto.setEmail(email);
             userDto.setSnsType(SNS_TYPE);
