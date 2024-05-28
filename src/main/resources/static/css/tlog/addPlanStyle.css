@@ -44,11 +44,14 @@ hr {
     align-items: center;
 }
 
+.planContainer:hover {
+    background-color: #DCDCDC
+}
+
 .selectBtn {
     margin-left: auto;
 }
 
-a {
-    text-decoration: none;
-    color: black;
+p:hover {
+    cursor: pointer;
 }

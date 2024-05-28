@@ -27,23 +27,23 @@
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                    <th:block th:each="num:${#numbers.sequence(1,5)}">
-                        <a href="#">
+                    <th:block th:each="tlog: ${tlogList}">
+                        <a th:href="@{/tlog/detail(no=${tlog.tlogNo})}">
                             <div class="col">
                                 <div class="card shadow-sm">
                                     <div class="imgContainer">
-                                        <img src="/images/busan-sample.jpg" alt="해운대" class="tlogImg"/>
+                                        <img th:src="|/tlog/images/${tlog.storeName}|" alt="여행기 섬네일" class="tlogImg"/>
                                     </div>
                                     <div class="writerContainer mt-2 mb-2 ms-2">
                                         <div><img src="/images/profile.jpg" alt="프로필 사진" class="profile-img"></div>
-                                        <div class="ms-3 mb-1"><b>닉네임</b> 님의 일정</div>
+                                        <div class="ms-3 mb-1"><b>[[${tlog.memberId}]]</b> 님의 일정</div>
                                     </div>
                                     <div class="card-body">
                                         <div class="title">
-                                            <h5>제목</h5>
+                                            <h5>[[${tlog.tlogTitle}]]</h5>
                                         </div>
                                         <div class="content mt-1">
-                                            내용
+                                            [[${tlog.tlogContent}]]
                                         </div>
                                     </div>
                                 </div>

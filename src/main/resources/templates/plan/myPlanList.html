@@ -110,7 +110,6 @@
                         </th:block>
                     </div>
                 </div>
-<!--                <input type="button" class="deleteBtn" th:attr="onclick=|location.href='@{/plan/delete(no=${schedule.scheduleNo})}'|"/>-->
                 <input type="button" class="deleteBtn" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" th:attr="data-schedule-no=${schedule.scheduleNo}"/>
             </div>
             <hr/>

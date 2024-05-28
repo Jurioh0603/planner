@@ -1,8 +1,9 @@
 package com.triplan.planner.plan.controller;
 
+import com.triplan.planner.file.UploadFile;
 import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.*;
-import com.triplan.planner.plan.file.FileStore;
+import com.triplan.planner.file.FileStore;
 import com.triplan.planner.plan.service.PlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +38,7 @@ public class PlanController {
     }
 
     @PostMapping("/upload")
-    public String saveItem(@ModelAttribute("planImg") imageUploadForm imageUploadForm) throws IOException {
+    public String saveItem(@ModelAttribute imageUploadForm imageUploadForm) throws IOException {
         UploadFile uploadFile = fileStore.storeFile(imageUploadForm.getUploadFile());
 
         ScheduleImage scheduleImage = new ScheduleImage();
