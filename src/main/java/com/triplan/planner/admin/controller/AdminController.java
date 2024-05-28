@@ -10,11 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/adminPage")
-    public String adPage() { return "admin/adminPage"; }
+    @GetMapping
+    public String adminIndex(){
+        return "redirect:/admin/memberPage";
+    }
 
-    @GetMapping("/boardList")
-    public String boardList() { return "admin/boardPage"; }
+/*    @GetMapping("/memberPage")
+    public String memberPage() { return "admin/memberPage"; }
+
+    @GetMapping("/boardPage")
+    public String boardPage() { return "admin/boardPage"; }*/
 
 
 
