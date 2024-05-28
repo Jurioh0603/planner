@@ -22,7 +22,7 @@ public class ApiExplorer {
             String MobileOS = "ETC";
             String MobileApp = "AppTest";
             String _type = "json";
-            String serviceKey = "rqzdPo39ovzT9%2FVPMUzriYrxFac1R23NNqVSXaL4Ud9kGLfDa0Pwb8vUfo4440xNw%2BnorJKMXKccFeUbbxyi%2Fw%3D%3D";
+            String serviceKey = "";
             String overviewYN = "Y";
             String addrinfoYN = "Y";
             String firstImageYN = "Y";
