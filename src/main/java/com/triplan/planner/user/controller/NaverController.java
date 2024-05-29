@@ -129,7 +129,7 @@ public class NaverController {
 		session.setAttribute("naverToken", accessToken);
 		log.info(" ■■■naver■■■ naverToken : "+accessToken);
 		
-		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/");
+		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/index");
         
     }
 	

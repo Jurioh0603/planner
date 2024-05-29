@@ -65,9 +65,9 @@ public class UserController {
         if(loginInfo != null) {
             // 회원정보 세션담기
     		session.setAttribute("loginMemberInfo", loginInfo);
-    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", "/");
+    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", "/index");
         }else {
-    		ReturnUtil.setReturnMessage(response, "로그인을 실패하였습니다.", "", "error", "/");        	
+    		ReturnUtil.setReturnMessage(response, "로그인을 실패하였습니다.", "", "error", "/user/login");
         }
 
     			;
@@ -167,7 +167,7 @@ public class UserController {
      	
     	//로그인으로 생성한 세션을 다 지운다.
 		session.invalidate();
-		ReturnUtil.setReturnMessage(response, "로그아웃을 하였습니다.", subMessage, "success", "/");
+		ReturnUtil.setReturnMessage(response, "로그아웃을 하였습니다.", subMessage, "success", "/index");
 
 	}
 
@@ -199,7 +199,7 @@ public class UserController {
 		
 		if(chkCnt != 0) {
 		
-			ReturnUtil.setReturnMessage(response, "이미 가입된 아이디입니다.", "다른 아이디를 사용해주세요.", "warning", "/member/join");
+			ReturnUtil.setReturnMessage(response, "이미 가입된 아이디입니다.", "다른 아이디를 사용해주세요.", "warning", "/user/join");
 
 		}else {
 
@@ -210,7 +210,7 @@ public class UserController {
 			if(result > 0) {
 				ReturnUtil.setReturnMessage(response, "회원가입을 하였습니다.","로그인 후 이용해주세요.", "success", "/user/login");
 			}else {
-				ReturnUtil.setReturnMessage(response, "회원가입을 실패였습니다.", "", "error", "/tiles/member/join");
+				ReturnUtil.setReturnMessage(response, "회원가입을 실패였습니다.", "", "error", "/user/join");
 			}
 			
 		}

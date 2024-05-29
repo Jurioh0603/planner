@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+	<html lang="ko" xmlns:th="http://www.thymeleaf.org">  
+	<head>
+        <meta charset="UTF-8"/>
+	</head>      
+    <!--headerFragment 선언-->
+    <th:block th:fragment="headerFragment">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand" href="#!">TEST 프로젝트</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">홈</a></li>
+                        
+                        <!-- 로그인세션 유무로 타임리프에서 메뉴 제어하기 -->
+                        
+                        <!-- 비 로그인한 사용자가 보이는 메뉴 -->
+                        <li class="nav-item" th:if="${session.loginMemberInfo == null}" ><a class="nav-link" href="/user/login">로그인</a></li>
+                        <li class="nav-item" th:if="${session.loginMemberInfo == null}" ><a class="nav-link" href="/user/join">회원가입</a></li>
+                       
+                        <!-- 모든 사용자가 보이는 메뉴 -->                        
+                        <li class="nav-item"><a class="nav-link" href="#!">메뉴1</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">메뉴2</a></li>
+                        
+                        <!-- 로그인한 사용자가 보이는 메뉴 -->
+	           			<li class="nav-item" th:if="${session.loginMemberInfo != null}" ><a class="nav-link"  href="#" th:onclick="javascript:fnLogout();" >로그아웃</a></li>
+                        <li class="nav-item" th:if="${session.loginMemberInfo != null}" ><a class="nav-link" href="#!">마이페이지</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">게시판</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
+                                <li><a class="dropdown-item" href="blog-home.html">공지사항</a></li>
+                                <li><a class="dropdown-item" href="blog-post.html">Q&A</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+	    <script th:inline="javascript">
+			function fnLogout(){
+		    	Swal.fire({
+			   		title: '로그아웃을 하시겠습니까?',
+			   		//text: '다시 되돌릴 수 없습니다. 신중하세요.',
+			   		icon: 'warning',
+			   		showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+			   		confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+			  		cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+			  		confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+				   	cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+				}).then(function(result){
+					if(result.isConfirmed == true){		
+						location.href="/user/logout";
+					}
+				});					
+			}
+		</script>
+	</th:block>
+</html>

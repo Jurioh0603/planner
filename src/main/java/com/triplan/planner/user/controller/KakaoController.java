@@ -81,7 +81,7 @@ public class KakaoController {
 		// 로그아웃 처리 시, 사용할 토큰 값
 		session.setAttribute("kakaoToken", kakaoToken);
 		log.info(" ■■■kakao■■■ kakaoToken : "+kakaoToken);
-		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "카카오회원 입니다.", "success", "/");
+		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "카카오회원 입니다.", "success", "/inedex");
 		
     }
 
