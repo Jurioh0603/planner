@@ -235,12 +235,17 @@
             .then(data => {
                 console.log('서버 응답:', data);
                 if (data.success) {
-                    // 서버 응답을 받은 후 UI를 업데이트
-                    const gradeButton = memberRow.querySelector('.grade-btn');
-                    gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
-                    gradeButton.className = 'btn dropdown-toggle grade-btn';
-                    gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black'); // 기존 클래스 제거
-                    gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black'); // 새로운 클래스 추가
+                    if (newGrade === 2222) {
+                        // 탈퇴 등급으로 변경된 경우 행을 테이블에서 제거
+                        memberRow.remove();
+                    } else {
+                        // 서버 응답을 받은 후 UI를 업데이트
+                        const gradeButton = memberRow.querySelector('.grade-btn');
+                        gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
+                        gradeButton.className = 'btn dropdown-toggle grade-btn';
+                        gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black'); // 기존 클래스 제거
+                        gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black'); // 새로운 클래스 추가
+                    }
                 } else {
                     alert('등급 변경 실패: ' + data.message);
                 }
@@ -252,6 +257,8 @@
         });
     });
 });
+
+
 
 </script>
 </body>

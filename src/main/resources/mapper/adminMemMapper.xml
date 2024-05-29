@@ -29,4 +29,9 @@
         WHERE MEMBER_ID = #{memId}
     </update>
 
+    <delete id="deleteMember">
+        DELETE FROM MEMBER
+        WHERE MEMBER_ID = #{memId}
+    </delete>
+
 </mapper>

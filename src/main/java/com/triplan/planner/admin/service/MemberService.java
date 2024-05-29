@@ -1,3 +1,4 @@
+// src/main/java/com/triplan/planner/admin/service/MemberService.java
 package com.triplan.planner.admin.service;
 
 import com.triplan.planner.admin.domain.Member;
@@ -21,9 +22,8 @@ public class MemberService {
     private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     public List<MemberDTO> getAllMember() {
-        List<Member> member = memberRepository.selectAll();
-
-        return member.stream()
+        List<Member> members = memberRepository.selectAll();
+        return members.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -42,6 +42,10 @@ public class MemberService {
 
     public void updateMemberGrade(String memId, int grade) {
         System.out.println("Updating member ID: " + memId + " to grade: " + grade);
-        memberRepository.updateMemberGrade(memId, grade);
+        if (grade == 2222) {
+            memberRepository.deleteMember(memId);
+        } else {
+            memberRepository.updateMemberGrade(memId, grade);
+        }
     }
 }

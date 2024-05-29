@@ -1,3 +1,4 @@
+// src/main/java/com/triplan/planner/admin/controller/MemberController.java
 package com.triplan.planner.admin.controller;
 
 import com.triplan.planner.admin.dto.MemberDTO;
@@ -29,10 +30,9 @@ public class MemberController {
 
     @GetMapping("/memberPage")
     public String memberPage(Model model){
-        List<MemberDTO> member = memberService.getAllMember();
-        model.addAttribute("member", member);
-
-        logger.info("Model Member: {}", member);
+        List<MemberDTO> members = memberService.getAllMember();
+        model.addAttribute("member", members);
+        logger.info("Model Member: {}", members);
         return "admin/memberPage";
     }
 
@@ -76,6 +76,4 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-
 }
-
