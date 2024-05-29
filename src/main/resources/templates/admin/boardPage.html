@@ -26,13 +26,13 @@
     <ul class="side-menu top">
         <li>
             <a href="#">
-                <i class='bx bxs-group' ></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">회원관리</span>
             </a>
         </li>
         <li class="active">
             <a href="#">
-                <i class='bx bxs-dashboard' ></i>
+                <i class='bx bxs-dashboard'></i>
                 <span class="text">게시판관리</span>
             </a>
         </li>
@@ -41,13 +41,13 @@
     <ul class="side-menu">
         <li>
             <a href="#">
-                <i class='bx bxs-cog' ></i>
+                <i class='bx bxs-cog'></i>
                 <span class="text">Settings</span>
             </a>
         </li>
         <li>
             <a href="#" class="logout">
-                <i class='bx bxs-log-out-circle' ></i>
+                <i class='bx bxs-log-out-circle'></i>
                 <span class="text">Logout</span>
             </a>
         </li>
@@ -59,16 +59,16 @@
 <section id="content">
     <!-- NAVBAR -->
     <nav>
-        <i class='bx bx-menu' ></i>
+        <i class='bx bx-menu'></i>
         <a href="#" class="nav-link">Categories</a>
         <form action="#">
             <div class="form-input">
                 <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
             </div>
         </form>
         <a href="#" class="notification">
-            <i class='bx bxs-bell' ></i>
+            <i class='bx bxs-bell'></i>
             <span class="num">8</span>
         </a>
         <a href="#" class="profile">
@@ -84,11 +84,18 @@
                 <h1>게시판관리</h1>
                 <ul class="breadcrumb">
                     <li>
-                        <a href="#">게시판이름</a>
+                        <select id="main-category" onchange="updateSubCategories()">
+                            <option value="none" selected disabled>게시판이름</option>
+                            <option value="community">지역 커뮤니티</option>
+                            <option value="travel_log">여행기</option>
+                            <option value="travel_info">여행정보</option>
+                        </select>
                     </li>
-                    <li><i class='bx bx-chevron-right' ></i></li>
+                    <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <a class="active" href="#">서울게시판</a>
+                        <select id="sub-category" disabled>
+                            <option value="none" selected disabled>세부 카테고리</option>
+                        </select>
                     </li>
                 </ul>
             </div>
@@ -98,8 +105,8 @@
             <div class="order">
                 <div class="head">
                     <h3>글관리</h3>
-                    <i class='bx bx-search' ></i>
-                    <i class='bx bx-filter' ></i>
+                    <i class='bx bx-search'></i>
+                    <i class='bx bx-filter'></i>
                 </div>
                 <table>
                     <thead>
@@ -111,7 +118,7 @@
                         <th>변경 <input type="checkbox" id="allcheck" name="allcheck" onclick="allCheck()"></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="board-content">
                     <tr>
                         <td>1</td>
                         <td>공지사항</td>
@@ -220,6 +227,26 @@
         checkboxes.forEach(checkbox => {
             checkbox.checked = allCheckbox.checked;
         });
+    }
+
+    // 게시판 카테고리 업데이트
+    function updateSubCategories() {
+        const mainCategory = document.getElementById("main-category").value;
+        const subCategory = document.getElementById("sub-category");
+
+        subCategory.innerHTML = '';
+        subCategory.disabled = true;
+
+        if (mainCategory === 'community') {
+            const regions = ['서울', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
+            regions.forEach(region => {
+                const option = document.createElement('option');
+                option.value = region;
+                option.textContent = region;
+                subCategory.appendChild(option);
+            });
+            subCategory.disabled = false;
+        }
     }
 </script>
 </body>
