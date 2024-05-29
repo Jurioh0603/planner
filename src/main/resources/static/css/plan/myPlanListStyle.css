@@ -43,8 +43,8 @@
 }
 
 .planListImg {
-    width: 100%;
-    height: 100%;
+    width: 200px;
+    height: 150px;
     object-fit: cover;
 }
 
@@ -86,4 +86,22 @@ span {
 
 .modal-body {
     align-items: center;
+}
+
+#planTitle, #planDay {
+    display: flex;
+    align-items: center;
+}
+
+.editTitleBtn:hover, .editDayBtn:hover, .titleContainer:hover, .deleteBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}
+
+.placeTag {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -1,10 +1,10 @@
 package com.triplan.planner.plan.service;
 
 import com.triplan.planner.plan.domain.DetailSchedule;
-import com.triplan.planner.plan.dto.PlanList;
 import com.triplan.planner.plan.domain.ScheduleImage;
-import com.triplan.planner.plan.repository.PlanRepository;
+import com.triplan.planner.plan.dto.PlanList;
 import com.triplan.planner.plan.dto.ScheduleList;
+import com.triplan.planner.plan.repository.PlanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -53,5 +53,10 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public void saveSchedule(List<DetailSchedule> detailScheduleList) {
         planRepository.insertDetailSchedules(detailScheduleList);
+    }
+
+    @Override
+    public void modifyTitle(Long scheduleNo, String title) {
+        planRepository.updateScheduleTitleByNo(scheduleNo, title);
     }
 }

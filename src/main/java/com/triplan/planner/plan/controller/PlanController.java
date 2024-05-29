@@ -2,6 +2,7 @@ package com.triplan.planner.plan.controller;
 
 import com.triplan.planner.file.FileStore;
 import com.triplan.planner.file.UploadFile;
+import com.triplan.planner.plan.domain.DetailSchedule;
 import com.triplan.planner.plan.domain.ScheduleImage;
 import com.triplan.planner.plan.dto.PlanList;
 import com.triplan.planner.plan.dto.ScheduleList;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -65,40 +69,43 @@ public class PlanController {
         return "redirect:/plan/list";
     }
 
-    @GetMapping("/write")
-    public String write(Model model) {
-        model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
-        return "plan/planForm";
+    @PostMapping("/modifyTitle")
+    public String modifyTitle(@RequestParam("no") Long scheduleNo, @RequestParam("editTitle") String title) {
+        planService.modifyTitle(scheduleNo, title);
+        return "redirect:/plan/list";
     }
 
-    @GetMapping("/modify")
-    public String modify(@RequestParam("no") Long scheduleNo, Model model) {
+    @GetMapping("/write")
+    public String write(@RequestParam("no") Long scheduleNo, Model model) {
         ScheduleList scheduleList = planService.getScheduleList(scheduleNo);
 
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         model.addAttribute("scheduleList", scheduleList);
         model.addAttribute("scheduleNo", scheduleNo);
 
-        return "plan/modifyForm";
+        return "plan/planForm";
     }
 
-//    @PostMapping("/save")
-//    public void saveSchedule(@RequestBody List<Map<String, String>> scheduleArray) {
-//        List<DetailSchedule> detailScheduleList = new ArrayList<>();
-//        for (Map<String, String> schedule : scheduleArray) {
-//            DetailSchedule detailSchedule = new DetailSchedule(0L,
-//                    Long.parseLong(schedule.get("scheduleNo")),
-//                    Integer.parseInt(schedule.get("detailDay")),
-//                    Integer.parseInt(schedule.get("placeProc")),
-//                    schedule.get("placeName"),
-//                    Double.parseDouble(schedule.get("placeLatitude")),
-//                    Double.parseDouble(schedule.get("placeLongitude")),
-//                    schedule.get("placeMemo"));
-//            detailScheduleList.add(detailSchedule);
-//        }
-//
-//        planService.saveSchedule(detailScheduleList);
-//    }
+    @PostMapping("/save")
+    @ResponseBody
+    public List<Map<String, String>> saveSchedule(@RequestBody List<Map<String, String>> scheduleArray) {
+        List<DetailSchedule> detailScheduleList = new ArrayList<>();
+        for (Map<String, String> schedule : scheduleArray) {
+            DetailSchedule detailSchedule = new DetailSchedule(0L,
+                    Long.parseLong(schedule.get("scheduleNo")),
+                    Integer.parseInt(schedule.get("detailDay")),
+                    Integer.parseInt(schedule.get("placeProc")),
+                    schedule.get("placeName"),
+                    Double.parseDouble(schedule.get("placeLatitude")),
+                    Double.parseDouble(schedule.get("placeLongitude")),
+                    schedule.get("placeMemo"));
+            detailScheduleList.add(detailSchedule);
+        }
+
+        planService.saveSchedule(detailScheduleList);
+
+        return scheduleArray;
+    }
 
     @GetMapping("/addAttr")
     public String addAttr(@ModelAttribute("day") int day, @ModelAttribute("keyword") String keyword, Model model) {

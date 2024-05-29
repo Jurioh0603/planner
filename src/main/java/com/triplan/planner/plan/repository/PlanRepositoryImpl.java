@@ -70,4 +70,9 @@ public class PlanRepositoryImpl implements PlanRepository {
         planMapper.deleteDetailScheduleByScheduleNo(detailScheduleList.get(0).getScheduleNo());
         planMapper.insertDetailSchedules(detailScheduleList);
     }
+
+    @Override
+    public void updateScheduleTitleByNo(Long scheduleNo, String title) {
+        planMapper.updateScheduleTitleByNo(scheduleNo, title);
+    }
 }

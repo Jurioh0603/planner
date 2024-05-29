@@ -79,4 +79,10 @@
             (#{item.scheduleNo}, #{item.detailDay}, #{item.placeProc}, #{item.placeName}, #{item.placeLatitude}, #{item.placeLongitude}, #{item.placeMemo})
         </foreach>
     </insert>
+
+    <update id="updateScheduleTitleByNo">
+        UPDATE SCHEDULE
+        SET SCHEDULE_TITLE=#{title}
+        WHERE SCHEDULE_NO=#{scheduleNo};
+    </update>
 </mapper>

@@ -15,4 +15,6 @@ public interface PlanRepository {
     public void deleteScheduleByNo(Long scheduleNo);
 
     public void insertDetailSchedules(List<DetailSchedule> detailScheduleList);
+
+    public void updateScheduleTitleByNo(Long scheduleNo, String title);
 }

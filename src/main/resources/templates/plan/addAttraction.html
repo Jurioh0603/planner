@@ -75,7 +75,7 @@
                 var ps = new kakao.maps.services.Places();
 
                 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-                var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+                var infowindow = new kakao.maps.InfoWindow({disableAutoPan:true, zIndex:1});
 
                 // 키워드로 장소를 검색합니다
                 searchPlaces();
@@ -163,6 +163,14 @@
                             itemEl.onmouseout =  function () {
                                 infowindow.close();
                             };
+
+                            // itemEl 클릭 시 마커 클릭 이벤트와 동일한 작업을 수행하도록 설정
+                            itemEl.onclick = function() {
+                                var latlng = marker.getPosition();
+                                map.setCenter(latlng);
+                                map.setLevel(3);
+                            };
+
                         })(marker, places[i].place_name);
 
                         fragment.appendChild(itemEl);
@@ -224,14 +232,22 @@
                         var latlng = marker.getPosition();
                         var lat = latlng.getLat();
                         var lng = latlng.getLng();
-                        console.log(latlng);
 
-                        var placeName = prompt("장소 이름:");
-                        var memo = prompt("장소 메모:");
+                        do {
+                            var placeName = prompt("장소 이름").trim();
+                            if(placeName == '') {
+                                alert('이름을 입력해주세요.');
+                            }
+                        } while (placeName == '');
 
-                        if (placeName) {
-                            sendSchedule(day, placeName, lat, lng, memo);
-                        }
+                        do {
+                            var memo = prompt("장소 메모").trim();
+                            if(memo == '') {
+                                alert('메모를 입력해주세요.');
+                            }
+                        } while (memo == '');
+
+                        sendSchedule(day, placeName, lat, lng, memo);
                     });
 
                     return marker;
@@ -266,7 +282,7 @@
 
                     for (i=1; i<=pagination.last; i++) {
                         var el = document.createElement('a');
-                        el.href = "#";
+                        //el.href = "#";
                         el.innerHTML = i;
 
                         if (i===pagination.current) {
@@ -301,16 +317,6 @@
                 }
             });
         }
-    </script>
-    <!-- 검색 폼 제출 기본 동작 막기 -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var form = document.getElementById('searchForm');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); // 폼 제출 기본 동작을 막습니다
-                searchPlaces(); // searchPlaces 함수 호출
-            });
-        });
     </script>
 
     <hr/>

@@ -7,18 +7,11 @@
     margin: 0 auto;
 }
 
-#planTitle, #planDay {
-    display: flex;
-    align-items: flex-end;
-}
-
-#planTitle div, #planDay div {
-    margin: 0 5px;
-}
-
-.editBtn {
-    border: 0px;
-    background-color: white;
+#CollapseBtnContainer {
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    z-index: 1000;
 }
 
 #mapContainer {
@@ -26,6 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #sortable {
@@ -53,6 +47,7 @@ ul {
 
 .planDetail {
     margin-left: 20px;
+    width: 650px;
 }
 
 .centered-circle {
@@ -78,6 +73,21 @@ input.deleteBtn {
     border: none;
 }
 
+input.modifyBtn {
+    background: url("/images/modify.png") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 35px;
+    top: 40px;
+    right: 1px;
+    border: none;
+}
+
+.deleteBtn:hover, .modifyBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}
+
 .ui-state-default:hover {
     cursor: pointer;
     background-color: #DCDCDC;
@@ -86,20 +96,23 @@ input.deleteBtn {
 #buttonContainer {
     display: flex;
     justify-content: flex-end;
+    margin-top: auto;
 }
 
-#placesList .item .marker_1 {background-position: 0 -10px;}
-#placesList .item .marker_2 {background-position: 0 -56px;}
-#placesList .item .marker_3 {background-position: 0 -102px}
-#placesList .item .marker_4 {background-position: 0 -148px;}
-#placesList .item .marker_5 {background-position: 0 -194px;}
-#placesList .item .marker_6 {background-position: 0 -240px;}
-#placesList .item .marker_7 {background-position: 0 -286px;}
-#placesList .item .marker_8 {background-position: 0 -332px;}
-#placesList .item .marker_9 {background-position: 0 -378px;}
-#placesList .item .marker_10 {background-position: 0 -423px;}
-#placesList .item .marker_11 {background-position: 0 -470px;}
-#placesList .item .marker_12 {background-position: 0 -516px;}
-#placesList .item .marker_13 {background-position: 0 -562px;}
-#placesList .item .marker_14 {background-position: 0 -608px;}
-#placesList .item .marker_15 {background-position: 0 -654px;}
+h3:hover {
+    color: #3e77b6;
+    cursor: pointer;
+}
+
+#headerBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.memo, .placeName {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

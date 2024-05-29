@@ -97,12 +97,21 @@
             var lat = latlng.getLat();
             var lng = latlng.getLng();
 
-            var placeName = prompt("장소 이름:");
-            var memo = prompt("장소 메모:");
+            do {
+                var placeName = prompt("장소 이름").trim();
+                if(placeName == '') {
+                    alert('이름을 입력해주세요.');
+                }
+            } while (placeName == '');
 
-            if (placeName) {
-                sendSchedule(day, placeName, lat, lng, memo);
-            }
+            do {
+                var memo = prompt("장소 메모").trim();
+                if(memo == '') {
+                    alert('메모를 입력해주세요.');
+                }
+            } while (memo == '');
+
+            sendSchedule(day, placeName, lat, lng, memo);
         });
 
         function sendSchedule(day, placeName, placeLatitude, placeLongitude, memo) {

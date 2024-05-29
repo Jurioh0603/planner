@@ -60,7 +60,7 @@
     <div id="contents">
         <h2 class="mt-3 mb-3">내 여행</h2>
 
-        <a href="/plan/write">
+        <a href="/plan/calendar">
             <div id="addPlanBtn">
                 <div>
                     <img src="/images/plus.png" alt="여행 일정 만들기" id="plus"/>
@@ -92,19 +92,25 @@
                         <p class="noImg">대표 이미지를 설정해주세요.</p>
                     </block>
                 </div>
-                <div>
-                    <a th:href="@{/plan/modify(no=${schedule.scheduleNo})}"><p class="fs-4 mb-2" th:text="${schedule.scheduleTitle}">새로운 여정</p></a>
-                    <div class="dateInfo">
-                        <p class="mb-5 startDay">
-                            [[${#dates.format(schedule.startDay, 'yyyy-MM-dd')}]]
-                        </p>
-                        <p class="mb-5 endDay">
-                            &nbsp;- [[${#dates.format(schedule.endDay, 'yyyy-MM-dd')}]] |&nbsp;
-                        </p>
-                        <p class="mb-5 dDay"></p>
+                <div style="width:700px;">
+                    <div id="planTitle">
+                        <a th:href="@{/plan/write(no=${schedule.scheduleNo})}"><p class="fs-4 mb-2 titleContainer" th:text="${schedule.scheduleTitle}">제목</p></a>
+                        <img src="/images/modify.png" style="width:32px" class="editTitleBtn" th:attr="data-schedule-no=${schedule.scheduleNo}, data-title=${schedule.scheduleTitle}"/>
+                    </div>
+                    <div id="planDay">
+                        <div class="dateInfo">
+                            <p class="mb-5 startDay">
+                                [[${#dates.format(schedule.startDay, 'yyyy-MM-dd')}]]
+                            </p>
+                            <p class="mb-5 endDay">
+                                &nbsp;- [[${#dates.format(schedule.endDay, 'yyyy-MM-dd')}]] |&nbsp;
+                            </p>
+                            <p class="mb-5 dDay"></p>
+                        </div>
+                        <a th:href="@{/plan/modifyDay(no=${schedule.scheduleNo})}"><img src="/images/modify.png" style="width:32px" class="editDayBtn mb-5"></a>
                     </div>
 
-                    <div>
+                    <div class="placeTag">
                         <th:block th:each="place : ${planList.placeList.get(schedule.scheduleNo)}">
                             <span>#[[${place}]]</span>
                         </th:block>
@@ -135,6 +141,29 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="editTitleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">제목 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/plan/modifyTitle" id="editTitleForm" method="post">
+                    <div class="modal-body">
+                        <label for="editTitle" class="form-label"><strong>제목</strong></label>
+                        <input type="text" class="form-control" id="editTitle" name="editTitle"/>
+                        <input type="hidden" id="no" name="no"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="edit">수정</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
         // 모달이 열릴 때 data-schedule-no 값을 가져와서 confirmDeleteBtn에 저장
         var deleteBtns = document.querySelectorAll('.deleteBtn');
@@ -151,6 +180,31 @@
         confirmDeleteBtn.addEventListener('click', function () {
             var scheduleNo = this.getAttribute('data-schedule-no');
             location.href = '/plan/delete?no=' + scheduleNo;
+        });
+
+        //제목 수정
+        document.querySelectorAll('.editTitleBtn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const no = button.getAttribute('data-schedule-no');
+                const title = button.getAttribute('data-title');
+
+                document.getElementById('no').value = no;
+                document.getElementById('editTitle').value = title;
+
+                const modal = new bootstrap.Modal(document.getElementById('editTitleModal'));
+                modal.show();
+            });
+        });
+
+        document.getElementById('edit').addEventListener('click', function() {
+            const editTitle = document.getElementById('editTitle').value.trim();
+
+            if (!editTitle) {
+                alert('제목을 입력해주세요.');
+                return;
+            }
+
+            document.getElementById('editTitleForm').submit();
         });
     </script>
 </body>
