@@ -193,3 +193,62 @@
     width: 95%;
     margin: 0 auto;
 }
+
+/*모달창*/
+h2{
+    text-align: center;
+}
+
+/*모달 팝업 영역 스타일링*/
+.modal {
+/*팝업 배경*/
+	display: none; /*평소에는 보이지 않도록*/
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+}
+.modal .modal_popup {
+/*팝업*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+.modal .modal_popup .close_btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #F6CECE;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.file-margin{
+    margin-left: 95px;
+}
+
+.line-container{
+    display: flex;
+    align-items: flex-start;
+}
+
+.update_btn{
+    background-color: #2E64FE
+    color: white;
+}

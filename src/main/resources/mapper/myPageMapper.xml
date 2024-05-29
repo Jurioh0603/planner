@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.triplan.planner.mypage.repository.MyPageMapper">
+    <select id="selectProfile" parameterType="java.lang.String" resultType="com.triplan.planner.mypage.dto.Profile">
+        SELECT NICKNAME, M_COPY_IMG FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+</mapper>
