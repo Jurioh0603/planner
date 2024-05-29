@@ -2,31 +2,26 @@ package com.triplan.planner.admin.service;
 
 import com.triplan.planner.admin.domain.Member;
 import com.triplan.planner.admin.dto.MemberDTO;
-import com.triplan.planner.admin.mapper.MemberMapper;
 import com.triplan.planner.admin.repository.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
 
-
     @Autowired
     private MemberRepository memberRepository;
 
-    //서버콘솔출력용
+    // 서버 콘솔 출력용
     private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
     public List<MemberDTO> getAllMember() {
         List<Member> member = memberRepository.selectAll();
-
 
         return member.stream()
                 .map(this::convertToDTO)
@@ -45,16 +40,8 @@ public class MemberService {
         return dto;
     }
 
-    @Autowired
-    private MemberMapper memberMapper;
-
     public void updateMemberGrade(String memId, int grade) {
-        Member member = memberRepository.selectById(memId);
-        Map<String, Object> params = new HashMap<>();
-        params.put("id", memId);
-        params.put("grade", grade);
         System.out.println("Updating member ID: " + memId + " to grade: " + grade);
-        memberMapper.updateMemberGrade(params);
+        memberRepository.updateMemberGrade(memId, grade);
     }
 }
-

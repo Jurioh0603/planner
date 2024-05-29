@@ -19,13 +19,14 @@
 
     <!-- 특정 회원 조회 -->
     <select id="selectById" parameterType="String" resultType="com.triplan.planner.admin.domain.Member">
-        SELECT * FROM members WHERE memberId = #{memberId}
+        SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
     </select>
 
+    <!-- 회원 등급 수정 -->
     <update id="updateMemberGrade" parameterType="map">
-        UPDATE member
-        SET grade = #{grade}
-        WHERE memId = #{memId}
+        UPDATE MEMBER
+        SET GRADE = #{grade}
+        WHERE MEMBER_ID = #{memId}
     </update>
 
 </mapper>

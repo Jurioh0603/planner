@@ -159,97 +159,100 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
+    allSideMenu.forEach(item => {
+        const li = item.parentElement;
 
-            item.addEventListener('click', function() {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                })
-                li.classList.add('active');
+        item.addEventListener('click', function() {
+            allSideMenu.forEach(i => {
+                i.parentElement.classList.remove('active');
             });
+            li.classList.add('active');
         });
+    });
 
-        // TOGGLE SIDEBAR
-        const menuBar = document.querySelector('#content nav .bx.bx-menu');
-        const sidebar = document.getElementById('sidebar');
+    // TOGGLE SIDEBAR
+    const menuBar = document.querySelector('#content nav .bx.bx-menu');
+    const sidebar = document.getElementById('sidebar');
 
-        menuBar.addEventListener('click', function() {
-            sidebar.classList.toggle('hide');
-        });
+    menuBar.addEventListener('click', function() {
+        sidebar.classList.toggle('hide');
+    });
 
-        const searchButton = document.querySelector('#content nav form .form-input button');
-        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-        const searchForm = document.querySelector('#content nav form');
+    const searchButton = document.querySelector('#content nav form .form-input button');
+    const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+    const searchForm = document.querySelector('#content nav form');
 
-        searchButton.addEventListener('click', function(e) {
-            if (window.innerWidth < 576) {
-                e.preventDefault();
-                searchForm.classList.toggle('show');
-                if (searchForm.classList.contains('show')) {
-                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                } else {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                }
+    searchButton.addEventListener('click', function(e) {
+        if (window.innerWidth < 576) {
+            e.preventDefault();
+            searchForm.classList.toggle('show');
+            if (searchForm.classList.contains('show')) {
+                searchButtonIcon.classList.replace('bx-search', 'bx-x');
+            } else {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
             }
-        });
+        }
+    });
 
-        if (window.innerWidth < 768) {
-            sidebar.classList.add('hide');
-        } else if (window.innerWidth > 576) {
+    if (window.innerWidth < 768) {
+        sidebar.classList.add('hide');
+    } else if (window.innerWidth > 576) {
+        searchButtonIcon.classList.replace('bx-x', 'bx-search');
+        searchForm.classList.remove('show');
+    }
+
+    window.addEventListener('resize', function() {
+        if (this.innerWidth > 576) {
             searchButtonIcon.classList.replace('bx-x', 'bx-search');
             searchForm.classList.remove('show');
         }
+    });
 
-        window.addEventListener('resize', function() {
-            if (this.innerWidth > 576) {
-                searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                searchForm.classList.remove('show');
-            }
-        });
+    // 회원등급변경 스크립트
+    const dropdownItems = document.querySelectorAll('.dropdown-menu a');
 
-        // 회원등급변경 스크립트
-        const dropdownItems = document.querySelectorAll('.dropdown-menu a');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault();
 
-        dropdownItems.forEach(item => {
-            item.addEventListener('click', function(event) {
-                event.preventDefault();
+            const newGrade = parseInt(item.getAttribute('data-grade'), 10); // 정수로 변환
+            const memberRow = item.closest('tr');
+            const memberId = memberRow.querySelector('td').innerText;
 
-                const newGrade = item.getAttribute('data-grade');
-                const memberRow = item.closest('tr');
-                const memberId = memberRow.querySelector('td').innerText;
+            console.log('변경할 회원 ID:', memberId);
+            console.log('변경할 새 등급:', newGrade);
 
-                console.log('변경할 회원 ID:', memberId);
-                console.log('변경할 새 등급:', newGrade);
-
-                fetch('/admin/updateMemberGrade', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: memberId, grade: newGrade })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('서버 응답:', data);
-                    if (data.success) {
-                        const gradeButton = memberRow.querySelector('.grade-btn');
-                        gradeButton.textContent = newGrade === '9999' ? '관리자' : newGrade === '1111' ? '일반' : newGrade === '2222' ? '탈퇴' : '블랙';
-                        gradeButton.className = 'btn dropdown-toggle grade-btn';
-                        gradeButton.classList.add(newGrade === '9999' ? 'admin' : newGrade === '1111' ? 'general' : newGrade === '2222' ? 'withdrawn' : 'black');
-                    } else {
-                        alert('등급 변경 실패');
-                    }
-                })
-                .catch(error => {
-                    console.error('에러 발생:', error);
-                    alert('등급 변경 실패: ' + error.message);
-                });
+            fetch('/admin/updateMemberGrade', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id: memberId, grade: newGrade }) // 정수로 전송
+            })
+            .then(response => response.json()) // JSON 응답 파싱
+            .then(data => {
+                console.log('서버 응답:', data);
+                if (data.success) {
+                    // 서버 응답을 받은 후 UI를 업데이트
+                    const gradeButton = memberRow.querySelector('.grade-btn');
+                    gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
+                    gradeButton.className = 'btn dropdown-toggle grade-btn';
+                    gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black'); // 기존 클래스 제거
+                    gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black'); // 새로운 클래스 추가
+                } else {
+                    alert('등급 변경 실패: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('에러 발생:', error);
+                alert('등급 변경 실패: ' + error.message);
             });
         });
     });
+});
+
 </script>
 </body>
 </html>
