@@ -22,7 +22,6 @@
                         <!-- 모든 사용자가 보이는 메뉴 -->                        
                         <li class="nav-item"><a class="nav-link" href="#!">메뉴1</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">메뉴2</a></li>
-                        
                         <!-- 로그인한 사용자가 보이는 메뉴 -->
 	           			<li class="nav-item" th:if="${session.loginMemberInfo != null}" ><a class="nav-link"  href="#" th:onclick="javascript:fnLogout();" >로그아웃</a></li>
                         <li class="nav-item" th:if="${session.loginMemberInfo != null}" ><a class="nav-link" href="#!">마이페이지</a></li>

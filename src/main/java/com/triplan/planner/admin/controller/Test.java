@@ -10,4 +10,6 @@ public class Test {
     public String main(){
         return "/main/index";
     }
+    
+    
 }

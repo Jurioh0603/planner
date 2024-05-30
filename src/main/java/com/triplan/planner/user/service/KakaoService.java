@@ -134,13 +134,8 @@ public class KakaoService {
 				String email = kakao_account.getAsJsonObject().get("email").getAsString();
 				String name = kakao_account.getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString();
 				String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
-				if ("female".equalsIgnoreCase(gender)) {
-					gender = "W";
-				} else if ("male".equalsIgnoreCase(gender)) {
-					gender = "M";
-				} else {
-					gender = "U";
-				}
+				gender = "female".equalsIgnoreCase(gender)? "F" : "M";
+
 				String tel = kakao_account.getAsJsonObject().get("phone_number").getAsString();
 				String profileImageUrl = properties.getAsJsonObject().get("profile_image").getAsString();
 
