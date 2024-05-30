@@ -16,6 +16,26 @@
         ORDER BY START_DAY ASC;
     </select>
 
+    <select id="getPostSchedules" parameterType="string" resultType="Schedule">
+        <![CDATA[
+        SELECT *
+        FROM SCHEDULE
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY ASC;
+        ]]>
+    </select>
+
+    <select id="getPreSchedules" parameterType="string" resultType="Schedule">
+        <![CDATA[
+        SELECT *
+        FROM SCHEDULE
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') < DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY DESC;
+        ]]>
+    </select>
+
     <select id="getPlaces" parameterType="long" resultType="PlaceList">
         SELECT DISTINCT SCHEDULE_NO, PLACE_NAME
         FROM DETAILSCHEDULE

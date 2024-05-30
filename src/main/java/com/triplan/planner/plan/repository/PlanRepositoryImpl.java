@@ -19,18 +19,28 @@ public class PlanRepositoryImpl implements PlanRepository {
     private final PlanMapper planMapper;
 
     public PlanList findPlanList(String memberId) {
+        //일정 개수
         int count = planMapper.getCount(memberId);
+        //일정이 없다면
         if(count == 0)
             return new PlanList(0, null, null, null);
-        List<Schedule> scheduleList = planMapper.getSchedules(memberId);
+        //schedule 테이블에서 데이터 가져오기(당일, 미래, 과거 순)
+        List<Schedule> scheduleList = null;
+        List<Schedule> postScheduleList = planMapper.getPostSchedules(memberId);
+        scheduleList = postScheduleList;
+        List<Schedule> preScheduleList = planMapper.getPreSchedules(memberId);
+        scheduleList.addAll(preScheduleList);
 
+        //내가 작성한 일정 번호를 저장하는 list
         long[] scheduleNoArray = new long[count];
         for(int i = 0; i < count; i++) {
             scheduleNoArray[i] = scheduleList.get(i).getScheduleNo();
         }
 
+        //내가 작성한 일정에 저장된 장소들의 list
         List<PlaceList> placeLists = planMapper.getPlaces(scheduleNoArray);
 
+        //몇 번 글에 저장된 장소인지 구분하여 저장하기 위한 map
         Map<Long, List<String>> placeList = new HashMap<>();
         for( PlaceList place : placeLists ) {
             if(!placeList.containsKey(place.getScheduleNo())) {
@@ -42,6 +52,7 @@ public class PlanRepositoryImpl implements PlanRepository {
             }
         }
 
+        //이미지 목록
         List<imageUploadForm> imageUploadForms = planMapper.getImages(memberId);
 
         return new PlanList(count, scheduleList, placeList, imageUploadForms);
