@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -130,5 +132,15 @@ public class TlogController {
         tlogService.modifyTlog(tlog, tlogImageList);
 
         return "redirect:/tlog/detail?no=" + no;
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<String> saveSchedule(@RequestBody Map<String, Object> jsonObj) {
+        String scheduleNo = (String) jsonObj.get("scheduleNo");
+
+        String memberId = "id1";
+        tlogService.saveSchedule(Long.parseLong(scheduleNo), memberId);
+
+        return ResponseEntity.ok("{\"message\": \"일정 저장 성공!\"}");
     }
 }

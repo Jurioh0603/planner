@@ -65,6 +65,11 @@ public class TlogServiceImpl implements TlogService {
         tlogRepository.updateTlog(tlog, tlogImageList);
     }
 
+    @Override
+    public void saveSchedule(long scheduleNo, String memberId) {
+        tlogRepository.saveSchedule(scheduleNo, memberId);
+    }
+
     private static void extracted(TlogDetailInfo tlogInfo) {
         List<Date> travelDay = new ArrayList<>();
         Date startDay = tlogInfo.getSchedule().getStartDay();

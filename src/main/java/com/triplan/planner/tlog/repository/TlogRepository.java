@@ -22,4 +22,6 @@ public interface TlogRepository {
     public void deleteTlogByNo(long tlogNo);
 
     public void updateTlog(Tlog tlog, List<TlogImage> tlogImageList);
+
+    public void saveSchedule(long scheduleNo, String memberId);
 }

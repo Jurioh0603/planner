@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,7 +89,10 @@ public class PlanController {
 
     @PostMapping("/save")
     @ResponseBody
-    public List<Map<String, String>> saveSchedule(@RequestBody List<Map<String, String>> scheduleArray) {
+    public ResponseEntity<String> saveSchedule(@RequestBody Map<String, Object> jsonObj) {
+        String scheduleNo = (String) jsonObj.get("scheduleNo");
+        List<Map<String, String>> scheduleArray = (List<Map<String, String>>) jsonObj.get("scheduleArray");
+
         List<DetailSchedule> detailScheduleList = new ArrayList<>();
         for (Map<String, String> schedule : scheduleArray) {
             DetailSchedule detailSchedule = new DetailSchedule(0L,
@@ -102,9 +106,9 @@ public class PlanController {
             detailScheduleList.add(detailSchedule);
         }
 
-        planService.saveSchedule(detailScheduleList);
+        planService.saveSchedule(Long.parseLong(scheduleNo), detailScheduleList);
 
-        return scheduleArray;
+        return ResponseEntity.ok("{\"message\": \"일정 저장 성공!\"}");
     }
 
     @GetMapping("/addAttr")

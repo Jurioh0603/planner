@@ -35,5 +35,7 @@ public interface PlanMapper {
 
     public long getLastScheduleNo();
 
-    List<Schedule> getSchedules(String memberId, String search);
+    public List<Schedule> getSchedules(String memberId, String search);
+
+    public void insertSchedule(Schedule mySchedule);
 }

@@ -1,10 +1,12 @@
 package com.triplan.planner.plan.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class Schedule {
 
     private long scheduleNo;

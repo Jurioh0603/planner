@@ -51,8 +51,8 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
-    public void saveSchedule(List<DetailSchedule> detailScheduleList) {
-        planRepository.insertDetailSchedules(detailScheduleList);
+    public void saveSchedule(long scheduleNo, List<DetailSchedule> detailScheduleList) {
+        planRepository.insertDetailSchedules(scheduleNo, detailScheduleList);
     }
 
     @Override

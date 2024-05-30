@@ -81,9 +81,11 @@ public class PlanRepositoryImpl implements PlanRepository {
     }
 
     @Override
-    public void insertDetailSchedules(List<DetailSchedule> detailScheduleList) {
-        planMapper.deleteDetailScheduleByScheduleNo(detailScheduleList.get(0).getScheduleNo());
-        planMapper.insertDetailSchedules(detailScheduleList);
+    public void insertDetailSchedules(long scheduleNo, List<DetailSchedule> detailScheduleList) {
+        planMapper.deleteDetailScheduleByScheduleNo(scheduleNo);
+        if(!detailScheduleList.isEmpty()) {
+            planMapper.insertDetailSchedules(detailScheduleList);
+        }
     }
 
     @Override

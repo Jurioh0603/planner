@@ -14,7 +14,7 @@ public interface PlanService {
     public void save(ScheduleImage scheduleImage);
     public void deletePlan(Long scheduleNo);
 
-    public void saveSchedule(List<DetailSchedule> detailScheduleList);
+    public void saveSchedule(long scheduleNo, List<DetailSchedule> detailScheduleList);
 
     public void modifyTitle(Long scheduleNo, String title);
 }

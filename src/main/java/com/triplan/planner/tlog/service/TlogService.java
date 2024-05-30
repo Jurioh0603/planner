@@ -26,4 +26,5 @@ public interface TlogService {
 
     public void modifyTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
+    public void saveSchedule(long scheduleNo, String memberId);
 }

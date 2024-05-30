@@ -124,4 +124,9 @@
         SELECT MAX(SCHEDULE_NO)
         FROM SCHEDULE;
     </select>
+
+    <insert id="insertSchedule" parameterType="Schedule">
+        INSERT INTO SCHEDULE(START_DAY, END_DAY, SCHEDULE_TITLE, MEMBER_ID)
+        VALUES(#{startDay}, #{endDay}, #{scheduleTitle}, #{memberId});
+    </insert>
 </mapper>

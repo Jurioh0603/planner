@@ -10,6 +10,8 @@ import com.triplan.planner.tlog.dto.TlogList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -67,6 +69,43 @@ public class TlogRepositoryImpl implements TlogRepository {
         if (!tlogImageList.isEmpty()) {
             tlogMapper.deleteTlogImageByNo(tlog.getTlogNo());
             tlogMapper.saveTlogImage(tlogImageList);
+        }
+    }
+
+    @Override
+    public void saveSchedule(long scheduleNo, String memberId) {
+        //schedule 가져오기
+        Schedule yourSchedule = planMapper.getScheduleByNo(scheduleNo);
+
+        //schedule 가공하기
+        long diffDaysLong = (yourSchedule.getEndDay().getTime() - yourSchedule.getStartDay().getTime()) / 1000 / (24 * 60 * 60);
+        int diffDaysInt = Long.valueOf(diffDaysLong).intValue();
+
+        Date startDay = new Date();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(startDay);
+        cal.add(Calendar.DATE, diffDaysInt);
+
+        Date endDay = cal.getTime();
+
+        //schedule 저장하기
+        Schedule mySchedule = new Schedule(0, startDay, endDay, "여행기에서 저장한 일정입니다.", memberId);
+        planMapper.insertSchedule(mySchedule);
+
+        long lastScheduleNo = planMapper.getLastScheduleNo();
+
+        //detailSchedule 가져오기
+        List<DetailSchedule> detailScheduleList = planMapper.getDetailSchedules(scheduleNo);
+
+        if(!detailScheduleList.isEmpty()) {
+            //detailSchedule 가공하기
+            for(int i = 0; i < detailScheduleList.size(); i++) {
+                detailScheduleList.get(i).setScheduleNo(lastScheduleNo);
+            }
+
+            //detailSchedule 저장하기
+            planMapper.insertDetailSchedules(detailScheduleList);
         }
     }
 }

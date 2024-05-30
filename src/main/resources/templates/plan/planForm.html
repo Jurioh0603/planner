@@ -94,10 +94,11 @@
         // "저장" 버튼 클릭 시 배열 생성 및 로깅
         function saveScheduleArray() {
             const scheduleArray = [];
+            var scheduleNo = 0;
 
             // 각 ul 태그를 순회하며 li 데이터를 추출하여 배열에 추가
             document.querySelectorAll('ul.sortable').forEach(ul => {
-                const scheduleNo = ul.getAttribute('data-schedule-no');
+                scheduleNo = ul.getAttribute('data-schedule-no');
                 const detailDay = ul.getAttribute('data-detail-day');
 
                 ul.querySelectorAll('li.ui-state-default').forEach(li => {
@@ -119,13 +120,18 @@
                 });
             });
 
+            const data = {
+                scheduleNo: scheduleNo,
+                scheduleArray: scheduleArray
+            };
+
             // AJAX 요청
             fetch('/plan/save', { // 요청 URL, 요청 옵션 객체
                 method: 'POST', // HTTP POST
                 headers: { // 전송 데이터 형식
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(scheduleArray) // 배열을 JSON으로 변환하여 포함
+                body: JSON.stringify(data) // 배열을 JSON으로 변환하여 포함
             })
             .then(data => {
                 alert('저장 완료!');

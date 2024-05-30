@@ -291,7 +291,7 @@
                 <button class="btn btn-lg btn-primary" type="button" id="deleteBtn">삭제</button>
             </div>
             <div id="buttonContainer-right" class="mt-5">
-                <button class="btn btn-lg btn-primary" type="button">일정담기</button>
+                <button class="btn btn-lg btn-primary" type="button" id="scheduleSaveBtn" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
             </div>
         </div>
 
@@ -321,6 +321,28 @@
             modal.show();
         });
 
+        document.getElementById('scheduleSaveBtn').addEventListener('click', function() {
+            var scheduleNo = this.getAttribute('scheduleNo');
+            var data = {
+                scheduleNo: scheduleNo
+            };
+
+            // AJAX 요청
+            fetch('/tlog/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert('저장 완료!');
+            })
+            .catch((error) => {
+                alert('저장 실패');
+            });
+        });
     </script>
 </body>
 </html>
