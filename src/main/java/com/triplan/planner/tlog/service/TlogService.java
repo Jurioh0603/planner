@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface TlogService {
 
-    public List<Schedule> getScheduleList(String memberId);
+    public List<Schedule> getScheduleList(String memberId, String search);
 
     public void writeTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
@@ -24,4 +24,6 @@ public interface TlogService {
     public TlogModifyForm getTlogModifyInfo(long tlogNo);
 
     public void modifyTlog(Tlog tlog, List<TlogImage> tlogImageList);
+
+
 }

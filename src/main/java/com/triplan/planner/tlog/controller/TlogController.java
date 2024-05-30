@@ -72,9 +72,9 @@ public class TlogController {
     }
 
     @GetMapping("/select")
-    public String select(Model model) {
+    public String select(@ModelAttribute("search") String search, Model model) {
         String memberId = "id1";
-        List<Schedule> scheduleList = tlogService.getScheduleList(memberId);
+        List<Schedule> scheduleList = tlogService.getScheduleList(memberId, search);
         model.addAttribute("scheduleList", scheduleList);
         return "tlog/addPlan";
     }
@@ -115,6 +115,7 @@ public class TlogController {
         if(storeImageFiles != null) {
             for (int i = 0; i < storeImageFiles.size(); i++) {
                 TlogImage tlogImage = new TlogImage();
+                tlogImage.setTlogNo(no);
                 tlogImage.setUploadName(storeImageFiles.get(i).getUploadFileName());
                 tlogImage.setStoreName(storeImageFiles.get(i).getStoreFileName());
                 tlogImageList.add(tlogImage);

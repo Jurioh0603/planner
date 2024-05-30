@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TlogRepository {
 
-    public List<Schedule> getScheduleList(String memberId);
+    public List<Schedule> getScheduleList(String memberId, String search);
 
     public void saveTlog(Tlog tlog, List<TlogImage> tlogImageList);
 

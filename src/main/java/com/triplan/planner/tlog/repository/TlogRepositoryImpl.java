@@ -19,8 +19,9 @@ public class TlogRepositoryImpl implements TlogRepository {
     private final TlogMapper tlogMapper;
     private final PlanMapper planMapper;
 
-    public List<Schedule> getScheduleList(String memberId) {
-        return planMapper.getSchedules(memberId);
+    @Override
+    public List<Schedule> getScheduleList(String memberId, String search) {
+        return planMapper.getSchedules(memberId, search);
     }
 
     @Override
@@ -57,5 +58,10 @@ public class TlogRepositoryImpl implements TlogRepository {
     @Override
     public void updateTlog(Tlog tlog, List<TlogImage> tlogImageList) {
         tlogMapper.updateTlog(tlog);
+
+        if (!tlogImageList.isEmpty()) {
+            tlogMapper.deleteTlogImageByNo(tlog.getTlogNo());
+            tlogMapper.saveTlogImage(tlogImageList);
+        }
     }
 }

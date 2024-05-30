@@ -21,8 +21,9 @@ public class TlogServiceImpl implements TlogService {
 
     private final TlogRepository tlogRepository;
 
-    public List<Schedule> getScheduleList(String memberId) {
-        return tlogRepository.getScheduleList(memberId);
+    @Override
+    public List<Schedule> getScheduleList(String memberId, String search) {
+        return tlogRepository.getScheduleList(memberId, search);
     }
 
     public void writeTlog(Tlog tlog, List<TlogImage> tlogImageList) {
@@ -84,7 +85,7 @@ public class TlogServiceImpl implements TlogService {
         }
         imageList = imageList.substring(0, imageList.length() - 2);
         tlogModifyForm.setImageList(imageList);
-        tlogModifyForm.setScheduleNo(tlogInfo.getTlog().getTlogNo());
+        tlogModifyForm.setScheduleNo(tlogInfo.getTlog().getScheduleNo());
         return tlogModifyForm;
     }
 }

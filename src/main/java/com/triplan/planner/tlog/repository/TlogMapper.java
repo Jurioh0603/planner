@@ -21,4 +21,5 @@ public interface TlogMapper {
     public void deleteTlogByNo(long tlogNo);
 
     public void updateTlog(Tlog tlog);
+    public void deleteTlogImageByNo(long tlogNo);
 }

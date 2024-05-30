@@ -13,7 +13,6 @@ import java.util.List;
 public interface PlanMapper {
 
     public int getCount(String memberId);
-    public List<Schedule> getSchedules(String memberId);
     public List<Schedule> getPostSchedules(String memberId);
     public List<Schedule> getPreSchedules(String memberId);
     public List<PlaceList> getPlaces(long[] scheduleNoArray);
@@ -35,4 +34,6 @@ public interface PlanMapper {
     public void updateScheduleTitleByNo(@Param("scheduleNo") Long scheduleNo, @Param("title") String title);
 
     public long getLastScheduleNo();
+
+    List<Schedule> getSchedules(String memberId, String search);
 }

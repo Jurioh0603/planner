@@ -12,7 +12,7 @@
     <select id="getSchedules" parameterType="string" resultType="Schedule">
         SELECT *
         FROM SCHEDULE
-        WHERE MEMBER_ID=#{memberId}
+        WHERE MEMBER_ID=#{memberId} AND SCHEDULE_TITLE LIKE CONCAT('%', #{search}, '%')
         ORDER BY START_DAY ASC;
     </select>
 

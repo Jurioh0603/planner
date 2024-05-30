@@ -21,10 +21,10 @@
     </script>
 </head>
 <body>
-<form action="#" method="get">
+<form action="/tlog/select" method="get">
     <div id="searchContainer">
-        <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="일정 검색"/></div>
-        <div id="searchIconContainer"><input type="button" id="searchIcon"/></div>
+        <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="일정 검색" th:value="${search}"/></div>
+        <div id="searchIconContainer"><input type="submit" id="searchIcon" value=""/></div>
     </div>
 </form>
 <hr/>

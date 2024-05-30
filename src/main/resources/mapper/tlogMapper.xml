@@ -50,4 +50,9 @@
         WHERE TLOG_NO=#{tlogNo};
     </update>
 
+    <delete id="deleteTlogImageByNo" parameterType="long">
+        DELETE FROM TLOGIMAGE
+        WHERE TLOG_NO=#{tlogNo};
+    </delete>
+
 </mapper>
