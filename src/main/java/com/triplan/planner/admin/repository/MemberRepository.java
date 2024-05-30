@@ -24,5 +24,5 @@ public interface MemberRepository {
     void updateMemberGrade(@Param("memId") String memId, @Param("grade") int grade);
 
     // 회원 삭제
-    void deleteMember(@Param("memId") String memId);
+//    void deleteMember(@Param("memId") String memId);
 }

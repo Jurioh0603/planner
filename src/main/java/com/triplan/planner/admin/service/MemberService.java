@@ -42,10 +42,11 @@ public class MemberService {
 
     public void updateMemberGrade(String memId, int grade) {
         System.out.println("Updating member ID: " + memId + " to grade: " + grade);
-        if (grade == 2222) {
+        memberRepository.updateMemberGrade(memId, grade);
+        /*if (grade == 2222) {
             memberRepository.deleteMember(memId);
         } else {
             memberRepository.updateMemberGrade(memId, grade);
-        }
+        }*/
     }
 }

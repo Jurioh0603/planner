@@ -10,12 +10,6 @@
         FROM MEMBER
     </select>
 
-    <!-- 회원정보수정 -->
-    <update id="updateMember">
-        UPDATE MEMBER
-        SET NICKNAME = #{nickName}, GRADE = #{grade}
-        WHERE MEMBER_ID = #{memId}
-    </update>
 
     <!-- 특정 회원 조회 -->
     <select id="selectById" parameterType="String" resultType="com.triplan.planner.admin.domain.Member">
@@ -29,9 +23,6 @@
         WHERE MEMBER_ID = #{memId}
     </update>
 
-    <delete id="deleteMember">
-        DELETE FROM MEMBER
-        WHERE MEMBER_ID = #{memId}
-    </delete>
+
 
 </mapper>
