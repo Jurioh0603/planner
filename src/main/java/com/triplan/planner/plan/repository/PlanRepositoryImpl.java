@@ -52,8 +52,12 @@ public class PlanRepositoryImpl implements PlanRepository {
             }
         }
 
-        //이미지 목록
-        List<imageUploadForm> imageUploadForms = planMapper.getImages(memberId);
+        //이미지 목록, schedule 순서에 맞게 저장해야 함
+        List<imageUploadForm> imageUploadForms = null;
+        List<imageUploadForm> postImageUploadForms = planMapper.getPostImages(memberId);
+        imageUploadForms = postImageUploadForms;
+        List<imageUploadForm> preImageUpoadForms = planMapper.getPreImages(memberId);
+        imageUploadForms.addAll(preImageUpoadForms);
 
         return new PlanList(count, scheduleList, placeList, imageUploadForms);
     }

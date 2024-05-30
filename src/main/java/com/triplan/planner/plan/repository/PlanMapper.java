@@ -17,7 +17,8 @@ public interface PlanMapper {
     public List<Schedule> getPostSchedules(String memberId);
     public List<Schedule> getPreSchedules(String memberId);
     public List<PlaceList> getPlaces(long[] scheduleNoArray);
-    public List<imageUploadForm> getImages(String memberId);
+    public List<imageUploadForm> getPostImages(String memberId);
+    public List<imageUploadForm> getPreImages(String memberId);
 
     public Schedule getScheduleByNo(Long scheduleNo);
     public List<DetailSchedule> getDetailSchedules(Long scheduleNo);
