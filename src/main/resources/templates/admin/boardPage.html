@@ -14,6 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/chat/chatListStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 
@@ -85,16 +86,25 @@
                 <ul class="breadcrumb">
                     <li>
                         <select id="main-category" onchange="updateSubCategories()">
-                            <option value="none" selected disabled>게시판이름</option>
+                            <option value="none" disabled selected>게시판이름</option>
                             <option value="community">지역 커뮤니티</option>
                             <option value="travel_log">여행기</option>
-                            <option value="travel_info">여행정보</option>
                         </select>
                     </li>
                     <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <select id="sub-category" disabled>
-                            <option value="none" selected disabled>세부 카테고리</option>
+                        <select id="sub-category" onchange="loadPosts(this.value)" disabled>
+                            <option value="none" disabled selected>세부 카테고리</option>
+                            <option value="S_COMMUNITY">서울</option>
+                            <option value="GG_COMMUNITY">경기</option>
+                            <option value="GW_COMMUNITY">강원</option>
+                            <option value="JJ_COMMUNITY">제주</option>
+                            <option value="CB_COMMUNITY">충북</option>
+                            <option value="CN_COMMUNITY">충남</option>
+                            <option value="JB_COMMUNITY">전북</option>
+                            <option value="JN_COMMUNITY">전남</option>
+                            <option value="GB_COMMUNITY">경북</option>
+                            <option value="GN_COMMUNITY">경남</option>
                         </select>
                     </li>
                 </ul>
@@ -118,136 +128,81 @@
                         <th>변경 <input type="checkbox" id="allcheck" name="allcheck" onclick="allCheck()"></th>
                     </tr>
                     </thead>
-                    <tbody id="board-content">
-                    <tr>
-                        <td>1</td>
-                        <td>공지사항</td>
-                        <td>관리자</td>
-                        <td>2024-05-27</td>
-                        <td><input type="checkbox" name="check" value="1"></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>자유게시판</td>
-                        <td>관리자</td>
-                        <td>2023-01-15</td>
-                        <td><input type="checkbox" name="check" value="2"></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Q&A</td>
-                        <td>관리자</td>
-                        <td>2023-02-01</td>
-                        <td><input type="checkbox" name="check" value="3"></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>경기지역게시판</td>
-                        <td>사용자1</td>
-                        <td>2023-02-10</td>
-                        <td><input type="checkbox" name="check" value="4"></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>서울지역게시판</td>
-                        <td>사용자2</td>
-                        <td>2023-03-05</td>
-                        <td><input type="checkbox" name="check" value="5"></td>
+                    <tbody id="post-list">
+                    <tr th:each="post : ${posts}">
+                        <td th:text="${post.bno}"></td>
+                        <td th:text="${post.title}"></td>
+                        <td th:text="${post.memberId}"></td>
+                        <td th:text="${#dates.format(post.writeTime, 'yyyy-MM-dd')}"></td>
+                        <td><input type="checkbox" name="check" th:value="${post.bno}"></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
+
     <!-- MAIN -->
 </section>
 <!-- CONTENT -->
 
 <script>
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-
-    allSideMenu.forEach(item => {
-        const li = item.parentElement;
-
-        item.addEventListener('click', function () {
-            allSideMenu.forEach(i => {
-                i.parentElement.classList.remove('active');
-            });
-            li.classList.add('active');
-
-            if (item.innerText.includes("게시판관리")) {
-                document.querySelector('.head-title .left h1').innerText = '게시판관리';
-                document.querySelector('.head-title .breadcrumb li:first-child a').innerText = '게시판관리';
-            }
-        });
-    });
-
-    // TOGGLE SIDEBAR
-    const menuBar = document.querySelector('#content nav .bx.bx-menu');
-    const sidebar = document.getElementById('sidebar');
-
-    menuBar.addEventListener('click', function () {
-        sidebar.classList.toggle('hide');
-    });
-
-    const searchButton = document.querySelector('#content nav form .form-input button');
-    const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-    const searchForm = document.querySelector('#content nav form');
-
-    searchButton.addEventListener('click', function (e) {
-        if (window.innerWidth < 576) {
-            e.preventDefault();
-            searchForm.classList.toggle('show');
-            if (searchForm.classList.contains('show')) {
-                searchButtonIcon.classList.replace('bx-search', 'bx-x');
-            } else {
-                searchButtonIcon.classList.replace('bx-x', 'bx-search');
-            }
-        }
-    });
-
-    if (window.innerWidth < 768) {
-        sidebar.classList.add('hide');
-    } else if (window.innerWidth > 576) {
-        searchButtonIcon.classList.replace('bx-x', 'bx-search');
-        searchForm.classList.remove('show');
-    }
-
-    window.addEventListener('resize', function () {
-        if (this.innerWidth > 576) {
-            searchButtonIcon.classList.replace('bx-x', 'bx-search');
-            searchForm.classList.remove('show');
-        }
-    });
-
-    // 전체 선택/해제
-    function allCheck() {
-        const allCheckbox = document.getElementById('allcheck');
-        const checkboxes = document.querySelectorAll('input[name="check"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = allCheckbox.checked;
-        });
-    }
-
-    // 게시판 카테고리 업데이트
     function updateSubCategories() {
-        const mainCategory = document.getElementById("main-category").value;
-        const subCategory = document.getElementById("sub-category");
-
-        subCategory.innerHTML = '';
-        subCategory.disabled = true;
+        const mainCategory = document.getElementById('main-category').value;
+        const subCategory = document.getElementById('sub-category');
 
         if (mainCategory === 'community') {
-            const regions = ['서울', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주'];
-            regions.forEach(region => {
-                const option = document.createElement('option');
-                option.value = region;
-                option.textContent = region;
-                subCategory.appendChild(option);
-            });
             subCategory.disabled = false;
+            subCategory.value = "S_COMMUNITY";
+            loadPosts("S_COMMUNITY");
+        } else {
+            subCategory.disabled = true;
+            subCategory.value = "none";
+            loadPosts(mainCategory);
         }
     }
+
+    function loadPosts(category) {
+        $.ajax({
+            url: "/admin/community/posts",
+            method: "GET",
+            data: { category: category },
+            success: function(posts) {
+                const postList = $("#post-list");
+                postList.empty();
+                posts.forEach(post => {
+                    const row = `<tr>
+                        <td>${post.bno}</td>
+                        <td>${post.title}</td>
+                        <td>${post.memberId}</td>
+                        <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                        <td><input type="checkbox" name="check" value="${post.bno}"></td>
+                    </tr>`;
+                    postList.append(row);
+                });
+            },
+            error: function() {
+                alert("게시글을 불러오는 중 오류가 발생했습니다.");
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sub-category').addEventListener('change', function() {
+            if (this.value !== 'none') {
+                loadPosts(this.value);
+            }
+        });
+
+        document.getElementById('main-category').addEventListener('change', function() {
+            updateSubCategories();
+        });
+
+        // 페이지 로드 시 기본값 설정 및 기본 데이터 로드
+        document.getElementById('main-category').value = "community";
+        document.getElementById('sub-category').value = "S_COMMUNITY";
+        loadPosts("S_COMMUNITY");
+    });
 </script>
 </body>
 </html>
