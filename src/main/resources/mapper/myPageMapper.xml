@@ -2,8 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.triplan.planner.mypage.repository.MyPageMapper">
-    <select id="selectProfile" parameterType="java.lang.String" resultType="com.triplan.planner.mypage.dto.Profile">
-        SELECT NICKNAME, M_COPY_IMG FROM MEMBER
+    <select id="getProfileList" parameterType="String" resultType="com.triplan.planner.mypage.dto.Profile">
+        SELECT MEMBER_ID, NICKNAME, M_IMG, M_COPY_IMG FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
+    <update id="updateProfile" parameterType="com.triplan.planner.mypage.dto.Profile">
+        UPDATE MEMBER
+        SET M_IMG = #{uploadFileName},
+            M_COPY_IMG = #{storeFileName}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
 </mapper>

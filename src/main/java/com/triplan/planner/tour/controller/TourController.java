@@ -15,8 +15,8 @@ public class TourController {
     @GetMapping("/tour/saveAll")
     public ResponseEntity<String> saveAllTours() {
         try {
-            int startContentId = 126182;
-            int endContentId = 129700;
+            int startContentId = 127189;
+            int endContentId = 127388;
 
             for (int contentId = startContentId; contentId <= endContentId; contentId++) {
                 tourService.saveTour(String.valueOf(contentId));

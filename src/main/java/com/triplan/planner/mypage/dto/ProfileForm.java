@@ -1,15 +1,14 @@
 package com.triplan.planner.mypage.dto;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Profile {
+public class ProfileForm {
     private String memberId;
-    private String nickName;
-    private String mImg;
-    private String mCopyImg;
+    private MultipartFile uploadFile;
 }

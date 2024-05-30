@@ -1,9 +1,8 @@
-package com.triplan.planner.mypage.service;
+package com.triplan.planner.mypage.repository;
 
 import com.triplan.planner.mypage.dto.Profile;
 
-public interface MyPageService {
-
+public interface MyPageRepository {
 
     public void updateProfile(Profile profile);
 
