@@ -1,14 +1,44 @@
 package com.triplan.planner.admin.domain;
 
-import lombok.Data;
+import java.time.LocalDateTime;
 
-import java.util.Date;
-
-@Data
 public class Community {
-    private int bno;
+
+    private Long bno;
     private String title;
-    private String content;
-    private Date writeTime;
     private String memberId;
+    private LocalDateTime writeTime;
+
+    // Getters and setters
+    public Long getBno() {
+        return bno;
+    }
+
+    public void setBno(Long bno) {
+        this.bno = bno;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public LocalDateTime getWriteTime() {
+        return writeTime;
+    }
+
+    public void setWriteTime(LocalDateTime writeTime) {
+        this.writeTime = writeTime;
+    }
 }

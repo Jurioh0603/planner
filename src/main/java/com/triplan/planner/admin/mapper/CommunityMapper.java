@@ -8,5 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface CommunityMapper {
-    List<Community> getAllPosts(@Param("tableName") String tableName);
+
+    List<Community> getPostsByCategory(@Param("category") String category);
 }

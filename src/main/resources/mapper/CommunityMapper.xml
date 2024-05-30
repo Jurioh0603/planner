@@ -3,7 +3,55 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.triplan.planner.admin.mapper.CommunityMapper">
-    <select id="getAllPosts" resultType="com.triplan.planner.admin.domain.Community">
-        SELECT * FROM ${tableName}
+    <select id="getPostsByCategory" parameterType="string" resultType="com.triplan.planner.admin.domain.Community">
+        <choose>
+            <when test="category == 'S_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM S_COMMUNITY
+            </when>
+            <when test="category == 'GG_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM GG_COMMUNITY
+            </when>
+            <when test="category == 'GW_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM GW_COMMUNITY
+            </when>
+            <when test="category == 'JJ_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM JJ_COMMUNITY
+            </when>
+            <when test="category == 'CB_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM CB_COMMUNITY
+            </when>
+            <when test="category == 'CN_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM CN_COMMUNITY
+            </when>
+            <when test="category == 'JB_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM JB_COMMUNITY
+            </when>
+            <when test="category == 'JN_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM JN_COMMUNITY
+            </when>
+            <when test="category == 'GB_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM GB_COMMUNITY
+            </when>
+            <when test="category == 'GN_COMMUNITY'">
+                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM GN_COMMUNITY
+            </when>
+            <when test="category == 'travel_log'">
+                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                FROM TLOG
+            </when>
+            <otherwise>
+                SELECT 1 WHERE 1=0
+            </otherwise>
+        </choose>
     </select>
 </mapper>

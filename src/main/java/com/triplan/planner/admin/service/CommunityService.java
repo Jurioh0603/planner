@@ -14,6 +14,6 @@ public class CommunityService {
     private CommunityMapper communityMapper;
 
     public List<Community> getPostsByCategory(String category) {
-        return communityMapper.getAllPosts(category);
+        return communityMapper.getPostsByCategory(category);
     }
 }
