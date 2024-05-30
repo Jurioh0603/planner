@@ -5,10 +5,7 @@ import com.triplan.planner.file.UploadFile;
 import com.triplan.planner.plan.domain.Schedule;
 import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
-import com.triplan.planner.tlog.dto.TlogDetailInfo;
-import com.triplan.planner.tlog.dto.TlogList;
-import com.triplan.planner.tlog.dto.TlogModifyForm;
-import com.triplan.planner.tlog.dto.TlogWriteForm;
+import com.triplan.planner.tlog.dto.*;
 import com.triplan.planner.tlog.service.TlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,9 +32,17 @@ public class TlogController {
     String KAKAO_API_KEY;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        List<TlogList> tlogList = tlogService.getTlogList();
-        model.addAttribute("tlogList", tlogList);
+    public String list(@ModelAttribute("page") String page, Model model) {
+        if(page.isEmpty()) {
+            page = "1";
+        }
+        List<TlogList> tlogList = tlogService.getTlogList(Integer.parseInt(page));
+
+        int total = tlogService.getCount();
+        int size = 6;
+
+        TlogPage tlogPage = new TlogPage(total, Integer.parseInt(page), size, tlogList);
+        model.addAttribute("tlogPage", tlogPage);
         return "tlog/tlogList";
     }
 

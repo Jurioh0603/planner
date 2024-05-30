@@ -17,14 +17,20 @@
         </foreach>
     </insert>
 
-    <select id="getTlogs" resultType="TlogList">
+    <select id="getTlogs" parameterType="int" resultType="TlogList">
         SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME
         FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
                           FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
                                 FROM TLOGIMAGE) AS RANKEDROWS
                           WHERE RN=1) B
         ON A.TLOG_NO=B.TLOG_NO
-        ORDER BY A.WRITE_TIME DESC;
+        ORDER BY A.WRITE_TIME DESC
+        LIMIT #{startRow}, #{size};
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TLOG;
     </select>
 
     <select id="getTlogByNo" parameterType="long" resultType="Tlog">

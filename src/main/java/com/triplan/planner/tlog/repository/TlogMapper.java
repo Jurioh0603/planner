@@ -13,7 +13,8 @@ public interface TlogMapper {
     public long saveTlog(Tlog tlog);
     public void saveTlogImage(List<TlogImage> tlogImageList);
 
-    public List<TlogList> getTlogs();
+    public List<TlogList> getTlogs(int startRow, int size);
+    public int getCount();
 
     public Tlog getTlogByNo(long tlogNo);
     public List<TlogImage> getTlogImageByNo(long tlogNo);
@@ -22,4 +23,6 @@ public interface TlogMapper {
 
     public void updateTlog(Tlog tlog);
     public void deleteTlogImageByNo(long tlogNo);
+
+
 }

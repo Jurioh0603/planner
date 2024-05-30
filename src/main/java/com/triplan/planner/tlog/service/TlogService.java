@@ -15,7 +15,8 @@ public interface TlogService {
 
     public void writeTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
-    public List<TlogList> getTlogList();
+    public List<TlogList> getTlogList(int page);
+    public int getCount();
 
     public TlogDetailInfo getTlogInfo(long tlogNo);
 
@@ -24,6 +25,5 @@ public interface TlogService {
     public TlogModifyForm getTlogModifyInfo(long tlogNo);
 
     public void modifyTlog(Tlog tlog, List<TlogImage> tlogImageList);
-
 
 }

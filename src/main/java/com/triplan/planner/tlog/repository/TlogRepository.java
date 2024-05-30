@@ -14,7 +14,8 @@ public interface TlogRepository {
 
     public void saveTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
-    public List<TlogList> getTlogList();
+    public List<TlogList> getTlogList(int startRow, int size);
+    public int getCount();
 
     public TlogDetailInfo getTlogInfo(long tlogNo);
 

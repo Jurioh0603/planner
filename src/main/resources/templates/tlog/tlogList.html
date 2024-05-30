@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                    <th:block th:each="tlog: ${tlogList}">
+                    <th:block th:each="tlog: ${tlogPage.tlogList}">
                         <a th:href="@{/tlog/detail(no=${tlog.tlogNo})}">
                             <div class="col">
                                 <div class="card shadow-sm">
@@ -55,17 +55,18 @@
             </div>
         </div>
 
-        <div class="pagination-container">
-            <div class="pagination">
-                    <a href="#">&laquo;</a>
-                        <a href="" class="active">1</a>
-                        <a href="">2</a>
-                        <a href="">3</a>
-                        <a href="">4</a>
-                        <a href="">5</a>
-                    <a href="#">&raquo;</a>
+        <block th:if="${tlogPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${tlogPage.startPage > 5}" th:href="@{/tlog/list(page=${tlogPage.startPage - 5})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(tlogPage.startPage, tlogPage.endPage)}">
+                        <a th:if="${page == tlogPage.currentPage}" th:href="@{/tlog/list(page=${page})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != tlogPage.currentPage}" th:href="@{/tlog/list(page=${page})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${tlogPage.endPage < tlogPage.totalPages}" th:href="@{/tlog/list(page=${tlogPage.startPage + 5})}">&raquo;</a>
+                </div>
             </div>
-        </div>
+        </block>
 
     </div>
 

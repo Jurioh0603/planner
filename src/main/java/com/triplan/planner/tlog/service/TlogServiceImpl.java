@@ -31,8 +31,14 @@ public class TlogServiceImpl implements TlogService {
     }
 
     @Override
-    public List<TlogList> getTlogList() {
-        return tlogRepository.getTlogList();
+    public List<TlogList> getTlogList(int page) {
+        int size = 6;
+        return tlogRepository.getTlogList((page - 1) * size, size);
+    }
+
+    @Override
+    public int getCount() {
+        return tlogRepository.getCount();
     }
 
     @Override

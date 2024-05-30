@@ -37,8 +37,13 @@ public class TlogRepositoryImpl implements TlogRepository {
     }
 
     @Override
-    public List<TlogList> getTlogList() {
-        return tlogMapper.getTlogs();
+    public List<TlogList> getTlogList(int startRow, int size) {
+        return tlogMapper.getTlogs(startRow, size);
+    }
+
+    @Override
+    public int getCount() {
+        return tlogMapper.getCount();
     }
 
     @Override
