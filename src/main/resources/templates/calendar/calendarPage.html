@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>여행일정 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/calendar/calendarStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h3 class="text-center mt-4 mb-4">여행일정 등록</h3>
+    <div class="calendar-container">
+        <div id="inline-calendar"></div>
+        <div id="date-range" class="mt-3"></div>
+        <button id="get-schedule" class="btn btn-primary mt-3" disabled>여행일정 만들기</button>
+    </div>
+    <form id="schedule-form" action="/plan/make" method="post" style="display:none;">
+        <input type="hidden" id="startDay" name="startDay">
+        <input type="hidden" id="endDay" name="endDay">
+        <input type="hidden" id="title" name="title">
+    </form>
+</div>
+
+<!-- 모달 -->
+<div class="modal" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">일정 만들기</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1"><strong>일정</strong></p>
+                <p id="modal-date"></p>
+                <label for="planTitle" class="form-label"><strong>제목</strong></label>
+                <input type="text" class="form-control" id="planTitle" placeholder="필수 입력">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="confirm-schedule">만들기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function getDateRange(startDate, endDate) {
+        const dates = [];
+        let currentDate = new Date(startDate);
+        currentDate.setHours(12, 0, 0, 0);
+
+        while (currentDate <= endDate) {
+            dates.push(new Date(currentDate));
+            currentDate.setDate(currentDate.getDate() + 1);
+            currentDate.setHours(12, 0, 0, 0);
+        }
+
+        return dates;
+    }
+
+    function displayDateRange(dates) {
+        console.clear();
+        dates.forEach((date, index) => {
+            console.log(`day${index + 1}: ${date.toISOString().split('T')[0]}`);
+        });
+    }
+
+    const picker = new Litepicker({
+        element: document.getElementById('inline-calendar'),
+        singleMode: false,
+        inlineMode: true,
+        allowRepick: true,
+        autoApply: true, // 자동 적용
+        numberOfMonths: 2, // 두 개의 달력
+        numberOfColumns: 2, // 두 개의 달력
+        setup: (picker) => {
+            picker.on('selected', (startDate, endDate) => {
+                if (startDate && endDate) {
+                    const start = new Date(startDate.dateInstance);
+                    const end = new Date(endDate.dateInstance);
+                    start.setHours(12, 0, 0, 0);
+                    end.setHours(12, 0, 0, 0);
+                    const dates = getDateRange(start, end);
+                    displayDateRange(dates);
+
+                    document.getElementById('startDay').value = start.toISOString().split('T')[0];
+                    document.getElementById('endDay').value = end.toISOString().split('T')[0];
+                    document.getElementById('get-schedule').disabled = false; // 선택된 날짜가 있을 때 버튼 활성화
+                }
+            });
+        }
+    });
+
+    document.getElementById('get-schedule').addEventListener('click', function() {
+        const startDay = document.getElementById('startDay').value;
+        const endDay = document.getElementById('endDay').value;
+
+        document.getElementById('modal-date').textContent = `${startDay} ~ ${endDay}`;
+
+        const modal = new bootstrap.Modal(document.getElementById('scheduleModal'));
+        modal.show();
+    });
+
+    document.getElementById('confirm-schedule').addEventListener('click', function() {
+        const planTitle = document.getElementById('planTitle').value.trim();
+
+        if (!planTitle) {
+            alert('제목을 입력해주세요.');
+            return;
+        }
+
+        document.getElementById('title').value = planTitle;
+        document.getElementById('schedule-form').submit();
+    });
+</script>
+</body>
+</html>

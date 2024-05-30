@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.tlog.repository.TlogMapper">
+
+    <insert id="saveTlog" parameterType="Tlog" useGeneratedKeys="true" keyProperty="tlogNo">
+        INSERT INTO TLOG(TLOG_TITLE, TLOG_CONTENT, WRITE_TIME, MEMBER_ID, SCHEDULE_NO)
+        VALUES(#{tlogTitle}, #{tlogContent}, now(), #{memberId}, #{scheduleNo});
+    </insert>
+
+    <insert id="saveTlogImage" parameterType="list">
+        INSERT INTO TLOGIMAGE(UPLOAD_NAME, STORE_NAME, TLOG_NO)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.uploadName}, #{item.storeName}, #{item.tlogNo})
+        </foreach>
+    </insert>
+
+    <select id="getTlogs" parameterType="int" resultType="TlogList">
+        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME
+        FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
+                          FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
+                                FROM TLOGIMAGE) AS RANKEDROWS
+                          WHERE RN=1) B
+        ON A.TLOG_NO=B.TLOG_NO
+        ORDER BY A.WRITE_TIME DESC
+        LIMIT #{startRow}, #{size};
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TLOG;
+    </select>
+
+    <select id="getTlogByNo" parameterType="long" resultType="Tlog">
+        SELECT *
+        FROM TLOG
+        WHERE TLOG_NO=#{tlogNo};
+    </select>
+
+    <select id="getTlogImageByNo" parameterType="long" resultType="TlogImage">
+        SELECT *
+        FROM TLOGIMAGE
+        WHERE TLOG_NO=#{tlogNo};
+    </select>
+
+    <delete id="deleteTlogByNo" parameterType="long">
+        DELETE FROM TLOG
+        WHERE TLOG_NO=#{tlogNo}
+    </delete>
+
+    <update id="updateTlog" parameterType="Tlog">
+        UPDATE TLOG
+        SET TLOG_TITLE=#{tlogTitle}, TLOG_CONTENT=#{tlogContent}, SCHEDULE_NO=#{scheduleNo}
+        WHERE TLOG_NO=#{tlogNo};
+    </update>
+
+    <delete id="deleteTlogImageByNo" parameterType="long">
+        DELETE FROM TLOGIMAGE
+        WHERE TLOG_NO=#{tlogNo};
+    </delete>
+
+</mapper>
