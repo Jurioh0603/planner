@@ -54,4 +54,102 @@
             </otherwise>
         </choose>
     </select>
+
+    <select id="getPagedPostsByCategory" parameterType="map" resultType="com.triplan.planner.admin.domain.Community">
+        <choose>
+            <when test="category == 'S_COMMUNITY'">
+                SELECT * FROM S_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'GG_COMMUNITY'">
+                SELECT * FROM GG_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'GW_COMMUNITY'">
+                SELECT * FROM GW_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'JJ_COMMUNITY'">
+                SELECT * FROM JJ_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'CB_COMMUNITY'">
+                SELECT * FROM CB_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'CN_COMMUNITY'">
+                SELECT * FROM CN_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'JB_COMMUNITY'">
+                SELECT * FROM JB_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'JN_COMMUNITY'">
+                SELECT * FROM JN_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'GB_COMMUNITY'">
+                SELECT * FROM GB_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'GN_COMMUNITY'">
+                SELECT * FROM GN_COMMUNITY
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+            <when test="category == 'travel_log'">
+                SELECT * FROM TLOG
+                ORDER BY WRITE_TIME DESC
+                LIMIT #{startRow}, #{size}
+            </when>
+        </choose>
+    </select>
+
+    <select id="getCountByCategory" parameterType="string" resultType="int">
+        <choose>
+            <when test="category == 'S_COMMUNITY'">
+                SELECT COUNT(*) FROM S_COMMUNITY
+            </when>
+            <when test="category == 'GG_COMMUNITY'">
+                SELECT COUNT(*) FROM GG_COMMUNITY
+            </when>
+            <when test="category == 'GW_COMMUNITY'">
+                SELECT COUNT(*) FROM GW_COMMUNITY
+            </when>
+            <when test="category == 'JJ_COMMUNITY'">
+                SELECT COUNT(*) FROM JJ_COMMUNITY
+            </when>
+            <when test="category == 'CB_COMMUNITY'">
+                SELECT COUNT(*) FROM CB_COMMUNITY
+            </when>
+            <when test="category == 'CN_COMMUNITY'">
+                SELECT COUNT(*) FROM CN_COMMUNITY
+            </when>
+            <when test="category == 'JB_COMMUNITY'">
+                SELECT COUNT(*) FROM JB_COMMUNITY
+            </when>
+            <when test="category == 'JN_COMMUNITY'">
+                SELECT COUNT(*) FROM JN_COMMUNITY
+            </when>
+            <when test="category == 'GB_COMMUNITY'">
+                SELECT COUNT(*) FROM GB_COMMUNITY
+            </when>
+            <when test="category == 'GN_COMMUNITY'">
+                SELECT COUNT(*) FROM GN_COMMUNITY
+            </when>
+            <when test="category == 'travel_log'">
+                SELECT COUNT(*) FROM TLOG
+            </when>
+        </choose>
+    </select>
 </mapper>

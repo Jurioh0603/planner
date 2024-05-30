@@ -16,4 +16,13 @@ public class CommunityService {
     public List<Community> getPostsByCategory(String category) {
         return communityMapper.getPostsByCategory(category);
     }
+
+    public List<Community> getPagedPostsByCategory(String category, int page, int size) {
+        int startRow = (page - 1) * size;
+        return communityMapper.getPagedPostsByCategory(category, startRow, size);
+    }
+
+    public int getCountByCategory(String category) {
+        return communityMapper.getCountByCategory(category);
+    }
 }

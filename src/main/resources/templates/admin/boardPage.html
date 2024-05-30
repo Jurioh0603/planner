@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -92,7 +94,7 @@
                     </li>
                     <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <select id="sub-category" onchange="loadPosts(this.value)" disabled>
+                        <select id="sub-category" onchange="loadPosts(this.value, 1)" disabled>
                             <option value="none" disabled selected>세부 카테고리</option>
                             <option value="S_COMMUNITY">서울</option>
                             <option value="GG_COMMUNITY">경기</option>
@@ -117,7 +119,7 @@
                     <i class='bx bx-search'></i>
                     <i class='bx bx-filter'></i>
                 </div>
-                <table>
+                <table class="table">
                     <thead>
                     <tr>
                         <th>글번호</th>
@@ -128,23 +130,22 @@
                     </tr>
                     </thead>
                     <tbody id="post-list">
-                    <tr th:each="post : ${posts}">
-                        <td th:text="${post.bno}"></td>
-                        <td th:text="${post.title}"></td>
-                        <td th:text="${post.memberId}"></td>
-                        <td th:text="${#temporals.format(post.writeTime, 'yyyy-MM-dd')}"></td>
-                        <td><input type="checkbox" name="check" th:value="${post.bno}"></td>
-                    </tr>
+                    <!-- AJAX로 데이터를 가져와서 여기에 채웁니다. -->
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- 페이징 버튼이 여기 추가됩니다. -->
+                    </ul>
+                </nav>
             </div>
         </div>
     </main>
-
     <!-- MAIN -->
 </section>
 <!-- CONTENT -->
 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -160,7 +161,6 @@
             });
         });
 
-        // TOGGLE SIDEBAR
         const menuBar = document.querySelector('#content nav .bx.bx-menu');
         const sidebar = document.getElementById('sidebar');
 
@@ -204,34 +204,34 @@
 
             if (mainCategory === 'community') {
                 subCategory.disabled = false;
-                subCategory.value = "none"; // Default value to prevent loading posts initially
+                subCategory.value = "none";
             } else if (mainCategory === 'travel_log') {
                 subCategory.disabled = true;
                 subCategory.value = "none";
-                loadPosts(mainCategory);
+                loadPagedPosts(mainCategory, 1);
             } else {
                 subCategory.disabled = true;
                 subCategory.value = "none";
                 const postList = document.getElementById('post-list');
-                postList.innerHTML = ""; // Clear the table
+                postList.innerHTML = "";
             }
         }
 
-        function loadPosts(category) {
+        function loadPagedPosts(category, page) {
             if (category === "none") {
                 const postList = document.getElementById('post-list');
-                postList.innerHTML = ""; // Clear the table if no category selected
+                postList.innerHTML = "";
                 return;
             }
 
             $.ajax({
-                url: "/admin/community/posts",
+                url: "/admin/community/posts/paged",
                 method: "GET",
-                data: { category: category },
-                success: function(posts) {
+                data: { category: category, page: page },
+                success: function(data) {
                     const postList = $("#post-list");
                     postList.empty();
-                    posts.forEach(post => {
+                    data.communityList.forEach(post => {
                         const row = `<tr>
                             <td>${post.bno}</td>
                             <td>${post.title}</td>
@@ -241,6 +241,7 @@
                         </tr>`;
                         postList.append(row);
                     });
+                    setupPagination(data.totalPages, page, category);
                 },
                 error: function() {
                     if(!document.querySelector('.error-alert')) {
@@ -254,6 +255,44 @@
             });
         }
 
+        function setupPagination(totalPages, currentPage, category) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            if (currentPage > 1) {
+                const prev = document.createElement('li');
+                prev.classList.add('page-item');
+                prev.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+                prev.addEventListener('click', function() {
+                    loadPagedPosts(category, currentPage - 1);
+                });
+                pagination.appendChild(prev);
+            }
+
+            for (let i = 1; i <= totalPages; i++) {
+                const page = document.createElement('li');
+                page.classList.add('page-item');
+                if (i === currentPage) {
+                    page.classList.add('active');
+                }
+                page.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+                page.addEventListener('click', function() {
+                    loadPagedPosts(category, i);
+                });
+                pagination.appendChild(page);
+            }
+
+            if (currentPage < totalPages) {
+                const next = document.createElement('li');
+                next.classList.add('page-item');
+                next.innerHTML = `<a class="page-link" href="#">&raquo;</a>`;
+                next.addEventListener('click', function() {
+                    loadPagedPosts(category, currentPage + 1);
+                });
+                pagination.appendChild(next);
+            }
+        }
+
         function allCheck() {
             const allCheckBox = document.getElementById("allcheck");
             const checkboxes = document.querySelectorAll('input[name="check"]');
@@ -264,7 +303,7 @@
 
         document.getElementById('sub-category').addEventListener('change', function() {
             if (this.value !== 'none') {
-                loadPosts(this.value);
+                loadPagedPosts(this.value, 1);
             }
         });
 
@@ -272,15 +311,13 @@
             updateSubCategories();
         });
 
-        document.getElementById("allcheck").addEventListener('change', allCheck); // Ensure event listener is attached
+        document.getElementById("allcheck").addEventListener('change', allCheck);
 
-        // 페이지 로드 시 기본값 설정 및 기본 데이터 로드
         document.getElementById('main-category').value = "none";
         document.getElementById('sub-category').value = "none";
         const postList = document.getElementById('post-list');
-        postList.innerHTML = ""; // Clear the table on initial load
+        postList.innerHTML = "";
     });
-
 </script>
 </body>
 </html>

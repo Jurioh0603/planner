@@ -10,4 +10,6 @@ import java.util.List;
 public interface CommunityMapper {
 
     List<Community> getPostsByCategory(@Param("category") String category);
+    List<Community> getPagedPostsByCategory(@Param("category") String category, @Param("startRow") int startRow, @Param("size") int size);
+    int getCountByCategory(@Param("category") String category);
 }

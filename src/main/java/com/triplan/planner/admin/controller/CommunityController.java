@@ -1,6 +1,7 @@
 package com.triplan.planner.admin.controller;
 
 import com.triplan.planner.admin.domain.Community;
+import com.triplan.planner.admin.domain.CommunityPage;
 import com.triplan.planner.admin.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,16 @@ public class CommunityController {
     @ResponseBody
     public List<Community> getCommunityPosts(@RequestParam(name = "category", required = true) String category) {
         return communityService.getPostsByCategory(category);
+    }
+
+    @GetMapping("/community/posts/paged")
+    @ResponseBody
+    public CommunityPage getPagedCommunityPosts(@RequestParam(name = "category", required = true) String category,
+                                                @RequestParam(name = "page", defaultValue = "1") int page,
+                                                @RequestParam(name = "size", defaultValue = "10") int size) {
+        List<Community> posts = communityService.getPagedPostsByCategory(category, page, size);
+        int total = communityService.getCountByCategory(category);
+
+        return new CommunityPage(total, page, size, posts);
     }
 }
