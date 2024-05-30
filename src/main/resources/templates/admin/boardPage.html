@@ -147,47 +147,122 @@
 <!-- CONTENT -->
 
 <script>
-    function updateSubCategories() {
-        const mainCategory = document.getElementById('main-category').value;
-        const subCategory = document.getElementById('sub-category');
+    document.addEventListener('DOMContentLoaded', function() {
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-        if (mainCategory === 'community') {
-            subCategory.disabled = false;
-            subCategory.value = "S_COMMUNITY";
-            loadPosts("S_COMMUNITY");
-        } else {
-            subCategory.disabled = true;
-            subCategory.value = "none";
-            loadPosts(mainCategory);
-        }
-    }
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
 
-    function loadPosts(category) {
-        $.ajax({
-            url: "/admin/community/posts",
-            method: "GET",
-            data: { category: category },
-            success: function(posts) {
-                const postList = $("#post-list");
-                postList.empty();
-                posts.forEach(post => {
-                    const row = `<tr>
-                        <td>${post.bno}</td>
-                        <td>${post.title}</td>
-                        <td>${post.memberId}</td>
-                        <td>${new Date(post.writeTime).toLocaleDateString()}</td>
-                        <td><input type="checkbox" name="check" value="${post.bno}"></td>
-                    </tr>`;
-                    postList.append(row);
+            item.addEventListener('click', function() {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
                 });
-            },
-            error: function() {
-                alert("게시글을 불러오는 중 오류가 발생했습니다.");
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function() {
+            sidebar.classList.toggle('hide');
+        });
+
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function(e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
             }
         });
-    }
 
-    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if (window.innerWidth > 576) {
+            searchButtonIcon.classList.replace('bx-x', 'bx-search');
+            searchForm.classList.remove('show');
+        }
+
+        window.addEventListener('resize', function() {
+            if (this.innerWidth > 576) {
+                searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
+            }
+        });
+
+        function updateSubCategories() {
+            const mainCategory = document.getElementById('main-category').value;
+            const subCategory = document.getElementById('sub-category');
+
+            if (mainCategory === 'community') {
+                subCategory.disabled = false;
+                subCategory.value = "none"; // Default value to prevent loading posts initially
+            } else if (mainCategory === 'travel_log') {
+                subCategory.disabled = true;
+                subCategory.value = "none";
+                loadPosts(mainCategory);
+            } else {
+                subCategory.disabled = true;
+                subCategory.value = "none";
+                const postList = document.getElementById('post-list');
+                postList.innerHTML = ""; // Clear the table
+            }
+        }
+
+        function loadPosts(category) {
+            if (category === "none") {
+                const postList = document.getElementById('post-list');
+                postList.innerHTML = ""; // Clear the table if no category selected
+                return;
+            }
+
+            $.ajax({
+                url: "/admin/community/posts",
+                method: "GET",
+                data: { category: category },
+                success: function(posts) {
+                    const postList = $("#post-list");
+                    postList.empty();
+                    posts.forEach(post => {
+                        const row = `<tr>
+                            <td>${post.bno}</td>
+                            <td>${post.title}</td>
+                            <td>${post.memberId}</td>
+                            <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                            <td><input type="checkbox" name="check" value="${post.bno}"></td>
+                        </tr>`;
+                        postList.append(row);
+                    });
+                },
+                error: function() {
+                    if(!document.querySelector('.error-alert')) {
+                        const alertDiv = document.createElement('div');
+                        alertDiv.className = 'error-alert';
+                        alertDiv.innerText = '게시글을 불러오는 중 오류가 발생했습니다.';
+                        document.body.appendChild(alertDiv);
+                        setTimeout(() => alertDiv.remove(), 3000);
+                    }
+                }
+            });
+        }
+
+        function allCheck() {
+            const allCheckBox = document.getElementById("allcheck");
+            const checkboxes = document.querySelectorAll('input[name="check"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = allCheckBox.checked;
+            });
+        }
+
         document.getElementById('sub-category').addEventListener('change', function() {
             if (this.value !== 'none') {
                 loadPosts(this.value);
@@ -199,10 +274,13 @@
         });
 
         // 페이지 로드 시 기본값 설정 및 기본 데이터 로드
-        document.getElementById('main-category').value = "community";
-        document.getElementById('sub-category').value = "S_COMMUNITY";
-        loadPosts("S_COMMUNITY");
+        document.getElementById('main-category').value = "none";
+        document.getElementById('sub-category').value = "none";
+        const postList = document.getElementById('post-list');
+        postList.innerHTML = ""; // Clear the table on initial load
     });
+
+
 </script>
 </body>
 </html>
