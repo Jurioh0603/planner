@@ -17,4 +17,8 @@ public interface TlogRepository {
     public List<TlogList> getTlogList();
 
     public TlogDetailInfo getTlogInfo(long tlogNo);
+
+    public void deleteTlogByNo(long tlogNo);
+
+    public void updateTlog(Tlog tlog, List<TlogImage> tlogImageList);
 }

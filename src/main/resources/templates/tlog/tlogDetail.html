@@ -105,8 +105,8 @@
             </button>
         </div>
 
-        <div class="mt-3">
-            [[${tlogInfo.tlog.tlogContent}]]
+        <div class="mt-3 contentContainer">
+[[${tlogInfo.tlog.tlogContent}]] <!-- 맨 앞에 공백이 들어가지 않도록 제일 끝에 작성 -->
         </div>
         <hr/>
 
@@ -276,8 +276,8 @@
                 <th:block th:each="schedule, scStat : ${tlogInfo.detailScheduleList}">
                     <th:block th:if="${schedule.detailDay == dStat.index}">
                         <li class="ui-state-default" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
-                            <div class="centered-circle"><span class="num-span"></span></div>
-                            <div class="planDetail"><h4 th:text="${schedule.placeName}">해운대</h4>[[${schedule.placeMemo}]]</div>
+                            <div class="centered-circle"><span class="num-span" ></span></div>
+                            <div class="planDetail"><h4 th:text="${schedule.placeName}" class="placeName">해운대</h4><p class="m-0 memo">[[${schedule.placeMemo}]]</p></div>
                         </li>
                     </th:block>
                 </th:block>
@@ -287,8 +287,8 @@
 
         <div id="buttonContainer">
             <div id="buttonContainer-left" class="mt-5">
-                <button class="btn btn-lg btn-primary me-2" type="button">수정</button>
-                <button class="btn btn-lg btn-primary" type="button">삭제</button>
+                <button class="btn btn-lg btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|">수정</button>
+                <button class="btn btn-lg btn-primary" type="button" id="deleteBtn">삭제</button>
             </div>
             <div id="buttonContainer-right" class="mt-5">
                 <button class="btn btn-lg btn-primary" type="button">일정담기</button>
@@ -296,5 +296,31 @@
         </div>
 
     </div>
+
+    <div class="modal" id="confirmDeleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">여행기 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn" th:attr="onclick=|location.href='@{/tlog/delete(no=${tlogInfo.tlog.tlogNo})}'|">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("deleteBtn").addEventListener("click", function () {
+            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            modal.show();
+        });
+
+    </script>
 </body>
 </html>

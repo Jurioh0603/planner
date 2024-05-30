@@ -48,4 +48,14 @@ public class TlogRepositoryImpl implements TlogRepository {
         List<DetailSchedule> detailScheduleList = planMapper.getDetailSchedules(tlog.getScheduleNo());
         return new TlogDetailInfo(tlog, tlogImageList, schedule, detailScheduleList, null);
     }
+
+    @Override
+    public void deleteTlogByNo(long tlogNo) {
+        tlogMapper.deleteTlogByNo(tlogNo);
+    }
+
+    @Override
+    public void updateTlog(Tlog tlog, List<TlogImage> tlogImageList) {
+        tlogMapper.updateTlog(tlog);
+    }
 }

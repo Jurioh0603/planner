@@ -54,13 +54,12 @@
             document.getElementById('planName').innerText = title;
             document.getElementById('scheduleNo').value = no;
         }
-
     </script>
 </head>
 <body>
     <div id="contents">
         <div><h2 class="mt-3 mb-3">나의 멋진 여행기를 공유해요.</h2></div>
-        <form action="/tlog/write" method="post" enctype="multipart/form-data">
+        <form action="/tlog/write" method="post" enctype="multipart/form-data" id="form">
             <div>
                 <label for="title" class="form-label"><strong>제목</strong></label>
                 <input type="text" name="title" id="title" class="form-control"/>
@@ -89,12 +88,75 @@
 
             <div id="buttonContainer" class="mt-5">
                 <button class="btn btn-lg btn-light me-3" type="button" onclick="history.back()" style="border-color: black;">취소</button>
-                <button class="btn btn-lg btn-primary" type="submit">저장</button>
+                <button class="btn btn-lg btn-primary" type="button" id="saveBtn">저장</button>
             </div>
         </form>
 
-
     </div>
 
+    <script>
+        document.getElementById("saveBtn").addEventListener("click", function () {
+            //제목 체크
+            var titleInput = document.getElementById('title');
+
+            if(titleInput.value == '') {
+                alert("제목은 필수 사항입니다.");
+                return false;
+            }
+
+            //내용 체크
+            var contentInput = document.getElementById('content');
+
+            if(contentInput.value == '') {
+                alert("내용은 필수 사항입니다.");
+                return false;
+            }
+
+            //이미지 체크
+            var fileInput = document.getElementById('file');
+
+            if(fileInput.files.length == 0) {
+                alert("이미지를 반드시 하나 이상 첨부하여야 합니다.");
+                return false;
+            }
+
+            var validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            var maxSize = 10 * 1024 * 1024; //10MB 사이즈 제한(개당)
+            var maxTotalSize = 50 * 1024 * 1024; //50MB 사이즈 제한(총)
+            var totalSize = 0;
+            for(var i = 0; i < fileInput.files.length; i++) {
+                var fileName = fileInput.files[i].name;
+                var fileSize = fileInput.files[i].size;
+                totalSize += fileSize;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                if (!validExtensions.includes(fileExtension)) {
+                    alert("올바른 이미지 확장자 jpg, jpeg, png, gif 를 선택하세요.");
+                    return false;
+                }
+
+                if (fileSize > maxSize){
+                    alert("각 파일의 사이즈는 10MB 이내로 가능합니다.");
+                    return false;
+                }
+
+                if (totalSize > maxTotalSize) {
+                    alert("파일 사이즈의 총합은 50MB를 넘을 수 없습니다.");
+                    return false;
+                }
+            }
+
+            //일정 체크
+            var scheduleNoInput = document.getElementById('scheduleNo');
+
+            if(scheduleNoInput.value == '') {
+                alert("일정을 반드시 첨부하여야 합니다.");
+                return false;
+            }
+
+            //제출
+            document.getElementById("form").submit();
+        });
+    </script>
 </body>
 </html>

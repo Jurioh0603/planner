@@ -119,4 +119,9 @@
         SET SCHEDULE_TITLE=#{title}
         WHERE SCHEDULE_NO=#{scheduleNo};
     </update>
+
+    <select id="getLastScheduleNo" resultType="long">
+        SELECT MAX(SCHEDULE_NO)
+        FROM SCHEDULE;
+    </select>
 </mapper>

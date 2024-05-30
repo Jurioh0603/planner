@@ -8,13 +8,8 @@ import java.util.List;
 @Data
 public class TlogWriteForm {
 
-
     private String title;
-
-
     private String content;
-
     private List<MultipartFile> file;
-
     private Long scheduleNo;
 }

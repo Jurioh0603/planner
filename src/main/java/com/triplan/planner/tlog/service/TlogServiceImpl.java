@@ -5,6 +5,7 @@ import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
 import com.triplan.planner.tlog.dto.TlogDetailInfo;
 import com.triplan.planner.tlog.dto.TlogList;
+import com.triplan.planner.tlog.dto.TlogModifyForm;
 import com.triplan.planner.tlog.repository.TlogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,28 @@ public class TlogServiceImpl implements TlogService {
     @Override
     public TlogDetailInfo getTlogInfo(long tlogNo) {
         TlogDetailInfo tlogInfo = tlogRepository.getTlogInfo(tlogNo);
+        extracted(tlogInfo);
+        return tlogInfo;
+    }
 
+    @Override
+    public void delete(long tlogNo) {
+        tlogRepository.deleteTlogByNo(tlogNo);
+    }
+
+    @Override
+    public TlogModifyForm getTlogModifyInfo(long tlogNo) {
+        TlogDetailInfo tlogInfo = tlogRepository.getTlogInfo(tlogNo);
+        extracted(tlogInfo);
+        return getTlogModifyForm(tlogInfo);
+    }
+
+    @Override
+    public void modifyTlog(Tlog tlog, List<TlogImage> tlogImageList) {
+        tlogRepository.updateTlog(tlog, tlogImageList);
+    }
+
+    private static void extracted(TlogDetailInfo tlogInfo) {
         List<Date> travelDay = new ArrayList<>();
         Date startDay = tlogInfo.getSchedule().getStartDay();
         Date endDay = tlogInfo.getSchedule().getEndDay();
@@ -49,7 +71,20 @@ public class TlogServiceImpl implements TlogService {
             calendar.add(Calendar.DATE, 1);
         } while(endDay.compareTo(day) > 0);
         tlogInfo.setTravelDay(travelDay);
+    }
 
-        return tlogInfo;
+    private static TlogModifyForm getTlogModifyForm(TlogDetailInfo tlogInfo) {
+        TlogModifyForm tlogModifyForm = new TlogModifyForm();
+        tlogModifyForm.setTitle(tlogInfo.getTlog().getTlogTitle());
+        tlogModifyForm.setContent(tlogInfo.getTlog().getTlogContent());
+        tlogModifyForm.setScheduleTitle(tlogInfo.getSchedule().getScheduleTitle());
+        String imageList = "";
+        for(int i = 0; i < tlogInfo.getTlogImageList().size(); i++) {
+            imageList += tlogInfo.getTlogImageList().get(i).getUploadName() + ", ";
+        }
+        imageList = imageList.substring(0, imageList.length() - 2);
+        tlogModifyForm.setImageList(imageList);
+        tlogModifyForm.setScheduleNo(tlogInfo.getTlog().getTlogNo());
+        return tlogModifyForm;
     }
 }

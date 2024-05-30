@@ -7,6 +7,7 @@ import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
 import com.triplan.planner.tlog.dto.TlogDetailInfo;
 import com.triplan.planner.tlog.dto.TlogList;
+import com.triplan.planner.tlog.dto.TlogModifyForm;
 import com.triplan.planner.tlog.dto.TlogWriteForm;
 import com.triplan.planner.tlog.service.TlogService;
 import lombok.RequiredArgsConstructor;
@@ -84,5 +85,44 @@ public class TlogController {
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         model.addAttribute("tlogInfo", tlogInfo);
         return "tlog/tlogDetail";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("no") long tlogNo) {
+        tlogService.delete(tlogNo);
+        return "redirect:/tlog/list";
+    }
+
+    @GetMapping("/modify")
+    public String modify(@RequestParam("no") long tlogNo, Model model) {
+        TlogModifyForm tlogModifyForm = tlogService.getTlogModifyInfo(tlogNo);
+
+        model.addAttribute("tlogModifyForm", tlogModifyForm);
+        model.addAttribute("no", tlogNo);
+        return "tlog/tlogModifyForm";
+    }
+
+    @PostMapping("/modify")
+    public String modify(@ModelAttribute TlogWriteForm form, @RequestParam("no") long no) throws IOException {
+        List<UploadFile> storeImageFiles = null;
+        if(!form.getFile().get(0).getOriginalFilename().isBlank()) {
+            storeImageFiles = fileStore.storeFiles(form.getFile());
+        }
+
+        String memberId = "id1";
+        Tlog tlog = new Tlog(no, form.getTitle(), form.getContent(), null, memberId, form.getScheduleNo());
+        List<TlogImage> tlogImageList = new ArrayList<>();
+        if(storeImageFiles != null) {
+            for (int i = 0; i < storeImageFiles.size(); i++) {
+                TlogImage tlogImage = new TlogImage();
+                tlogImage.setUploadName(storeImageFiles.get(i).getUploadFileName());
+                tlogImage.setStoreName(storeImageFiles.get(i).getStoreFileName());
+                tlogImageList.add(tlogImage);
+            }
+        }
+
+        tlogService.modifyTlog(tlog, tlogImageList);
+
+        return "redirect:/tlog/detail?no=" + no;
     }
 }

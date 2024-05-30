@@ -14,8 +14,8 @@ public class CalendarService {
     @Autowired
     private CalendarRepository calendarRepository;
 
-    public void saveDate(DateDTO dateDTO){
-        calendarRepository.saveDate(dateDTO);
+    public long saveDate(DateDTO dateDTO){
+        return calendarRepository.saveDate(dateDTO);
     }
 
     public void modifyDay(ModifyForm modifyForm) {

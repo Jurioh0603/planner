@@ -73,6 +73,7 @@ ul {
 
 .planDetail {
     margin-left: 20px;
+    width: 700px;
 }
 
 .centered-circle {
@@ -123,4 +124,16 @@ ul {
 h3:hover {
     color: #3e77b6;
     cursor: pointer;
+}
+
+.contentContainer {
+    white-space: pre-wrap;
+}
+
+.memo, .placeName {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

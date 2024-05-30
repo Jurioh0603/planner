@@ -52,6 +52,12 @@
     display: flex;
     align-items: center;
     position: relative;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.planListContainer:hover {
+    background-color: #F0F0F0;
 }
 
 input.deleteBtn {
@@ -59,8 +65,8 @@ input.deleteBtn {
     background-size: contain;
     position: absolute;
     width: 30px;
-    top: 5px;
-    right: 10px;
+    top: 10px;
+    right: 5px;
     border: none;
 }
 
@@ -104,4 +110,8 @@ span {
     -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+hr {
+    margin: 0px;
 }

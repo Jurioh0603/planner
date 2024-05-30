@@ -33,4 +33,6 @@ public interface PlanMapper {
     public void insertDetailSchedules(List<DetailSchedule> detailScheduleList);
 
     public void updateScheduleTitleByNo(@Param("scheduleNo") Long scheduleNo, @Param("title") String title);
+
+    public long getLastScheduleNo();
 }

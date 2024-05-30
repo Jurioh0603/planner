@@ -17,4 +17,8 @@ public interface TlogMapper {
 
     public Tlog getTlogByNo(long tlogNo);
     public List<TlogImage> getTlogImageByNo(long tlogNo);
+
+    public void deleteTlogByNo(long tlogNo);
+
+    public void updateTlog(Tlog tlog);
 }

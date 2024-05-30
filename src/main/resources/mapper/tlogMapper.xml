@@ -39,5 +39,15 @@
         WHERE TLOG_NO=#{tlogNo};
     </select>
 
+    <delete id="deleteTlogByNo" parameterType="long">
+        DELETE FROM TLOG
+        WHERE TLOG_NO=#{tlogNo}
+    </delete>
+
+    <update id="updateTlog" parameterType="Tlog">
+        UPDATE TLOG
+        SET TLOG_TITLE=#{tlogTitle}, TLOG_CONTENT=#{tlogContent}, SCHEDULE_NO=#{scheduleNo}
+        WHERE TLOG_NO=#{tlogNo};
+    </update>
 
 </mapper>

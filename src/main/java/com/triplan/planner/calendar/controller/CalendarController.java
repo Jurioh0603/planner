@@ -40,9 +40,9 @@ public class CalendarController {
         Date endDate = formatter.parse(endDay);
 
         DateDTO dateDTO = new DateDTO(startDate, endDate, memberId, title);
-        calendarService.saveDate(dateDTO);
+        long scheduleNo = calendarService.saveDate(dateDTO);
 
-        return "redirect:/plan/list";
+        return "redirect:/plan/write?no=" + scheduleNo;
     }
 
     @GetMapping("/modifyDay")
