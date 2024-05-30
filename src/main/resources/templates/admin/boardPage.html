@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/chat/chatListStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
@@ -273,13 +272,14 @@
             updateSubCategories();
         });
 
+        document.getElementById("allcheck").addEventListener('change', allCheck); // Ensure event listener is attached
+
         // 페이지 로드 시 기본값 설정 및 기본 데이터 로드
         document.getElementById('main-category').value = "none";
         document.getElementById('sub-category').value = "none";
         const postList = document.getElementById('post-list');
         postList.innerHTML = ""; // Clear the table on initial load
     });
-
 
 </script>
 </body>
