@@ -18,8 +18,9 @@ public class TemplateController {
         return "fragments/weekTemp";
     }
 
-    @GetMapping("/dropdown")
+    @GetMapping("/header")
     public String header(){
-        return "fragments/jquery-menu";
+        return "fragments/header";
     }
+
 }
