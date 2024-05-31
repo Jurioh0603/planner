@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.triplan.planner.admin.mapper.CommunityMapper">
+    <!-- 글목록조회 -->
     <select id="getPostsByCategory" parameterType="string" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
             <when test="category == 'S_COMMUNITY'">
@@ -55,6 +55,7 @@
         </choose>
     </select>
 
+    <!-- 페이징 -->
     <select id="getPagedPostsByCategory" parameterType="map" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
             <when test="category == 'S_COMMUNITY'">
@@ -108,7 +109,7 @@
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'travel_log'">
-                SELECT * FROM TLOG
+                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime FROM TLOG
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
