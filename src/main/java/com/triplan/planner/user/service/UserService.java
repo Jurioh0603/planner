@@ -1,5 +1,6 @@
 package com.triplan.planner.user.service;
 
+import com.triplan.planner.user.common.SendMail;
 import com.triplan.planner.user.dto.LoginDto;
 import com.triplan.planner.user.dto.UserDto;
 import com.triplan.planner.user.repository.MemberMapper;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.SecureRandom;
+
 
 @Slf4j
 @Service
@@ -82,6 +86,60 @@ public class UserService {
 		paramDto.setSnsId(snsId);
 		paramDto.setSnsType(snsType);
 		return memberMapper.selectSnsUser(paramDto);
+	}
+
+	//사용자 신규 비밀번호 업데이트
+	public boolean passwordUpdate(UserDto userDto) {
+
+		boolean result = true;
+
+		UserDto memberInfo = memberMapper.selectPassword(userDto);
+
+		//아이디,이메일로 조회시 회원정보가 있다면
+		if(memberInfo != null) {
+
+			//신규비밀번호 생성
+			String newPassword = generateRandomPassword(8);
+
+			//비밀번호 암호화
+			String encodePw = passwordEncoder.encode(newPassword);
+			memberInfo.setPassword(encodePw);
+
+			//신규비밀번호로 업데이트 수행
+			memberMapper.updatePassword(memberInfo);
+
+			//받는사람의 이메일 주소
+			String toEmailAddr = memberInfo.getEmail();
+			String subject = "신규 비밀번호 안내";
+			String content = "변경된 신규 비밀번호는 "+newPassword+" 입니다.";
+
+			//이메일 전송
+			SendMail.sendEmailToMember(toEmailAddr, subject, content);
+
+			result = true;
+
+		}else {
+
+			result = false;
+
+		}
+
+		return result;
+	}
+
+	//소문자+숫자 조합 8자리 난수생성
+	public static String generateRandomPassword(int length) {
+		// 비밀번호에 사용할 문자와 숫자 집합
+		String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		SecureRandom random = new SecureRandom();
+		StringBuilder password = new StringBuilder();
+
+		// 지정된 길이만큼 랜덤한 문자 선택
+		for (int i = 0; i < length; i++) {
+			password.append(chars.charAt(random.nextInt(chars.length())));
+		}
+
+		return password.toString();
 	}
 
 }

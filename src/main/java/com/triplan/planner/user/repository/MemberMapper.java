@@ -17,5 +17,8 @@ public interface MemberMapper {
 	public UserDto selectMember(String id);
 	//SNS 회원 정보 조회
 	public UserDto selectSnsUser(UserDto userDto);
-
+	//비밀번호 찾기
+	public UserDto selectPassword(UserDto userDto);
+	//비밀번호 변경
+	public int updatePassword(UserDto userDto);
 }

@@ -183,8 +183,7 @@ public class UserController {
 	public void insertMember(HttpServletResponse response, UserDto userDto) throws Exception {
 
     	log.info("Controller @PostMapping(/user/insertMember) 회원가입 처리");
-		
-		//MemberVo chkMemberVo = new MemberVo();
+
 		UserDto chkMemberDto = new UserDto();
 
 		chkMemberDto.setMemberId(userDto.getMemberId());
@@ -220,6 +219,30 @@ public class UserController {
 			throw new Exception(e);
 		}
 		
+	}
+
+	@GetMapping("/passwordFind")
+	public String passwordFind() {
+		log.info("Controller @GetMapping(/user/passwordFind) 비밀번호찾기 화면이동");
+		return "user/passwordFind";
+	}
+
+	@PostMapping("/passwordUpdate")
+	public void passwordUpdate(HttpServletResponse response, UserDto userdDto) {
+		log.info("Controller @GetMapping(/user/passwordUpdate) 새비밀번호로 업데이트");
+
+		String alertMessage = "";
+		String icon = "";
+
+		if(userService.passwordUpdate(userdDto)) {
+			alertMessage = "이메일로 신규비밀번호를 발송하였습니다.";
+			icon = "success";
+		}else {
+			alertMessage = "일치하는 메일주소가 없습니다.";
+			icon = "error";
+		}
+
+		ReturnUtil.setReturnMessage(response, alertMessage, "", icon, "/user/login");
 	}
 
 	//test

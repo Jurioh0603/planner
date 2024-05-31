@@ -112,4 +112,28 @@
 	 	AND SNS_TYPE = #{snsType}
 	</select>
 
+	<!-- 비밀번호 찾기 -->
+	<select id="selectPassword" parameterType="com.triplan.planner.user.dto.UserDto" resultType="com.triplan.planner.user.dto.UserDto">
+		/* 비밀번호 찾기 */
+		SELECT
+		MEMBER_ID
+		, PASSWORD
+		, NAME
+		, EMAIL
+		, TEL
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND   EMAIL = #{email}
+	</select>
+
+	<!-- 비밀번호 업데이트 -->
+	<update id="updatePassword" parameterType="com.triplan.planner.user.dto.UserDto">
+		/* 비밀번호 변경 */
+		UPDATE
+		MEMBER
+		SET
+		PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId} AND EMAIL = #{email}
+	</update>
+
 </mapper>
