@@ -88,22 +88,6 @@
                 <h1>게시판관리</h1>
                 <ul class="breadcrumb">
                     <li>
-                        <a href="#">게시글관리</a>
-                    </li>
-                    <li><i class='bx bx-chevron-right'></i></li>
-                    <li>
-                        <a class="active" href="#">Home</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>글관리</h3>
-                    <li>
                         <select id="main-category" onchange="updateSubCategories()">
                             <option value="none" disabled selected>게시판이름</option>
                             <option value="community">지역 커뮤니티</option>
@@ -112,7 +96,7 @@
                     </li>
                     <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <select id="sub-category" onchange="loadPosts(this.value, 1)" disabled>
+                        <select id="sub-category" onchange="loadPagedPosts(this.value, 1)" disabled>
                             <option value="none" disabled selected>세부 카테고리</option>
                             <option value="S_COMMUNITY">서울</option>
                             <option value="GG_COMMUNITY">경기</option>
@@ -126,10 +110,23 @@
                             <option value="GN_COMMUNITY">경남</option>
                         </select>
                     </li>
-                    <i class='bx bx-search'></i>
-                    <i class='bx bx-filter'></i>
-                </div>
+                </ul>
+            </div>
+        </div>
 
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>글관리</h3>
+                    <form id="search-form" class="d-flex">
+                        <select id="search-type" class="form-select me-2">
+                            <option value="title">제목</option>
+                            <option value="memberId">작성자</option>
+                        </select>
+                        <input type="text" id="search-query" class="form-control me-2" placeholder="검색어">
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </form>
+                </div>
                 <table>
                     <thead>
                     <tr>
@@ -148,8 +145,8 @@
                     <ul class="pagination justify-content-center" id="pagination">
                         <!-- 페이징 버튼이 여기 추가됩니다. -->
                     </ul>
-                    <button type="button" class="btn btn-primary">삭제</button>
                 </nav>
+                <button type="button" class="btn btn-primary">삭제</button>
             </div>
         </div>
     </main>
@@ -157,7 +154,6 @@
 </section>
 <!-- CONTENT -->
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
@@ -236,10 +232,20 @@
                 return;
             }
 
+            const searchType = document.getElementById('search-type').value;
+            const searchQuery = document.getElementById('search-query').value;
+
+            const params = new URLSearchParams({
+                category: category,
+                page: page,
+                searchType: searchType,
+                searchQuery: searchQuery
+            });
+
             $.ajax({
                 url: "/admin/community/posts/paged",
                 method: "GET",
-                data: { category: category, page: page },
+                data: params.toString(),
                 success: function(data) {
                     const postList = $("#post-list");
                     postList.empty();
@@ -324,6 +330,13 @@
         });
 
         document.getElementById("allcheck").addEventListener('change', allCheck);
+
+        // 검색 폼 제출 이벤트 핸들러 추가
+        document.getElementById('search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const category = document.getElementById('sub-category').value;
+            loadPagedPosts(category, 1);
+        });
 
         document.getElementById('main-category').value = "none";
         document.getElementById('sub-category').value = "none";

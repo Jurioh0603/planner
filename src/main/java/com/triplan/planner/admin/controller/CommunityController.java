@@ -38,9 +38,11 @@ public class CommunityController {
     @ResponseBody
     public CommunityPage getPagedCommunityPosts(@RequestParam(name = "category", required = true) String category,
                                                 @RequestParam(name = "page", defaultValue = "1") int page,
-                                                @RequestParam(name = "size", defaultValue = "10") int size) {
-        List<Community> posts = communityService.getPagedPostsByCategory(category, page, size);
-        int total = communityService.getCountByCategory(category);
+                                                @RequestParam(name = "size", defaultValue = "10") int size,
+                                                @RequestParam(name = "searchType", required = false) String searchType,
+                                                @RequestParam(name = "searchQuery", required = false) String searchQuery) {
+        List<Community> posts = communityService.getPagedPostsByCategory(category, page, size, searchType, searchQuery);
+        int total = communityService.getCountByCategory(category, searchType, searchQuery);
 
         return new CommunityPage(total, page, size, posts);
     }

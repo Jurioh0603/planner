@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.triplan.planner.admin.mapper.CommunityMapper">
+
     <!-- 글목록조회 -->
     <select id="getPostsByCategory" parameterType="string" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
@@ -55,101 +56,125 @@
         </choose>
     </select>
 
-    <!-- 페이징 -->
+    <!-- 페이징 및 검색 -->
     <select id="getPagedPostsByCategory" parameterType="map" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
-            <when test="category == 'S_COMMUNITY'">
+            <when test="params.category == 'S_COMMUNITY'">
                 SELECT * FROM S_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'GG_COMMUNITY'">
+            <when test="params.category == 'GG_COMMUNITY'">
                 SELECT * FROM GG_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'GW_COMMUNITY'">
+            <when test="params.category == 'GW_COMMUNITY'">
                 SELECT * FROM GW_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'JJ_COMMUNITY'">
+            <when test="params.category == 'JJ_COMMUNITY'">
                 SELECT * FROM JJ_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'CB_COMMUNITY'">
+            <when test="params.category == 'CB_COMMUNITY'">
                 SELECT * FROM CB_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'CN_COMMUNITY'">
+            <when test="params.category == 'CN_COMMUNITY'">
                 SELECT * FROM CN_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'JB_COMMUNITY'">
+            <when test="params.category == 'JB_COMMUNITY'">
                 SELECT * FROM JB_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'JN_COMMUNITY'">
+            <when test="params.category == 'JN_COMMUNITY'">
                 SELECT * FROM JN_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'GB_COMMUNITY'">
+            <when test="params.category == 'GB_COMMUNITY'">
                 SELECT * FROM GB_COMMUNITY
-                ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
+                ORDER BY WRITE TIME DESC
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'GN_COMMUNITY'">
+            <when test="params.category == 'GN_COMMUNITY'">
                 SELECT * FROM GN_COMMUNITY
-                ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
+                ORDER BY WRITE TIME DESC
+                LIMIT #{params.startRow}, #{params.size}
             </when>
-            <when test="category == 'travel_log'">
-                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime FROM TLOG
-                ORDER BY WRITE_TIME DESC
-                LIMIT #{startRow}, #{size}
+            <when test="params.category == 'travel_log'">
+                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE TIME as writeTime
+                FROM TLOG
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
+                ORDER BY WRITE TIME DESC
+                LIMIT #{params.startRow}, #{params.size}
             </when>
         </choose>
     </select>
 
-    <select id="getCountByCategory" parameterType="string" resultType="int">
+    <!-- 카운트 및 검색 -->
+    <select id="getCountByCategory" parameterType="map" resultType="int">
         <choose>
-            <when test="category == 'S_COMMUNITY'">
+            <when test="params.category == 'S_COMMUNITY'">
                 SELECT COUNT(*) FROM S_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'GG_COMMUNITY'">
+            <when test="params.category == 'GG_COMMUNITY'">
                 SELECT COUNT(*) FROM GG_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'GW_COMMUNITY'">
+            <when test="params.category == 'GW_COMMUNITY'">
                 SELECT COUNT(*) FROM GW_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'JJ_COMMUNITY'">
+            <when test="params.category == 'JJ_COMMUNITY'">
                 SELECT COUNT(*) FROM JJ_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'CB_COMMUNITY'">
+            <when test="params.category == 'CB_COMMUNITY'">
                 SELECT COUNT(*) FROM CB_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'CN_COMMUNITY'">
+            <when test="params.category == 'CN_COMMUNITY'">
                 SELECT COUNT(*) FROM CN_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'JB_COMMUNITY'">
+            <when test="params.category == 'JB_COMMUNITY'">
                 SELECT COUNT(*) FROM JB_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'JN_COMMUNITY'">
+            <when test="params.category == 'JN_COMMUNITY'">
                 SELECT COUNT(*) FROM JN_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'GB_COMMUNITY'">
+            <when test="params.category == 'GB_COMMUNITY'">
                 SELECT COUNT(*) FROM GB_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'GN_COMMUNITY'">
+            <when test="params.category == 'GN_COMMUNITY'">
                 SELECT COUNT(*) FROM GN_COMMUNITY
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
-            <when test="category == 'travel_log'">
+            <when test="params.category == 'travel_log'">
                 SELECT COUNT(*) FROM TLOG
+                WHERE ${params.searchType} LIKE CONCAT('%', #{params.searchQuery}, '%')
             </when>
         </choose>
     </select>
