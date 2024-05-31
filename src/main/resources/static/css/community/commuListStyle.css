@@ -1,0 +1,39 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.localImg {
+    width: 70px;
+}
+
+.localLinkBtn {
+    align-items: center;
+    margin: 0 auto;
+}
+
+#localLinkBtnContainer {
+    display: flex;
+    align-items: center;
+}
+
+p {
+    text-align: center;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#weatherContainer {
+    width: 600px;
+    height: 200px;
+    background-color: gray;
+    margin: 0 auto;
+}
