@@ -92,6 +92,7 @@
 /*비밀번호 불일치 안내글*/
 .error-message {
     color: red;
-    font-size: 12px;
+    font-size: 17px;
     display: none; /* 기본적으로 보이지 않게 설정 */
+    margin-top: 5px;
 }
