@@ -50,10 +50,15 @@ public class TlogRepositoryImpl implements TlogRepository {
 
     @Override
     public TlogDetailInfo getTlogInfo(long tlogNo) {
+        //tlog
         Tlog tlog = tlogMapper.getTlogByNo(tlogNo);
+        //tlogImage
         List<TlogImage> tlogImageList = tlogMapper.getTlogImageByNo(tlogNo);
+        //schedule
         Schedule schedule = planMapper.getScheduleByNo(tlog.getScheduleNo());
+        //detailSchedule
         List<DetailSchedule> detailScheduleList = planMapper.getDetailSchedules(tlog.getScheduleNo());
+
         return new TlogDetailInfo(tlog, tlogImageList, schedule, detailScheduleList, null);
     }
 
@@ -107,5 +112,24 @@ public class TlogRepositoryImpl implements TlogRepository {
             //detailSchedule 저장하기
             planMapper.insertDetailSchedules(detailScheduleList);
         }
+    }
+
+    @Override
+    public boolean isFav(String memberId, long tlogNo) {
+        List<Long> favList = tlogMapper.getFavList(memberId);
+        if(favList.contains(tlogNo))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
+    public void saveFav(long tlogNo, String memberId) {
+        tlogMapper.saveFav(tlogNo, memberId);
+    }
+
+    @Override
+    public void deleteFav(long tlogNo, String memberId) {
+        tlogMapper.deleteFav(tlogNo, memberId);
     }
 }

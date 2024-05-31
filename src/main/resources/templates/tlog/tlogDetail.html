@@ -75,8 +75,16 @@
                 <div class="ms-3 mb-1"><b>[[${tlogInfo.tlog.memberId}]]</b> 님의 일정</div>
             </div>
             <div class="iconContainer">
-                <a href="#"><div><img src="/images/heart_white.png" alt="즐겨찾기" class="fav-img mb-1"></div></a>
-                <a href="#"><div><img src="/images/download.jpg" alt="일정담기" class="download-img ms-2"></div></a>
+                <div class="fav-img-box">
+                    <block th:if="${!isFav}">
+                        <img src="/images/heart_white.png" alt="즐겨찾기" class="fav-img mb-1">
+                        <a th:href="|@{/tlog/fav(tlogNo=${tlogInfo.tlog.tlogNo})}|"><img src="/images/heart_black.png" alt="즐겨찾기" class="fav-img-hover mb-1"></a>
+                    </block>
+                    <block th:if="${isFav}">
+                        <a th:href="|@{/tlog/notFav(tlogNo=${tlogInfo.tlog.tlogNo})}|"><img src="/images/heart_red.png" alt="즐겨찾기" class="fav-img-red mb-1"></a>
+                    </block>
+                </div>
+                <div><img src="/images/download.png" alt="일정담기" class="download-img ms-3 mb-1 scheduleSaveBtn" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}"></div>
             </div>
         </div>
         <hr/>
@@ -239,6 +247,9 @@
                     var polyline = [];
                     for (var i = 0; i < positions.length; i++) {
                         polyline.push(positions[i].latlng);
+                        if(polyline.length == 15) {
+                            break;
+                        }
                     }
 
                     //마커 연결
@@ -291,7 +302,7 @@
                 <button class="btn btn-lg btn-primary" type="button" id="deleteBtn">삭제</button>
             </div>
             <div id="buttonContainer-right" class="mt-5">
-                <button class="btn btn-lg btn-primary" type="button" id="scheduleSaveBtn" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
+                <button class="btn btn-lg btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
             </div>
         </div>
 
@@ -321,26 +332,28 @@
             modal.show();
         });
 
-        document.getElementById('scheduleSaveBtn').addEventListener('click', function() {
-            var scheduleNo = this.getAttribute('scheduleNo');
-            var data = {
-                scheduleNo: scheduleNo
-            };
+        document.querySelectorAll('.scheduleSaveBtn').forEach(function(element) {
+            element.addEventListener('click', function(event) {
+                var scheduleNo = this.getAttribute('scheduleNo');
+                var data = {
+                    scheduleNo: scheduleNo
+                };
 
-            // AJAX 요청
-            fetch('/tlog/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(data => {
-                console.log('Success:', data);
-                alert('저장 완료!');
-            })
-            .catch((error) => {
-                alert('저장 실패');
+                // AJAX 요청
+                fetch('/tlog/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('저장 완료!');
+                })
+                .catch((error) => {
+                    alert('저장 실패');
+                });
             });
         });
     </script>

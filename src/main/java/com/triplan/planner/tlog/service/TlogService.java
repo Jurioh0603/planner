@@ -27,4 +27,8 @@ public interface TlogService {
     public void modifyTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
     public void saveSchedule(long scheduleNo, String memberId);
+
+    public boolean isFav(String memberId, long tlogNo);
+    public void favoriteTlog(long tlogNo, String memberId);
+    public void notFavoriteTlog(long tlogNo, String memberId);
 }
