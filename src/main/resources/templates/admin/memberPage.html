@@ -19,10 +19,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <title>AdminHub</title>
-
 </head>
 <body>
-
 
 <!-- SIDEBAR -->
 <section id="sidebar">
@@ -31,16 +29,15 @@
         <span class="text">AdminHub</span>
     </a>
     <ul class="side-menu top">
-        <!-- li에 class="active" 추가하면 클릭효과  -->
         <li class="active">
             <a href="#">
-                <i class='bx bxs-group' ></i>
+                <i class='bx bxs-group'></i>
                 <span class="text">회원관리</span>
             </a>
         </li>
         <li>
             <a href="#">
-                <i class='bx bxs-dashboard' ></i>
+                <i class='bx bxs-dashboard'></i>
                 <span class="text">게시판관리</span>
             </a>
         </li>
@@ -49,13 +46,13 @@
     <ul class="side-menu">
         <li>
             <a href="#">
-                <i class='bx bxs-cog' ></i>
+                <i class='bx bxs-cog'></i>
                 <span class="text">Settings</span>
             </a>
         </li>
         <li>
             <a href="#" class="logout">
-                <i class='bx bxs-log-out-circle' ></i>
+                <i class='bx bxs-log-out-circle'></i>
                 <span class="text">Logout</span>
             </a>
         </li>
@@ -67,21 +64,7 @@
 <section id="content">
     <!-- NAVBAR -->
     <nav>
-        <i class='bx bx-menu' ></i>
-        <a href="#" class="nav-link">Categories</a>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-            </div>
-        </form>
-        <a href="#" class="notification">
-            <i class='bx bxs-bell' ></i>
-            <span class="num">8</span>
-        </a>
-        <!--        <a href="#" class="profile">
-                    <img src="img/people.png">
-                </a>-->
+        <i class='bx bx-menu'></i>
     </nav>
     <!-- NAVBAR -->
 
@@ -106,7 +89,7 @@
             <div class="order">
                 <div class="head">
                     <h3>회원정보수정</h3>
-                    <i class='bx bx-search'></i>
+                    <i class='bx bx-search' id="searchIcon" style="font-size: 16px; width: 16px; height: 16px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#searchModal"></i>
                     <i class='bx bx-filter'></i>
                 </div>
                 <table>
@@ -121,7 +104,7 @@
                         <th>회원상태</th>
                     </tr>
                     </thead>
-                    <tbody >
+                    <tbody>
                     <tr th:each="member : ${member}">
                         <td><p th:text="${member.memId}"></p></td>
                         <td th:text="${member.nickName}"></td>
@@ -156,104 +139,150 @@
 </section>
 <!-- CONTENT -->
 
+<!-- 검색 모달 -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="searchModalLabel">검색</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="searchForm">
+                    <div class="mb-3">
+                        <label for="searchType" class="form-label">검색 구분:</label>
+                        <select id="searchType" name="searchType" class="form-select">
+                            <option value="id">ID</option>
+                            <option value="nickname">닉네임</option>
+                            <option value="name">이름</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="searchQuery" class="form-label">검색어:</label>
+                        <input type="text" id="searchQuery" name="searchQuery" class="form-control">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="performSearch()">검색</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-    allSideMenu.forEach(item => {
-        const li = item.parentElement;
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
 
-        item.addEventListener('click', function() {
-            allSideMenu.forEach(i => {
-                i.parentElement.classList.remove('active');
+            item.addEventListener('click', function() {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
             });
-            li.classList.add('active');
         });
-    });
 
-    // TOGGLE SIDEBAR
-    const menuBar = document.querySelector('#content nav .bx.bx-menu');
-    const sidebar = document.getElementById('sidebar');
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
 
-    menuBar.addEventListener('click', function() {
-        sidebar.classList.toggle('hide');
-    });
+        if (menuBar) {
+            menuBar.addEventListener('click', function() {
+                sidebar.classList.toggle('hide');
+                console.log('Sidebar toggled. Current state:', sidebar.classList.contains('hide') ? 'Hidden' : 'Visible');
+            });
+        }
 
-    const searchButton = document.querySelector('#content nav form .form-input button');
-    const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-    const searchForm = document.querySelector('#content nav form');
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
 
-    searchButton.addEventListener('click', function(e) {
-        if (window.innerWidth < 576) {
-            e.preventDefault();
-            searchForm.classList.toggle('show');
-            if (searchForm.classList.contains('show')) {
-                searchButtonIcon.classList.replace('bx-search', 'bx-x');
-            } else {
+        if (searchButton) {
+            searchButton.addEventListener('click', function(e) {
+                if (window.innerWidth < 576) {
+                    e.preventDefault();
+                    searchForm.classList.toggle('show');
+                    if (searchForm.classList.contains('show')) {
+                        searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                    } else {
+                        searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                    }
+                    console.log('Search form toggled. Current state:', searchForm.classList.contains('show') ? 'Shown' : 'Hidden');
+                }
+            });
+        }
+
+        if (window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        } else if (window.innerWidth > 576) {
+            if (searchButtonIcon && searchForm) {
                 searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                searchForm.classList.remove('show');
             }
         }
-    });
 
-    if (window.innerWidth < 768) {
-        sidebar.classList.add('hide');
-    } else if (window.innerWidth > 576) {
-        searchButtonIcon.classList.replace('bx-x', 'bx-search');
-        searchForm.classList.remove('show');
-    }
-
-    window.addEventListener('resize', function() {
-        if (this.innerWidth > 576) {
-            searchButtonIcon.classList.replace('bx-x', 'bx-search');
-            searchForm.classList.remove('show');
-        }
-    });
-
-    // 회원등급변경 스크립트
-const dropdownItems = document.querySelectorAll('.dropdown-menu a');
-
-    dropdownItems.forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            const newGrade = parseInt(item.getAttribute('data-grade'), 10); // 정수로 변환
-            const memberRow = item.closest('tr');
-            const memberId = memberRow.querySelector('td').innerText;
-
-            console.log('변경할 회원 ID:', memberId);
-            console.log('변경할 새 등급:', newGrade);
-
-            fetch('/admin/updateMemberGrade', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: memberId, grade: newGrade }) // 정수로 전송
-            })
-            .then(response => response.json()) // JSON 응답 파싱
-            .then(data => {
-                console.log('서버 응답:', data);
-                if (data.success) {
-                    // 서버 응답을 받은 후 UI를 업데이트
-                    const gradeButton = memberRow.querySelector('.grade-btn');
-                    gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
-                    gradeButton.className = 'btn dropdown-toggle grade-btn';
-                    gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black'); // 기존 클래스 제거
-                    gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black'); // 새로운 클래스 추가
-                } else {
-                    alert('등급 변경 실패: ' + data.message);
+        window.addEventListener('resize', function() {
+            if (this.innerWidth > 576) {
+                if (searchButtonIcon && searchForm) {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                    searchForm.classList.remove('show');
                 }
-            })
-            .catch(error => {
-                console.error('에러 발생:', error);
-                alert('등급 변경 실패: ' + error.message);
-            });
+            }
+            console.log('Window resized. Current width:', this.innerWidth);
+        });
+
+        // 회원등급변경 스크립트 이벤트 위임 방식으로 수정
+        document.body.addEventListener('click', function(event) {
+            if (event.target.matches('.dropdown-menu a')) {
+                event.preventDefault();
+
+                const newGrade = parseInt(event.target.getAttribute('data-grade'), 10);
+                const memberRow = event.target.closest('tr');
+                const memberId = memberRow.querySelector('td').innerText;
+
+                console.log('변경할 회원 ID:', memberId);
+                console.log('변경할 새 등급:', newGrade);
+
+                fetch('/admin/updateMemberGrade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: memberId, grade: newGrade })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('서버 응답:', data);
+                    if (data.success) {
+                        const gradeButton = memberRow.querySelector('.grade-btn');
+                        gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
+                        gradeButton.className = 'btn dropdown-toggle grade-btn';
+                        gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black');
+                        gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black');
+                        console.log('회원 등급이 성공적으로 변경되었습니다.');
+                    } else {
+                        alert('등급 변경 실패: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('에러 발생:', error);
+                    alert('등급 변경 실패: ' + error.message);
+                });
+            }
         });
     });
-});
 
+    // 검색 기능 구현 (예시)
+    function performSearch() {
+        var searchType = document.getElementById("searchType").value;
+        var searchQuery = document.getElementById("searchQuery").value;
 
+        console.log("검색 구분: " + searchType);
+        console.log("검색어: " + searchQuery);
+
+        // 검색 결과를 페이지에 표시하는 로직 추가 필요
+    }
 
 </script>
 </body>
