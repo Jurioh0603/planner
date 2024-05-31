@@ -21,6 +21,9 @@ public class UserService {
 	private MemberMapper memberMapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	SendMail sendMail;
 	
 	//회원가입-저장처리
 	@Transactional
@@ -114,7 +117,7 @@ public class UserService {
 			String content = "변경된 신규 비밀번호는 "+newPassword+" 입니다.";
 
 			//이메일 전송
-			SendMail.sendEmailToMember(toEmailAddr, subject, content);
+			sendMail.sendEmailToMember(toEmailAddr, subject, content);
 
 			result = true;
 
