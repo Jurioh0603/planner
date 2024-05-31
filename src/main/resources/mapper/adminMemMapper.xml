@@ -8,6 +8,7 @@
     <select id="selectAll" resultType="com.triplan.planner.admin.domain.Member">
         SELECT MEMBER_ID as memId, NICKNAME, PASSWORD, NAME, EMAIL, GENDER, TEL, GRADE
         FROM MEMBER
+        LIMIT #{offset}, #{limit}
     </select>
 
     <!-- 특정 회원 조회 -->
@@ -36,6 +37,26 @@
         <if test="searchType == 'name'">
             AND NAME LIKE CONCAT('%', #{searchQuery}, '%')
         </if>
+        LIMIT #{offset}, #{limit}
     </select>
 
+    <!-- 회원 수 조회 -->
+    <select id="countMembers" resultType="int">
+        SELECT COUNT(*) FROM MEMBER
+    </select>
+
+    <!-- 검색된 회원 수 조회 -->
+    <select id="countSearchMembers" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM MEMBER
+        WHERE 1=1
+        <if test="searchType == 'id'">
+            AND MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'nickname'">
+            AND NICKNAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'name'">
+            AND NAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+    </select>
 </mapper>

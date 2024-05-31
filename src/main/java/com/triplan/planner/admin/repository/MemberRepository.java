@@ -1,4 +1,3 @@
-// src/main/java/com/triplan/planner/admin/repository/MemberRepository.java
 package com.triplan.planner.admin.repository;
 
 import com.triplan.planner.admin.domain.Member;
@@ -10,7 +9,10 @@ import java.util.List;
 @Mapper
 public interface MemberRepository {
     // 모든 회원 조회
-    List<Member> selectAll();
+    List<Member> selectAll(@Param("offset") int offset, @Param("limit") int limit);
+
+    // 회원 수 조회
+    int countMembers();
 
     // 회원 정보 수정
     void updateMember(@Param("memberId") String memberId,
@@ -24,6 +26,8 @@ public interface MemberRepository {
     void updateMemberGrade(@Param("memId") String memId, @Param("grade") int grade);
 
     // 회원 검색
-    List<Member> searchMembers(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery);
+    List<Member> searchMembers(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery, @Param("offset") int offset, @Param("limit") int limit);
 
+    // 검색된 회원 수 조회
+    int countSearchMembers(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery);
 }

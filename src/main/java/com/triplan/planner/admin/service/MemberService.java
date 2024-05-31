@@ -20,11 +20,28 @@ public class MemberService {
     // 서버 콘솔 출력용
     private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
-    public List<MemberDTO> getAllMember() {
-        List<Member> members = memberRepository.selectAll();
+    public List<MemberDTO> getMembers(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        List<Member> members = memberRepository.selectAll(offset, pageSize);
         return members.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public int getMemberCount() {
+        return memberRepository.countMembers();
+    }
+
+    public List<MemberDTO> searchMembers(String searchType, String searchQuery, int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        List<Member> members = memberRepository.searchMembers(searchType, searchQuery, offset, pageSize);
+        return members.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public int countSearchMembers(String searchType, String searchQuery) {
+        return memberRepository.countSearchMembers(searchType, searchQuery);
     }
 
     private MemberDTO convertToDTO(Member member) {
@@ -42,13 +59,5 @@ public class MemberService {
     public void updateMemberGrade(String memId, int grade) {
         System.out.println("Updating member ID: " + memId + " to grade: " + grade);
         memberRepository.updateMemberGrade(memId, grade);
-    }
-
-    // 검색 기능 추가
-    public List<MemberDTO> searchMembers(String searchType, String searchQuery) {
-        List<Member> members = memberRepository.searchMembers(searchType, searchQuery);
-        return members.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
     }
 }

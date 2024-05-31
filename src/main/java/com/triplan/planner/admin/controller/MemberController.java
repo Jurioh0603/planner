@@ -27,14 +27,27 @@ public class MemberController {
     @GetMapping("/memberPage")
     public String memberPage(@RequestParam(value = "searchType", required = false) String searchType,
                              @RequestParam(value = "searchQuery", required = false) String searchQuery,
+                             @RequestParam(value = "page", defaultValue = "1") int page,
                              Model model) {
+        int pageSize = 10; // 한 페이지에 보여줄 회원 수
         List<MemberDTO> members;
+        int totalMembers;
+
         if (searchType != null && searchQuery != null) {
-            members = memberService.searchMembers(searchType, searchQuery);
+            members = memberService.searchMembers(searchType, searchQuery, page, pageSize);
+            totalMembers = memberService.countSearchMembers(searchType, searchQuery);
         } else {
-            members = memberService.getAllMember();
+            members = memberService.getMembers(page, pageSize);
+            totalMembers = memberService.getMemberCount();
         }
+
+        int totalPages = (int) Math.ceil((double) totalMembers / pageSize);
         model.addAttribute("member", members);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("searchType", searchType);
+        model.addAttribute("searchQuery", searchQuery);
+
         logger.info("Model Member: {}", members);
         return "admin/memberPage";
     }

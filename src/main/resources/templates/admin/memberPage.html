@@ -136,6 +136,23 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+                        <li class="page-item" th:classappend="${currentPage == 1} ? ' disabled'">
+                            <a class="page-link" th:href="@{/admin/memberPage(page=${currentPage-1}, searchType=${searchType}, searchQuery=${searchQuery})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="pageNum : ${#numbers.sequence(1, totalPages)}" th:classappend="${pageNum == currentPage} ? ' active'">
+                            <a class="page-link" th:href="@{/admin/memberPage(page=${pageNum}, searchType=${searchType}, searchQuery=${searchQuery})}" th:text="${pageNum}">1</a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages} ? ' disabled'">
+                            <a class="page-link" th:href="@{/admin/memberPage(page=${currentPage+1}, searchType=${searchType}, searchQuery=${searchQuery})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </main>
@@ -247,40 +264,67 @@
         });
     });
 
-    // 검색 결과를 업데이트하는 함수
-    function updateMemberTable(members) {
-        var tbody = document.getElementById('memberTableBody');
-        tbody.innerHTML = ''; // 기존 테이블 내용 제거
+// 회원 검색 기능
+function performMemberSearch() {
+    var searchType = document.getElementById("memberSearchType").value;
+    var searchQuery = document.getElementById("memberSearchQuery").value;
 
-        members.forEach(member => {
-            var row = document.createElement('tr');
+    console.log("회원 검색 구분: " + searchType);
+    console.log("회원 검색어: " + searchQuery);
 
-            row.innerHTML = `
-                <td>${member.memId}</td>
-                <td>${member.nickName}</td>
-                <td>${member.name}</td>
-                <td>${member.email}</td>
-                <td>${member.gender}</td>
-                <td>${member.tel}</td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn dropdown-toggle grade-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
-                            class="${member.grade == 9999 ? ' grade-btn admin' : (member.grade == 1111 ? ' grade-btn general' : (member.grade == 2222 ? ' grade-btn withdrawn' : ' grade-btn black'))}"
-                            textContent="${member.grade == 9999 ? '관리자' : (member.grade == 1111 ? '일반' : (member.grade == 2222 ? '탈퇴' : '블랙'))}">
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="#" data-grade="1111">일반</a></li>
-                            <li><a class="dropdown-item" href="#" data-grade="2222">탈퇴</a></li>
-                            <li><a class="dropdown-item" href="#" data-grade="9999">관리자</a></li>
-                            <li><a class="dropdown-item" href="#" data-grade="0000">블랙</a></li>
-                        </ul>
-                    </div>
-                </td>
-            `;
+    fetch('/admin/searchMembers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ searchType: searchType, searchQuery: searchQuery })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('회원 검색 결과:', data);
+        updateMemberTable(data.members); // 검색 결과를 테이블에 업데이트하는 함수 호출
+    })
+    .catch(error => {
+        console.error('회원 검색 오류 발생:', error);
+        alert('검색 실패: ' + error.message);
+    });
+}
 
-            tbody.appendChild(row);
-        });
-    }
+// 검색 결과를 업데이트하는 함수
+function updateMemberTable(members) {
+    var tbody = document.getElementById('memberTableBody');
+    tbody.innerHTML = ''; // 기존 테이블 내용 제거
+
+    members.forEach(member => {
+        var row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${member.memId}</td>
+            <td>${member.nickName}</td>
+            <td>${member.name}</td>
+            <td>${member.email}</td>
+            <td>${member.gender}</td>
+            <td>${member.tel}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle grade-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+                        class="${member.grade == 9999 ? ' grade-btn admin' : (member.grade == 1111 ? ' grade-btn general' : (member.grade == 2222 ? ' grade-btn withdrawn' : ' grade-btn black'))}"
+                        textContent="${member.grade == 9999 ? '관리자' : (member.grade == 1111 ? '일반' : (member.grade == 2222 ? '탈퇴' : '블랙'))}">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#" data-grade="1111">일반</a></li>
+                        <li><a class="dropdown-item" href="#" data-grade="2222">탈퇴</a></li>
+                        <li><a class="dropdown-item" href="#" data-grade="9999">관리자</a></li>
+                        <li><a class="dropdown-item" href="#" data-grade="0000">블랙</a></li>
+                    </ul>
+                </div>
+            </td>
+        `;
+
+        tbody.appendChild(row);
+    });
+}
+
 </script>
 </body>
 </html>
