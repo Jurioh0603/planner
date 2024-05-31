@@ -79,18 +79,30 @@ public class MyPage {
                              @RequestParam String password2,
                              Model model) {
         Profile profile = new Profile();
-        if (!password1.equals(password2)) {
-            return "/mypage/fail";
+        if (!password1.equals(password2) || password1.trim().isEmpty()) {
+            return "/mypage/error";
         } else {
             //데이터베이스에 저장
             profile.setMemberId((String) session.getAttribute("memberId"));
             profile.setNickName(updateInfoForm.getNickName());
-            profile.setPassword(updateInfoForm.getPassword1());
+            profile.setPassword(updateInfoForm.getPassword1().replaceAll(" ","")); // 공백제거 후 저장
             System.out.println(profile);
             myPageService.updateInfo(profile);
             model.addAttribute(profile);
             return "redirect:/mypage/myPage";
         }
+    }
+
+    // Get매핑 시도시 에러 페이지로 리다이렉트
+    @GetMapping("/mypage/updateInfo")
+    public String handleSpecificPath() {
+        return "redirect:/mypage/error";
+    }
+
+    // 즐겨찾기 목록 요청
+    @GetMapping("/mypage/myFav")
+    public String myFavList(){
+        return "/mypage/myFav";
     }
 
 }
