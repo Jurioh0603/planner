@@ -12,7 +12,7 @@
     align-items: end;
 }
 
-.profileContainer, .replyContent {
+.profileContainer, .replyBtns {
     display: flex;
     align-items: end;
 }
@@ -35,11 +35,12 @@
     min-height: 200px;
 }
 
-.content {
+#content {
     height: 100px;
 }
 
 .buttonContainer {
+    margin-left: auto;
     display: flex;
     justify-content: flex-end;
 }
@@ -47,4 +48,9 @@
 .replyContainer {
     border-radius: 5px;
     background-color: #DCDCDC;
+    padding: 10px 20px;
+}
+
+a {
+    text-decoration: none;
 }

@@ -51,13 +51,13 @@
         </div>
         <div class="localLinkBtn">
             <a href="#">
-                <img class="localImg" src="/images/GB.png"/>
+                <img class="localImg" src="/images/JB.png"/>
                 <p>전 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
             <a href="#">
-                <img class="localImg" src="/images/GN.png"/>
+                <img class="localImg" src="/images/JN.png"/>
                 <p>전 남</p>
             </a>
         </div>
@@ -85,21 +85,20 @@
         <!-- 추가 -->
     </div>
 
-    <hr/>
-    <div class="contentContainer">
-        <div class="title">강남 인근에 맛있는 라멘집 있을까요? [2]</div>
-        <div class="writer">우디누나</div>
-        <div class="writeTime">12:36:20</div>
-    </div>
+    <block th:each="item : ${communityList}">
+        <hr/>
+        <div class="contentContainer">
+            <a href="#"><div class="title" th:text="${item.title}">강남 인근에 맛있는 라멘집 있을까요? [2]</div></a>
+            <div class="writer" th:text="${item.memberId}">우디누나</div>
+            <div class="writeTime" th:text="${item.getWriteTimeFormatted()}">12:36:20</div>
+        </div>
+    </block>
 
     <hr/>
-    <div class="contentContainer">
-        <div class="title">안녕하세요. 가입했어요.</div>
-        <div class="writer">감자</div>
-        <div class="writeTime">24/05/30</div>
+
+    <div class="buttonContainer mt-3">
+        <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
     </div>
-
-
 
 </div>
 

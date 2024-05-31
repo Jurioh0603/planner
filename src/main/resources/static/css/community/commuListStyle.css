@@ -39,18 +39,37 @@ a {
 }
 
 .title {
-    width: 70%;
+    width: 600px;
 }
 
 .writer {
-    width: 20%;
+    width: 100px;
 }
 
 .writeTime {
-    width: 10%;
+    width: 100px;
 }
 
 .localLinkBtn:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.buttonContainer {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contentContainer {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.contentTypeContainer {
+    text-align: center;
+}
+
+hr {
+    margin: 5px;
 }

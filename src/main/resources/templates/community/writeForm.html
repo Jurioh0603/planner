@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -16,7 +16,7 @@
 <div id="contents">
 
     <div><h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3></div>
-    <form action="#" method="post" id="form">
+    <form action="/community/write" method="post" id="form">
         <div>
             <label for="title" class="form-label"><strong>제목</strong></label>
             <input type="text" name="title" id="title" class="form-control"/>
@@ -27,9 +27,11 @@
             <textarea name="content" id="content" class="form-control"></textarea>
         </div>
 
+        <input type="hidden" id="local" name="local" th:value="${local}"/>
+
         <div id="buttonContainer" class="mt-5">
             <button class="btn btn-lg btn-light me-3" type="button" onclick="history.back()" style="border-color: black;">취소</button>
-            <button class="btn btn-lg btn-primary" type="button" id="saveBtn">저장</button>
+            <button class="btn btn-lg btn-primary" type="submit" id="saveBtn">저장</button>
         </div>
     </form>
 
