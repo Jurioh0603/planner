@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogDetailStyle.css">
+</head>
+<body>
+    <div id="contents">
+        <div class="mt-5">
+            <h2>부산 3박 4일 일정 공유해요~</h2>
+        </div>
+
+        <div class="infoContainer mt-4">
+            <div class="profileContainer">
+                <div><img src="/images/profile.jpg" alt="프로필 사진" class="profile-img"></div>
+                <div class="ms-3 mb-1"><b>닉네임</b> 님의 일정</div>
+            </div>
+            <div class="iconContainer">
+                <a href="#"><div><img src="/images/heart_white.png" alt="즐겨찾기" class="fav-img mb-1"></div></a>
+                <a href="#"><div><img src="/images/download.jpg" alt="일정담기" class="download-img ms-2"></div></a>
+            </div>
+        </div>
+        <hr/>
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="/images/busan-sample.jpg" class="d-block w-100" alt="해운대">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/busan-sample.jpg" class="d-block w-100" alt="해운대">
+                </div>
+                <div class="carousel-item">
+                    <img src="/images/busan-sample.jpg" class="d-block w-100" alt="해운대">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="mt-3">
+            맛있는 음식이 가득한 부산!! 처음 놀러갔는데 너무 재밌었어요~<br/>
+            일정 공유해요!!
+        </div>
+        <hr/>
+
+        <div id="mapContainer">
+            <div id="map" style="width:800px; height:400px;"></div>
+        </div>
+        <script th:inline="javascript">
+            var appkey = [[${KAKAO_API_KEY}]];
+        </script>
+        <script>
+            var script = document.createElement('script');
+            script.type = "text/javascript";
+            script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + appkey + "&autoload=false";
+            document.head.appendChild(script);
+        </script>
+        <script>
+            script.onload = function() {
+                kakao.maps.load(function() {
+                    var container = document.getElementById('map'); //지도를 표시할 div
+                    var options = {
+                        center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
+                        level: 3 //지도의 확대 레벨
+                    };
+
+                    var map = new kakao.maps.Map(container, options); //지도 생성
+
+                    // 마커를 표시할 위치와 title 객체 배열입니다
+                    var positions = [
+                        {
+                            title: '카카오',
+                            latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+                        },
+                        {
+                            title: '생태연못',
+                            latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+                        },
+                        {
+                            title: '텃밭',
+                            latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+                        },
+                        {
+                            title: '근린공원',
+                            latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+                        }
+                    ];
+
+                    // 마커 이미지의 이미지 주소입니다
+                    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+
+                    for (var i = 0; i < positions.length; i ++) {
+
+                        // 마커 이미지의 이미지 크기 입니다
+                        var imageSize = new kakao.maps.Size(24, 35);
+
+                        // 마커 이미지를 생성합니다
+                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+                        // 마커를 생성합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map, // 마커를 표시할 지도
+                            position: positions[i].latlng, // 마커를 표시할 위치
+                            title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                            image : markerImage // 마커 이미지
+                        });
+                    }
+                });
+            };
+        </script>
+        <hr/>
+
+        <h3>day 1 - 11.10</h3>
+        <ul>
+            <li class="ui-state-default">
+                <div class="centered-circle"><span>1</span></div>
+                <div class="planDetail"><h4>해운대</h4>물에 들어갈까 말까?!</div>
+            </li>
+            <li class="ui-state-default">
+                <div class="centered-circle"><span>2</span></div>
+                <div class="planDetail"><h4>태종대</h4>백악기말에 호수에서 쌓인 퇴적층이 해수...</div>
+            </li>
+            <li class="ui-state-default">
+                <div class="centered-circle"><span>3</span></div>
+                <div class="planDetail"><h4>이재모피자</h4>1순위 하와이안 피자ㅋ 2순위 고구마 피자...</div>
+            </li>
+            <li class="ui-state-default">
+                <div class="centered-circle"><span>4</span></div>
+                <div class="planDetail"><h4>장소이름</h4>메모</div>
+            </li>
+        </ul>
+        <hr/>
+
+        <h3>day 2 - 11.11</h3>
+
+        <div id="buttonContainer">
+            <div id="buttonContainer-left" class="mt-5">
+                <button class="btn btn-lg btn-primary me-2" type="button">수정</button>
+                <button class="btn btn-lg btn-primary" type="button">삭제</button>
+            </div>
+            <div id="buttonContainer-right" class="mt-5">
+                <button class="btn btn-lg btn-primary" type="button">일정담기</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

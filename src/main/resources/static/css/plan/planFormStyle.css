@@ -1,0 +1,89 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#planTitle, #planDay {
+    display: flex;
+    align-items: flex-end;
+}
+
+#planTitle div, #planDay div {
+    margin: 0 5px;
+}
+
+.editBtn {
+    border: 0px;
+    background-color: white;
+}
+
+#mapContainer {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sortable {
+    list-style-type: none;
+}
+
+li {
+    margin: 20px 30px;
+    padding: 20px;
+}
+
+ul {
+    padding-right: 32px;
+}
+
+.hamburgerMenu {
+    width: 30px;
+}
+
+.ui-state-default {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.planDetail {
+    margin-left: 20px;
+}
+
+.centered-circle {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #99CCFF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input.deleteBtn {
+    background: url("/images/close.svg") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 30px;
+    top: 10px;
+    right: 5px;
+    border: none;
+}
+
+.ui-state-default:hover {
+    cursor: pointer;
+    background-color: #DCDCDC;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,47 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#title, #content {
+    width: 100%;
+}
+
+#content {
+    height: 500px;
+}
+
+.btn-upload {
+    width: 150px;
+    height: 30px;
+    background: #fff;
+    border: 1px solid rgb(77,77,77);
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-upload:hover {
+    background: rgb(77,77,77);
+    color: #fff;
+}
+
+#file {
+    display: none;
+}
+
+.plan-upload {
+    display: flex;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+}
