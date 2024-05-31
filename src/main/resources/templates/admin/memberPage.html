@@ -91,11 +91,11 @@
                     <h3>회원정보수정</h3>
                     <form action="/admin/memberPage" method="get" class="d-flex">
                         <select name="searchType" class="form-select me-2">
-                            <option value="id">ID</option>
-                            <option value="nickname">닉네임</option>
-                            <option value="name">이름</option>
+                            <option value="id" th:selected="${searchType == 'id'}">ID</option>
+                            <option value="nickname" th:selected="${searchType == 'nickname'}">닉네임</option>
+                            <option value="name" th:selected="${searchType == 'name'}">이름</option>
                         </select>
-                        <input type="text" name="searchQuery" class="form-control me-2" placeholder="검색어">
+                        <input type="text" name="searchQuery" class="form-control me-2" placeholder="검색어" th:value="${searchQuery}">
                         <button type="submit" class="btn btn-primary">검색</button>
                     </form>
                 </div>
