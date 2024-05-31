@@ -16,7 +16,7 @@
     margin: 0 auto;
 }
 
-#localLinkBtnContainer {
+#localLinkBtnContainer, .contentContainer {
     display: flex;
     align-items: center;
 }
@@ -34,6 +34,23 @@ a {
 #weatherContainer {
     width: 600px;
     height: 200px;
-    background-color: gray;
+    background-color: #DCDCDC;
     margin: 0 auto;
+}
+
+.title {
+    width: 70%;
+}
+
+.writer {
+    width: 20%;
+}
+
+.writeTime {
+    width: 10%;
+}
+
+.localLinkBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
