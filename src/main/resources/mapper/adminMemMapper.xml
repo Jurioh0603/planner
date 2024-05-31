@@ -10,7 +10,6 @@
         FROM MEMBER
     </select>
 
-
     <!-- 특정 회원 조회 -->
     <select id="selectById" parameterType="String" resultType="com.triplan.planner.admin.domain.Member">
         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
@@ -23,6 +22,20 @@
         WHERE MEMBER_ID = #{memId}
     </update>
 
-
+    <!-- 회원 검색 -->
+    <select id="searchMembers" parameterType="map" resultType="com.triplan.planner.admin.domain.Member">
+        SELECT MEMBER_ID as memId, NICKNAME, NAME, EMAIL, GENDER, TEL, GRADE
+        FROM MEMBER
+        WHERE 1=1
+        <if test="searchType == 'id'">
+            AND MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'nickname'">
+            AND NICKNAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'name'">
+            AND NAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+    </select>
 
 </mapper>

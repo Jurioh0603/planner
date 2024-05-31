@@ -23,6 +23,7 @@ public interface MemberRepository {
     // 회원 등급 업데이트
     void updateMemberGrade(@Param("memId") String memId, @Param("grade") int grade);
 
-    // 회원 삭제
-//    void deleteMember(@Param("memId") String memId);
+    // 회원 검색
+    List<Member> searchMembers(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery);
+
 }

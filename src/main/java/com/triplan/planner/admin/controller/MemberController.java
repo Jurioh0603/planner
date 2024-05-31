@@ -1,4 +1,3 @@
-// src/main/java/com/triplan/planner/admin/controller/MemberController.java
 package com.triplan.planner.admin.controller;
 
 import com.triplan.planner.admin.dto.MemberDTO;
@@ -10,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,14 +25,21 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping("/memberPage")
-    public String memberPage(Model model){
-        List<MemberDTO> members = memberService.getAllMember();
+    public String memberPage(@RequestParam(value = "searchType", required = false) String searchType,
+                             @RequestParam(value = "searchQuery", required = false) String searchQuery,
+                             Model model) {
+        List<MemberDTO> members;
+        if (searchType != null && searchQuery != null) {
+            members = memberService.searchMembers(searchType, searchQuery);
+        } else {
+            members = memberService.getAllMember();
+        }
         model.addAttribute("member", members);
         logger.info("Model Member: {}", members);
         return "admin/memberPage";
     }
 
-    //회원정보수정
+    // 회원정보수정
     @PostMapping("/updateMemberGrade")
     public ResponseEntity<Map<String, Object>> updateMemberGrade(@RequestBody Map<String, Object> payload) {
         String memId = (String) payload.get("id");

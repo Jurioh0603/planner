@@ -1,4 +1,3 @@
-// src/main/java/com/triplan/planner/admin/service/MemberService.java
 package com.triplan.planner.admin.service;
 
 import com.triplan.planner.admin.domain.Member;
@@ -43,10 +42,13 @@ public class MemberService {
     public void updateMemberGrade(String memId, int grade) {
         System.out.println("Updating member ID: " + memId + " to grade: " + grade);
         memberRepository.updateMemberGrade(memId, grade);
-        /*if (grade == 2222) {
-            memberRepository.deleteMember(memId);
-        } else {
-            memberRepository.updateMemberGrade(memId, grade);
-        }*/
+    }
+
+    // 검색 기능 추가
+    public List<MemberDTO> searchMembers(String searchType, String searchQuery) {
+        List<Member> members = memberRepository.searchMembers(searchType, searchQuery);
+        return members.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 }

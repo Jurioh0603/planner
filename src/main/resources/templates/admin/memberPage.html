@@ -89,8 +89,15 @@
             <div class="order">
                 <div class="head">
                     <h3>회원정보수정</h3>
-                    <i class='bx bx-search' id="searchIcon" style="font-size: 16px; width: 16px; height: 16px; cursor: pointer;" data-bs-toggle="modal" data-bs-target="#searchModal"></i>
-                    <i class='bx bx-filter'></i>
+                    <form action="/admin/memberPage" method="get" class="d-flex">
+                        <select name="searchType" class="form-select me-2">
+                            <option value="id">ID</option>
+                            <option value="nickname">닉네임</option>
+                            <option value="name">이름</option>
+                        </select>
+                        <input type="text" name="searchQuery" class="form-control me-2" placeholder="검색어">
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </form>
                 </div>
                 <table>
                     <thead>
@@ -104,16 +111,14 @@
                         <th>회원상태</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr th:each="member : ${member}">
-                        <td><p th:text="${member.memId}"></p></td>
+                    <tbody id="memberTableBody" th:each="member : ${member}">
+                    <tr>
+                        <td th:text="${member.memId}"></td>
                         <td th:text="${member.nickName}"></td>
                         <td th:text="${member.name}"></td>
                         <td th:text="${member.email}"></td>
                         <td th:text="${member.gender}"></td>
                         <td th:text="${member.tel}"></td>
-
-                        <!-- HTML: 회원 등급 변경을 위한 드롭다운 버튼 -->
                         <td>
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle grade-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
@@ -128,45 +133,14 @@
                                 </ul>
                             </div>
                         </td>
-
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </main>
-    <!-- MAIN -->
 </section>
 <!-- CONTENT -->
-
-<!-- 검색 모달 -->
-<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="searchModalLabel">검색</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="searchForm">
-                    <div class="mb-3">
-                        <label for="searchType" class="form-label">검색 구분:</label>
-                        <select id="searchType" name="searchType" class="form-select">
-                            <option value="id">ID</option>
-                            <option value="nickname">닉네임</option>
-                            <option value="name">이름</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="searchQuery" class="form-label">검색어:</label>
-                        <input type="text" id="searchQuery" name="searchQuery" class="form-control">
-                    </div>
-                    <button type="button" class="btn btn-primary" onclick="performSearch()">검색</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -273,17 +247,40 @@
         });
     });
 
-    // 검색 기능 구현 (예시)
-    function performSearch() {
-        var searchType = document.getElementById("searchType").value;
-        var searchQuery = document.getElementById("searchQuery").value;
+    // 검색 결과를 업데이트하는 함수
+    function updateMemberTable(members) {
+        var tbody = document.getElementById('memberTableBody');
+        tbody.innerHTML = ''; // 기존 테이블 내용 제거
 
-        console.log("검색 구분: " + searchType);
-        console.log("검색어: " + searchQuery);
+        members.forEach(member => {
+            var row = document.createElement('tr');
 
-        // 검색 결과를 페이지에 표시하는 로직 추가 필요
+            row.innerHTML = `
+                <td>${member.memId}</td>
+                <td>${member.nickName}</td>
+                <td>${member.name}</td>
+                <td>${member.email}</td>
+                <td>${member.gender}</td>
+                <td>${member.tel}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle grade-btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
+                            class="${member.grade == 9999 ? ' grade-btn admin' : (member.grade == 1111 ? ' grade-btn general' : (member.grade == 2222 ? ' grade-btn withdrawn' : ' grade-btn black'))}"
+                            textContent="${member.grade == 9999 ? '관리자' : (member.grade == 1111 ? '일반' : (member.grade == 2222 ? '탈퇴' : '블랙'))}">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#" data-grade="1111">일반</a></li>
+                            <li><a class="dropdown-item" href="#" data-grade="2222">탈퇴</a></li>
+                            <li><a class="dropdown-item" href="#" data-grade="9999">관리자</a></li>
+                            <li><a class="dropdown-item" href="#" data-grade="0000">블랙</a></li>
+                        </ul>
+                    </div>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+        });
     }
-
 </script>
 </body>
 </html>
