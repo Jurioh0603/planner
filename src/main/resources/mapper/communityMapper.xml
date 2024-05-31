@@ -6,7 +6,29 @@
 
     <select id="getCommunityList" parameterType="string" resultType="Community">
         SELECT *
-        FROM ${local};
+        FROM ${local}
+        ORDER BY WRITE_TIME DESC
     </select>
 
+    <insert id="insertCommunity" useGeneratedKeys="true" keyProperty="community.bno">
+        INSERT INTO ${local} (TITLE, CONTENT, WRITE_TIME, MEMBER_ID)
+        VALUES (#{community.title}, #{community.content}, NOW(), #{community.memberId})
+    </insert>
+
+    <select id="getCommunityByNo" resultType="Community">
+        SELECT *
+        FROM ${local}
+        WHERE BNO=#{bno}
+    </select>
+
+    <update id="updateCommunity">
+        UPDATE ${local}
+        SET TITLE=#{community.title}, CONTENT=#{community.content}
+        WHERE BNO=#{community.bno}
+    </update>
+
+    <delete id="deleteCommunityByNo">
+        DELETE FROM ${local}
+        WHERE BNO=#{bno}
+    </delete>
 </mapper>

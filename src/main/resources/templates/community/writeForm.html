@@ -31,10 +31,32 @@
 
         <div id="buttonContainer" class="mt-5">
             <button class="btn btn-lg btn-light me-3" type="button" onclick="history.back()" style="border-color: black;">취소</button>
-            <button class="btn btn-lg btn-primary" type="submit" id="saveBtn">저장</button>
+            <button class="btn btn-lg btn-primary" type="button" id="saveBtn">저장</button>
         </div>
     </form>
 
 </div>
+<script>
+    document.getElementById("saveBtn").addEventListener("click", function () {
+        //제목 체크
+        var titleInput = document.getElementById('title');
+
+        if(titleInput.value == '') {
+            alert("제목은 필수 사항입니다.");
+            return false;
+        }
+
+        //내용 체크
+        var contentInput = document.getElementById('content');
+
+        if(contentInput.value == '') {
+            alert("내용은 필수 사항입니다.");
+            return false;
+        }
+
+        //제출
+        document.getElementById("form").submit();
+    });
+</script>
 </body>
 </html>

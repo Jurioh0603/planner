@@ -20,63 +20,63 @@
 
     <div id="localLinkBtnContainer" class="mt-3">
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=S)}|">
                 <img class="localImg" src="/images/S.png"/>
-                <p>서 울</p>
+                <p id="S">서 울</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=GG)}|">
                 <img class="localImg" src="/images/GG.png"/>
-                <p>경 기</p>
+                <p id="GG">경 기</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=GW)}|">
                 <img class="localImg" src="/images/GW.png"/>
-                <p>강 원</p>
+                <p id="GW">강 원</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=CB)}|">
                 <img class="localImg" src="/images/CB.png"/>
-                <p>충 북</p>
+                <p id="CB">충 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=CN)}|">
                 <img class="localImg" src="/images/CN.png"/>
-                <p>충 남</p>
+                <p id="CN">충 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=JB)}|">
                 <img class="localImg" src="/images/JB.png"/>
-                <p>전 북</p>
+                <p id="JB">전 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=JN)}|">
                 <img class="localImg" src="/images/JN.png"/>
-                <p>전 남</p>
+                <p id="JN">전 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=GB)}|">
                 <img class="localImg" src="/images/GB.png"/>
-                <p>경 북</p>
+                <p id="GB">경 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=GN)}|">
                 <img class="localImg" src="/images/GN.png"/>
-                <p>경 남</p>
+                <p id="GN">경 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a href="#">
+            <a th:href="|@{/community/list(local=JJ)}|">
                 <img class="localImg" src="/images/JJ.png"/>
-                <p>제 주</p>
+                <p id="JJ">제 주</p>
             </a>
         </div>
     </div>
@@ -88,9 +88,9 @@
     <block th:each="item : ${communityList}">
         <hr/>
         <div class="contentContainer">
-            <a href="#"><div class="title" th:text="${item.title}">강남 인근에 맛있는 라멘집 있을까요? [2]</div></a>
-            <div class="writer" th:text="${item.memberId}">우디누나</div>
-            <div class="writeTime" th:text="${item.getWriteTimeFormatted()}">12:36:20</div>
+            <a th:href="|@{/community/detail(local=${local}, no=${item.bno})}|"><div class="title" th:text="${item.title}"></div></a>
+            <div class="writer" th:text="${item.memberId}"></div>
+            <div class="writeTime" th:text="${item.getWriteTimeFormatted()}"></div>
         </div>
     </block>
 
@@ -101,6 +101,11 @@
     </div>
 
 </div>
-
+<script th:inline="javascript">
+    //선택된 지역 게시판 이름에 <strong> 부여
+    var local = [[${local}]];
+    var localP = document.getElementById(local);
+    localP.innerHTML = `<strong>${localP.innerHTML}</strong>`;
+</script>
 </body>
 </html>

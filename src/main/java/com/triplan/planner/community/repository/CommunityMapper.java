@@ -9,4 +9,12 @@ import java.util.List;
 public interface CommunityMapper {
 
     public List<Community> getCommunityList(String local);
+
+    public void insertCommunity(Community community, String local);
+
+    public Community getCommunityByNo(String local, long bno);
+
+    public void updateCommunity(Community community, String local);
+
+    public void deleteCommunityByNo(String local, long bno);
 }

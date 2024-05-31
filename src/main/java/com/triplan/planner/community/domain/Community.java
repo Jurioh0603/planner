@@ -25,7 +25,7 @@ public class Community {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             return format.format(writeTime);
         } else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
             return format.format(writeTime);
         }
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.community.repository.ReplyMapper">
+
+    <select id="maxRstep" resultType="long">
+        SELECT MAX(RSTEP)
+        FROM ${local}
+        WHERE BNO=#{bno}
+    </select>
+
+    <insert id="insertReply">
+        INSERT INTO ${local} (RCONTENT, RSTEP, RWRITETIME, MEMBER_ID, BNO)
+        VALUES (#{reply.rcontent}, #{rstep}, NOW(), #{reply.memberId}, #{reply.bno})
+    </insert>
+
+    <select id="getReplyListByNo" resultType="Reply">
+        SELECT *
+        FROM ${local}
+        WHERE BNO=#{bno}
+        ORDER BY RSTEP ASC, RNO ASC
+    </select>
+
+    <insert id="insertReReply">
+        INSERT INTO ${local} (RCONTENT, RSTEP, RWRITETIME, MEMBER_ID, BNO)
+        VALUES (#{reply.rcontent}, #{reply.rstep}, NOW(), #{reply.memberId}, #{reply.bno})
+    </insert>
+
+</mapper>

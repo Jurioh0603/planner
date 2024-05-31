@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,60 +15,148 @@
 <body>
 <div id="contents">
     <div class="mt-5">
-        <h2>강남 인근에 맛있는 라멘집 있을까요?</h2>
+        <h2>[[${communityDetail.community.title}]]</h2>
     </div>
 
     <div class="infoContainer mt-4">
         <div class="profileContainer">
             <div><img src="/images/profile.jpg" alt="프로필 사진" class="profile-img"></div>
-            <div class="ms-3 mb-1">우디누나</div>
+            <div class="ms-3 mb-1">[[${communityDetail.community.memberId}]]</div>
         </div>
 
-        <div class="writeTime">3시간 전</div>
+        <div class="writeTime" id="writeTime"></div>
     </div>
     <hr/>
 
-    <div class="contentContainer">라멘이 먹고 싶은데 맛집 있나요? 추천해주세요!</div>
-    <hr/>
+    <div class="contentContainer">[[${communityDetail.community.content}]]</div>
 
-    <form action="#" method="post" id="form">
+    <hr/>
+    <div class="doContainer">
+        <div>
+            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local})}'|" style="border-color: black;">목록</button>
+        </div>
+        <div class="buttonContainer">
+            <button class="btn btn-sm btn-primary me-2" type="button" id="modifyBtn" th:onclick="|location.href='@{/community/modify(local=${local}, no=${communityDetail.community.bno})}'|">수정</button>
+            <button class="btn btn-sm btn-primary" type="button" id="deleteBtn">삭제</button>
+        </div>
+    </div>
+
+    <form action="/community/reply/write" method="post">
         <div class="mt-3">
-            <label for="content" class="form-label"><strong>댓글</strong></label>
-            <textarea name="content" id="content" class="form-control"></textarea>
+            <label for="rcontent" class="form-label"><strong>댓글</strong></label>
+            <textarea name="rcontent" id="rcontent" class="form-control"></textarea>
         </div>
 
+        <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+        <input type="hidden" name="local" th:value="${local}"/>
+
         <div class="buttonContainer mt-1">
-            <button class="btn btn-sm btn-primary" type="button" id="saveBtn">댓글 쓰기</button>
+            <button class="btn btn-sm btn-primary" type="submit">댓글 쓰기</button>
         </div>
     </form>
     <hr/>
 
-    <div class="replyContainer">
-        <div class="mb-2"><strong>우디누나</strong></div>
-        <div class="mb-2">오레노 라멘 맛있어요</div>
-        <div class="replyBtns">
-            <a href="#">댓글 쓰기</a>
-            <div class="buttonContainer">
-                <a href="#" class="me-2">수정</a>
-                <a href="#">삭제</a>
+    <th:block th:each="reply : ${communityDetail.replyList}">
+        <div class="replyContainer mt-2" >
+            <div class="mb-2"><strong>[[${reply.memberId}]]</strong></div>
+            <div class="mb-2">[[${reply.rcontent}]]</div>
+            <div class="replyBtns">
+                <div class="replyBtn" onclick="toggleReplyForm(this)">댓글 쓰기</div>
+                <div class="buttonContainer">
+                    <a href="#" class="me-2">수정</a>
+                    <a href="#">삭제</a>
+                </div>
             </div>
+            <form action="/community/reply/rewrite" method="post" class="replyForm" style="display: none;">
+                <div class="mt-3">
+                    <textarea name="rcontent" class="form-control"></textarea>
+                </div>
+
+                <input type="hidden" name="rstep" th:value="${reply.rstep}"/>
+                <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+                <input type="hidden" name="local" th:value="${local}"/>
+
+                <div class="buttonContainer mt-1">
+                    <button class="btn btn-sm btn-primary" type="submit">댓글 쓰기</button>
+                </div>
+            </form>
         </div>
-    </div>
-
-    <div class="replyContainer mt-2 ms-5">
-        <div class="mb-2"><strong>우디누나</strong></div>
-        <div class="mb-2">오레노 라멘 맛있어요</div>
-        <div class="replyBtns">
-            <a href="#">댓글 쓰기</a>
-            <div class="buttonContainer">
-                <a href="#" class="me-2">수정</a>
-                <a href="#">삭제</a>
-            </div>
-        </div>
-    </div>
-
-
+    </th:block>
 
 </div>
+
+<div class="modal" id="confirmDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">작성글 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                정말 삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="confirmDeleteBtn" th:attr="onclick=|location.href='@{/community/delete(local=${local}, no=${communityDetail.community.bno})}'|">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    // 작성된 시간을 표시할 요소 선택
+    var writeTimeElement = document.getElementById('writeTime');
+
+    // 작성된 시간 가져오기
+    var writeTime = [[${communityDetail.community.writeTime}]];
+    var writeDate = new Date(writeTime);
+
+    // 현재 시간
+    var currentDate = new Date();
+
+    // 현재 시간과 작성된 시간의 차이 계산 (밀리초 단위)
+    var timeDiff = currentDate - writeDate;
+
+    // 밀리초를 시간으로 변환
+    var seconds = Math.floor(timeDiff / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+
+    // 시간 전에 대한 표시를 작성된 시간 요소에 추가
+    var displayText = '';
+    if (days > 0) {
+        displayText = days + '일 전';
+    } else if (hours > 0) {
+        displayText = hours + '시간 전';
+    } else if (minutes > 0) {
+        displayText = minutes + '분 전';
+    } else if (seconds > 0) {
+        displayText = seconds + '초 전';
+    } else {
+        displayText = '방금 전';
+    }
+    writeTimeElement.innerText = displayText;
+
+    document.getElementById("deleteBtn").addEventListener("click", function () {
+        const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        modal.show();
+    });
+
+    function toggleReplyForm(button) {
+        //댓글 쓰기 버튼이 속한
+        var replyContainer = button.closest('.replyContainer');
+        //replyForm을 찾는다.
+        var replyForm = replyContainer.querySelector('.replyForm');
+        //보였다, 안보였다
+        if (replyForm.style.display == 'none') {
+            replyForm.style.display = 'block';
+            button.innerText = '댓글 취소';
+        } else {
+            replyForm.style.display = 'none';
+            button.innerText = '댓글 쓰기';
+        }
+    }
+</script>
 </body>
 </html>
