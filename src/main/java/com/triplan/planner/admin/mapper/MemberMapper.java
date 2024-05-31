@@ -8,4 +8,3 @@ import java.util.Map;
 public interface MemberMapper {
     void updateMemberGrade(Map<String, Object> params);
 }
-
