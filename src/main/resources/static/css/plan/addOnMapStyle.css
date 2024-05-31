@@ -38,3 +38,20 @@ h3 {
     padding: 10px;
     margin: 0px;
 }
+
+#select {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+#select:hover {
+    background-color: #0056b3;
+}

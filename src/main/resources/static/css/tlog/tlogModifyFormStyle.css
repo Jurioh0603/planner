@@ -45,3 +45,8 @@
     display: flex;
     justify-content: flex-end;
 }
+
+#deletePlanBtn:hover, #deleteImageBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}

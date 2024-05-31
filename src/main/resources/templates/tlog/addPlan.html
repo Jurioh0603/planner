@@ -11,24 +11,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/css/tlog/addPlanStyle.css">
+
+    <script>
+        function selectPlan(title, no) {
+            window.opener.addPlan(title, no);
+
+            window.close();
+        }
+    </script>
 </head>
 <body>
-<form action="#" method="get">
+<form action="/tlog/select" method="get">
     <div id="searchContainer">
-        <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="일정 검색"/></div>
-        <div id="searchIconContainer"><input type="button" id="searchIcon"/></div>
+        <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="일정 검색" th:value="${search}"/></div>
+        <div id="searchIconContainer"><input type="submit" id="searchIcon" value=""/></div>
     </div>
 </form>
 <hr/>
 
-<div class="planContainer">
-    <div class="ms-3">
-        <h3 class="mb-0">경애와 떠나는 부산 여행</h3>
+<block th:each="schedule: ${scheduleList}">
+    <div class="planContainer">
+        <div class="ms-3">
+            <h3 class="mb-0" th:text="${schedule.scheduleTitle}"></h3>
+        </div>
+        <div class="selectBtn">
+            <p class="mb-0" th:attr="onclick=|selectPlan('${schedule.scheduleTitle}', ${schedule.scheduleNo})|">선택</p>
+        </div>
     </div>
-    <div class="selectBtn">
-        <a href="#">선택</a>
-    </div>
-</div>
+</block>
 
 </body>
 </html>

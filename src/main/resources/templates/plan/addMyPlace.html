@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="searchContainer">
-        <div id="backBtnContainer"><input type="button" id="backIcon" onclick="location.href='/plan/addAttr'"/></div>
+        <div id="backBtnContainer"><input type="button" id="backIcon" th:attr="onclick=|location.href='@{/plan/addAttr?keyword=강남+맛집(day=${day})}'|"/></div>
         <div id="address_kakao">
             <div id="searchInputContainer"><input type="text" name="search" id="search" placeholder="주소 검색" readonly/></div>
             <div id="searchIconContainer"><input type="button" id="searchIcon"/></div>
@@ -23,11 +23,12 @@
     <hr/>
 
     <div id="mapContainer">
-        <div id="map" style="width:550px; height:400px;"></div>
+        <div id="map" style="position:relative;width:100%;height:395px;"></div>
         <button id="select">추가</button>
     </div>
     <script th:inline="javascript">
         var appkey = [[${KAKAO_API_KEY}]];
+        var day = [[${day}]];
     </script>
     <script>
         var script = document.createElement('script');
@@ -36,6 +37,8 @@
         document.head.appendChild(script);
     </script>
     <script>
+        var marker = null;
+
         //default
         script.onload = function() {
             updateMap('제주특별자치도 제주시 첨단로 242');
@@ -72,7 +75,7 @@
                         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
                         // 마커를 생성합니다
-                        var marker = new kakao.maps.Marker({
+                        marker = new kakao.maps.Marker({
                             position: coords,
                             image: markerImage // 마커이미지 설정
                         });
@@ -86,16 +89,49 @@
                 });
             });
         };
+
+        // 추가 버튼에 클릭 이벤트 추가
+        var addButton = document.getElementById('select');
+        addButton.addEventListener('click', function() {
+            var latlng = marker.getPosition();
+            var lat = latlng.getLat();
+            var lng = latlng.getLng();
+
+            do {
+                var placeName = prompt("장소 이름").trim();
+                if(placeName == '') {
+                    alert('이름을 입력해주세요.');
+                }
+            } while (placeName == '');
+
+            do {
+                var memo = prompt("장소 메모").trim();
+                if(memo == '') {
+                    alert('메모를 입력해주세요.');
+                }
+            } while (memo == '');
+
+            sendSchedule(day, placeName, lat, lng, memo);
+        });
+
+        function sendSchedule(day, placeName, placeLatitude, placeLongitude, memo) {
+            // 부모 창의 addLocation 함수 호출
+            window.opener.addLocation(day, placeName, placeLatitude, placeLongitude, memo);
+
+            // 팝업 창 닫기
+            window.close();
+        }
     </script>
 
     <hr/>
-    <a href="/plan/addOnMap">
+    <a th:href="@{/plan/addOnMap(day=${day})}">
         <div class="attractionContainer" id="addBtn">
             <div>
                 <img src="/images/plus.png" alt="추가" id="plus"/>
             </div>
             <div class="ms-3">
                 <h3>지도에서 선택하기</h3>
+                주소를 모른다면 직접 지도에서 선택해보세요.
             </div>
         </div>
     </a>

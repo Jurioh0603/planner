@@ -10,56 +10,165 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogModifyFormStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogWriteFormStyle.css">
 
     <script>
+        var imageUploadFlag = 1; //이미지를 업로드했는지 체크하기 위한 변수
+        var planUploadFlag = 1; //일정을 업로드했는지 체크하기 위한 변수
+
         function openPopup() {
-            var url = "/tlog/selectPlan";
+            var url = "/tlog/select";
             var width = 500;
             var height = 600;
             var left = (screen.width - width) / 2;
             var top = (screen.height - height) / 2;
             var pop = window.open(url, "계획 추가", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + ",resizable=no");
         }
+
+        window.onload=function(){
+            var target=document.getElementById('file'); // file 아이디 선언
+            target.addEventListener('change',function(){ // change 함수
+                imageUploadFlag = 0;
+                var fileInfo = '';
+                for(var i = 0; i < target.files.length; i++) {
+                    fileInfo += target.files[i].name + ', ';
+                }
+                if(fileInfo.length > 0) {
+                    fileInfo = fileInfo.slice(0, -2);
+                }
+                console.log(fileInfo);
+                document.getElementById('fileName').innerText = fileInfo;
+            });
+
+            var deleteImageBtn = document.getElementById('deleteImageBtn');
+            deleteImageBtn.addEventListener('click', function () {
+                imageUploadFlag = 0;
+                target.value = ''; // 파일 입력 필드 초기화
+                document.getElementById('fileName').innerText = '선택한 파일이 없습니다.'; // 표시된 파일 이름 제거
+            });
+
+            var deletePlanBtn = document.getElementById('deletePlanBtn');
+            deletePlanBtn.addEventListener('click', function () {
+                planUploadFlag = 0;
+                document.getElementById('scheduleNo').value = '';
+                document.getElementById('planName').innerText = '선택한 일정이 없습니다.';
+            });
+
+        }
+
+        function addPlan(title, no) {
+            planUploadFlag = 0;
+            document.getElementById('planName').innerText = title;
+            document.getElementById('scheduleNo').value = no;
+        }
     </script>
 </head>
 <body>
-    <div id="contents">
-        <div><h2 class="mt-3 mb-3">나의 멋진 여행기를 공유해요.</h2></div>
-        <form action="#" method="post">
-            <div>
-                <label for="title" class="form-label"><strong>제목</strong></label>
-                <input type="text" name="title" id="title" class="form-control"/>
-            </div>
+<div id="contents">
+    <div><h2 class="mt-3 mb-3">여행기 수정</h2></div>
+    <form action="/tlog/modify" method="post" enctype="multipart/form-data" id="form">
+        <div>
+            <label for="title" class="form-label"><strong>제목</strong></label>
+            <input type="text" name="title" id="title" class="form-control" th:value="${tlogModifyForm.title}"/>
+        </div>
 
-            <div class="mt-3">
-                <label for="content" class="form-label"><strong>내용</strong></label>
-                <textarea name="content" id="content" class="form-control"></textarea>
-            </div>
+        <div class="mt-3">
+            <label for="content" class="form-label"><strong>내용</strong></label>
+            <textarea name="content" id="content" class="form-control">[[${tlogModifyForm.content}]]</textarea>
+        </div>
 
-            <div class="mt-3">
-                <label for="file">
-                    <div class="btn-upload">사진 업로드하기</div>
-                </label>
-                <input type="file" name="file" id="file" multiple>
-                선택한 파일이 없습니다.
-            </div>
+        <div class="mt-3">
+            <label for="file">
+                <div class="btn-upload">사진 업로드하기</div>
+            </label>
+            <input type="file" name="file" id="file" multiple>
+            <p id="fileName" class="mb-0" style="display: inline-block">[[${tlogModifyForm.imageList}]]</p>
+            <img src="/images/delete.png" id="deleteImageBtn" class="mb-1"/>
+        </div>
 
-            <div class="mt-3 plan-upload">
-                <button type="button" class="btn-upload" onclick="openPopup()">일정 업로드하기</button>
-                <div class="ms-1">
-                    선택한 일정이 없습니다.
-                </div>
-            </div>
+        <div class="mt-3 plan-upload">
+            <button type="button" class="btn-upload" onclick="openPopup()">일정 업로드하기</button>
+            <p id="planName" class="mb-0 ms-1 mt-1 me-1" style="display: inline-block">[[${tlogModifyForm.scheduleTitle}]]</p>
+            <img src="/images/delete.png" id="deletePlanBtn"/>
+        </div>
+        <input type="hidden" name="scheduleNo" id="scheduleNo" th:value="${tlogModifyForm.scheduleNo}"/>
+        <input type="hidden" name="no" id="no" th:value="${no}"/>
 
-            <div id="buttonContainer" class="mt-5">
-                <button class="btn btn-lg btn-light me-3" type="button" style="border-color: black;">취소</button>
-                <button class="btn btn-lg btn-primary" type="button">저장</button>
-            </div>
-        </form>
+        <div id="buttonContainer" class="mt-5">
+            <button class="btn btn-lg btn-light me-3" type="button" onclick="history.back()" style="border-color: black;">취소</button>
+            <button class="btn btn-lg btn-primary" type="button" id="saveBtn">수정</button>
+        </div>
+    </form>
 
+</div>
 
-    </div>
+<script>
+    document.getElementById("saveBtn").addEventListener("click", function () {
+        //제목 체크
+        var titleInput = document.getElementById('title');
 
+        if(titleInput.value == '') {
+            alert("제목은 필수 사항입니다.");
+            return false;
+        }
+
+        //내용 체크
+        var contentInput = document.getElementById('content');
+
+        if(contentInput.value == '') {
+            alert("내용은 필수 사항입니다.");
+            return false;
+        }
+
+        if(imageUploadFlag == 0) {
+            //이미지 체크
+            var fileInput = document.getElementById('file');
+
+            if(fileInput.files.length == 0) {
+                alert("이미지를 반드시 하나 이상 첨부하여야 합니다.");
+                return false;
+            }
+
+            var validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            var maxSize = 10 * 1024 * 1024; //10MB 사이즈 제한(개당)
+            var maxTotalSize = 50 * 1024 * 1024; //50MB 사이즈 제한(총)
+            var totalSize = 0;
+            for(var i = 0; i < fileInput.files.length; i++) {
+                var fileName = fileInput.files[i].name;
+                var fileSize = fileInput.files[i].size;
+                totalSize += fileSize;
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                if (!validExtensions.includes(fileExtension)) {
+                    alert("올바른 이미지 확장자 jpg, jpeg, png, gif 를 선택하세요.");
+                    return false;
+                }
+
+                if (fileSize > maxSize){
+                    alert("각 파일의 사이즈는 10MB 이내로 가능합니다.");
+                    return false;
+                }
+
+                if (totalSize > maxTotalSize) {
+                    alert("파일 사이즈의 총합은 50MB를 넘을 수 없습니다.");
+                    return false;
+                }
+            }
+        }
+
+        if(planUploadFlag == 0) {
+            //일정 체크
+            var scheduleNoInput = document.getElementById('scheduleNo');
+
+            if(scheduleNoInput.value == '') {
+                alert("일정을 반드시 첨부하여야 합니다.");
+                return false;
+            }
+        }
+
+        //제출
+        document.getElementById("form").submit();
+    });
+</script>
 </body>
 </html>

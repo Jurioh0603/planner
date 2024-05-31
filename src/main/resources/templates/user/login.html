@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/user/login.css}" rel="stylesheet" />
+    <title>login</title>
+</head>
+<body>
+<div class="login-wrapper">
+    <h2>Login</h2>
+    <form method="post" action="/user/login" id="login-form" >
+        <input type="text" name="memberId" id="memberId" placeholder="Id" class="input_box">
+        <input type="password" name="password" placeholder="Password" class="input_box">
+        <label for="rememberMe">
+            <input type="checkbox" id="rememberMe">아이디 저장하기
+        </label>
+        <input type=submit id="submitBtn" value="Login">
+        <input type="button" onclick="window.location.href='/user/join'" value="Join">
+        <p class="snssimple"> SNS 계정으로 간편하게 시작하기</p>
+        <div class="d-grid">
+            <div class="btn">
+                <img height="48px;"  alt="카카오로그인" src="/images/kakao_login.jpg" onclick="javascript:loginWithKakao();">
+            </div>
+            <div class="btn" >
+                <img height="48px;" alt="네이버로그인" src="/images/naver_login.png" onclick="javascript:loginWithNaver();">
+            </div>
+        </div>
+        <a class="snssimple" href="/user/passwordFind"> 비밀번호를 잊으셨나요?</a>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+<script th:inline="javascript">
+    //application.properties 파일에 정의한 변수
+    let KAKAO_CALLBACK_URI = /*[[${kakaoCallbackUri}]]*/ 'default';
+    let KAKAO_JAVASCRIPT_KEY = /*[[${kakaoJavascriptKey}]]*/ 'default';
+
+     console.log("KAKAO_CALLBACK_URI : "+KAKAO_CALLBACK_URI);
+     console.log("KAKAO_JAVASCRIPT_KEY : "+KAKAO_JAVASCRIPT_KEY);
+
+    $(document).ready(function(){
+        //카카오 로그인연동 자바스크립트 초기화
+        console.log("카카오 연동 초기화");
+        Kakao.init(KAKAO_JAVASCRIPT_KEY);	//본인의 JavaScript 키 입력
+        Kakao.isInitialized();
+
+        const memberIdInput = $('#memberId');
+        const rememberMeCheckbox = $('#rememberMe');
+
+        // 페이지 로드 시 쿠키를 확인하여 memberId를 설정
+        const savedMemberId = getCookie('memberId');
+        if (savedMemberId) {
+            memberIdInput.val(savedMemberId);
+            rememberMeCheckbox.prop('checked', true);
+        }
+
+        //로그인 버튼 클릭이벤트
+        $("#submitBtn").click(function(){
+            if (rememberMeCheckbox.is(':checked')) {
+                setCookie('memberId', memberIdInput.val(), 7); // 7일 동안 쿠키를 저장
+            } else {
+                setCookie('memberId', '', -1); // 쿠키 삭제
+            }
+            //폼태그 전송 이벤트
+            $("#login-form").submit();
+        });
+    });
+
+    //카카오 로그인 페이지 호출
+    //https://developers.kakao.com/docs/latest/ko/kakaologin/js#login
+    function loginWithKakao() {
+        Kakao.Auth.authorize({
+            redirectUri: KAKAO_CALLBACK_URI // 등록한 리다이렉트uri 입력
+            , prompts : 'login'	//기존 로그인 여부와 상관없이 로그인하기
+        });
+    }
+
+    //네이버 로그인 페이지 호출
+    function loginWithNaver() {
+        location.href="/member/naver_login";
+    }
+
+    // 쿠키 설정 함수
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    // 쿠키 읽기 함수
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+</script>
+
+
+</body>
+</html>

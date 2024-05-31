@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.triplan.planner.user.repository.MemberMapper">
+
+	<!-- 회원정보 조회 -->
+	<select id="selectMember" parameterType="String" resultType="com.triplan.planner.user.dto.UserDto">
+	 	/* 회원조회 SQL */
+	 	SELECT
+			MEMBER_ID
+			, NICKNAME
+			, PASSWORD
+			, NAME
+			, EMAIL
+			, GENDER
+			, TEL
+			, M_IMG
+			, M_COPY_IMG
+			, SNS_TYPE
+			, SNS_ID
+			, GRADE
+	 	FROM MEMBER
+	 	WHERE MEMBER_ID = #{memberId}
+	</select>
+	
+	<!-- 로그인정보 조회 -->
+	<select id="selectLogin" parameterType="String" resultType="com.triplan.planner.user.dto.UserDto">
+	 	/* 회원조회 SQL */
+	 	SELECT
+			MEMBER_ID
+			, NICKNAME
+			, PASSWORD
+			, NAME
+			, EMAIL
+			, GENDER
+			, TEL
+			, M_IMG
+			, M_COPY_IMG
+			, SNS_TYPE
+			, SNS_ID
+			, GRADE
+	 	FROM MEMBER
+	 	where MEMBER_ID = #{memberId}
+	</select>
+	
+ 	<!--회원 저장  -->
+	<insert id="insertMember" parameterType="com.triplan.planner.user.dto.UserDto" >
+		/* 회원저장 SQL */
+		INSERT INTO MEMBER(
+			MEMBER_ID
+			, NICKNAME
+			, PASSWORD
+			, NAME
+			, EMAIL
+			, GENDER
+			, TEL
+			, M_IMG
+			, M_COPY_IMG
+			, SNS_TYPE
+			, SNS_ID
+			, GRADE
+		) VALUES(
+			#{memberId}
+			, #{nickname}
+			, #{password}
+			, #{name}
+			, #{email}
+			, #{gender}
+			, #{tel}
+			, ''
+			, ''
+			, #{snsType}
+			, #{snsId}
+			, '1111'
+		)
+	</insert>
+
+	<!-- 중복 아이디 체크 -->
+	<select id="insertCheck" 	parameterType="com.triplan.planner.user.dto.UserDto" resultType="Integer">
+		/* 아이디 중복체크 SQL */
+		SELECT 
+			COUNT(MEMBER_ID) AS CNT
+		FROM MEMBER
+		WHERE 1=1
+		<if test="memberId != null and memberId != '' ">
+        	AND MEMBER_ID = #{memberId}
+   		</if>
+		<if test="name != null and name != '' ">
+        	AND NAME = #{name}
+   		</if>
+	</select>
+
+	<!-- SNS 회원 회원유무 조회 -->
+	<select id="selectSnsUser" parameterType="com.triplan.planner.user.dto.UserDto" resultType="com.triplan.planner.user.dto.UserDto">
+	 	SELECT
+			MEMBER_ID
+			, NICKNAME
+			, PASSWORD
+			, NAME
+			, EMAIL
+			, GENDER
+			, TEL
+			, M_IMG
+			, M_COPY_IMG
+			, SNS_TYPE
+			, SNS_ID
+			, GRADE
+	 	FROM MEMBER
+	 	WHERE SNS_ID = #{snsId}
+	 	AND SNS_TYPE = #{snsType}
+	</select>
+
+	<!-- 비밀번호 찾기 -->
+	<select id="selectPassword" parameterType="com.triplan.planner.user.dto.UserDto" resultType="com.triplan.planner.user.dto.UserDto">
+		/* 비밀번호 찾기 */
+		SELECT
+		MEMBER_ID
+		, PASSWORD
+		, NAME
+		, EMAIL
+		, TEL
+		FROM MEMBER
+		WHERE MEMBER_ID = #{memberId}
+		AND   EMAIL = #{email}
+	</select>
+
+	<!-- 비밀번호 업데이트 -->
+	<update id="updatePassword" parameterType="com.triplan.planner.user.dto.UserDto">
+		/* 비밀번호 변경 */
+		UPDATE
+		MEMBER
+		SET
+		PASSWORD = #{password}
+		WHERE MEMBER_ID = #{memberId} AND EMAIL = #{email}
+	</update>
+
+</mapper>
