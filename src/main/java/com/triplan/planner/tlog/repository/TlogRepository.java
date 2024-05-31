@@ -24,4 +24,8 @@ public interface TlogRepository {
     public void updateTlog(Tlog tlog, List<TlogImage> tlogImageList);
 
     public void saveSchedule(long scheduleNo, String memberId);
+
+    public boolean isFav(String memberId, long tlogNo);
+    public void saveFav(long tlogNo, String memberId);
+    public void deleteFav(long tlogNo, String memberId);
 }

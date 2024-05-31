@@ -61,4 +61,20 @@
         WHERE TLOG_NO=#{tlogNo};
     </delete>
 
+    <select id="getFavList" parameterType="string" resultType="long">
+        SELECT TLOG_NO
+        FROM FAV
+        WHERE MEMBER_ID=#{memberId};
+    </select>
+
+    <insert id="saveFav">
+        INSERT INTO FAV
+        VALUES(NOW(), #{memberId}, #{tlogNo});
+    </insert>
+
+    <delete id="deleteFav">
+        DELETE FROM FAV
+        WHERE TLOG_NO=#{tlogNo} AND MEMBER_ID=#{memberId};
+    </delete>
+
 </mapper>

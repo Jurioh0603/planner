@@ -31,14 +31,26 @@
     text-align: center;
 }
 
-.fav-img {
+.fav-img, .fav-img-hover, .fav-img-red {
     width: 25px;
     height: 25px;
 }
 
+.fav-img-hover {
+    display: none;
+}
+
+.fav-img-box:hover .fav-img-hover {
+    display: block;
+}
+
+.fav-img-box:hover .fav-img {
+    display: none;
+}
+
 .download-img {
-    width: 30px;
-    height: 30px;
+    width: 26px;
+    height: 25px;
 }
 
 .carousel-inner > .carousel-item > img {
@@ -136,4 +148,9 @@ h3:hover {
     -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.scheduleSaveBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
 }

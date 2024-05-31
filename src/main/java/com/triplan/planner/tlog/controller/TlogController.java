@@ -88,9 +88,12 @@ public class TlogController {
 
     @GetMapping("/detail")
     public String detail(@RequestParam("no") long tlogNo, Model model) {
+        String memberId = "id1";
         TlogDetailInfo tlogInfo = tlogService.getTlogInfo(tlogNo);
+        boolean isFav = tlogService.isFav(memberId, tlogNo);
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         model.addAttribute("tlogInfo", tlogInfo);
+        model.addAttribute("isFav", isFav);
         return "tlog/tlogDetail";
     }
 
@@ -142,5 +145,19 @@ public class TlogController {
         tlogService.saveSchedule(Long.parseLong(scheduleNo), memberId);
 
         return ResponseEntity.ok("{\"message\": \"일정 저장 성공!\"}");
+    }
+
+    @GetMapping("/fav")
+    public String fav(@RequestParam("tlogNo") long tlogNo) {
+        String memberId = "id1";
+        tlogService.favoriteTlog(tlogNo, memberId);
+        return "redirect:/tlog/detail?no=" + tlogNo;
+    }
+
+    @GetMapping("/notFav")
+    public String notFav(@RequestParam("tlogNo") long tlogNo) {
+        String memberId = "id1";
+        tlogService.notFavoriteTlog(tlogNo, memberId);
+        return "redirect:/tlog/detail?no=" + tlogNo;
     }
 }

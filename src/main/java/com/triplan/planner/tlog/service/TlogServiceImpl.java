@@ -70,6 +70,21 @@ public class TlogServiceImpl implements TlogService {
         tlogRepository.saveSchedule(scheduleNo, memberId);
     }
 
+    @Override
+    public boolean isFav(String memberId, long tlogNo) {
+        return tlogRepository.isFav(memberId, tlogNo);
+    }
+
+    @Override
+    public void favoriteTlog(long tlogNo, String memberId) {
+        tlogRepository.saveFav(tlogNo, memberId);
+    }
+
+    @Override
+    public void notFavoriteTlog(long tlogNo, String memberId) {
+        tlogRepository.deleteFav(tlogNo, memberId);
+    }
+
     private static void extracted(TlogDetailInfo tlogInfo) {
         List<Date> travelDay = new ArrayList<>();
         Date startDay = tlogInfo.getSchedule().getStartDay();
