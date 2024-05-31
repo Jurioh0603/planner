@@ -88,6 +88,22 @@
                 <h1>게시판관리</h1>
                 <ul class="breadcrumb">
                     <li>
+                        <a href="#">게시글관리</a>
+                    </li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li>
+                        <a class="active" href="#">Home</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>글관리</h3>
+                    <li>
                         <select id="main-category" onchange="updateSubCategories()">
                             <option value="none" disabled selected>게시판이름</option>
                             <option value="community">지역 커뮤니티</option>
@@ -110,18 +126,11 @@
                             <option value="GN_COMMUNITY">경남</option>
                         </select>
                     </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="table-data">
-            <div class="order">
-                <div class="head">
-                    <h3>글관리</h3>
                     <i class='bx bx-search'></i>
                     <i class='bx bx-filter'></i>
                 </div>
-                <table class="table">
+
+                <table>
                     <thead>
                     <tr>
                         <th>글번호</th>
