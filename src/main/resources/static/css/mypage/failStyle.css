@@ -1,0 +1,43 @@
+body {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.icon img {
+    width: 350px;
+    height: 250px;
+}
+
+h1 {
+    font-size: 35px;
+    margin: 20px 0;
+}
+
+p {
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 20px 0;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #BDBDBD;
+}

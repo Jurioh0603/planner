@@ -9,28 +9,52 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/user/myPageStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/mypage/myPageStyle.css">
 </head>
 <body>
 <div id="contents">
     <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
     <h1 class="text-h2">마이페이지</h1>
     <div class="background-section"></div>
+    <div class="background-padding">
     <div class="inline-list">
+        <!-- profile 설정 -->
         <div class="d-flex">
             <div class="jus-end">
-            <div class="p-5 text-bg rounded-3">
-                <div class="scroll">
-                    <div class="box-align">
-                        <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
-                        <div class="box-welcome">반가워요!</div>
-                        <h1>콩나물님</h1>
-                        <a class="box-text" href="#">프로필 이미지 설정 ></a>
+                <div class="p-5 text-bg rounded-3">
+                    <div class="scroll">
+                        <div class="box-align">
+                            <img th:src="|/mypage/images/${profile.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg != null}">
+                            <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg == null}">
+                            <div class="box-welcome">반가워요!</div>
+                            <h1><span th:text="${profile.nickName} + ' 님'"></span></h1>
+                            <a class="box-text">프로필 이미지 설정 ></a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <!--모달 팝업-->
+        <div class="modal">
+            <div class="modal_popup">
+                <h3 class="text-center">프로필 이미지 설정</h3>
+                <form id="updateForm" action="/mypage/upload" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="memberId" value="${session.memberId}"/>
+                    <div class="text-center">
+                        <img id="imagePreview" src="/images/profile.jpg" alt="프로필 사진" class="profile-img text-center"> <!-- 미리보기 이미지 -->
+                    </div>
+                    <div class="text-center">
+                        <input type="file" id="imageInput" name="uploadFile" accept="image/*" class="file-margin"> <!-- 이미지 업로드 입력 필드 -->
+                    </div>
+                    <div class="line-container">
+                        <button type="submit" class="update_btn">완료</button>
+                        <button type="button" class="close_btn">취소</button>
+                    </div>
+                </form>
+
             </div>
         </div>
+        <!-- 우측 menu -->
         <div class="d-flex flex-column py-md-5 align-items-center">
             <div class="list-group list-group-my">
                 <div class="intro">나의여정</div>
@@ -41,6 +65,15 @@
                                 나의 여행 계획
                             </div>
                             <div class=""></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="list-group-items" aria-current="true">
+                    <div class="list-group-item-action d-flex py-3 line">
+                        <div class="d-flex-container w-100 justify-content-between">
+                            <div class="mb-0 list-text icon-5">
+                                나의 여행기
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -62,16 +95,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-items" aria-current="true">
-                    <div class="list-group-item-action d-flex py-3 line">
-                        <div class="d-flex-container w-100 justify-content-between">
-                            <div class="mb-0 list-text icon-5">
-                                여행톡
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="list-group-items rounded-bottom-4" aria-current="true">
+                <a href="/mypage/myInfo" class="list-group-items rounded-bottom-4" aria-current="true">
                     <div class="list-group-item-action list-group-items-last  d-flex py-3">
                         <div class="d-flex-container w-100 justify-content-between">
                             <div class="mb-0 list-text icon-2">
@@ -86,6 +110,8 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
+<script src="/js/mypage/myPage.js"></script>
 </body>
 </html>

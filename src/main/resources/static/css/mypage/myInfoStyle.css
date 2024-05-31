@@ -1,0 +1,97 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.container {
+    width:504px;
+    margin: 0 auto;
+}
+
+/*제목*/
+.top-title{
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+/*설명 및 안내사항*/
+.contents-box {
+    position: relative;
+    width: 480px;
+    height: 120px;
+    background-color: #F3F5F7;
+    font-size: 18px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+/*상단 라인선*/
+.top-line{
+    background-color: #FAAC58;
+    width: 480px;
+    height: 5px;
+    margin-top: 10px;
+}
+/*테이블*/
+.t-padding{
+    padding-left: 41px;
+    padding-right: 41px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 17px;
+}
+
+.t-padding-l {
+    padding-left: 41px;
+    padding-right: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    font-size: 17px;
+}
+
+.border-bottom {
+    border-bottom: 1px;
+    border-color: #D8D8D8;
+}
+
+/*수평정렬*/
+.line-container{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.margin-right-10 {
+    margin-right: 10px;
+}
+
+.s-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 17px;
+    padding-right: 17px;
+    background-color: #FAAC58;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+}
+
+.r-btn {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 17px;
+    padding-right: 17px;
+    background-color: #F2F2F2;
+    font-size: 17px;
+    border: none;
+    border-radius: 5px;
+}
+/*비밀번호 불일치 안내글*/
+.error-message {
+    color: red;
+    font-size: 12px;
+    display: none; /* 기본적으로 보이지 않게 설정 */
+}
