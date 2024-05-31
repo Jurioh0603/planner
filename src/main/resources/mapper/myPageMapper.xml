@@ -3,13 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.triplan.planner.mypage.repository.MyPageMapper">
     <select id="getProfileList" parameterType="String" resultType="com.triplan.planner.mypage.dto.Profile">
-        SELECT MEMBER_ID, NICKNAME, M_IMG, M_COPY_IMG FROM MEMBER
+        SELECT * FROM MEMBER
         WHERE MEMBER_ID = #{memberId}
     </select>
     <update id="updateProfile" parameterType="com.triplan.planner.mypage.dto.Profile">
         UPDATE MEMBER
-        SET M_IMG = #{uploadFileName},
-            M_COPY_IMG = #{storeFileName}
+        SET M_IMG = #{mImg},
+            M_COPY_IMG = #{mCopyImg}
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+    <update id="updateInfo" parameterType="com.triplan.planner.mypage.dto.Profile">
+        UPDATE MEMBER
+        SET PASSWORD = #{password},
+            NICKNAME = #{nickName}
         WHERE MEMBER_ID = #{memberId}
     </update>
 </mapper>

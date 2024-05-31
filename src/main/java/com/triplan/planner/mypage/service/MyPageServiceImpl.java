@@ -20,4 +20,9 @@ public class MyPageServiceImpl implements MyPageService{
     public Profile getProfileList(String memberId) {
         return myPageRepository.getProfileList(memberId);
     }
+
+    @Override
+    public void updateInfo(Profile profile) {
+        myPageRepository.updateInfo(profile);
+    }
 }

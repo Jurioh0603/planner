@@ -12,4 +12,12 @@ public class Profile {
     private String nickName;
     private String mImg;
     private String mCopyImg;
+    private String name;
+    private String email;
+    private String password;
+    private String gender;
+    private String tel;
+    private String snsType;
+    private String snsId;
+    private int grade;
 }

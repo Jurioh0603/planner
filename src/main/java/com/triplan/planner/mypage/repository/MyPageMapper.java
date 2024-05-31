@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MyPageMapper {
     public void updateProfile(Profile profile);
     public Profile getProfileList(String memberId);
+    public void updateInfo(Profile profile);
 }

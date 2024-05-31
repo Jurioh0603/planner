@@ -8,4 +8,6 @@ public interface MyPageService {
     public void updateProfile(Profile profile);
 
     public Profile getProfileList(String memberId);
+
+    public void updateInfo(Profile profile);
 }

@@ -20,4 +20,9 @@ public class MyPageRepositoryImpl implements MyPageRepository{
         return myPageMapper.getProfileList(memberId);
     }
 
+    @Override
+    public void updateInfo(Profile profile) {
+        myPageMapper.updateInfo(profile);
+    }
+
 }

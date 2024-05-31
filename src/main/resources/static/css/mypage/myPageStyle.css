@@ -56,11 +56,11 @@
 
 /*프로필 상자*/
 .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-top: 70px;
+    margin-top: 40px;
     margin-bottom: 25px;
     text-align: center;
 }
@@ -73,6 +73,7 @@
     vertical-align: bottom;
     margin-top: 60px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .box-text:hover {
@@ -87,7 +88,6 @@
 
 .box-align{
     text-align: center;
-    margin-left: 20px;
     min-width: 100px
 }
 
@@ -97,6 +97,7 @@
     width: 350px;
     height: 470px;
     margin-right: -300px;
+    min-width: 350px
 }
 
 @media (max-width: 600px) { /* 화면 너비가 600px 이하일 때 적용 */
@@ -247,7 +248,7 @@ h2{
 .modal .modal_popup .close_btn {
     display: block;
     padding: 10px 20px;
-    background-color: #F6CECE;
+    background-color: #F2F2F2;
     border: none;
     border-radius: 5px;
     color: black;
@@ -261,7 +262,7 @@ h2{
 .modal .modal_popup .update_btn {
     display: block;
     padding: 10px 20px;
-    background-color: #A9BCF5;
+    background-color: #FAAC58;
     border: none;
     border-radius: 5px;
     color: black;
@@ -286,6 +287,7 @@ h2{
 }
 
 .update_btn{
-    background-color: #2E64FE
+    background-color: #2E64FE;
     color: white;
+    border: none;
 }
