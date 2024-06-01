@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
 </head>
 <body>
-
 <div id="contents">
 
     <h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3>
@@ -85,19 +84,45 @@
         <!-- 추가 -->
     </div>
 
-    <block th:each="item : ${communityList}">
+    <form action="/community/list" method="get" class="d-flex mt-3 mb-3 searchContainer">
+        <input type="hidden" name="local" th:value="${local}"/>
+        <input class="form-control me-2" type="search" name="search" th:value="${search}" placeholder="검색" aria-label="Search" style="width: 200px">
+        <button class="btn btn-outline-primary" type="submit">검색</button>
+    </form>
+
+    <block th:if="${communityPage.hasNoContents()}">
+        <hr/>
+        <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+    </block>
+
+    <block th:each="community, iterStat : ${communityPage.communityList.communities}">
         <hr/>
         <div class="contentContainer">
-            <a th:href="|@{/community/detail(local=${local}, no=${item.bno})}|"><div class="title" th:text="${item.title}"></div></a>
-            <div class="writer" th:text="${item.memberId}"></div>
-            <div class="writeTime" th:text="${item.getWriteTimeFormatted()}"></div>
+            <a th:href="|@{/community/detail(local=${local}, no=${community.bno}, page=${page}, search=${search})}|"><div class="title" th:text="${community.title}"></div></a>
+            <div class="writer" th:text="${communityPage.communityList.nicknameList[iterStat.index]}"></div>
+            <div class="writeTime" th:text="${community.getWriteTimeFormatted()}"></div>
         </div>
     </block>
 
     <hr/>
 
-    <div class="buttonContainer mt-3">
-        <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
+    <div id="doContainer">
+        <block th:if="${communityPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${communityPage.startPage > 5}" th:href="@{/community/list(local=${local}, page=${communityPage.startPage - 5}, search=${search})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(communityPage.startPage, communityPage.endPage)}">
+                        <a th:if="${page == communityPage.currentPage}" th:href="@{/community/list(local=${local}, page=${page}, search=${search})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != communityPage.currentPage}" th:href="@{/community/list(local=${local}, page=${page}, search=${search})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${communityPage.endPage < communityPage.totalPages}" th:href="@{/community/list(local=${local}, page=${communityPage.startPage + 5}, search=${search})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
+
+        <div class="buttonContainer mt-3">
+            <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
+        </div>
     </div>
 
 </div>

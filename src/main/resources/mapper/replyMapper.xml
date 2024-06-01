@@ -4,27 +4,38 @@
 
 <mapper namespace="com.triplan.planner.community.repository.ReplyMapper">
 
-    <select id="maxRstep" resultType="long">
-        SELECT MAX(RSTEP)
+    <select id="maxRef" resultType="long">
+        SELECT MAX(REF)
         FROM ${local}
         WHERE BNO=#{bno}
     </select>
 
     <insert id="insertReply">
-        INSERT INTO ${local} (RCONTENT, RSTEP, RWRITETIME, MEMBER_ID, BNO)
-        VALUES (#{reply.rcontent}, #{rstep}, NOW(), #{reply.memberId}, #{reply.bno})
+        INSERT INTO ${local} (RCONTENT, REF, RSTEP, RWRITETIME, MEMBER_ID, BNO)
+        VALUES (#{reply.rcontent}, #{ref}, #{reply.rstep}, NOW(), #{reply.memberId}, #{reply.bno})
     </insert>
 
     <select id="getReplyListByNo" resultType="Reply">
         SELECT *
         FROM ${local}
         WHERE BNO=#{bno}
-        ORDER BY RSTEP ASC, RNO ASC
+        ORDER BY REF ASC, RNO ASC
     </select>
 
     <insert id="insertReReply">
-        INSERT INTO ${local} (RCONTENT, RSTEP, RWRITETIME, MEMBER_ID, BNO)
-        VALUES (#{reply.rcontent}, #{reply.rstep}, NOW(), #{reply.memberId}, #{reply.bno})
+        INSERT INTO ${local} (RCONTENT, REF, RSTEP, RWRITETIME, MEMBER_ID, BNO)
+        VALUES (#{reply.rcontent}, #{reply.ref}, #{reply.rstep}, NOW(), #{reply.memberId}, #{reply.bno})
     </insert>
+
+    <update id="updateReply">
+        UPDATE ${local}
+        SET RCONTENT=#{reply.rcontent}
+        WHERE RNO=#{reply.rno}
+    </update>
+
+    <delete id="deleteReplyByNo">
+        DELETE FROM ${local}
+        WHERE RNO=${rno}
+    </delete>
 
 </mapper>

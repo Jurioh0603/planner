@@ -13,16 +13,28 @@ public class ReplyRepositoryImpl implements ReplyRepository {
     @Override
     public void insertReply(Reply reply, String local) {
         local += "_reply";
-        Long lastRstep = replyMapper.maxRstep(reply.getBno(), local);
-        long rstep = 1;
-        if(lastRstep != null)
-            rstep = lastRstep + 1;
-        replyMapper.insertReply(reply, rstep, local);
+        Long lastRef = replyMapper.maxRef(reply.getBno(), local);
+        long ref = 1;
+        if(lastRef != null)
+            ref = lastRef + 1;
+        replyMapper.insertReply(reply, ref, local);
     }
 
     @Override
     public void insertReReply(Reply reply, String local) {
         local += "_reply";
         replyMapper.insertReReply(reply, local);
+    }
+
+    @Override
+    public void updateReply(Reply reply, String local) {
+        local += "_reply";
+        replyMapper.updateReply(reply, local);
+    }
+
+    @Override
+    public void deleteReply(long rno, String local) {
+        local += "_reply";
+        replyMapper.deleteReplyByNo(rno, local);
     }
 }

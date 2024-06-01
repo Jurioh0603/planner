@@ -7,4 +7,8 @@ public interface ReplyRepository {
     public void insertReply(Reply reply, String local);
 
     public void insertReReply(Reply reply, String local);
+
+    public void updateReply(Reply reply, String local);
+
+    public void deleteReply(long rno, String local);
 }

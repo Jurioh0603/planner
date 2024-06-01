@@ -2,11 +2,10 @@ package com.triplan.planner.community.service;
 
 import com.triplan.planner.community.domain.Community;
 import com.triplan.planner.community.dto.CommunityDetail;
+import com.triplan.planner.community.dto.CommunityList;
 import com.triplan.planner.community.repository.CommunityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +14,14 @@ public class CommunityServiceImpl implements CommunityService {
     private final CommunityRepository communityRepository;
 
     @Override
-    public List<Community> getCommunityList(String local) {
-        return communityRepository.getCommunityList(local);
+    public CommunityList getCommunityList(String local, int page, String search) {
+        int size = 10;
+        return communityRepository.getCommunityList(local, (page - 1) * size, size, search);
+    }
+
+    @Override
+    public int getCount(String local, String search) {
+        return communityRepository.getCount(local, search);
     }
 
     @Override

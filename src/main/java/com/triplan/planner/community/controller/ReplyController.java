@@ -17,6 +17,7 @@ public class ReplyController {
     public String write(@ModelAttribute Reply reply, @RequestParam("local") String local) {
         String memberId = "id1";
         reply.setMemberId(memberId);
+        reply.setRstep(1);
         replyService.write(reply, local);
         return "redirect:/community/detail?local=" + local + "&no=" + reply.getBno();
     }
@@ -25,8 +26,21 @@ public class ReplyController {
     public String rewrite(@ModelAttribute Reply reply, @RequestParam("local") String local) {
         String memberId = "id1";
         reply.setMemberId(memberId);
+        reply.setRstep(2);
         replyService.rewrite(reply, local);
         return "redirect:/community/detail?local=" + local + "&no=" + reply.getBno();
+    }
+
+    @PostMapping("/modify")
+    public String modify(@ModelAttribute Reply reply, @RequestParam("local") String local) {
+        replyService.modify(reply, local);
+        return "redirect:/community/detail?local=" + local + "&no=" + reply.getBno();
+    }
+
+    @PostMapping("delete")
+    public String delete(@RequestParam("rno") long rno, @RequestParam("bno") long bno, @RequestParam("local") String local) {
+        replyService.delete(rno, local);
+        return "redirect:/community/detail?local=" + local + "&no=" + bno;
     }
 
 }

@@ -13,4 +13,6 @@ public class CommunityDetail {
 
     private Community community;
     private List<Reply> replyList;
+    private Profile writerProfile;
+    private List<String> replyNicknameList;
 }

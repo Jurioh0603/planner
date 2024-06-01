@@ -20,4 +20,14 @@ public class ReplyServiceImpl implements ReplyService {
     public void rewrite(Reply reply, String local) {
         replyRepository.insertReReply(reply, local);
     }
+
+    @Override
+    public void modify(Reply reply, String local) {
+        replyRepository.updateReply(reply, local);
+    }
+
+    @Override
+    public void delete(long rno, String local) {
+        replyRepository.deleteReply(rno, local);
+    }
 }
