@@ -9,14 +9,14 @@
         WHERE MEMBER_ID=#{memberId};
     </select>
 
-    <select id="getSchedules" parameterType="string" resultType="Schedule">
+    <select id="getSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
         SELECT *
         FROM SCHEDULE
         WHERE MEMBER_ID=#{memberId} AND SCHEDULE_TITLE LIKE CONCAT('%', #{search}, '%')
         ORDER BY START_DAY ASC;
     </select>
 
-    <select id="getPostSchedules" parameterType="string" resultType="Schedule">
+    <select id="getPostSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
         <![CDATA[
         SELECT *
         FROM SCHEDULE
@@ -26,7 +26,7 @@
         ]]>
     </select>
 
-    <select id="getPreSchedules" parameterType="string" resultType="Schedule">
+    <select id="getPreSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
         <![CDATA[
         SELECT *
         FROM SCHEDULE
@@ -36,7 +36,7 @@
         ]]>
     </select>
 
-    <select id="getPlaces" parameterType="long" resultType="PlaceList">
+    <select id="getPlaces" parameterType="long" resultType="com.triplan.planner.plan.dto.PlaceList">
         SELECT DISTINCT SCHEDULE_NO, PLACE_NAME
         FROM DETAILSCHEDULE
         WHERE SCHEDULE_NO IN
@@ -45,7 +45,7 @@
         </foreach>
     </select>
 
-    <select id="getPostImages" parameterType="string" resultType="ScheduleImage">
+    <select id="getPostImages" parameterType="string" resultType="com.triplan.planner.plan.domain.ScheduleImage">
         <![CDATA[
         SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
         FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
@@ -56,7 +56,7 @@
         ]]>
     </select>
 
-    <select id="getPreImages" parameterType="string" resultType="ScheduleImage">
+    <select id="getPreImages" parameterType="string" resultType="com.triplan.planner.plan.domain.ScheduleImage">
         <![CDATA[
         SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
         FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
@@ -67,20 +67,20 @@
         ]]>
     </select>
 
-    <select id="getScheduleByNo" parameterType="long" resultType="Schedule">
+    <select id="getScheduleByNo" parameterType="long" resultType="com.triplan.planner.plan.domain.Schedule">
         SELECT *
         FROM SCHEDULE
         WHERE SCHEDULE_NO=#{scheduleNo};
     </select>
 
-    <select id="getDetailSchedules" parameterType="long" resultType="DetailSchedule">
+    <select id="getDetailSchedules" parameterType="long" resultType="com.triplan.planner.plan.domain.DetailSchedule">
         SELECT *
         FROM DETAILSCHEDULE
         WHERE SCHEDULE_NO=#{scheduleNo}
         ORDER BY DETAIL_DAY ASC, PLACE_PROC ASC;
     </select>
 
-    <select id="isImageExist" parameterType="long" resultType="ScheduleImage">
+    <select id="isImageExist" parameterType="long" resultType="com.triplan.planner.plan.domain.ScheduleImage">
         SELECT *
         FROM SCHEDULEIMAGE
         WHERE SCHEDULE_NO=#{scheduleNo};
@@ -91,7 +91,7 @@
         WHERE SCHEDULE_NO=#{scheduleNo};
     </delete>
 
-    <insert id="save" parameterType="ScheduleImage">
+    <insert id="save" parameterType="com.triplan.planner.plan.domain.ScheduleImage">
         INSERT INTO SCHEDULEIMAGE
         VALUES(#{uploadName}, #{storeName}, #{scheduleNo});
     </insert>
@@ -125,7 +125,7 @@
         FROM SCHEDULE;
     </select>
 
-    <insert id="insertSchedule" parameterType="Schedule">
+    <insert id="insertSchedule" parameterType="com.triplan.planner.plan.domain.Schedule">
         INSERT INTO SCHEDULE(START_DAY, END_DAY, SCHEDULE_TITLE, MEMBER_ID)
         VALUES(#{startDay}, #{endDay}, #{scheduleTitle}, #{memberId});
     </insert>

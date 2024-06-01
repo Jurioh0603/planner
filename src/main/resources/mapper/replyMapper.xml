@@ -15,7 +15,7 @@
         VALUES (#{reply.rcontent}, #{ref}, #{reply.rstep}, NOW(), #{reply.memberId}, #{reply.bno})
     </insert>
 
-    <select id="getReplyListByNo" resultType="Reply">
+    <select id="getReplyListByNo" resultType="com.triplan.planner.community.domain.Reply">
         SELECT *
         FROM ${local}
         WHERE BNO=#{bno}

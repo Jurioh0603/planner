@@ -4,7 +4,7 @@
 
 <mapper namespace="com.triplan.planner.community.repository.CommunityMapper">
 
-    <select id="getCommunityList" resultType="Community">
+    <select id="getCommunityList" resultType="com.triplan.planner.community.domain.Community">
         SELECT *
         FROM ${local}
         WHERE TITLE LIKE CONCAT('%', #{search}, '%') || CONTENT LIKE CONCAT('%', #{search}, '%')
@@ -29,13 +29,13 @@
         VALUES (#{community.title}, #{community.content}, NOW(), #{community.memberId})
     </insert>
 
-    <select id="getCommunityByNo" resultType="Community">
+    <select id="getCommunityByNo" resultType="com.triplan.planner.community.domain.Community">
         SELECT *
         FROM ${local}
         WHERE BNO=#{bno}
     </select>
 
-    <select id="getWriterProfile" parameterType="string" resultType="Profile">
+    <select id="getWriterProfile" parameterType="string" resultType="com.triplan.planner.community.dto.Profile">
         SELECT NICKNAME, M_COPY_IMG
         FROM MEMBER
         WHERE MEMBER_ID=#{memberId}
