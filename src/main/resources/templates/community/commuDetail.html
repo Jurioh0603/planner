@@ -36,7 +36,7 @@
     <hr/>
     <div class="doContainer">
         <div>
-            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local}, page=${page}, search=${search})}'|" style="border-color: black;">목록</button>
+            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local})}'|" style="border-color: black;">목록</button>
         </div>
         <div class="buttonContainer">
             <button class="btn btn-sm btn-primary me-2" type="button" id="modifyBtn" th:onclick="|location.href='@{/community/modify(local=${local}, no=${communityDetail.community.bno})}'|">수정</button>

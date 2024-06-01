@@ -80,13 +80,10 @@ public class CommunityController {
     }
 
     @GetMapping("/detail")
-    public String detail(@RequestParam("local") String local, @RequestParam("no") long bno,
-                         @RequestParam("page") int page, @RequestParam("search") String search, Model model) {
+    public String detail(@RequestParam("local") String local, @RequestParam("no") long bno, Model model) {
         CommunityDetail communityDetail = communityService.getCommunityDetail(local, bno);
         model.addAttribute("communityDetail", communityDetail);
         model.addAttribute("local", local);
-        model.addAttribute("page", page);
-        model.addAttribute("search", search);
         return "community/commuDetail";
     }
 
