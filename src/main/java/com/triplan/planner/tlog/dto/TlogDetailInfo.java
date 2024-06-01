@@ -19,4 +19,5 @@ public class TlogDetailInfo {
     private Schedule schedule;
     private List<DetailSchedule> detailScheduleList;
     private List<Date> travelDay;
+    private Profile writerProfile;
 }
