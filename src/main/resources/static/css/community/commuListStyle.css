@@ -1,0 +1,128 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.localImg {
+    width: 70px;
+}
+
+.localLinkBtn {
+    align-items: center;
+    margin: 0 auto;
+}
+
+#localLinkBtnContainer, .contentContainer {
+    display: flex;
+    align-items: center;
+}
+
+p {
+    text-align: center;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+#weatherContainer {
+    width: 600px;
+    height: 200px;
+    background-color: #DCDCDC;
+    margin: 0 auto;
+}
+
+.title {
+    width: 500px;
+}
+
+.title:hover {
+    cursor: pointer;
+    color: #0D6EFD;
+}
+
+.writer {
+    width: 200px;
+}
+
+.writeTime {
+    width: 100px;
+}
+
+.localLinkBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.buttonContainer, .searchContainer {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.contentContainer {
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.contentTypeContainer {
+    text-align: center;
+}
+
+hr {
+    margin: 5px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #0D6EFD;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+#doContainer {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.buttonContainer {
+    position: absolute;
+    right: 10px;
+    z-index: 1000;
+}
+
+.noContentsMsg {
+    text-align: center;
+}
+
+hr {
+    margin: 7px;
+}

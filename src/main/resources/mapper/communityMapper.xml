@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.community.repository.CommunityMapper">
+
+    <select id="getCommunityList" resultType="Community">
+        SELECT *
+        FROM ${local}
+        WHERE TITLE LIKE CONCAT('%', #{search}, '%') || CONTENT LIKE CONCAT('%', #{search}, '%')
+        ORDER BY WRITE_TIME DESC
+        LIMIT #{startRow}, #{size}
+    </select>
+
+    <select id="getNickname" parameterType="string" resultType="string">
+        SELECT NICKNAME
+        FROM MEMBER
+        WHERE MEMBER_ID=#{memberId}
+    </select>
+
+    <select id="getCountCommunity" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM ${local}
+        WHERE TITLE LIKE CONCAT('%', #{search}, '%') || CONTENT LIKE CONCAT('%', #{search}, '%')
+    </select>
+
+    <insert id="insertCommunity" useGeneratedKeys="true" keyProperty="community.bno">
+        INSERT INTO ${local} (TITLE, CONTENT, WRITE_TIME, MEMBER_ID)
+        VALUES (#{community.title}, #{community.content}, NOW(), #{community.memberId})
+    </insert>
+
+    <select id="getCommunityByNo" resultType="Community">
+        SELECT *
+        FROM ${local}
+        WHERE BNO=#{bno}
+    </select>
+
+    <select id="getWriterProfile" parameterType="string" resultType="Profile">
+        SELECT NICKNAME, M_COPY_IMG
+        FROM MEMBER
+        WHERE MEMBER_ID=#{memberId}
+    </select>
+
+    <update id="updateCommunity">
+        UPDATE ${local}
+        SET TITLE=#{community.title}, CONTENT=#{community.content}
+        WHERE BNO=#{community.bno}
+    </update>
+
+    <delete id="deleteCommunityByNo">
+        DELETE FROM ${local}
+        WHERE BNO=#{bno}
+    </delete>
+</mapper>
