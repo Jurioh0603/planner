@@ -35,11 +35,13 @@ public class TlogController {
 
     @GetMapping("/list")
     public String list(@ModelAttribute("page") String page, Model model) {
+        //page 파라미터 없이 접근 시 기본값 1(1페이지)
         if(page.isEmpty()) {
             page = "1";
         }
         List<TlogList> tlogList = tlogService.getTlogList(Integer.parseInt(page));
 
+        //페이지네이션
         int total = tlogService.getCount();
         int size = 6;
 

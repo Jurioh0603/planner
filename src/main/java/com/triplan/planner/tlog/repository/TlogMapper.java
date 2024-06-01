@@ -2,6 +2,7 @@ package com.triplan.planner.tlog.repository;
 
 import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
+import com.triplan.planner.tlog.dto.Profile;
 import com.triplan.planner.tlog.dto.TlogList;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,6 +15,7 @@ public interface TlogMapper {
     public void saveTlogImage(List<TlogImage> tlogImageList);
 
     public List<TlogList> getTlogs(int startRow, int size);
+    public Profile getProfile(String memberId);
     public int getCount();
 
     public Tlog getTlogByNo(long tlogNo);

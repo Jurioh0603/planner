@@ -10,4 +10,5 @@ public class TlogList {
     private String tlogContent;
     private String memberId;
     private String storeName;
+    private Profile writerProfile;
 }
