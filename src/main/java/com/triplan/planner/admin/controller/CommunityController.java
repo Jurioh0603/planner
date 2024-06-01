@@ -6,10 +6,7 @@ import com.triplan.planner.admin.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,12 +35,17 @@ public class CommunityController {
     @ResponseBody
     public CommunityPage getPagedCommunityPosts(@RequestParam(name = "category", required = true) String category,
                                                 @RequestParam(name = "page", defaultValue = "1") int page,
-                                                @RequestParam(name = "size", defaultValue = "10") int size,
-                                                @RequestParam(name = "searchType", required = false) String searchType,
-                                                @RequestParam(name = "searchQuery", required = false) String searchQuery) {
-        List<Community> posts = communityService.getPagedPostsByCategory(category, page, size, searchType, searchQuery);
-        int total = communityService.getCountByCategory(category, searchType, searchQuery);
+                                                @RequestParam(name = "size", defaultValue = "10") int size) {
+        List<Community> posts = communityService.getPagedPostsByCategory(category, page, size);
+        int total = communityService.getCountByCategory(category);
 
         return new CommunityPage(total, page, size, posts);
+    }
+
+    @PostMapping("/community/delete")
+    @ResponseBody
+    public List<String> deletePosts(@RequestBody List<String> boardIdxArray, @RequestParam(name = "category") String category) {
+        communityService.deletePosts(boardIdxArray, category);
+        return boardIdxArray;
     }
 }

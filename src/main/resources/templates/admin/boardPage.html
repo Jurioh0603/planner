@@ -64,20 +64,6 @@
     <!-- NAVBAR -->
     <nav>
         <i class='bx bx-menu'></i>
-        <a href="#" class="nav-link">Categories</a>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Search...">
-                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-            </div>
-        </form>
-        <a href="#" class="notification">
-            <i class='bx bxs-bell'></i>
-            <span class="num">8</span>
-        </a>
-        <a href="#" class="profile">
-            <img src="img/people.png">
-        </a>
     </nav>
     <!-- NAVBAR -->
 
@@ -88,6 +74,9 @@
                 <h1>게시판관리</h1>
                 <ul class="breadcrumb">
                     <li>
+                        <a href="#">게시글관리</a>
+                    </li>
+                    <li>
                         <select id="main-category" onchange="updateSubCategories()">
                             <option value="none" disabled selected>게시판이름</option>
                             <option value="community">지역 커뮤니티</option>
@@ -96,7 +85,7 @@
                     </li>
                     <li><i class='bx bx-chevron-right'></i></li>
                     <li>
-                        <select id="sub-category" onchange="loadPagedPosts(this.value, 1)" disabled>
+                        <select id="sub-category" onchange="loadPosts(this.value, 1)" disabled>
                             <option value="none" disabled selected>세부 카테고리</option>
                             <option value="S_COMMUNITY">서울</option>
                             <option value="GG_COMMUNITY">경기</option>
@@ -118,15 +107,11 @@
             <div class="order">
                 <div class="head">
                     <h3>글관리</h3>
-                    <form id="search-form" class="d-flex">
-                        <select id="search-type" class="form-select me-2">
-                            <option value="title">제목</option>
-                            <option value="memberId">작성자</option>
-                        </select>
-                        <input type="text" id="search-query" class="form-control me-2" placeholder="검색어">
-                        <button type="submit" class="btn btn-primary">검색</button>
-                    </form>
+
+                    <i class='bx bx-search'></i>
+                    <i class='bx bx-filter'></i>
                 </div>
+
                 <table>
                     <thead>
                     <tr>
@@ -145,8 +130,8 @@
                     <ul class="pagination justify-content-center" id="pagination">
                         <!-- 페이징 버튼이 여기 추가됩니다. -->
                     </ul>
+                    <button type="button" class="btn btn-primary" onclick="boardDelete()">삭제</button>
                 </nav>
-                <button type="button" class="btn btn-primary">삭제</button>
             </div>
         </div>
     </main>
@@ -155,6 +140,147 @@
 <!-- CONTENT -->
 
 <script>
+    function allCheck() {
+        const allCheckBox = document.getElementById("allcheck");
+        const checkboxes = document.querySelectorAll('input[name="check"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = allCheckBox.checked;
+        });
+    }
+
+    function updateSubCategories() {
+        const mainCategory = document.getElementById('main-category').value;
+        const subCategory = document.getElementById('sub-category');
+
+        if (mainCategory === 'community') {
+            subCategory.disabled = false;
+            subCategory.value = "none";
+        } else if (mainCategory === 'travel_log') {
+            subCategory.disabled = true;
+            subCategory.value = "none";
+            loadPagedPosts(mainCategory, 1);
+        } else {
+            subCategory.disabled = true;
+            subCategory.value = "none";
+            const postList = document.getElementById('post-list');
+            postList.innerHTML = "";
+        }
+    }
+
+    function loadPagedPosts(category, page) {
+        if (category === "none") {
+            const postList = document.getElementById('post-list');
+            postList.innerHTML = "";
+            return;
+        }
+
+        $.ajax({
+            url: "/admin/community/posts/paged",
+            method: "GET",
+            data: { category: category, page: page },
+            success: function(data) {
+                const postList = $("#post-list");
+                postList.empty();
+                data.communityList.forEach(post => {
+                    const row = `<tr>
+                        <td>${post.bno}</td>
+                        <td>${post.title}</td>
+                        <td>${post.memberId}</td>
+                        <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                        <td><input type="checkbox" name="check" value="${post.bno}"></td>
+                    </tr>`;
+                    postList.append(row);
+                });
+                setupPagination(data.totalPages, page, category);
+            },
+            error: function() {
+                if(!document.querySelector('.error-alert')) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'error-alert';
+                    alertDiv.innerText = '게시글을 불러오는 중 오류가 발생했습니다.';
+                    document.body.appendChild(alertDiv);
+                    setTimeout(() => alertDiv.remove(), 3000);
+                }
+            }
+        });
+    }
+
+    function setupPagination(totalPages, currentPage, category) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        if (currentPage > 1) {
+            const prev = document.createElement('li');
+            prev.classList.add('page-item');
+            prev.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+            prev.addEventListener('click', function() {
+                loadPagedPosts(category, currentPage - 1);
+            });
+            pagination.appendChild(prev);
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            const page = document.createElement('li');
+            page.classList.add('page-item');
+            if (i === currentPage) {
+                page.classList.add('active');
+            }
+            page.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            page.addEventListener('click', function() {
+                loadPagedPosts(category, i);
+            });
+            pagination.appendChild(page);
+        }
+
+        if (currentPage < totalPages) {
+            const next = document.createElement('li');
+            next.classList.add('page-item');
+            next.innerHTML = `<a class="page-link" href="#">&raquo;</a>`;
+            next.addEventListener('click', function() {
+                loadPagedPosts(category, currentPage + 1);
+            });
+            pagination.appendChild(next);
+        }
+    }
+
+    function boardDelete() {
+        var boardIdxArray = [];
+        $("input:checkbox[name='check']:checked").each(function(){
+            boardIdxArray.push($(this).val());
+        });
+
+        console.log("선택된 게시글 번호:", boardIdxArray);
+
+        if(boardIdxArray.length === 0){
+            alert("삭제할 항목을 선택해주세요.");
+            return false;
+        }
+
+        var confirmAlert = confirm('정말로 삭제하시겠습니까?');
+        if(confirmAlert){
+            var category = document.getElementById('main-category').value;
+            $.ajax({
+                type: 'POST',
+                url: '/admin/community/delete?category=' + category,
+                dataType: 'json',
+                data: JSON.stringify(boardIdxArray),
+                contentType: 'application/json',
+                success: function(result) {
+                    console.log("삭제 성공:", result);
+                    alert("해당글이 정상적으로 삭제되었습니다.");
+                    loadPagedPosts(document.getElementById('sub-category').value, 1);
+                },
+                error: function(request, status, error) {
+                    console.error("삭제 오류 발생");
+                    console.error("Request:", request);
+                    console.error("Status:", status);
+                    console.error("Error:", error);
+                    alert("게시글 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
@@ -176,147 +302,8 @@
             sidebar.classList.toggle('hide');
         });
 
-        const searchButton = document.querySelector('#content nav form .form-input button');
-        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-        const searchForm = document.querySelector('#content nav form');
-
-        searchButton.addEventListener('click', function(e) {
-            if (window.innerWidth < 576) {
-                e.preventDefault();
-                searchForm.classList.toggle('show');
-                if (searchForm.classList.contains('show')) {
-                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                } else {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                }
-            }
-        });
-
         if (window.innerWidth < 768) {
             sidebar.classList.add('hide');
-        } else if (window.innerWidth > 576) {
-            searchButtonIcon.classList.replace('bx-x', 'bx-search');
-            searchForm.classList.remove('show');
-        }
-
-        window.addEventListener('resize', function() {
-            if (this.innerWidth > 576) {
-                searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                searchForm.classList.remove('show');
-            }
-        });
-
-        function updateSubCategories() {
-            const mainCategory = document.getElementById('main-category').value;
-            const subCategory = document.getElementById('sub-category');
-
-            if (mainCategory === 'community') {
-                subCategory.disabled = false;
-                subCategory.value = "none";
-            } else if (mainCategory === 'travel_log') {
-                subCategory.disabled = true;
-                subCategory.value = "none";
-                loadPagedPosts(mainCategory, 1);
-            } else {
-                subCategory.disabled = true;
-                subCategory.value = "none";
-                const postList = document.getElementById('post-list');
-                postList.innerHTML = "";
-            }
-        }
-
-        function loadPagedPosts(category, page) {
-            if (category === "none") {
-                const postList = document.getElementById('post-list');
-                postList.innerHTML = "";
-                return;
-            }
-
-            const searchType = document.getElementById('search-type').value;
-            const searchQuery = document.getElementById('search-query').value;
-
-            const params = new URLSearchParams({
-                category: category,
-                page: page,
-                searchType: searchType,
-                searchQuery: searchQuery
-            });
-
-            $.ajax({
-                url: "/admin/community/posts/paged",
-                method: "GET",
-                data: params.toString(),
-                success: function(data) {
-                    const postList = $("#post-list");
-                    postList.empty();
-                    data.communityList.forEach(post => {
-                        const row = `<tr>
-                            <td>${post.bno}</td>
-                            <td>${post.title}</td>
-                            <td>${post.memberId}</td>
-                            <td>${new Date(post.writeTime).toLocaleDateString()}</td>
-                            <td><input type="checkbox" name="check" value="${post.bno}"></td>
-                        </tr>`;
-                        postList.append(row);
-                    });
-                    setupPagination(data.totalPages, page, category);
-                },
-                error: function() {
-                    if(!document.querySelector('.error-alert')) {
-                        const alertDiv = document.createElement('div');
-                        alertDiv.className = 'error-alert';
-                        alertDiv.innerText = '게시글을 불러오는 중 오류가 발생했습니다.';
-                        document.body.appendChild(alertDiv);
-                        setTimeout(() => alertDiv.remove(), 3000);
-                    }
-                }
-            });
-        }
-
-        function setupPagination(totalPages, currentPage, category) {
-            const pagination = document.getElementById('pagination');
-            pagination.innerHTML = '';
-
-            if (currentPage > 1) {
-                const prev = document.createElement('li');
-                prev.classList.add('page-item');
-                prev.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
-                prev.addEventListener('click', function() {
-                    loadPagedPosts(category, currentPage - 1);
-                });
-                pagination.appendChild(prev);
-            }
-
-            for (let i = 1; i <= totalPages; i++) {
-                const page = document.createElement('li');
-                page.classList.add('page-item');
-                if (i === currentPage) {
-                    page.classList.add('active');
-                }
-                page.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-                page.addEventListener('click', function() {
-                    loadPagedPosts(category, i);
-                });
-                pagination.appendChild(page);
-            }
-
-            if (currentPage < totalPages) {
-                const next = document.createElement('li');
-                next.classList.add('page-item');
-                next.innerHTML = `<a class="page-link" href="#">&raquo;</a>`;
-                next.addEventListener('click', function() {
-                    loadPagedPosts(category, currentPage + 1);
-                });
-                pagination.appendChild(next);
-            }
-        }
-
-        function allCheck() {
-            const allCheckBox = document.getElementById("allcheck");
-            const checkboxes = document.querySelectorAll('input[name="check"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = allCheckBox.checked;
-            });
         }
 
         document.getElementById('sub-category').addEventListener('change', function() {
@@ -331,18 +318,14 @@
 
         document.getElementById("allcheck").addEventListener('change', allCheck);
 
-        // 검색 폼 제출 이벤트 핸들러 추가
-        document.getElementById('search-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const category = document.getElementById('sub-category').value;
-            loadPagedPosts(category, 1);
-        });
-
         document.getElementById('main-category').value = "none";
         document.getElementById('sub-category').value = "none";
         const postList = document.getElementById('post-list');
         postList.innerHTML = "";
     });
 </script>
+
+
+
 </body>
 </html>
