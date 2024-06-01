@@ -5,6 +5,7 @@ import com.triplan.planner.plan.domain.Schedule;
 import com.triplan.planner.plan.repository.PlanMapper;
 import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
+import com.triplan.planner.tlog.dto.Profile;
 import com.triplan.planner.tlog.dto.TlogDetailInfo;
 import com.triplan.planner.tlog.dto.TlogList;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +41,15 @@ public class TlogRepositoryImpl implements TlogRepository {
 
     @Override
     public List<TlogList> getTlogList(int startRow, int size) {
-        return tlogMapper.getTlogs(startRow, size);
+        List<TlogList> tlogList = tlogMapper.getTlogs(startRow, size);
+        //작성자 정보(닉네임, 프로필) 저장
+        if(!tlogList.isEmpty()) {
+            for(int i = 0; i < tlogList.size(); i++) {
+                Profile profile = tlogMapper.getProfile(tlogList.get(i).getMemberId());
+                tlogList.get(i).setWriterProfile(profile);
+            }
+        }
+        return tlogList;
     }
 
     @Override
@@ -58,8 +67,10 @@ public class TlogRepositoryImpl implements TlogRepository {
         Schedule schedule = planMapper.getScheduleByNo(tlog.getScheduleNo());
         //detailSchedule
         List<DetailSchedule> detailScheduleList = planMapper.getDetailSchedules(tlog.getScheduleNo());
+        //profile
+        Profile profile = tlogMapper.getProfile(tlog.getMemberId());
 
-        return new TlogDetailInfo(tlog, tlogImageList, schedule, detailScheduleList, null);
+        return new TlogDetailInfo(tlog, tlogImageList, schedule, detailScheduleList, null, profile);
     }
 
     @Override

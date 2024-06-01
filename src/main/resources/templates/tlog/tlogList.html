@@ -35,8 +35,11 @@
                                         <img th:src="|/tlog/images/${tlog.storeName}|" alt="여행기 섬네일" class="tlogImg"/>
                                     </div>
                                     <div class="writerContainer mt-2 mb-2 ms-2">
-                                        <div><img src="/images/profile.jpg" alt="프로필 사진" class="profile-img"></div>
-                                        <div class="ms-3 mb-1"><b>[[${tlog.memberId}]]</b> 님의 일정</div>
+                                        <div>
+                                            <img th:if="${tlog.writerProfile.mCopyImg == null}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+                                            <img th:if="${tlog.writerProfile.mCopyImg != null}" th:src="|/tlog/images/${tlog.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
+                                        </div>
+                                        <div class="ms-3 mb-1"><b>[[${tlog.writerProfile.nickname}]]</b> 님의 일정</div>
                                     </div>
                                     <div class="card-body">
                                         <div class="title">

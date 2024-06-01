@@ -7,12 +7,29 @@
     margin: 0 auto;
 }
 
+@media (min-width: 600px) {
+            .content {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            .background-section {
+                margin-right: 20px;
+            }
+
+            .align-items-center {
+                margin-top: 0;
+            }
+        }
+
+
 /*마이페이지 상단*/
 .text-h2 {
     font-size: 44px;
     font-weight: bold;
     margin-top: 20px;
-    margin-bottom: 70px;
+    margin-bottom: 20px;
 }
 
 .ico-my {
@@ -25,7 +42,7 @@
 .background-section {
     background-color: #F3F5F7;
     position: absolute;
-    top: 10%;
+    padding: 20px;
     left: 50%;
     transform: translateX(-50%);
     width: 100vw;
@@ -33,13 +50,17 @@
     z-index: -1;
 }
 
+.background-padding{
+    padding: 50px;
+}
+
 /*프로필 상자*/
 .profile-img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    margin-top: 70px;
+    margin-top: 40px;
     margin-bottom: 25px;
     text-align: center;
 }
@@ -52,6 +73,7 @@
     vertical-align: bottom;
     margin-top: 60px;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .box-text:hover {
@@ -66,6 +88,7 @@
 
 .box-align{
     text-align: center;
+    min-width: 100px
 }
 
 .text-bg {
@@ -74,6 +97,7 @@
     width: 350px;
     height: 470px;
     margin-right: -300px;
+    min-width: 350px
 }
 
 @media (max-width: 600px) { /* 화면 너비가 600px 이하일 때 적용 */
@@ -192,4 +216,78 @@
     border-bottom: none; /* 마지막 글에는 선 제거 */
     width: 95%;
     margin: 0 auto;
+}
+
+/*모달창*/
+h2{
+    text-align: center;
+}
+
+/*모달 팝업 영역 스타일링*/
+.modal {
+/*팝업 배경*/
+	display: none; /*평소에는 보이지 않도록*/
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+}
+.modal .modal_popup {
+/*팝업*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+.modal .modal_popup .close_btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin-top: 70px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+}
+
+.modal .modal_popup .update_btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #FAAC58;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.file-margin{
+    margin-left: 105px;
+}
+
+.line-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update_btn{
+    background-color: #2E64FE;
+    color: white;
+    border: none;
 }

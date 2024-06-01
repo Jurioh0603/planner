@@ -4,7 +4,7 @@
 
 <mapper namespace="com.triplan.planner.calendar.repository.CalendarMapper">
 
-    <insert id="saveDate" parameterType="dateDTO">
+    <insert id="saveDate" parameterType="com.triplan.planner.calendar.dto.DateDTO">
         INSERT INTO SCHEDULE (START_DAY, END_DAY, SCHEDULE_TITLE, MEMBER_ID)
         VALUES (#{startDay}, #{endDay}, #{title}, #{memberId})
     </insert>
@@ -14,7 +14,7 @@
         WHERE SCHEDULE_NO=#{scheduleNo} AND DETAIL_DAY > #{diffmodifyDays};
     </delete>
 
-    <update id="updateDayByNo" parameterType="modifyForm">
+    <update id="updateDayByNo" parameterType="com.triplan.planner.calendar.dto.ModifyForm">
         UPDATE SCHEDULE
         SET START_DAY=#{startDay}, END_DAY=#{endDay}
         WHERE SCHEDULE_NO=#{scheduleNo};

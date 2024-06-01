@@ -3,9 +3,9 @@ package com.triplan.planner.plan.repository;
 import com.triplan.planner.plan.domain.DetailSchedule;
 import com.triplan.planner.plan.domain.Schedule;
 import com.triplan.planner.plan.domain.ScheduleImage;
-import com.triplan.planner.plan.dto.*;
+import com.triplan.planner.plan.dto.PlaceList;
+import com.triplan.planner.plan.dto.imageUploadForm;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public interface PlanMapper {
     public void deleteDetailScheduleByScheduleNo(long scheduleNo);
     public void insertDetailSchedules(List<DetailSchedule> detailScheduleList);
 
-    public void updateScheduleTitleByNo(@Param("scheduleNo") Long scheduleNo, @Param("title") String title);
+    public void updateScheduleTitleByNo(Long scheduleNo, String title);
 
     public long getLastScheduleNo();
 

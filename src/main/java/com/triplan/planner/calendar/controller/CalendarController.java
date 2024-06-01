@@ -3,7 +3,7 @@ package com.triplan.planner.calendar.controller;
 import com.triplan.planner.calendar.dto.DateDTO;
 import com.triplan.planner.calendar.dto.ModifyForm;
 import com.triplan.planner.calendar.service.CalendarService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/plan")
 public class CalendarController {
 
-    @Autowired
-    private CalendarService calendarService;
+    private final CalendarService calendarService;
 
     //달력페이지
     @GetMapping("/calendar")
