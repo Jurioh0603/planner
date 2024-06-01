@@ -194,7 +194,7 @@
                 setupPagination(data.totalPages, page, category);
             },
             error: function() {
-                if(!document.querySelector('.error-alert')) {
+                if (!document.querySelector('.error-alert')) {
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'error-alert';
                     alertDiv.innerText = '게시글을 불러오는 중 오류가 발생했습니다.';
@@ -245,30 +245,33 @@
 
     function boardDelete() {
         var boardIdxArray = [];
-        $("input:checkbox[name='check']:checked").each(function(){
+        $("input:checkbox[name='check']:checked").each(function() {
             boardIdxArray.push($(this).val());
         });
 
         console.log("선택된 게시글 번호:", boardIdxArray);
 
-        if(boardIdxArray.length === 0){
+        if (boardIdxArray.length === 0) {
             alert("삭제할 항목을 선택해주세요.");
             return false;
         }
 
         var confirmAlert = confirm('정말로 삭제하시겠습니까?');
-        if(confirmAlert){
+        if (confirmAlert) {
             var category = document.getElementById('main-category').value;
+            var subCategory = document.getElementById('sub-category').value;
+            var targetCategory = category === 'community' ? subCategory : category;
+
             $.ajax({
                 type: 'POST',
-                url: '/admin/community/delete?category=' + category,
+                url: '/admin/community/delete?category=' + targetCategory,
                 dataType: 'json',
                 data: JSON.stringify(boardIdxArray),
                 contentType: 'application/json',
                 success: function(result) {
                     console.log("삭제 성공:", result);
                     alert("해당글이 정상적으로 삭제되었습니다.");
-                    loadPagedPosts(document.getElementById('sub-category').value, 1);
+                    loadPagedPosts(targetCategory, 1); // 삭제 후 글 목록 다시 로드
                 },
                 error: function(request, status, error) {
                     console.error("삭제 오류 발생");
