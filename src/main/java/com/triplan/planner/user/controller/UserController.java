@@ -245,6 +245,7 @@ public class UserController {
 		ReturnUtil.setReturnMessage(response, alertMessage, "", icon, "/user/login");
 	}
 
+
 	//test
 //	@Autowired
 //	TestMapper testMapper;

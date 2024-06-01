@@ -15,6 +15,12 @@
             <input type="password" name="password" placeholder="Password" class="input_box">
         </div>
 
+        <div class="from-row">
+            <input type="password" id="pw1" oninput="pwCheck()" class="input_box" placeholder="비밀번호">
+            <input type="password" id="pw2" oninput="pwCheck()" class="input_box" placeholder="비밀번호 확인">
+            <span id="pwConfirm">비밀번호를 입력하세요</span>
+        </div>
+
         <!-- name / nickname -->
         <div class="form-row">
             <input type="text" name="name" placeholder="Name" class="input_box">
@@ -38,5 +44,15 @@
         <input type="submit" value="회원가입" class="submit-btn">
     </form>
 </div>
+<script>
+    function pwCheck(){
+    if($('#pw1').val() == $('#pw2').val()){
+        $('#pwConfirm').text('비밀번호 일치').css('color', 'green')
+    }else{
+        $('#pwConfirm').text('비밀번호 불일치').css('color', 'red')
+    }
+}
+
+</script>
 </body>
 </html>
