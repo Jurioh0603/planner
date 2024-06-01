@@ -108,8 +108,16 @@
                 <div class="head">
                     <h3>글관리</h3>
 
-                    <i class='bx bx-search'></i>
-                    <i class='bx bx-filter'></i>
+                    <!-- 게시판 관리 페이지의 검색 양식 -->
+                    <form id="searchForm" class="d-flex" onsubmit="return searchPosts()">
+                        <select id="searchType" class="form-select me-2">
+                            <option value="title">제목</option>
+                            <option value="memberId">작성자</option>
+                        </select>
+                        <input id="searchQuery" type="text" class="form-control me-2" placeholder="검색어 입력">
+                        <button type="submit" class="btn btn-primary">검색</button>
+                    </form>
+
                 </div>
 
                 <table>
@@ -326,6 +334,48 @@
         const postList = document.getElementById('post-list');
         postList.innerHTML = "";
     });
+
+    function searchPosts() {
+    var category = document.getElementById('sub-category').value; // 게시판 카테고리
+    var searchQuery = document.getElementById('searchQuery').value; // 검색어
+
+    $.ajax({
+        url: "/admin/community/search",
+        method: "GET",
+        data: { category: category, searchQuery: searchQuery },
+        success: function(data) {
+            // 검색 결과를 게시글 목록에 표시하는 함수 호출
+            displaySearchResults(data);
+        },
+        error: function() {
+            // 오류가 발생한 경우 알림 표시
+            alert("검색 중 오류가 발생했습니다.");
+        }
+    });
+
+    // 기본 동작 방지 (페이지 새로고침 방지)
+    return false;
+}
+
+// 검색 결과를 게시글 목록에 표시하는 함수
+function displaySearchResults(data) {
+    // 검색 결과를 표시할 곳을 선택
+    var postList = $("#post-list");
+    // 이전에 표시된 게시글 목록 지우기
+    postList.empty();
+    // 받아온 검색 결과를 반복해서 표시
+    data.forEach(post => {
+        var row = `<tr>
+            <td>${post.bno}</td>
+            <td>${post.title}</td>
+            <td>${post.memberId}</td>
+            <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+            <td><input type="checkbox" name="check" value="${post.bno}"></td>
+        </tr>`;
+        postList.append(row);
+    });
+}
+
 </script>
 
 

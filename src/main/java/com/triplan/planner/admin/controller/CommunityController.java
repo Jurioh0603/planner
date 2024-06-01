@@ -48,4 +48,11 @@ public class CommunityController {
         communityService.deletePosts(boardIdxArray, category);
         return boardIdxArray;
     }
+
+    @PostMapping("/community/search")
+    @ResponseBody
+    public List<Community> searchPosts(@RequestParam("searchType") String searchType, @RequestParam("searchQuery") String searchQuery) {
+        return communityService.searchPosts(searchType, searchQuery);
+    }
+
 }

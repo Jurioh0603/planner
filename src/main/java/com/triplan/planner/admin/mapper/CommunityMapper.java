@@ -16,4 +16,8 @@ public interface CommunityMapper {
     int getCountByCategory(@Param("category") String category);
 
     int deletePosts(@Param("boardIdxList") List<String> boardIdxList, @Param("category") String category);
+
+    List<Community> searchPosts(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery);
+
+
 }

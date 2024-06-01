@@ -29,4 +29,9 @@ public class CommunityService {
     public void deletePosts(List<String> boardIdxArray, String category) {
         communityMapper.deletePosts(boardIdxArray, category);
     }
+
+    public List<Community> searchPosts(String searchType, String searchQuery) {
+        return communityMapper.searchPosts(searchType, searchQuery);
+    }
+
 }
