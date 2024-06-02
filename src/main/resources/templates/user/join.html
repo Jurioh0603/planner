@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/user/join.css}" rel="stylesheet" />
     <title>Join</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 <div class="login-wrapper">
@@ -12,11 +13,10 @@
         <!--id / pw-->
         <div class="form-row">
             <input type="text" name="memberId" placeholder="Id" class="input_box">
-            <input type="password" name="password" placeholder="Password" class="input_box">
+            <input type="password" id="pw1" name="password" oninput="pwCheck()" class="input_box" placeholder="비밀번호">
         </div>
 
-        <div class="from-row">
-            <input type="password" id="pw1" oninput="pwCheck()" class="input_box" placeholder="비밀번호">
+        <div class="form-row">
             <input type="password" id="pw2" oninput="pwCheck()" class="input_box" placeholder="비밀번호 확인">
             <span id="pwConfirm">비밀번호를 입력하세요</span>
         </div>
@@ -46,13 +46,12 @@
 </div>
 <script>
     function pwCheck(){
-    if($('#pw1').val() == $('#pw2').val()){
-        $('#pwConfirm').text('비밀번호 일치').css('color', 'green')
-    }else{
-        $('#pwConfirm').text('비밀번호 불일치').css('color', 'red')
+        if($('#pw1').val() === $('#pw2').val()){
+            $('#pwConfirm').text('비밀번호 일치').css('color', 'green');
+        } else {
+            $('#pwConfirm').text('비밀번호를 확인해주세요').css('color', 'red');
+        }
     }
-}
-
 </script>
 </body>
 </html>
