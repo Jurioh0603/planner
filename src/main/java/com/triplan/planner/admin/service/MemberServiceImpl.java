@@ -2,7 +2,7 @@ package com.triplan.planner.admin.service;
 
 import com.triplan.planner.admin.domain.Member;
 import com.triplan.planner.admin.dto.MemberDTO;
-import com.triplan.planner.admin.repository.MemberRepository;
+import com.triplan.planner.admin.repository.adminMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;
+    private final adminMemberRepository adminMemberRepository;
 
 
 
     @Override
     public List<MemberDTO> getMembers(int page, int pageSize) {
         int offset = (page - 1) * pageSize;
-        List<Member> members = memberRepository.selectAll(offset, pageSize);
+        List<Member> members = adminMemberRepository.selectAll(offset, pageSize);
         return members.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -28,13 +28,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int getMemberCount() {
-        return memberRepository.countMembers();
+        return adminMemberRepository.countMembers();
     }
 
     @Override
     public List<MemberDTO> searchMembers(String searchType, String searchQuery, int page, int pageSize) {
         int offset = (page - 1) * pageSize;
-        List<Member> members = memberRepository.searchMembers(searchType, searchQuery, offset, pageSize);
+        List<Member> members = adminMemberRepository.searchMembers(searchType, searchQuery, offset, pageSize);
         return members.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int countSearchMembers(String searchType, String searchQuery) {
-        return memberRepository.countSearchMembers(searchType, searchQuery);
+        return adminMemberRepository.countSearchMembers(searchType, searchQuery);
     }
 
     private MemberDTO convertToDTO(Member member) {
@@ -59,6 +59,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void updateMemberGrade(String memId, int grade) {
-        memberRepository.updateMemberGrade(memId, grade);
+        adminMemberRepository.updateMemberGrade(memId, grade);
     }
 }

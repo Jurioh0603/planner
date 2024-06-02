@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface MemberRepository {
+public interface adminMemberRepository {
     // 모든 회원 조회
     List<Member> selectAll(@Param("offset") int offset, @Param("limit") int limit);
 
