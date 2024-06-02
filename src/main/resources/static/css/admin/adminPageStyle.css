@@ -315,7 +315,6 @@ body {
 	border-radius: 20px;
 	background: var(--light);
 	padding: 24px;
-	overflow-x: auto;
 }
 #content main .table-data .head {
 	display: flex;
@@ -442,6 +441,15 @@ tr td:last-child, th:last-child {
     border-right: none; /* 마지막 열의 오른쪽 보더 제거 */
 }
 
+/* 페이지 네비게이션을 가운데로 정렬 */
+nav[aria-label="Page navigation example"] {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+
+
 
 /* MAIN */
 /* CONTENT */
@@ -461,8 +469,33 @@ tr td:last-child, th:last-child {
 	}
 }
 
+#searchType {
+    width: 40%; /* input 요소 크기의 절반으로 설정 */
+    height: 50px; /* 높이를 30px로 설정 */
+}
 
+#searchQuery {
+    height: 50px; /* 높이를 30px로 설정 */
+}
 
+#searchForm button {
+    font-size: 16px; /* 글자 크기 조정 */
+    padding: 5px 10px; /* 버튼 패딩 조정 */
+}
+
+.form-select {
+    width: 40%;
+    height: 50px;
+}
+
+.form-control {
+    height: 50px;
+}
+
+.btn {
+    font-size: 16px;
+    padding: 5px 10px;
+}
 
 
 

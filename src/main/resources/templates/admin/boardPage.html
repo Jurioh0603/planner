@@ -115,7 +115,8 @@
                             <option value="memberId">작성자</option>
                         </select>
                         <input id="searchQuery" type="text" class="form-control me-2" placeholder="검색어 입력">
-                        <button type="submit" class="btn btn-primary">검색</button>
+                        <button type="submit" class="btn btn-primary" style="width: 100px; height: 50px;">검색</button>
+
                     </form>
 
                 </div>
@@ -134,11 +135,14 @@
                     <!-- AJAX로 데이터를 가져와서 여기에 채웁니다. -->
                     </tbody>
                 </table>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="button" class="btn btn-primary" style="margin-top: 20px;" onclick="boardDelete()">삭제</button>
+                </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center" id="pagination">
                         <!-- 페이징 버튼이 여기 추가됩니다. -->
                     </ul>
-                    <button type="button" class="btn btn-primary" onclick="boardDelete()">삭제</button>
+
                 </nav>
             </div>
         </div>
