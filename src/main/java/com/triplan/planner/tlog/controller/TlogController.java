@@ -7,6 +7,8 @@ import com.triplan.planner.tlog.domain.Tlog;
 import com.triplan.planner.tlog.domain.TlogImage;
 import com.triplan.planner.tlog.dto.*;
 import com.triplan.planner.tlog.service.TlogService;
+import com.triplan.planner.user.dto.UserDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -62,10 +64,10 @@ public class TlogController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute TlogWriteForm form) throws IOException {
+    public String write(@ModelAttribute TlogWriteForm form, @SessionAttribute("loginMemberInfo") UserDto loginInfo) throws IOException {
         List<UploadFile> storeImageFiles = fileStore.storeFiles(form.getFile());
 
-        String memberId = "id1";
+        String memberId = loginInfo.getMemberId();
         Tlog tlog = new Tlog(0L, form.getTitle(), form.getContent(), null, memberId, form.getScheduleNo());
         List<TlogImage> tlogImageList = new ArrayList<>();
         for(int i = 0; i < storeImageFiles.size(); i++) {
@@ -81,18 +83,23 @@ public class TlogController {
     }
 
     @GetMapping("/select")
-    public String select(@ModelAttribute("search") String search, Model model) {
-        String memberId = "id1";
+    public String select(@ModelAttribute("search") String search, Model model, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         List<Schedule> scheduleList = tlogService.getScheduleList(memberId, search);
         model.addAttribute("scheduleList", scheduleList);
         return "tlog/addPlan";
     }
 
     @GetMapping("/detail")
-    public String detail(@RequestParam("no") long tlogNo, Model model) {
-        String memberId = "id1";
+    public String detail(@RequestParam("no") long tlogNo, Model model, HttpSession session) {
+        UserDto loginInfo = (UserDto) session.getAttribute("loginMemberInfo");
+
         TlogDetailInfo tlogInfo = tlogService.getTlogInfo(tlogNo);
-        boolean isFav = tlogService.isFav(memberId, tlogNo);
+
+        boolean isFav = false;
+        if(loginInfo != null)
+            isFav = tlogService.isFav(loginInfo.getMemberId(), tlogNo);
+
         model.addAttribute("KAKAO_API_KEY", KAKAO_API_KEY);
         model.addAttribute("tlogInfo", tlogInfo);
         model.addAttribute("isFav", isFav);
@@ -115,13 +122,13 @@ public class TlogController {
     }
 
     @PostMapping("/modify")
-    public String modify(@ModelAttribute TlogWriteForm form, @RequestParam("no") long no) throws IOException {
+    public String modify(@ModelAttribute TlogWriteForm form, @RequestParam("no") long no, @SessionAttribute("loginMemberInfo") UserDto loginInfo) throws IOException {
         List<UploadFile> storeImageFiles = null;
         if(!form.getFile().get(0).getOriginalFilename().isBlank()) {
             storeImageFiles = fileStore.storeFiles(form.getFile());
         }
 
-        String memberId = "id1";
+        String memberId = loginInfo.getMemberId();
         Tlog tlog = new Tlog(no, form.getTitle(), form.getContent(), null, memberId, form.getScheduleNo());
         List<TlogImage> tlogImageList = new ArrayList<>();
         if(storeImageFiles != null) {
@@ -140,25 +147,25 @@ public class TlogController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveSchedule(@RequestBody Map<String, Object> jsonObj) {
+    public ResponseEntity<String> saveSchedule(@RequestBody Map<String, Object> jsonObj, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
         String scheduleNo = (String) jsonObj.get("scheduleNo");
 
-        String memberId = "id1";
+        String memberId = loginInfo.getMemberId();
         tlogService.saveSchedule(Long.parseLong(scheduleNo), memberId);
 
         return ResponseEntity.ok("{\"message\": \"일정 저장 성공!\"}");
     }
 
     @GetMapping("/fav")
-    public String fav(@RequestParam("tlogNo") long tlogNo) {
-        String memberId = "id1";
+    public String fav(@RequestParam("tlogNo") long tlogNo, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         tlogService.favoriteTlog(tlogNo, memberId);
         return "redirect:/tlog/detail?no=" + tlogNo;
     }
 
     @GetMapping("/notFav")
-    public String notFav(@RequestParam("tlogNo") long tlogNo) {
-        String memberId = "id1";
+    public String notFav(@RequestParam("tlogNo") long tlogNo, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         tlogService.notFavoriteTlog(tlogNo, memberId);
         return "redirect:/tlog/detail?no=" + tlogNo;
     }

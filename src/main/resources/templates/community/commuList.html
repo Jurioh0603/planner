@@ -121,7 +121,12 @@
         </block>
 
         <div class="buttonContainer mt-3">
-            <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
+            <th:block th:if="${session.loginMemberInfo != null}">
+                <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
+            </th:block>
+            <th:block th:if="${session.loginMemberInfo == null}">
+                <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/user/login}'|">글쓰기</button>
+            </th:block>
         </div>
     </div>
 
