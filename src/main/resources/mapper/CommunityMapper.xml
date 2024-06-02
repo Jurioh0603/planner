@@ -8,43 +8,43 @@
     <select id="getPostsByCategory" parameterType="string" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
             <when test="category == 'S_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM S_COMMUNITY
             </when>
             <when test="category == 'GG_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GG_COMMUNITY
             </when>
             <when test="category == 'GW_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GW_COMMUNITY
             </when>
             <when test="category == 'JJ_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JJ_COMMUNITY
             </when>
             <when test="category == 'CB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CB_COMMUNITY
             </when>
             <when test="category == 'CN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CN_COMMUNITY
             </when>
             <when test="category == 'JB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JB_COMMUNITY
             </when>
             <when test="category == 'JN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JN_COMMUNITY
             </when>
             <when test="category == 'GB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GB_COMMUNITY
             </when>
             <when test="category == 'GN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GN_COMMUNITY
             </when>
             <when test="category == 'travel_log'">
@@ -58,91 +58,171 @@
     <select id="getPagedPostsByCategory" parameterType="map" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
             <when test="category == 'S_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM S_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GG_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GG_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GW_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GW_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JJ_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JJ_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'CB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'CN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
                 ORDER BY WRITE_TIME DESC
                 LIMIT #{startRow}, #{size}
@@ -165,61 +245,141 @@
             <when test="category == 'S_COMMUNITY'">
                 SELECT COUNT(*) FROM S_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'GG_COMMUNITY'">
                 SELECT COUNT(*) FROM GG_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'GW_COMMUNITY'">
                 SELECT COUNT(*) FROM GW_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'JJ_COMMUNITY'">
                 SELECT COUNT(*) FROM JJ_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'CB_COMMUNITY'">
                 SELECT COUNT(*) FROM CB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'CN_COMMUNITY'">
                 SELECT COUNT(*) FROM CN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'JB_COMMUNITY'">
                 SELECT COUNT(*) FROM JB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'JN_COMMUNITY'">
                 SELECT COUNT(*) FROM JN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'GB_COMMUNITY'">
                 SELECT COUNT(*) FROM GB_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'GN_COMMUNITY'">
                 SELECT COUNT(*) FROM GN_COMMUNITY
                 <if test="searchQuery != null and searchQuery != ''">
-                    WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    WHERE
+                    <choose>
+                        <when test="searchType == 'memberId'">
+                            MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                        </when>
+                        <otherwise>
+                            ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                        </otherwise>
+                    </choose>
                 </if>
             </when>
             <when test="category == 'travel_log'">
@@ -277,67 +437,147 @@
     <select id="searchPosts" parameterType="map" resultType="com.triplan.planner.admin.domain.Community">
         <choose>
             <when test="category == 'S_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM S_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'GG_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GG_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'GW_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GW_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'JJ_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JJ_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'CB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CB_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'CN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CN_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'JB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JB_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'JN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JN_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'GB_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GB_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'GN_COMMUNITY'">
-                SELECT BNO as bno, TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GN_COMMUNITY
-                WHERE ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                WHERE
+                <choose>
+                    <when test="searchType == 'memberId'">
+                        MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+                    </when>
+                    <otherwise>
+                        ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
+                    </otherwise>
+                </choose>
                 ORDER BY WRITE_TIME DESC
             </when>
             <when test="category == 'travel_log'">
-                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
+                SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID, WRITE_TIME
                 FROM TLOG
                 WHERE TLOG_TITLE LIKE CONCAT('%', #{searchQuery}, '%')
                 ORDER BY WRITE_TIME DESC

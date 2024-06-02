@@ -2,9 +2,9 @@ package com.triplan.planner.admin.controller;
 
 import com.triplan.planner.admin.dto.MemberDTO;
 import com.triplan.planner.admin.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,12 +17,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class MemberController {
 
+    private final MemberService memberService;
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
-    @Autowired
-    private MemberService memberService;
 
     @GetMapping("/memberPage")
     public String memberPage(@RequestParam(value = "searchType", required = false) String searchType,
@@ -48,7 +47,6 @@ public class MemberController {
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchQuery", searchQuery);
 
-        logger.info("Model Member: {}", members);
         return "admin/memberPage";
     }
 
@@ -68,15 +66,12 @@ public class MemberController {
                 throw new IllegalArgumentException("Invalid grade type");
             }
         } catch (NumberFormatException e) {
-            System.err.println("Invalid grade format: " + gradeObj);
+            logger.error("Invalid grade format: {}", gradeObj);
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Invalid grade format");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
-
-        System.out.println("Received member ID: " + memId);
-        System.out.println("Received new grade: " + updateGrade);
 
         try {
             memberService.updateMemberGrade(memId, updateGrade);
@@ -85,7 +80,7 @@ public class MemberController {
             response.put("message", "Member grade updated successfully");
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.err.println("Error updating member grade: " + e.getMessage());
+            logger.error("Error updating member grade: {}", e.getMessage());
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Error updating member grade: " + e.getMessage());

@@ -2,7 +2,7 @@ package com.triplan.planner.admin.controller;
 
 import com.triplan.planner.admin.domain.Community;
 import com.triplan.planner.admin.service.CommunityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class CommunityController {
 
-    @Autowired
-    private CommunityService communityService;
+    private final CommunityService communityService;
 
     @GetMapping("/community")
     public String getCommunityPage(@RequestParam(name = "category", required = false, defaultValue = "S_COMMUNITY") String category,

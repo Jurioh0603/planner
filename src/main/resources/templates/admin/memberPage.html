@@ -181,7 +181,7 @@
         if (menuBar) {
             menuBar.addEventListener('click', function() {
                 sidebar.classList.toggle('hide');
-
+                console.log('Sidebar toggled. Current state:', sidebar.classList.contains('hide') ? 'Hidden' : 'Visible');
             });
         }
 
@@ -199,6 +199,7 @@
                     } else {
                         searchButtonIcon.classList.replace('bx-x', 'bx-search');
                     }
+                    console.log('Search form toggled. Current state:', searchForm.classList.contains('show') ? 'Shown' : 'Hidden');
                 }
             });
         }
@@ -219,6 +220,7 @@
                     searchForm.classList.remove('show');
                 }
             }
+            console.log('Window resized. Current width:', this.innerWidth);
         });
 
         // 회원등급변경 스크립트 이벤트 위임 방식으로 수정
@@ -230,6 +232,8 @@
                 const memberRow = event.target.closest('tr');
                 const memberId = memberRow.querySelector('td').innerText;
 
+                console.log('변경할 회원 ID:', memberId);
+                console.log('변경할 새 등급:', newGrade);
 
                 fetch('/admin/updateMemberGrade', {
                     method: 'POST',
@@ -240,17 +244,20 @@
                 })
                 .then(response => response.json())
                 .then(data => {
+                    console.log('서버 응답:', data);
                     if (data.success) {
                         const gradeButton = memberRow.querySelector('.grade-btn');
                         gradeButton.textContent = newGrade === 9999 ? '관리자' : newGrade === 1111 ? '일반' : newGrade === 2222 ? '탈퇴' : '블랙';
                         gradeButton.className = 'btn dropdown-toggle grade-btn';
                         gradeButton.classList.remove('admin', 'general', 'withdrawn', 'black');
                         gradeButton.classList.add(newGrade === 9999 ? 'admin' : newGrade === 1111 ? 'general' : newGrade === 2222 ? 'withdrawn' : 'black');
+                        console.log('회원 등급이 성공적으로 변경되었습니다.');
                     } else {
                         alert('등급 변경 실패: ' + data.message);
                     }
                 })
                 .catch(error => {
+                    console.error('에러 발생:', error);
                     alert('등급 변경 실패: ' + error.message);
                 });
             }
@@ -262,7 +269,8 @@ function performMemberSearch() {
     var searchType = document.getElementById("memberSearchType").value;
     var searchQuery = document.getElementById("memberSearchQuery").value;
 
-
+    console.log("회원 검색 구분: " + searchType);
+    console.log("회원 검색어: " + searchQuery);
 
     fetch('/admin/searchMembers', {
         method: 'POST',
@@ -273,9 +281,11 @@ function performMemberSearch() {
     })
     .then(response => response.json())
     .then(data => {
+        console.log('회원 검색 결과:', data);
         updateMemberTable(data.members); // 검색 결과를 테이블에 업데이트하는 함수 호출
     })
     .catch(error => {
+        console.error('회원 검색 오류 발생:', error);
         alert('검색 실패: ' + error.message);
     });
 }
