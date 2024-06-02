@@ -16,6 +16,7 @@
 /*수평정렬*/
 .line-container{
     margin-top: 20px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -40,37 +41,69 @@
     display: flex;
     flex-direction: column;
     margin-left: 50px;
+    margin-top: 30px;
     top: 50%;
     left: 50%;
-    transform: translate(6%, 8%);
 }
 
 .s-text {
-    font-size: 13px;
+    font-size: 14px;
     color: #6E6E6E;
 }
 
 .m-text {
-    font-size: 18px;
+    font-size: 20px;
     color: #6E6E6E;
 }
 
 .l-text {
-    font-size: 23px;
+    font-size: 25px;
 }
 
 
 .img-size {
-    width: 180px;
-    height: 125px;
+    width: 220px;
+    height: 160px;
+}
+
+.text-decoration {
+    color: inherit;
+    text-decoration: none;
 }
 
 .title {
-    color: inherit;
-    text-decoration: none;
     margin-bottom: 5px;
 }
 
-.title:hover {
+.text-decoration:hover {
     text-decoration: underline;
+}
+
+/*페이지네이션*/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #0090F9;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }

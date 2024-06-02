@@ -18,4 +18,36 @@
             NICKNAME = #{nickName}
         WHERE MEMBER_ID = #{memberId}
     </update>
+    <select id="myTlogList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
+        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d")
+        FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
+                          FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
+                                FROM TLOGIMAGE) AS RANKEDROWS
+                          WHERE RN=1) B
+        ON A.TLOG_NO=B.TLOG_NO JOIN FAV C
+        ON B.TLOG_NO=C.TLOG_NO
+        WHERE A.MEMBER_ID = #{memberId}
+        ORDER BY C.FAV_DATE DESC
+        LIMIT #{startRow}, #{size}
+    </select>
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*)
+        FROM TLOG
+    </select>
+    <select id="favCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM FAV
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+    <select id="myTlogList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
+        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d")
+        FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
+        FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
+        FROM TLOGIMAGE) AS RANKEDROWS
+        WHERE RN=1) B
+        ON A.TLOG_NO=B.TLOG_NO
+        WHERE A.MEMBER_ID = #{memberId}
+        ORDER BY A.WRITE_TIME DESC
+        LIMIT #{startRow}, #{size}
+    </select>
 </mapper>
