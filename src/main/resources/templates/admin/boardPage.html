@@ -202,7 +202,7 @@
             success: function(data) {
                 const postList = $("#post-list");
                 postList.empty();
-                data.communityList.forEach(post => {
+                data.boardList.forEach(post => {
                     const row = `<tr>
                         <td>${post.bno}</td>
                         <td>${post.title}</td>

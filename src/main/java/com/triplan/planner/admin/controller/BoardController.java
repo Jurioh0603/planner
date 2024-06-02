@@ -1,7 +1,7 @@
 package com.triplan.planner.admin.controller;
 
-import com.triplan.planner.admin.domain.Community;
-import com.triplan.planner.admin.service.CommunityService;
+import com.triplan.planner.admin.domain.Board;
+import com.triplan.planner.admin.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +14,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-public class CommunityController {
+public class BoardController {
 
-    private final CommunityService communityService;
+    private final BoardService boardService;
 
     @GetMapping("/board")
     public String getCommunityPage(@RequestParam(name = "category", required = false, defaultValue = "S_COMMUNITY") String category,
@@ -33,8 +33,8 @@ public class CommunityController {
 
     @GetMapping("/board/posts")
     @ResponseBody
-    public List<Community> getCommunityPosts(@RequestParam(name = "category", required = true) String category) {
-        return communityService.getPostsByCategory(category);
+    public List<Board> getCommunityPosts(@RequestParam(name = "category", required = true) String category) {
+        return boardService.getPostsByCategory(category);
     }
 
     @GetMapping("/board/posts/paged")
@@ -47,12 +47,12 @@ public class CommunityController {
 
         int pageSize = 10;
         int startRow = (page - 1) * pageSize;
-        List<Community> posts = communityService.getPagedPostsByCategory(category, searchType, searchQuery, startRow, pageSize);
-        int totalPosts = communityService.getCountByCategory(category, searchType, searchQuery);
+        List<Board> posts = boardService.getPagedPostsByCategory(category, searchType, searchQuery, startRow, pageSize);
+        int totalPosts = boardService.getCountByCategory(category, searchType, searchQuery);
         int totalPages = (int) Math.ceil((double) totalPosts / pageSize);
 
         Map<String, Object> result = new HashMap<>();
-        result.put("communityList", posts);
+        result.put("boardList", posts);
         result.put("totalPages", totalPages);
         return result;
     }
@@ -62,7 +62,7 @@ public class CommunityController {
     public Map<String, String> deletePosts(@RequestBody Map<String, Object> params) {
         List<Integer> boardIdxArray = (List<Integer>) params.get("boardIdxArray");
         String category = (String) params.get("category");
-        communityService.deletePosts(boardIdxArray, category);
+        boardService.deletePosts(boardIdxArray, category);
 
         Map<String, String> response = new HashMap<>();
         response.put("status", "success");
@@ -72,7 +72,7 @@ public class CommunityController {
 
     @GetMapping("/board/search")
     @ResponseBody
-    public List<Community> searchPosts(@RequestParam String category, @RequestParam String searchType, @RequestParam String searchQuery) {
-        return communityService.searchPosts(category, searchType, searchQuery);
+    public List<Board> searchPosts(@RequestParam String category, @RequestParam String searchType, @RequestParam String searchQuery) {
+        return boardService.searchPosts(category, searchType, searchQuery);
     }
 }

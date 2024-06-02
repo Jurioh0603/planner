@@ -1,7 +1,7 @@
 package com.triplan.planner.admin.service;
 
-import com.triplan.planner.admin.domain.Community;
-import com.triplan.planner.admin.repository.CommunityMapper;
+import com.triplan.planner.admin.domain.Board;
+import com.triplan.planner.admin.repository.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +10,17 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CommunityServiceImpl implements CommunityService {
+public class BoardServiceImpl implements BoardService {
 
-    private final CommunityMapper communityMapper;
+    private final BoardMapper boardMapper;
 
     @Override
-    public List<Community> getPostsByCategory(String category) {
-        return communityMapper.getPostsByCategory(category);
+    public List<Board> getPostsByCategory(String category) {
+        return boardMapper.getPostsByCategory(category);
     }
 
     @Override
-    public List<Community> getPagedPostsByCategory(String category, String searchType, String searchQuery, int startRow, int size) {
+    public List<Board> getPagedPostsByCategory(String category, String searchType, String searchQuery, int startRow, int size) {
         Map<String, Object> params = Map.of(
                 "category", category,
                 "searchType", searchType,
@@ -28,7 +28,7 @@ public class CommunityServiceImpl implements CommunityService {
                 "startRow", startRow,
                 "size", size
         );
-        return communityMapper.getPagedPostsByCategory(params);
+        return boardMapper.getPagedPostsByCategory(params);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CommunityServiceImpl implements CommunityService {
                 "searchType", searchType,
                 "searchQuery", searchQuery
         );
-        return communityMapper.getCountByCategory(params);
+        return boardMapper.getCountByCategory(params);
     }
 
     @Override
@@ -47,16 +47,16 @@ public class CommunityServiceImpl implements CommunityService {
                 "boardIdxArray", boardIdxArray,
                 "category", category
         );
-        communityMapper.deletePosts(params);
+        boardMapper.deletePosts(params);
     }
 
     @Override
-    public List<Community> searchPosts(String category, String searchType, String searchQuery) {
+    public List<Board> searchPosts(String category, String searchType, String searchQuery) {
         Map<String, Object> params = Map.of(
                 "category", category,
                 "searchType", searchType,
                 "searchQuery", searchQuery
         );
-        return communityMapper.searchPosts(params);
+        return boardMapper.searchPosts(params);
     }
 }
