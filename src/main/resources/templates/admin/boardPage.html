@@ -29,13 +29,13 @@
     </a>
     <ul class="side-menu top">
         <li>
-            <a href="#">
+            <a th:href="@{/admin/memberPage}">
                 <i class='bx bxs-group'></i>
                 <span class="text">회원관리</span>
             </a>
         </li>
         <li class="active">
-            <a href="#">
+            <a th:href="@{/admin/board}">
                 <i class='bx bxs-dashboard'></i>
                 <span class="text">게시판관리</span>
             </a>
@@ -43,12 +43,7 @@
     </ul>
 
     <ul class="side-menu">
-        <li>
-            <a href="#">
-                <i class='bx bxs-cog'></i>
-                <span class="text">Settings</span>
-            </a>
-        </li>
+        <br/>
         <li>
             <a href="#" class="logout">
                 <i class='bx bxs-log-out-circle'></i>
@@ -72,6 +67,7 @@
         <div class="head-title">
             <div class="left">
                 <h1>게시판관리</h1>
+                <br/>
                 <ul class="breadcrumb">
                     <li>
                         <a href="#">게시글관리</a>
@@ -195,7 +191,7 @@
         }
 
         $.ajax({
-            url: "/admin/community/posts/paged",
+            url: "/admin/board/posts/paged",
             method: "GET",
             data: {
                 category: category,
@@ -297,7 +293,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/admin/community/delete',
+                url: '/admin/board/delete',
                 dataType: 'json',
                 data: JSON.stringify({
                     boardIdxArray: boardIdxArray,
@@ -388,7 +384,7 @@
         var searchQuery = document.getElementById('searchQuery').value; // 검색어
 
         $.ajax({
-            url: "/admin/community/search",
+            url: "/admin/board/search",
             method: "GET",
             data: {
                 category: category,

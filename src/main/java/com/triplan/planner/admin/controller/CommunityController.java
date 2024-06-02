@@ -18,7 +18,7 @@ public class CommunityController {
 
     private final CommunityService communityService;
 
-    @GetMapping("/community")
+    @GetMapping("/board")
     public String getCommunityPage(@RequestParam(name = "category", required = false, defaultValue = "S_COMMUNITY") String category,
                                    @RequestParam(name = "page", required = false, defaultValue = "1") int page,
                                    @RequestParam(name = "searchType", required = false, defaultValue = "title") String searchType,
@@ -31,13 +31,13 @@ public class CommunityController {
         return "admin/boardPage";
     }
 
-    @GetMapping("/community/posts")
+    @GetMapping("/board/posts")
     @ResponseBody
     public List<Community> getCommunityPosts(@RequestParam(name = "category", required = true) String category) {
         return communityService.getPostsByCategory(category);
     }
 
-    @GetMapping("/community/posts/paged")
+    @GetMapping("/board/posts/paged")
     @ResponseBody
     public Map<String, Object> getPagedPostsByCategory(
             @RequestParam String category,
@@ -57,7 +57,7 @@ public class CommunityController {
         return result;
     }
 
-    @PostMapping("/community/delete")
+    @PostMapping("/board/delete")
     @ResponseBody
     public Map<String, String> deletePosts(@RequestBody Map<String, Object> params) {
         List<Integer> boardIdxArray = (List<Integer>) params.get("boardIdxArray");
@@ -70,7 +70,7 @@ public class CommunityController {
         return response;
     }
 
-    @GetMapping("/community/search")
+    @GetMapping("/board/search")
     @ResponseBody
     public List<Community> searchPosts(@RequestParam String category, @RequestParam String searchType, @RequestParam String searchQuery) {
         return communityService.searchPosts(category, searchType, searchQuery);
