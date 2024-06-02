@@ -1,5 +1,6 @@
 package com.triplan.planner.mypage.repository;
 
+import com.triplan.planner.mypage.dto.MyCommunityList;
 import com.triplan.planner.mypage.dto.MyTlogList;
 import com.triplan.planner.mypage.dto.Profile;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,11 @@ public class MyPageRepositoryImpl implements MyPageRepository{
     @Override
     public List<MyTlogList> myTlogList(String memberId, int startRow, int size) {
         return myPageMapper.myTlogList(memberId, startRow, size);
+    }
+
+    @Override
+    public List<MyCommunityList> myComList(String memberId, int startRow, int size) {
+        return myPageMapper.myComList(memberId, startRow, size);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.triplan.planner.mypage.service;
 
+import com.triplan.planner.mypage.dto.MyCommunityList;
 import com.triplan.planner.mypage.dto.MyTlogList;
 import com.triplan.planner.mypage.dto.Profile;
 import com.triplan.planner.mypage.repository.MyPageRepository;
@@ -49,6 +50,12 @@ public class MyPageServiceImpl implements MyPageService{
     public List<MyTlogList> myTlogList(String memberId, int page) {
         int size = 6;
         return myPageRepository.myTlogList(memberId, (page-1) * size, size);
+    }
+
+    @Override
+    public List<MyCommunityList> myComList(String memberId, int page) {
+        int size = 6;
+        return myPageRepository.getTlogList(memberId,(page - 1) * size, size);
     }
 
 

@@ -1,5 +1,6 @@
 package com.triplan.planner.mypage.repository;
 
+import com.triplan.planner.mypage.dto.MyCommunityList;
 import com.triplan.planner.mypage.dto.MyTlogList;
 import com.triplan.planner.mypage.dto.Profile;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,8 @@ public interface MyPageMapper {
     public List<MyTlogList> myTlogList(@Param("memberId") String memberId,
                                        @Param("startRow") int startRow,
                                        @Param("size") int size);
+
+    public List<MyCommunityList> myComList(@Param("memberId") String memberId,
+                                           @Param("startRow") int startRow,
+                                           @Param("size") int size);
 }
