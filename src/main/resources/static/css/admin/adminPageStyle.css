@@ -471,11 +471,11 @@ nav[aria-label="Page navigation example"] {
 
 #searchType {
     width: 40%; /* input 요소 크기의 절반으로 설정 */
-    height: 50px; /* 높이를 30px로 설정 */
+    height: 35px; /* 높이를 30px로 설정 */
 }
 
 #searchQuery {
-    height: 50px; /* 높이를 30px로 설정 */
+    height: 35px; /* 높이를 30px로 설정 */
 }
 
 #searchForm button {
@@ -485,11 +485,11 @@ nav[aria-label="Page navigation example"] {
 
 .form-select {
     width: 40%;
-    height: 50px;
+    height: 35px;
 }
 
 .form-control {
-    height: 50px;
+    height: 35px;
 }
 
 .btn {

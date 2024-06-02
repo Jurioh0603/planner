@@ -1,4 +1,4 @@
-package com.triplan.planner.admin.mapper;
+package com.triplan.planner.admin.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,7 +1,7 @@
 package com.triplan.planner.admin.service;
 
 import com.triplan.planner.admin.domain.Community;
-import com.triplan.planner.admin.mapper.CommunityMapper;
+import com.triplan.planner.admin.repository.CommunityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
