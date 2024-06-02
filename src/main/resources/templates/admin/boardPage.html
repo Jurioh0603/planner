@@ -173,6 +173,14 @@
             const postList = document.getElementById('post-list');
             postList.innerHTML = "";
         }
+
+        // 검색 필드를 초기화
+        resetSearchFields();
+    }
+
+    function resetSearchFields() {
+        document.getElementById('searchType').value = 'title';
+        document.getElementById('searchQuery').value = '';
     }
 
     function loadPagedPosts(category, page) {
@@ -185,7 +193,12 @@
         $.ajax({
             url: "/admin/community/posts/paged",
             method: "GET",
-            data: { category: category, page: page },
+            data: {
+                category: category,
+                page: page,
+                searchType: document.getElementById('searchType').value,
+                searchQuery: document.getElementById('searchQuery').value
+            },
             success: function(data) {
                 const postList = $("#post-list");
                 postList.empty();
@@ -200,6 +213,7 @@
                     postList.append(row);
                 });
                 setupPagination(data.totalPages, page, category);
+                updateUrl(category, page);
             },
             error: function() {
                 if (!document.querySelector('.error-alert')) {
@@ -251,6 +265,13 @@
         }
     }
 
+    function updateUrl(category, page) {
+        const searchType = document.getElementById('searchType').value;
+        const searchQuery = document.getElementById('searchQuery').value;
+        const newUrl = `${window.location.origin}${window.location.pathname}?category=${category}&page=${page}&searchType=${searchType}&searchQuery=${searchQuery}`;
+        history.pushState({path: newUrl}, '', newUrl);
+    }
+
     function boardDelete() {
         var boardIdxArray = [];
         $("input:checkbox[name='check']:checked").each(function() {
@@ -272,9 +293,12 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/admin/community/delete?category=' + targetCategory,
+                url: '/admin/community/delete',
                 dataType: 'json',
-                data: JSON.stringify(boardIdxArray),
+                data: JSON.stringify({
+                    boardIdxArray: boardIdxArray,
+                    category: targetCategory
+                }),
                 contentType: 'application/json',
                 success: function(result) {
                     console.log("삭제 성공:", result);
@@ -333,50 +357,76 @@
         document.getElementById('sub-category').value = "none";
         const postList = document.getElementById('post-list');
         postList.innerHTML = "";
-    });
 
-    function searchPosts() {
-    var category = document.getElementById('sub-category').value; // 게시판 카테고리
-    var searchQuery = document.getElementById('searchQuery').value; // 검색어
+        // URL에서 파라미터를 읽어 초기 상태를 설정
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const page = urlParams.get('page') || 1;
+        const searchType = urlParams.get('searchType') || 'title';
+        const searchQuery = urlParams.get('searchQuery') || '';
 
-    $.ajax({
-        url: "/admin/community/search",
-        method: "GET",
-        data: { category: category, searchQuery: searchQuery },
-        success: function(data) {
-            // 검색 결과를 게시글 목록에 표시하는 함수 호출
-            displaySearchResults(data);
-        },
-        error: function() {
-            // 오류가 발생한 경우 알림 표시
-            alert("검색 중 오류가 발생했습니다.");
+        if (category) {
+            document.getElementById('main-category').value = category === 'travel_log' ? 'travel_log' : 'community';
+            if (category !== 'travel_log') {
+                document.getElementById('sub-category').value = category;
+            }
+            document.getElementById('searchType').value = searchType;
+            document.getElementById('searchQuery').value = searchQuery;
+            loadPagedPosts(category, page);
         }
     });
 
-    // 기본 동작 방지 (페이지 새로고침 방지)
-    return false;
-}
+    function searchPosts() {
+        var category = document.getElementById('main-category').value === 'travel_log'
+            ? 'travel_log'
+            : document.getElementById('sub-category').value; // 게시판 카테고리
+        var searchType = document.getElementById('searchType').value; // 검색 타입
+        var searchQuery = document.getElementById('searchQuery').value; // 검색어
 
-// 검색 결과를 게시글 목록에 표시하는 함수
-function displaySearchResults(data) {
-    // 검색 결과를 표시할 곳을 선택
-    var postList = $("#post-list");
-    // 이전에 표시된 게시글 목록 지우기
-    postList.empty();
-    // 받아온 검색 결과를 반복해서 표시
-    data.forEach(post => {
-        var row = `<tr>
-            <td>${post.bno}</td>
-            <td>${post.title}</td>
-            <td>${post.memberId}</td>
-            <td>${new Date(post.writeTime).toLocaleDateString()}</td>
-            <td><input type="checkbox" name="check" value="${post.bno}"></td>
-        </tr>`;
-        postList.append(row);
-    });
-}
+        $.ajax({
+            url: "/admin/community/search",
+            method: "GET",
+            data: {
+                category: category,
+                searchType: searchType,
+                searchQuery: searchQuery
+            },
+            success: function(data) {
+                // 검색 결과를 게시글 목록에 표시하는 함수 호출
+                displaySearchResults(data);
+                updateUrl(category, 1); // 검색 후 URL 업데이트
+                setupPagination(1, 1, category); // 검색 결과에 맞춰 페이지네이션 설정
+            },
+            error: function() {
+                // 오류가 발생한 경우 알림 표시
+                alert("검색 중 오류가 발생했습니다.");
+            }
+        });
 
+        // 기본 동작 방지 (페이지 새로고침 방지)
+        return false;
+    }
+
+    // 검색 결과를 게시글 목록에 표시하는 함수
+    function displaySearchResults(data) {
+        // 검색 결과를 표시할 곳을 선택
+        var postList = $("#post-list");
+        // 이전에 표시된 게시글 목록 지우기
+        postList.empty();
+        // 받아온 검색 결과를 반복해서 표시
+        data.forEach(post => {
+            var row = `<tr>
+                <td>${post.bno}</td>
+                <td>${post.title}</td>
+                <td>${post.memberId}</td>
+                <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                <td><input type="checkbox" name="check" value="${post.bno}"></td>
+            </tr>`;
+            postList.append(row);
+        });
+    }
 </script>
+
 
 
 

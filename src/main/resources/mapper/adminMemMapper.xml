@@ -12,9 +12,9 @@
     </select>
 
     <!-- 특정 회원 조회 -->
-    <select id="selectById" parameterType="String" resultType="com.triplan.planner.admin.domain.Member">
+<!--    <select id="selectById" parameterType="String" resultType="com.triplan.planner.admin.domain.Member">
         SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId}
-    </select>
+    </select>-->
 
     <!-- 회원 등급 수정 -->
     <update id="updateMemberGrade" parameterType="map">

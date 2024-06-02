@@ -5,19 +5,18 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface CommunityMapper {
 
     List<Community> getPostsByCategory(@Param("category") String category);
 
-    List<Community> getPagedPostsByCategory(@Param("category") String category, @Param("startRow") int startRow, @Param("size") int size);
+    List<Community> getPagedPostsByCategory(Map<String, Object> params);
 
-    int getCountByCategory(@Param("category") String category);
+    int getCountByCategory(Map<String, Object> params);
 
-    int deletePosts(@Param("boardIdxList") List<String> boardIdxList, @Param("category") String category);
+    void deletePosts(Map<String, Object> params);
 
-    List<Community> searchPosts(@Param("searchType") String searchType, @Param("searchQuery") String searchQuery);
-
-
+    List<Community> searchPosts(Map<String, Object> params);
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CommunityService {
@@ -17,21 +18,40 @@ public class CommunityService {
         return communityMapper.getPostsByCategory(category);
     }
 
-    public List<Community> getPagedPostsByCategory(String category, int page, int size) {
-        int startRow = (page - 1) * size;
-        return communityMapper.getPagedPostsByCategory(category, startRow, size);
+    public List<Community> getPagedPostsByCategory(String category, String searchType, String searchQuery, int startRow, int size) {
+        Map<String, Object> params = Map.of(
+                "category", category,
+                "searchType", searchType,
+                "searchQuery", searchQuery,
+                "startRow", startRow,
+                "size", size
+        );
+        return communityMapper.getPagedPostsByCategory(params);
     }
 
-    public int getCountByCategory(String category) {
-        return communityMapper.getCountByCategory(category);
+    public int getCountByCategory(String category, String searchType, String searchQuery) {
+        Map<String, Object> params = Map.of(
+                "category", category,
+                "searchType", searchType,
+                "searchQuery", searchQuery
+        );
+        return communityMapper.getCountByCategory(params);
     }
 
-    public void deletePosts(List<String> boardIdxArray, String category) {
-        communityMapper.deletePosts(boardIdxArray, category);
+    public void deletePosts(List<Integer> boardIdxArray, String category) {
+        Map<String, Object> params = Map.of(
+                "boardIdxArray", boardIdxArray,
+                "category", category
+        );
+        communityMapper.deletePosts(params);
     }
 
-    public List<Community> searchPosts(String searchType, String searchQuery) {
-        return communityMapper.searchPosts(searchType, searchQuery);
+    public List<Community> searchPosts(String category, String searchType, String searchQuery) {
+        Map<String, Object> params = Map.of(
+                "category", category,
+                "searchType", searchType,
+                "searchQuery", searchQuery
+        );
+        return communityMapper.searchPosts(params);
     }
-
 }
