@@ -29,14 +29,14 @@
     text-align: center;
 }
 
-#imgContainer, {
+#imgContainer {
     width: 100%;
     height: 225px;
 }
 
 div > img {
     width: 100%;
-    height: 100%;
+    height: 200px;
     object-fit: cover;
     border-top-left-radius: 2%;
     border-top-right-radius: 2%;
@@ -65,7 +65,7 @@ div > img {
 .content {
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -100,7 +100,7 @@ a:hover .card {
 }
 
 .pagination a.active {
-    background-color: #0090F9;
+    background-color: #0D6EFD;
     color: white;
 }
 

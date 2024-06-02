@@ -7,18 +7,11 @@
     margin: 0 auto;
 }
 
-#planTitle, #planDay {
-    display: flex;
-    align-items: flex-end;
-}
-
-#planTitle div, #planDay div {
-    margin: 0 5px;
-}
-
-.editBtn {
-    border: 0px;
-    background-color: white;
+#CollapseBtnContainer {
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    z-index: 1000;
 }
 
 #mapContainer {
@@ -26,6 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #sortable {
@@ -53,13 +47,14 @@ ul {
 
 .planDetail {
     margin-left: 20px;
+    width: 650px;
 }
 
 .centered-circle {
     margin-left: 20px;
     width: 40px;
     height: 40px;
-    background-color: #99CCFF;
+    background-color: #90bcf9;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -78,6 +73,21 @@ input.deleteBtn {
     border: none;
 }
 
+input.modifyBtn {
+    background: url("/images/modify.png") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 35px;
+    top: 40px;
+    right: 1px;
+    border: none;
+}
+
+.deleteBtn:hover, .modifyBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}
+
 .ui-state-default:hover {
     cursor: pointer;
     background-color: #DCDCDC;
@@ -86,4 +96,23 @@ input.deleteBtn {
 #buttonContainer {
     display: flex;
     justify-content: flex-end;
+    margin-top: auto;
+}
+
+h3:hover {
+    color: #3e77b6;
+    cursor: pointer;
+}
+
+#headerBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.memo, .placeName {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

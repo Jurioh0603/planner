@@ -1,0 +1,293 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+            .content {
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+            .background-section {
+                margin-right: 20px;
+            }
+
+            .align-items-center {
+                margin-top: 0;
+            }
+        }
+
+
+/*마이페이지 상단*/
+.text-h2 {
+    font-size: 44px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ico-my {
+    float: left;
+    width: 32px;
+    height: auto;
+}
+
+/*배경색*/
+.background-section {
+    background-color: #F3F5F7;
+    position: absolute;
+    padding: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: 100%;
+    z-index: -1;
+}
+
+.background-padding{
+    padding: 50px;
+}
+
+/*프로필 상자*/
+.profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 40px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.box-text {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-top: 60px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.box-text:hover {
+    color: #bebebe;
+}
+
+.box-welcome {
+    color: white;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.box-align{
+    text-align: center;
+    min-width: 100px
+}
+
+.text-bg {
+    color: white;
+    background-color: #022C6C;
+    width: 350px;
+    height: 470px;
+    margin-right: -300px;
+    min-width: 350px
+}
+
+@media (max-width: 600px) { /* 화면 너비가 600px 이하일 때 적용 */
+    .text-bg {
+        width: 100%; /* 화면 너비에 꽉 차도록 설정 */
+        height: auto; /* 내용에 맞춰 높이 자동 조정 */
+    }
+}
+
+/*나의 여정 글자*/
+.intro{
+    display: inline-block!important;
+    font-size: 30px;
+    font-weight: bold;
+    justify-content: flex-end;
+    letter-spacing: 3px;
+    margin-top: -55px;
+    margin-bottom: 15px;
+}
+
+
+/*리스트 관련*/
+.list-group-my {
+    width: 100%;
+    max-width: 100%;
+}
+
+.list-text{
+    padding: 10px;
+    margin-left: 10px;
+    font-size: 25px;
+    letter-spacing: 1.5px;
+    color: #3c3c3c;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.list-text-exit{
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: right;
+    color: #3c3c3c;
+    text-decoration: none !important;
+}
+
+.list-text-exit:hover {
+    color: #6e6e6e; /* 호버 시 색상 변경 */
+}
+
+.inline-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.list-group-items {
+    position: relative;
+    display: block;
+    color: var(--bs-list-group-color);
+    text-decoration: none;
+    background-color: var(--bs-list-group-bg);
+    border: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color);
+}
+
+
+/*리스트 아이콘*/
+
+.list-text::before {
+    content: "";
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    background-image: url('/images/my-list-fav.png'); /* 이미지 경로 */
+    background-size: cover;
+    background-position: 0 0;
+    margin-right: 20px; /* 이미지와 텍스트 사이의 간격 */
+}
+.icon-1::before {
+    background-position: 0 0; /* 스프라이트 이미지의 첫 번째 아이콘 위치 */
+}
+
+.icon-2::before {
+    background-position: 0 -50px; /* 스프라이트 이미지의 두 번째 아이콘 위치 */
+}
+
+.icon-3::before {
+    background-position: 0 -101px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.icon-4::before {
+    background-position: 0 -150px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.icon-5::before {
+    background-position: 0 -200px; /* 스프라이트 이미지의 세 번째 아이콘 위치 */
+}
+
+.list-group-items{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+}
+
+.line{
+    border-bottom: 1px solid #dcdcdc;
+    margin: 0 auto;
+    width: 95%;
+}
+.list-group-items-last {
+    border-bottom: none; /* 마지막 글에는 선 제거 */
+    width: 95%;
+    margin: 0 auto;
+}
+
+/*모달창*/
+h2{
+    text-align: center;
+}
+
+/*모달 팝업 영역 스타일링*/
+.modal {
+/*팝업 배경*/
+	display: none; /*평소에는 보이지 않도록*/
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(0,0,0,0.5);
+}
+.modal .modal_popup {
+/*팝업*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 20px;
+}
+.modal .modal_popup .close_btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin-top: 70px;
+    margin-left: 12px;
+    margin-bottom: 10px;
+}
+
+.modal .modal_popup .update_btn {
+    display: block;
+    padding: 10px 20px;
+    background-color: #FAAC58;
+    border: none;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.file-margin{
+    margin-left: 105px;
+}
+
+.line-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update_btn{
+    background-color: #2E64FE;
+    color: white;
+    border: none;
+}
