@@ -18,7 +18,7 @@
             NICKNAME = #{nickName}
         WHERE MEMBER_ID = #{memberId}
     </update>
-    <select id="myTlogList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
+    <select id="myFavList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
         SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d")
         FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
                           FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
