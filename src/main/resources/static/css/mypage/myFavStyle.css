@@ -3,7 +3,7 @@
 }
 
 .container {
-    width:680px;
+    width:980px;
     margin: 0 auto;
 }
 
@@ -16,7 +16,13 @@
 /*수평정렬*/
 .line-container{
     margin-top: 20px;
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.line-container-s{
+    margin-top: 5px;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -41,19 +47,28 @@
     display: flex;
     flex-direction: column;
     margin-left: 50px;
-    margin-top: 30px;
+    margin-top: 18px;
     top: 50%;
     left: 50%;
 }
 
 .s-text {
+    margin-top: 5px;
     font-size: 14px;
     color: #6E6E6E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%;
 }
 
 .m-text {
     font-size: 20px;
     color: #6E6E6E;
+    max-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%;
 }
 
 .l-text {
@@ -62,8 +77,8 @@
 
 
 .img-size {
-    width: 220px;
-    height: 160px;
+    width: 300px;
+    height: 200px;
 }
 
 .text-decoration {
@@ -73,9 +88,14 @@
 
 .title {
     margin-bottom: 5px;
+    max-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%;
 }
 
-.text-decoration:hover {
+.title:hover {
     text-decoration: underline;
 }
 
@@ -106,4 +126,20 @@
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+}
+
+.decoration {
+    color: inherit;
+    text-decoration: none;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    text-align: center;
+    margin-right: 15px;
+    margin-bottom: 5px;
+
 }

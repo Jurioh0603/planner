@@ -1,5 +1,6 @@
 package com.triplan.planner.mypage.service;
 
+import com.triplan.planner.mypage.dto.MyCommunityList;
 import com.triplan.planner.mypage.dto.MyTlogList;
 import com.triplan.planner.mypage.dto.Profile;
 
@@ -21,4 +22,6 @@ public interface MyPageService {
     public int getFavCount(String memberId);
 
     public List<MyTlogList> myTlogList(String memberId, int page);
+
+    public List<MyCommunityList> myComList(String memberId, int page);
 }

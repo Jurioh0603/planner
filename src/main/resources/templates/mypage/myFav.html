@@ -14,8 +14,10 @@
 <body>
     <div class="container">
         <div class="line-container">
-            <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
-            <h5 class="color-gray">마이페이지</h5>
+            <a class="decoration line-container" href="/mypage/myPage">
+                <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
+                <h5 class="color-gray">마이페이지</h5>
+            </a>
         </div>
         <h2 class="text-h2">즐겨찾기</h2>
         <hr class="border-height-2"/>
@@ -29,7 +31,11 @@
                         <img th:src="|/mypage/images/${myFav.storeName}|" class="img-size">
                         <div class="text-container">
                             <div class="l-text title">[[${myFav.tlogTitle}]]</div>
-                            <div class="s-text">[[${myFav.memberId}]]님의 일정</div>
+                            <div class="line-container-s">
+                                <img th:src="|/mypage/images/${myFav.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg != null}">
+                                <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg == null}">
+                                <div class="s-text">[[${myFav.nickName}]]님의 일정</div>
+                            </div>
                             <div class="s-text">[[${myFav.writeTime}]]</div>
                             <div class="m-text">[[${myFav.tlogContent}]]</div>
                         </div>
@@ -45,7 +51,7 @@
         <block th:if="${myFavPage.hasContents()}">
             <div class="pagination-container">
                 <div class="pagination">
-                    <a th:if="${myTlogPage.startPage > 5}" th:href="@{/mypage/myFav(page=${myFavPage.startPage - 5})}">&laquo;</a>
+                    <a th:if="${myFavPage.startPage > 5}" th:href="@{/mypage/myFav(page=${myFavPage.startPage - 5})}">&laquo;</a>
                     <block th:each="page : ${#numbers.sequence(myFavPage.startPage, myFavPage.endPage)}">
                         <a th:if="${page == myFavPage.currentPage}" th:href="@{/mypage/myFav(page=${page})}" class="active">[[${page}]]</a>
                         <a th:if="${page != myFavPage.currentPage}" th:href="@{/mypage/myFav(page=${page})}">[[${page}]]</a>
