@@ -347,7 +347,6 @@ body {
 }
 
 #content main .table-data .order table tr td:first-child {
-	display: flex;
 	align-items: center;
 	grid-gap: 12px;
 	padding-left: 6px;
@@ -365,15 +364,15 @@ body {
 }
 
 #content main .table-data .order table tr td .grade-btn.general {
-    background: #28a745; /* 일반 초록색 */
+    background: #2b72ff; /* 일반 파랑 */
 }
 
 #content main .table-data .order table tr td .grade-btn.withdrawn {
-    background: #6f42c1; /* 탈퇴 보라색 */
+    background: #ff2617; /* 탈퇴 빨강 */
 }
 
 #content main .table-data .order table tr td .grade-btn.admin {
-    background: #fd7e14; /* 관리자 주황색 */
+    background: #f7b32a; /* 관리자 노랑 */
 }
 
 #content main .table-data .order table tr td .grade-btn.black {
@@ -415,23 +414,14 @@ tr:hover {
         .dropdown-menu {
             min-width: auto; /* 드롭다운 메뉴의 최소 너비 설정 */
         }
-        .completed {
-            background-color: #3C91E6; /* completed 배경색 파란색 */
-        }
-        .process {
-            background-color: #FFCE26; /* process 배경색 노란색 */
-        }
-        .pending {
-            background-color: #FD7238; /* pending 배경색 주황색 */
-        }
         .general {
-            background: #28a745; /* 일반 초록색 */
+            background: #2b72ff; /* 일반 파랑 */
         }
         .withdrawn {
-            background: #6f42c1; /* 탈퇴 보라색 */
+            background: #ff2617; /* 탈퇴 빨강 */
         }
         .admin {
-            background: #fd7e14; /* 관리자 주황색 */
+            background: #f7b32a; /* 관리자 노랑 */
         }
         .black {
             background: #343a40; /* 블랙 검정색 */
