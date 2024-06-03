@@ -26,6 +26,9 @@
             <div>총[[${myTlogPage.total}]]건</div>
             <hr class="hr-margin"/>
             <br/>
+            <block th:if="${myTlogPage.hasNoContents()}">
+                <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+            </block>
         </div>
 
         <div class="album bg-body-tertiary mt-3">

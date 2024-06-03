@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.triplan.planner.tour.controller.ApiExplorer;
 import com.triplan.planner.tour.dto.Api;
 import com.triplan.planner.tour.dto.Attraction;
+import com.triplan.planner.tour.dto.AttractionDetail;
 import com.triplan.planner.tour.repository.TourMapper;
 import com.triplan.planner.tour.repository.TourRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,18 @@ public class TourServiceImpl implements TourService{
     }
 
     @Override
-    public List<Attraction> tourList(List<String> areaCode) {
-        return tourRepository.tourList(areaCode);
+    public List<Attraction> tourList(List<String> areaCode, int page) {
+        int size = 6;
+        return tourRepository.tourList(areaCode,(page - 1) * size, size);
+    }
+
+    @Override
+    public int attractionCount(List<String> areaCode) {
+        return tourRepository.attractionCount(areaCode);
+    }
+
+    @Override
+    public AttractionDetail getTourDetail(int placeNo) {
+        return tourRepository.getTourDetail(placeNo);
     }
 }

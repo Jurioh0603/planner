@@ -1,6 +1,8 @@
 package com.triplan.planner.tour.controller;
 
 import com.triplan.planner.tour.dto.Attraction;
+import com.triplan.planner.tour.dto.AttractionDetail;
+import com.triplan.planner.tour.dto.AttractionPage;
 import com.triplan.planner.tour.service.TourService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -8,14 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController
+
 @Controller
 @RequiredArgsConstructor
 public class TourController {
@@ -51,13 +52,18 @@ public class TourController {
 
     }*/
 
-    // 여행 정보 리스트 요청
+    // 지역별 관광 정보 리스트 요청
     @GetMapping("/tour/list")
     public String tourList(@ModelAttribute("local") String local,
+                           @ModelAttribute("page") String page,
                            Model model){
+        if (page.isEmpty()) {
+            page = "1";
+        }
         //local 파라미터 없이 접근 시 기본값 S(서울)
-        if(local.isEmpty())
+        if(local.isEmpty()){
             local = "S";
+        }
         Map<String, List<String>> area =  new HashMap<String, List<String>>();
         String[] s = {"1"};
         String[] gg = {"31","2"};
@@ -80,9 +86,24 @@ public class TourController {
         area.put("JB", Arrays.asList(jb));
         area.put("JJ", Arrays.asList(jj));
         List<String> areaCode = area.get(local);
+        System.out.println(areaCode);
 
-        List<Attraction> attractions = tourService.tourList(areaCode);
-        model.addAttribute("attraction", attractions);
-        return "/tour/list";
+        List<Attraction> attractions = tourService.tourList(areaCode, Integer.parseInt(page));
+        // 페이지네이션
+        int total = tourService.attractionCount(areaCode);
+        int size = 6;
+        System.out.println("page="+page);
+        AttractionPage attractionPage = new AttractionPage(total, Integer.parseInt(page), size, attractions);
+        model.addAttribute("attractionPage", attractionPage);
+        return "/tour/tourList";
+    }
+
+    // 관광 정보 세부
+    @GetMapping("/tour/detail")
+    public String tourDetail(@ModelAttribute("placeNo") int placeNo,
+                             Model model) {
+        AttractionDetail attractionDetail = tourService.getTourDetail(placeNo);
+        model.addAttribute("attractionDetail", attractionDetail);
+        return "/tour/tourDetail";
     }
 }

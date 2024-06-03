@@ -33,10 +33,10 @@
         <hr class="border-height-2"/>
         <div>
             <div>총[[${myCommunityPage.total}]]건</div>
+            <hr class="hr-margin"/>
             <block th:if="${myCommunityPage.hasNoContents()}">
                 <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
             </block>
-            <hr class="hr-margin"/>
             <th:block th:each="myCommunity: ${myCommunityPage.myCommunityLists}">
                 <a th:href="|@{/community/detail(local=${myCommunity.communityType}, no=${myCommunity.bNo})}|">
                     <div class="line-container-end">

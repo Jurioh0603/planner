@@ -7,13 +7,14 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Attraction {
+public class AttractionDetail {
+
     private int placeNo;
     private String placeName;
+    private String placeAddress;
     private String placeAreaCode;
+    private String placeTel;
+    private String placePage;
     private String placeIntro;
     private String placeImg;
-
-
-
 }

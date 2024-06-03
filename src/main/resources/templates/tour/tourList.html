@@ -12,15 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogListStyle.css">
 
 </head>
 <body>
 <th:block layout:fragment="css"></th:block>
 <th:block layout:fragment="script"></th:block>
 <th:block layout:fragment="content">
-    <div id="contents">
+    <div id="contents" style="text-decoration: none;">
 
-        <h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3>
+        <h3 class="mt-4 mb-3" style="text-align: center;">지역 관광 정보</h3>
 
         <div id="localLinkBtnContainer" class="mt-3">
             <div class="localLinkBtn">
@@ -84,5 +85,61 @@
                 </a>
             </div>
         </div>
+    </div>
+    <div class="album bg-body-tertiary mt-3">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <th:block th:each="tour: ${attractionPage.attraction}">
+                    <a th:href="|@{/tour/detail(local=${local}, placeNo=${tour.placeNo}, page=${page}, search=${search})}|" style="text-decoration: none;">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="imgContainer">
+                                    <img th:if="${tour.placeImg} == ''" th:src="@{/images/no-image.png}" alt="관광지 섬네일" class="tlogImg">
+                                    <img th:if="${tour.placeImg} != ''" th:src="${tour.placeImg}" alt="관광지 섬네일" class="tlogImg"/>
+                                </div>
+                                <div class="writerContainer mt-2 mb-2 ms-2">
+                                    <div class="card-body">
+                                        <div class="title">
+                                            <h5>[[${tour.placeName}]]</h5>
+                                        </div>
+                                        <div class="content mt-1">
+                                            [[${tour.placeIntro}]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </th:block>
+                <hr style="width: 100%;"/>
+                <!-- 페이지네이션 -->
+                <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                <div id="doContainer">
+                    <block th:if="${attractionPage.hasContents()}">
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                <a th:if="${attractionPage.startPage > 5}" th:href="@{/tour/list(local=${local}, page=${attractionPage.startPage - 5}, search=${search})}">&laquo;</a>
+                                <block th:each="page : ${#numbers.sequence(attractionPage.startPage, attractionPage.endPage)}">
+                                    <a th:if="${page == attractionPage.currentPage}" th:href="@{/tour/list(local=${local}, page=${page}, search=${search})}" class="active">[[${page}]]</a>
+                                    <a th:if="${page != attractionPage.currentPage}" th:href="@{/tour/list(local=${local}, page=${page}, search=${search})}">[[${page}]]</a>
+                                </block>
+                                <a th:if="${attractionPage.endPage < attractionPage.totalPages}" th:href="@{/tour/list(local=${local}, page=${attractionPage.startPage + 5}, search=${search})}">&raquo;</a>
+                            </div>
+                        </div>
+                    </block>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script th:inline="javascript">
+    //선택된 지역 게시판 이름에 <strong> 부여
+    var local = [[${local}]];
+    var localP = document.getElementById(local);
+    localP.innerHTML = `<strong>${localP.innerHTML}</strong>`;
+</script>
 </body>
 </html>

@@ -20,7 +20,7 @@ public interface MyPageRepository {
 
     public int favCount(String memberId);
 
-    public List<MyTlogList> myTlogList(String memberId, int i, int size);
+    public List<MyTlogList> myTlogList(String memberId, int startRow, int size);
 
     public List<MyCommunityList> myComList(String memberId, int startRow, int size);
 
