@@ -90,7 +90,7 @@
                         <a th:href="|@{/tlog/notFav(tlogNo=${tlogInfo.tlog.tlogNo})}|"><img src="/images/heart_red.png" alt="즐겨찾기" class="fav-img-red mb-1"></a>
                     </block>
                 </div>
-                <div><img src="/images/download.png" alt="일정담기" class="download-img ms-3 mb-1 scheduleSaveBtn" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}"></div>
+                <div><img src="/images/download.png" alt="일정담기" class="download-img ms-3 mb-1 scheduleSaveBtn saveIcon" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}"></div>
             </div>
         </div>
         <hr/>
@@ -300,14 +300,21 @@
             <hr/>
         </th:block>
 
+        <div id="listButtonContainer" th:if="${session.loginMemberInfo == null}">
+            <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="border-color: black;">목록</button>
+        </div>
+
         <div id="buttonContainer" th:if="${session.loginMemberInfo != null}">
-            <div id="buttonContainer-left" class="mt-5" th:if="${tlogInfo.tlog.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
-                <button class="btn btn-sm btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|">수정</button>
-                <button class="btn btn-sm btn-primary" type="button" id="deleteBtn">삭제</button>
+            <div id="buttonContainer-left" class="mt-5">
+                <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="border-color: black;">목록</button>
+                <th:block th:if="${tlogInfo.tlog.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
+                    <button class="btn btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|">수정</button>
+                    <button class="btn btn-primary" type="button" id="deleteBtn">삭제</button>
+                </th:block>
             </div>
 
             <div id="buttonContainer-right" class="mt-5">
-                <button class="btn btn-sm btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
+                <button class="btn btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
             </div>
         </div>
 
