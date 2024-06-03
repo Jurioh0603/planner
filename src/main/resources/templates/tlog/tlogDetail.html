@@ -324,8 +324,11 @@
                     정말 삭제하시겠습니까?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="confirmDeleteBtn" th:attr="onclick=|location.href='@{/tlog/delete(no=${tlogInfo.tlog.tlogNo})}'|">삭제</button>
+                    <form action="/tlog/delete" method="post">
+                        <input type="hidden" name="no" th:value="${tlogInfo.tlog.tlogNo}"/>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-primary" id="confirmDeleteBtn">삭제</button>
+                    </form>
                 </div>
             </div>
         </div>
