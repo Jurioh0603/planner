@@ -43,6 +43,7 @@
 			, GRADE
 	 	FROM MEMBER
 	 	where MEMBER_ID = #{memberId}
+		AND GRADE NOT IN ('2222', '3333')
 	</select>
 	
  	<!--회원 저장  -->
