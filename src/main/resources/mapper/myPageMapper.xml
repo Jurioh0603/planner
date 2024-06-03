@@ -19,13 +19,15 @@
         WHERE MEMBER_ID = #{memberId}
     </update>
     <select id="myFavList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
-        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d")
+        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d"), D.NICKNAME, D.M_COPY_IMG
         FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
                           FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
                                 FROM TLOGIMAGE) AS RANKEDROWS
                           WHERE RN=1) B
         ON A.TLOG_NO=B.TLOG_NO JOIN FAV C
-        ON B.TLOG_NO=C.TLOG_NO
+        ON B.TLOG_NO=C.TLOG_NO JOIN (SELECT MEMBER_ID, NICKNAME, M_COPY_IMG
+                                     FROM MEMBER) D
+        ON C.MEMBER_ID=D.MEMBER_ID
         WHERE A.MEMBER_ID = #{memberId}
         ORDER BY C.FAV_DATE DESC
         LIMIT #{startRow}, #{size}
@@ -40,14 +42,20 @@
         WHERE MEMBER_ID = #{memberId}
     </select>
     <select id="myTlogList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyTlogList">
-        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d")
+        SELECT A.TLOG_NO, A.TLOG_TITLE, A.TLOG_CONTENT, A.MEMBER_ID, B.STORE_NAME, DATE_FORMAT(A.WRITE_TIME, "%Y-%m-%d"), C.NICKNAME, C.M_COPY_IMG
         FROM TLOG A JOIN (SELECT STORE_NAME, TLOG_NO
-        FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
-        FROM TLOGIMAGE) AS RANKEDROWS
-        WHERE RN=1) B
-        ON A.TLOG_NO=B.TLOG_NO
+                          FROM (SELECT STORE_NAME, TLOG_NO, ROW_NUMBER() OVER (PARTITION BY TLOG_NO ORDER BY (SELECT NULL)) AS RN
+                                FROM TLOGIMAGE) AS RANKEDROWS
+                                WHERE RN=1) B
+        ON A.TLOG_NO=B.TLOG_NO JOIN (SELECT MEMBER_ID, NICKNAME, M_COPY_IMG
+                                     FROM MEMBER) C
+        ON A.MEMBER_ID=C.MEMBER_ID
         WHERE A.MEMBER_ID = #{memberId}
         ORDER BY A.WRITE_TIME DESC
         LIMIT #{startRow}, #{size}
+    </select>
+    <select id="myComList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyCommunityList">
+        SELECT * FROM CB_COMMUNITY
+        WHERE MEMBER_ID=#{memberId}
     </select>
 </mapper>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,8 +12,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
+
 </head>
 <body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
 <div id="contents">
 
     <h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3>
@@ -81,7 +86,45 @@
     </div>
 
     <div id="weatherContainer" class="mt-3">
-        <!-- 추가 -->
+        <div class="weather-forecast">
+            <div id="forecast-container"></div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script th:inline="javascript">
+
+            $(document).ready(function(){
+                getTemp();
+            });
+
+            const getTemp = async () => {
+                let city = [[${weather}]];
+                console.log("city >>>> " +city);
+                let apiKey = 'cd4e311164901e06e47b3d8f546073fe'; // OpenWeatherMap API 키
+                let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
+                try {
+
+                    let response = await fetch(url);
+                    let data = await response.json();
+                    let dataList = data.list;
+
+                    dataList.filter((v)=>v.dt_txt.includes('12:00:00')).forEach((v)=>{
+                        let temp = v.main.temp;
+                        let icon = `http://openweathermap.org/img/wn/${v.weather[0].icon}@2x.png`;
+                        let date = v.dt_txt.substring(0, 10);
+                        //console.log(v.weather[0].description);
+                        let forecastHtml = `<div class="forecast-day">
+                                                <div class="date">${date}</div>
+                                                <div class="icon"><img src="${icon}"></div>
+                                                <div class="temp">${temp}</div>
+                                            </div>`;
+
+                        $('#forecast-container').append(forecastHtml);
+                    });
+                } catch (error) {
+                    console.error('날씨 예보 정보를 가져오는데 실패했습니다.', error);
+                }
+            }
+        </script>
     </div>
 
     <form action="/community/list" method="get" class="d-flex mt-3 mb-3 searchContainer">
@@ -138,4 +181,5 @@
     localP.innerHTML = `<strong>${localP.innerHTML}</strong>`;
 </script>
 </body>
+</th:block>
 </html>

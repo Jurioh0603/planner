@@ -57,7 +57,6 @@ a {
 
 .localLinkBtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .buttonContainer, .searchContainer {
@@ -126,3 +125,68 @@ hr {
 hr {
     margin: 7px;
 }
+
+#weatherContainer {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 980px;
+    height: 200px;
+    margin: 0;
+    }
+
+    .weather-forecast {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+    .weather-forecast h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    }
+
+    #forecast-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    }
+
+    .forecast-day {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    }
+
+    .forecast-day:last-child {
+    border-right: none;
+    }
+
+    .date {
+    color: #666;
+    margin-bottom: 5px;
+    }
+
+    .icon {
+    margin-bottom: 5px;
+    }
+
+    .icon img {
+    width: 48px;
+    height: 48px;
+    }
+
+    .temp {
+    color: #333;
+    }

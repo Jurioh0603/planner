@@ -8,20 +8,20 @@
 }
 
 @media (min-width: 600px) {
-            .content {
-                flex-direction: row;
-                justify-content: center;
-                align-items: flex-start;
-            }
+    .content {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
 
-            .background-section {
-                margin-right: 20px;
-            }
+    .background-section {
+        margin-right: 20px;
+    }
 
-            .align-items-center {
-                margin-top: 0;
-            }
-        }
+    .align-items-center {
+        margin-top: 0;
+    }
+}
 
 
 /*마이페이지 상단*/

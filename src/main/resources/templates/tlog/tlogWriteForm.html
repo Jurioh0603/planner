@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -57,6 +57,9 @@
     </script>
 </head>
 <body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
     <div id="contents">
         <div><h2 class="mt-3 mb-3">나의 멋진 여행기를 공유해요.</h2></div>
         <form action="/tlog/write" method="post" enctype="multipart/form-data" id="form">
@@ -159,4 +162,5 @@
         });
     </script>
 </body>
+</th:block>
 </html>
