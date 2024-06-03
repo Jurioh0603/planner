@@ -1,0 +1,87 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.container {
+    width:980px;
+    margin: 0 auto;
+}
+
+.line-container-start{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.line-container-end{
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.decoration {
+    color: inherit;
+    text-decoration: none;
+}
+
+.color-gray {
+    color-gray;
+}
+
+.text-h2 {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+
+}
+
+.border-height-2 {
+    height: 2px;
+    background-color: black;
+}
+
+.hr-margin {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.title {
+    font-size: 28px;
+    text-decoration: none;
+    color: inherit;
+    max-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.nickname {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #6E6E6E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%;
+}
+
+.date {
+    font-size: 22px;
+    color: #6E6E6E;
+    max-height: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 85%;
+}
+
+.justify-content-end {
+    align-self: flex-end;
+    position: relative;
+}
+
+.form-control {
+    width: 200px
+}

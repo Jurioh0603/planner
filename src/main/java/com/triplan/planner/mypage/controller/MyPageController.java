@@ -4,6 +4,7 @@ import com.triplan.planner.file.FileStore;
 import com.triplan.planner.file.UploadFile;
 import com.triplan.planner.mypage.dto.*;
 import com.triplan.planner.mypage.service.MyPageService;
+import com.triplan.planner.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,15 @@ public class MyPageController {
     @GetMapping("/mypage/myPage")
     public String MyPageForm(Model model,
                              HttpSession session) {
-        String memberId = "id1";
-        Profile profile = myPageService.getProfileList(memberId);
+        UserDto userInfo = (UserDto) session.getAttribute("loginMemberInfo");
+        if (userInfo == null || userInfo.getMemberId() == null || userInfo.getMemberId().isEmpty()) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
+        log.info("로그인정보 >>>>>>>> {} ",userInfo.toString());
+        log.info("로그인 아이디 정보 >>>>>>>> {} ",userInfo.getMemberId());
+        String memberId = userInfo.getMemberId();
         session.setAttribute("memberId", memberId);
+        Profile profile = myPageService.getProfileList(memberId);
         System.out.println(profile);
         model.addAttribute("profile", profile);
         return "/mypage/myPage";
@@ -72,8 +79,9 @@ public class MyPageController {
 
     // 마이페이지 내 정보 보기 요청
     @GetMapping("/mypage/myInfo")
-    public String myInfo(Model model) {
-        String memberId = "id1";
+    public String myInfo(HttpSession session,
+                         Model model) {
+        String memberId = (String) session.getAttribute("memberId");
         Profile profile = myPageService.getProfileList(memberId);
         model.addAttribute("profile", profile);
         return "/mypage/myInfo";
@@ -118,7 +126,7 @@ public class MyPageController {
             page = "1";
         }
         String memberId = (String) session.getAttribute("memberId");
-        List<MyTlogList> myTlogList = myPageService.myFavList(memberId, Integer.parseInt(page));
+        List<MyTlogList> myFavList = myPageService.myFavList(memberId, Integer.parseInt(page));
 
         // 페이지네이션
         int total = myPageService.getCount();
@@ -126,18 +134,9 @@ public class MyPageController {
         // 즐겨찾기 총 갯수 가져오기
         int myTotal = myPageService.getFavCount(memberId);
 
-        MyTlogPage myTlogPage = new MyTlogPage(total, Integer.parseInt(page), size, myTotal, myTlogList);
-        model.addAttribute("myFavPage", myTlogPage);
+        MyTlogPage myFavPage = new MyTlogPage(total, Integer.parseInt(page), size, myTotal, myFavList);
+        model.addAttribute("myFavPage", myFavPage);
         return "/mypage/myFav";
-    }
-
-    // 내가 쓴 글 보기
-    @GetMapping("/mypage/myBoard")
-    public String myBoard(HttpSession session,
-                          Model model) {
-        String memberId = (String) session.getAttribute("memberId");
-
-        return "/mypage/myBoard";
     }
 
     // 나의 여행기 보기
@@ -159,6 +158,28 @@ public class MyPageController {
         MyTlogPage myTlogPage = new MyTlogPage(total, Integer.parseInt(page), size, myTotal, myTlogList);
         model.addAttribute("myTlogPage", myTlogPage);
         return "/mypage/myTlog";
+    }
+
+    // 내가 쓴 글 보기
+    @GetMapping("/mypage/myCommunity")
+    public String myBoard(HttpSession session,
+                          @ModelAttribute("page") String page,
+                          Model model) {
+        if (page.isEmpty()) {
+            page = "1";
+        }
+
+        String memberId = (String) session.getAttribute("memberId");
+        List<MyCommunityList> myCommunityList = myPageService.myComList(memberId, Integer.parseInt(page));
+
+        // 페이지네이션
+        int total = myPageService.getCount();
+        int size = 6;
+        // 내가 쓴 글 총 갯수
+        int myTotal = total;
+        MyCommunityList myCommunityPage = new MyCommunityList(total,Integer.parseInt(page), size, myCommunityList);
+        model.addAttribute("myCommunityPage", myCommunityPage);
+        return "/mypage/myCommunity";
     }
 
 }

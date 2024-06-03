@@ -10,22 +10,22 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/css/mypage/myFavStyle.css">
-    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogListStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/mypage/myTlogListStyle.css">
 </head>
 <body>
-    <div class="container">
+    <div id="contents">
         <div class="line-container">
-            <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
-            <h5 class="color-gray">마이페이지</h5>
+            <a class="decoration line-container" href="/mypage/myPage">
+                <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
+                <h5 class="color-gray">마이페이지</h5>
+            </a>
         </div>
         <h2 class="text-h2">나의 여행기</h2>
         <hr class="border-height-2"/>
         <div>
             <div>총[[${myTlogPage.myTotal}]]건</div>
             <hr class="hr-margin"/>
-            <div id="writeBtnContainer">
-                <button type="button" class="btn btn-primary writeTlogBtn" onclick="location.href='/tlog/write'">여행기 작성</button>
-            </div>
+            <br/>
         </div>
 
         <div class="album bg-body-tertiary mt-3">
@@ -33,15 +33,16 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
                     <th:block th:each="myTlog: ${myTlogPage.myTlogLists}">
-                        <a th:href="@{/mypage/myTlog(no=${myTlog.tlogNo})}">
+                        <a th:href="@{/tlog/detail(no=${myTlog.tlogNo})}">
                             <div class="col">
                                 <div class="card shadow-sm">
                                     <div class="imgContainer">
-                                        <img th:src="|/mypage/images/${myTlog.storeName}|" alt="여행기 섬네일" class="tlogImg"/>
+                                        <img th:src="|/mypage/images/${myTlog.storeName}|" alt="여행기 섬네일" class="tlogImg img-gal"/>
                                     </div>
                                     <div class="writerContainer mt-2 mb-2 ms-2">
-                                        <div><img src="/images/profile.jpg" alt="프로필 사진" class="profile-img"></div>
-                                        <div class="ms-3 mb-1"><b>[[${tlog.memberId}]]</b> 님의 일정</div>
+                                        <img th:src="|/mypage/images/${myTlog.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg != ''}">
+                                        <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg == ''}">
+                                        <div class="ms-3 mb-1"><b>[[${myTlog.nickName}]]</b> 님의 일정</div>
                                     </div>
                                     <div class="card-body">
                                         <div class="title">

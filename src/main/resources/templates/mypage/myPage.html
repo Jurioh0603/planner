@@ -27,8 +27,8 @@
                 <div class="p-5 text-bg rounded-3">
                     <div class="scroll">
                         <div class="box-align">
-                            <img th:src="|/mypage/images/${profile.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg != null}">
-                            <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg == null}">
+                            <img th:src="|/mypage/images/${profile.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg != ''}">
+                            <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${profile.mCopyImg == ''}">
                             <div class="box-welcome">반가워요!</div>
                             <h1><span th:text="${profile.nickName} + ' 님'"></span></h1>
                             <a class="box-text">프로필 이미지 설정 ></a>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="#" class="list-group-items" aria-current="true">
+                <a href="/mypage/myCommunity" class="list-group-items" aria-current="true">
                     <div class="list-group-item-action d-flex py-3 line">
                         <div class="d-flex-container w-100 justify-content-between">
                             <div class="mb-0 list-text icon-3">

@@ -287,10 +287,10 @@
 
         <th:block th:each="day, dStat : ${tlogInfo.travelDay}">
             <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToElement('mapContainer')|">day [[${dStat.index + 1}]]</h3>
-            <ul th:id="'day-'+${dStat.index}" class="day">
+            <ul th:id="'day-'+${dStat.index}" class="day ulItem">
                 <th:block th:each="schedule, scStat : ${tlogInfo.detailScheduleList}">
                     <th:block th:if="${schedule.detailDay == dStat.index}">
-                        <li class="ui-state-default" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                        <li class="ui-state-default liItem" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
                             <div class="centered-circle"><span class="num-span" ></span></div>
                             <div class="planDetail"><h4 th:text="${schedule.placeName}" class="placeName">해운대</h4><p class="m-0 memo">[[${schedule.placeMemo}]]</p></div>
                         </li>
