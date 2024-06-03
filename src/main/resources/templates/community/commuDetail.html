@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -13,6 +13,9 @@
     <link rel="stylesheet" type="text/css" href="/css/community/commuDetailStyle.css">
 </head>
 <body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
 <div id="contents">
     <div class="mt-5">
         <h2>[[${communityDetail.community.title}]]</h2>
@@ -258,4 +261,5 @@
     });
 </script>
 </body>
+</th:block>
 </html>
