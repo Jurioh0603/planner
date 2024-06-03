@@ -26,8 +26,12 @@ p {
     margin: 0px;
 }
 
-a {
+.link {
     text-decoration: none;
+    color: black;
+}
+
+.link:hover {
     color: black;
 }
 
@@ -74,7 +78,7 @@ a {
     text-align: center;
 }
 
-hr {
+.hrClass {
     margin: 5px;
 }
 
@@ -135,9 +139,9 @@ hr {
     width: 980px;
     height: 200px;
     margin: 0;
-    }
+}
 
-    .weather-forecast {
+.weather-forecast {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -146,47 +150,47 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    }
+}
 
-    .weather-forecast h1 {
+.weather-forecast h1 {
     text-align: center;
     color: #333;
     margin-bottom: 20px;
-    }
+}
 
-    #forecast-container {
+#forecast-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    }
+}
 
-    .forecast-day {
+.forecast-day {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px;
     border-right: 1px solid #ddd;
-    }
+}
 
-    .forecast-day:last-child {
+.forecast-day:last-child {
     border-right: none;
-    }
+}
 
-    .date {
+.date {
     color: #666;
     margin-bottom: 5px;
-    }
+}
 
-    .icon {
+.icon {
     margin-bottom: 5px;
-    }
+}
 
-    .icon img {
+.icon img {
     width: 48px;
     height: 48px;
-    }
+}
 
-    .temp {
+.temp {
     color: #333;
-    }
+}

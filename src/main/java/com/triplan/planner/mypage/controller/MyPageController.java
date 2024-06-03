@@ -8,8 +8,10 @@ import com.triplan.planner.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,9 @@ public class MyPageController {
 
     private final MyPageService myPageService;
     private final FileStore fileStore;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     // 마이페이지 요청
     @GetMapping("/mypage/myPage")
@@ -93,10 +98,12 @@ public class MyPageController {
         if (!password1.equals(password2) || password1.trim().isEmpty()) {
             return "/mypage/error";
         } else {
-            //데이터베이스에 저장
+            // 데이터베이스에 저장
             profile.setMemberId((String) session.getAttribute("memberId"));
             profile.setNickName(updateInfoForm.getNickName());
-            profile.setPassword(updateInfoForm.getPassword1().replaceAll(" ", "")); // 공백제거 후 저장
+            // 비밀번호 암호화 후 저장
+            profile.setPassword(passwordEncoder.encode(password1.replaceAll(" ", "")));
+
             System.out.println(profile);
             myPageService.updateInfo(profile);
             model.addAttribute(profile);
