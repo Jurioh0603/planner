@@ -186,12 +186,17 @@
             <div class="recommand-cont">
             <em class="tag">여행지추천 ♥</em>
             <div class="recommand-title">
-                <h2>이달의 추천 명소</h2>
+                <h2>
+                    <a th:href="@{/}">
+                        이달의 추천 명소 <img src="/images/arrow.png">
+                    </a>
+                </h2>
+                <p style="margin-top: 15px;">
+                    "여행을 떠나 행운 가득한 혜택을 즐겨보세요~"
+                </p>
                 <br/>
-                <a th:href="@{/}">
-                    <img src="/images/arrow.png">
-                </a>
             </div>
+
             <div class="recommand-wrap">
                 <div class="place-wrap">
                     <div class="placeDiv" onclick="location.href='#'">

@@ -184,7 +184,7 @@
     height: 50%;
     margin-top: 50px;
     background: url('/images/bgImg.png') center center no-repeat;
-    transform: translateX(-200px);
+    transform: translate(-100px, -10px);
 }
 
 .recommand-cont {
@@ -212,11 +212,31 @@
     font-weight: 300;
 }
 
+.recommand-title {
+    margin: 0; /* 필요에 따라 여백 설정 */
+}
+
 .recommand-title h2 {
     font-size: 40px;
     font-weight: bold;
     color: #333;
+    margin: 0; /* 기본 마진 제거 */
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로축 정렬을 가운데로 */
 }
+
+.recommand-title a {
+    display: flex;
+    align-items: center; /* 세로축 정렬을 가운데로 */
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 부모 요소의 글자 색상 상속 */
+}
+
+.recommand-title a img {
+    height: 24px; /* 이미지 크기 조정 */
+    margin-left: 10px; /* 텍스트와 이미지 사이 여백 */
+}
+
 
 .recommand-wrap {
     width: 980px;
@@ -229,7 +249,7 @@
     justify-content: center;
     position: relative; /* 이 속성이 있어야 z-index가 적용됩니다 */
     z-index: 2;
-    margin-top: 110px;
+    margin-top: 70px;
 }
 
 .recommand-wrap h4 {
