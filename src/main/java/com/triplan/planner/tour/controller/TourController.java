@@ -56,6 +56,7 @@ public class TourController {
     @GetMapping("/tour/list")
     public String tourList(@ModelAttribute("local") String local,
                            @ModelAttribute("page") String page,
+                           @ModelAttribute("search") String search,
                            Model model){
         if (page.isEmpty()) {
             page = "1";
@@ -88,9 +89,9 @@ public class TourController {
         List<String> areaCode = area.get(local);
         System.out.println(areaCode);
 
-        List<Attraction> attractions = tourService.tourList(areaCode, Integer.parseInt(page));
+        List<Attraction> attractions = tourService.tourList(areaCode, Integer.parseInt(page), search);
         // 페이지네이션
-        int total = tourService.attractionCount(areaCode);
+        int total = tourService.attractionCount(areaCode, search);
         int size = 6;
         System.out.println("page="+page);
         AttractionPage attractionPage = new AttractionPage(total, Integer.parseInt(page), size, attractions);

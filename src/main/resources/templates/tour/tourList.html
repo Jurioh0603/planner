@@ -85,7 +85,14 @@
                 </a>
             </div>
         </div>
-    </div>
+
+    <form action="/tour/list" method="get" class="d-flex mt-3 mb-4 searchContainer">
+
+        <input type="hidden" name="local" th:value="${local}"/>
+        <input class="form-control me-2" type="search" name="search" th:value="${search}" placeholder="검색" aria-label="Search" style="width: 200px">
+        <button class="btn btn-outline-primary" type="submit">검색</button>
+    </form>
+
     <div class="album bg-body-tertiary mt-3">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -134,7 +141,7 @@
         </div>
     </div>
 </th:block>
-
+</div>
 <script th:inline="javascript">
     //선택된 지역 게시판 이름에 <strong> 부여
     var local = [[${local}]];

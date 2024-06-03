@@ -13,9 +13,10 @@ public interface TourMapper {
     public void insertTourList(Api api);
     public List<Attraction> tourList(@Param("areaCode") List<String> areaCode,
                                      @Param("startRow") int startRow,
-                                     @Param("size") int size);
+                                     @Param("size") int size,
+                                     @Param("search") String search);
 
-    public int attractionCount(List<String> areaCode);
+    public int attractionCount(List<String> areaCode, String search);
 
     public AttractionDetail getTourDetail(int placeNo);
 }

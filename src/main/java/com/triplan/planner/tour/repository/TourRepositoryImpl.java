@@ -13,13 +13,13 @@ public class TourRepositoryImpl implements TourRepository{
 
     private final TourMapper tourMapper;
     @Override
-    public List<Attraction> tourList(List<String> areaCode, int startRow, int size) {
-        return tourMapper.tourList(areaCode, startRow, size);
+    public List<Attraction> tourList(List<String> areaCode, int startRow, int size, String search) {
+        return tourMapper.tourList(areaCode, startRow, size, search);
     }
 
     @Override
-    public int attractionCount(List<String> areaCode) {
-        return tourMapper.attractionCount(areaCode);
+    public int attractionCount(List<String> areaCode, String search) {
+        return tourMapper.attractionCount(areaCode, search);
     }
 
     @Override
