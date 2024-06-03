@@ -184,7 +184,7 @@
     height: 50%;
     margin-top: 50px;
     background: url('/images/bgImg.png') center center no-repeat;
-    transform: translate(-100px, -10px);
+    transform: translate(-200px, -10px);
 }
 
 .recommand-cont {
