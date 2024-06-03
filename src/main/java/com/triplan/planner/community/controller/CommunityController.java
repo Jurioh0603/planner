@@ -7,6 +7,7 @@ import com.triplan.planner.community.dto.CommunityPage;
 import com.triplan.planner.community.service.CommunityService;
 import com.triplan.planner.file.FileStore;
 import com.triplan.planner.user.dto.UserDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -67,8 +68,15 @@ public class CommunityController {
     }
 
     @GetMapping("/modify")
-    public String modify(@RequestParam("local") String local, @RequestParam("no") long bno, Model model) {
+    public String modify(@RequestParam("local") String local, @RequestParam("no") long bno, Model model, HttpSession session) {
         Community community = communityService.getCommunity(local, bno);
+
+        UserDto loginInfo = (UserDto) session.getAttribute("loginMemberInfo");
+        //로그인하지 않았거나 작성자가 아닌 경우 수정 불가 -> 에러 페이지 이동
+        if(loginInfo == null || !loginInfo.getMemberId().equals(community.getMemberId())) {
+            return "redirect:/error/forbidden";
+        }
+
         model.addAttribute("community", community);
         model.addAttribute("local", local);
         return "community/modifyForm";
@@ -94,7 +102,7 @@ public class CommunityController {
         return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam("local") String local, @RequestParam("no") long bno, Model model) {
         communityService.deleteCommunity(local, bno);
         return "redirect:/community/list?local=" + local;

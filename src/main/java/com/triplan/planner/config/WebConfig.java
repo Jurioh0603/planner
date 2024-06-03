@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
-                .addPathPatterns("/plan/*", "/admin/*");
+                .addPathPatterns("/plan/*", "/admin/*", "/*/write");
 
         registry.addInterceptor(new AdminCheckInterceptor())
                 .order(2)

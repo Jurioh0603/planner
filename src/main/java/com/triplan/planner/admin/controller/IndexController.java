@@ -16,6 +16,6 @@ public class IndexController {
 
     @GetMapping("/error/notFound")
     public String notFound() {
-        return "/error/404";
+        return "/error/4xx";
     }
 }

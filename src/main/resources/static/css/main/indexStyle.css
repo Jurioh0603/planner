@@ -1,3 +1,7 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
 .carousel-item img {
     max-width: none;
     height: 550px;
