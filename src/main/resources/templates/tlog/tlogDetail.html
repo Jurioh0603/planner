@@ -72,12 +72,12 @@
         <div class="infoContainer mt-4">
             <div class="profileContainer">
                 <div>
-                    <img th:if="${tlogInfo.writerProfile.mCopyImg == null}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
-                    <img th:if="${tlogInfo.writerProfile.mCopyImg != null}" th:src="|/tlog/images/${tlogInfo.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
+                    <img th:if="${tlogInfo.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+                    <img th:if="${tlogInfo.writerProfile.mCopyImg != ''}" th:src="|/tlog/images/${tlogInfo.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
                 </div>
                 <div class="ms-3 mb-1"><b>[[${tlogInfo.writerProfile.nickname}]]</b> 님의 일정</div>
             </div>
-            <div class="iconContainer">
+            <div class="iconContainer" th:if="${session.loginMemberInfo != null}">
                 <div class="fav-img-box">
                     <block th:if="${!isFav}">
                         <img src="/images/heart_white.png" alt="즐겨찾기" class="fav-img mb-1">
@@ -297,11 +297,12 @@
             <hr/>
         </th:block>
 
-        <div id="buttonContainer">
-            <div id="buttonContainer-left" class="mt-5">
+        <div id="buttonContainer" th:if="${session.loginMemberInfo != null}">
+            <div id="buttonContainer-left" class="mt-5" th:if="${tlogInfo.tlog.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
                 <button class="btn btn-sm btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|">수정</button>
                 <button class="btn btn-sm btn-primary" type="button" id="deleteBtn">삭제</button>
             </div>
+
             <div id="buttonContainer-right" class="mt-5">
                 <button class="btn btn-sm btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
             </div>
@@ -328,9 +329,16 @@
     </div>
 
     <script>
-        document.getElementById("deleteBtn").addEventListener("click", function () {
-            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
-            modal.show();
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteBtn = document.getElementById("deleteBtn");
+
+            //작성자가 아닌 경우 삭제 버튼이 존재하지 않는다. 따라서 존재 여부를 파악하여 이벤트 리스너를 추가한다.
+            if (deleteBtn) {
+                deleteBtn.addEventListener("click", function () {
+                    const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+                    modal.show();
+                });
+            }
         });
 
         document.querySelectorAll('.scheduleSaveBtn').forEach(function(element) {

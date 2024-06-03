@@ -8,6 +8,7 @@ import com.triplan.planner.plan.dto.PlanList;
 import com.triplan.planner.plan.dto.ScheduleList;
 import com.triplan.planner.plan.dto.imageUploadForm;
 import com.triplan.planner.plan.service.PlanService;
+import com.triplan.planner.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -35,8 +36,8 @@ public class PlanController {
     private String KAKAO_API_KEY;
 
     @GetMapping("/list")
-    public String list(Model model) {
-        String memberId = "id1"; //나중에 세션에서 로그인한 id를 가져옴
+    public String list(Model model, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         PlanList planList = planService.getPlanList(memberId);
 
         model.addAttribute("planList", planList);

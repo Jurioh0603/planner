@@ -2,6 +2,7 @@ package com.triplan.planner.community.controller;
 
 import com.triplan.planner.community.domain.Reply;
 import com.triplan.planner.community.service.ReplyService;
+import com.triplan.planner.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,8 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @PostMapping("/write")
-    public String write(@ModelAttribute Reply reply, @RequestParam("local") String local) {
-        String memberId = "id1";
+    public String write(@ModelAttribute Reply reply, @RequestParam("local") String local, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         reply.setMemberId(memberId);
         reply.setRstep(1);
         replyService.write(reply, local);
@@ -23,8 +24,8 @@ public class ReplyController {
     }
 
     @PostMapping("/rewrite")
-    public String rewrite(@ModelAttribute Reply reply, @RequestParam("local") String local) {
-        String memberId = "id1";
+    public String rewrite(@ModelAttribute Reply reply, @RequestParam("local") String local, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         reply.setMemberId(memberId);
         reply.setRstep(2);
         replyService.rewrite(reply, local);

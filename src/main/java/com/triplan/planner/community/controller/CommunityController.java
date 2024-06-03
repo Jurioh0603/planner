@@ -6,6 +6,7 @@ import com.triplan.planner.community.dto.CommunityList;
 import com.triplan.planner.community.dto.CommunityPage;
 import com.triplan.planner.community.service.CommunityService;
 import com.triplan.planner.file.FileStore;
+import com.triplan.planner.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -58,8 +59,8 @@ public class CommunityController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute Community community, @RequestParam("local") String local) {
-        String memberId = "id1";
+    public String write(@ModelAttribute Community community, @RequestParam("local") String local, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
+        String memberId = loginInfo.getMemberId();
         community.setMemberId(memberId);
         long bno = communityService.write(community, local);
         return "redirect:/community/detail?local=" + local + "&no=" + bno;

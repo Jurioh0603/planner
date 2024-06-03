@@ -20,31 +20,40 @@
         <h2 class="text-h2">즐겨찾기</h2>
         <hr class="border-height-2"/>
         <div>
-            <div>총2건</div>
+            <div>총[[${myFavPage.myTotal}]]건</div>
             <hr class="hr-margin"/>
-            <div class="line-container">
-                <a href="#"><img src="/images/error.png" class="img-size"></a>
-                <div class="text-container">
-                    <a class="l-text title" href="#">누구나 가기 좋은 익산 나들이 코스</a>
-                    <div class="s-text">전북</div>
-                    <div class="s-text">id1님의 일정</div>
-                    <div class="m-text">가족과 함께 가기 좋은 나들이 코스 추천합니다~</div>
-                </div>
-            </div>
-            <br/>
-            <hr/>
-            <br/>
-            <div class="line-container">
-                <a href="#"><img src="/images/busan-sample.jpg" class="img-size"></a>
-                <div class="text-container">
-                    <a class="l-text title" href="#">가족과 함께 부산여행</a>
-                    <div class="s-text">부산</div>
-                    <div class="s-text">id2님의 일정</div>
-                    <div class="m-text">부산에서 해물먹고 바다보면서 힐링하세요~</div>
-                </div>
-            </div>
-        </div>
+            <th:block th:each="myFav: ${myFavPage.myTlogLists}">
+                <a th:href="@{/tlog/detail(no=${myFav.tlogNo})}" class="text-decoration">
+                <div class="line-container">
 
+                        <img th:src="|/mypage/images/${myFav.storeName}|" class="img-size">
+                        <div class="text-container">
+                            <div class="l-text title">[[${myFav.tlogTitle}]]</div>
+                            <div class="s-text">[[${myFav.memberId}]]님의 일정</div>
+                            <div class="s-text">[[${myFav.writeTime}]]</div>
+                            <div class="m-text">[[${myFav.tlogContent}]]</div>
+                        </div>
+
+                <br/>
+                <hr/>
+                <br/>
+                </div>
+                </a>
+            </th:block>
+        </div>
+        <!-- 페이지네이션 -->
+        <block th:if="${myFavPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${myTlogPage.startPage > 5}" th:href="@{/mypage/myFav(page=${myFavPage.startPage - 5})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(myFavPage.startPage, myFavPage.endPage)}">
+                        <a th:if="${page == myFavPage.currentPage}" th:href="@{/mypage/myFav(page=${page})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != myFavPage.currentPage}" th:href="@{/mypage/myFav(page=${page})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${myFavPage.endPage < myFavPage.totalPages}" th:href="@{/mypage/myFav(page=${myFavPage.startPage + 5})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
     </div>
 </body>
 </html>
