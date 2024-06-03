@@ -32,8 +32,8 @@
                         <div class="text-container">
                             <div class="l-text title">[[${myFav.tlogTitle}]]</div>
                             <div class="line-container-s">
-                                <img th:src="|/mypage/images/${myFav.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg != null}">
-                                <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg == null}">
+                                <img th:src="|/mypage/images/${myFav.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg != ''}">
+                                <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myFav.mCopyImg == ''}">
                                 <div class="s-text">[[${myFav.nickName}]]님의 일정</div>
                             </div>
                             <div class="s-text">[[${myFav.writeTime}]]</div>

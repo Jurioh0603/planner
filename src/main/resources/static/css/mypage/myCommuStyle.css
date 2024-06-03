@@ -82,11 +82,6 @@
     position: relative;
 }
 
-.dropdown-menu {
-    max-width: 200px;
-}
-
-.dropdown-menu {
-    max-height: 200px;
-    overflow-y: auto;
+.form-control {
+    width: 200px
 }
