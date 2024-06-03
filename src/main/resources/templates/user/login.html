@@ -25,8 +25,8 @@
                 <img height="48px;" alt="네이버로그인" src="/images/naver_login.png" onclick="javascript:loginWithNaver();">
             </div>
         </div>
-        <br>
-        <p class="snssimple" ><a style="text-decoration: none; color:#BDBDBD;" href="/user/passwordFind"> 비밀번호를 잊으셨나요?</a></p>
+        <a class="snssimple" href="/user/passwordFind"> 비밀번호를 잊으셨나요?</a>
+        <input type="hidden" name="redirectURL" th:value="${redirectURL}"/>
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

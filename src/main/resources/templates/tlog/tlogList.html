@@ -21,12 +21,7 @@
         <div id="titleContainer">
             <div><h2 class="mt-3 mb-3">나의 멋진 여행기를 공유해요.</h2></div>
             <div id="writeBtnContainer">
-                <th:block th:if="${session.loginMemberInfo != null}">
-                    <button type="button" class="btn btn-primary writeTlogBtn" onclick="location.href='/tlog/write'">여행기 작성</button>
-                </th:block>
-                <th:block th:if="${session.loginMemberInfo == null}">
-                    <button type="button" class="btn btn-primary writeTlogBtn" onclick="location.href='/user/login'">여행기 작성</button>
-                </th:block>
+                <button type="button" class="btn btn-primary writeTlogBtn" onclick="location.href='/tlog/write'">여행기 작성</button>
             </div>
         </div>
 

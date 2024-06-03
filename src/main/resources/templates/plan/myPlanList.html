@@ -113,6 +113,7 @@
                 <input type="file" name="uploadFile" th:id="'file_' + ${iterStat.index}" accept="image/*" style="display:none"/>
             </form>
 
+
             <div class="planListContainer">
                 <div class="planListImgBox me-3 ms-3" th:attr="onclick=|openFileUploader(${iterStat.index})|">
                     <block th:if="${planList.imageList[iterStat.index].storeName != null}">
@@ -122,10 +123,10 @@
                         <p class="noImg">대표 이미지를 설정해주세요.</p>
                     </block>
                 </div>
-                <div style="width:700px;">
+                <div style="width:700px;" class="outer" th:attr="data-scheduleNo=${schedule.scheduleNo}">
                     <div id="planTitle">
-                        <a th:href="@{/plan/write(no=${schedule.scheduleNo})}" class="link"><p class="fs-4 mb-2 titleContainer" th:text="${schedule.scheduleTitle}">제목</p></a>
-                        <img src="/images/modify.png" style="width:32px" class="editTitleBtn" th:attr="data-schedule-no=${schedule.scheduleNo}, data-title=${schedule.scheduleTitle}"/>
+                        <p class="fs-4 mb-2 titleContainer" th:text="${schedule.scheduleTitle}">제목</p>
+                        <img src="/images/modify.png" style="width:32px" class="editTitleBtn inner" th:onclick="event.stopPropagation()" th:attr="data-schedule-no=${schedule.scheduleNo}, data-title=${schedule.scheduleTitle}"/>
                     </div>
                     <div id="planDay">
                         <div class="dateInfo">
@@ -137,7 +138,7 @@
                             </p>
                             <p class="mb-5 dDay"></p>
                         </div>
-                        <a th:href="@{/plan/modifyDay(no=${schedule.scheduleNo})}"><img src="/images/modify.png" style="width:32px" class="editDayBtn mb-5"></a>
+                        <img src="/images/modify.png" style="width:32px" class="editDayBtn mb-5 inner" th:onclick="|event.stopPropagation(); location.href='@{/plan/modifyDay(no=${schedule.scheduleNo})}'|">
                     </div>
 
                     <div class="placeTag">
@@ -235,6 +236,15 @@
             }
 
             document.getElementById('editTitleForm').submit();
+        });
+
+        const outerElements = document.querySelectorAll(".outer");
+
+        outerElements.forEach(outer => {
+            var scheduleNo = outer.getAttribute('data-scheduleNo');
+            outer.addEventListener("click", () => {
+                window.location.assign("/plan/write?no=" + scheduleNo);
+            });
         });
     </script>
 </body>

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,16 +49,17 @@ public class UserController {
     
     //공통 로그인 페이지 이동
 	@GetMapping("/login")
-	public String login(Model model) {
+	public String login(Model model, @RequestParam(defaultValue = "/index") String redirectURL) {
     	log.info("Controller @GetMapping( /user/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
     	model.addAttribute("kakaoCallbackUri", kakaoCallbackUri);
     	model.addAttribute("kakaoJavascriptKey", kakaoJavascriptKey);
+		model.addAttribute("redirectURL", redirectURL);
     	return "user/login";
 	}
 	
     //일반회원 로그인 처리
 	@PostMapping("/login")
-	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session) {
+	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session, @RequestParam(defaultValue = "/index") String redirectURL) {
 
 		UserDto loginInfo = userService.selectLogin(userDto);
 
@@ -65,12 +67,10 @@ public class UserController {
         if(loginInfo != null) {
             // 회원정보 세션담기
     		session.setAttribute("loginMemberInfo", loginInfo);
-    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", "/index");
+    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", redirectURL);
         }else {
     		ReturnUtil.setReturnMessage(response, "로그인을 실패하였습니다.", "", "error", "/user/login");
         }
-
-    			;
 	}
 	
 	//공통 로그아웃 (SNS회원 / 일반회원)

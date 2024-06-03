@@ -104,7 +104,7 @@ span {
     align-items: center;
 }
 
-.editTitleBtn:hover, .editDayBtn:hover, .titleContainer:hover, .deleteBtn:hover {
+.editTitleBtn:hover, .editDayBtn:hover, .deleteBtn:hover {
     cursor: pointer;
     filter: invert(50%);
 }
