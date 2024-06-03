@@ -24,61 +24,61 @@
 
     <div id="localLinkBtnContainer" class="mt-3">
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=S)}|">
+            <a th:href="|@{/community/list(local=S)}|" class="link">
                 <img class="localImg" src="/images/S.png"/>
                 <p id="S">서 울</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=GG)}|">
+            <a th:href="|@{/community/list(local=GG)}|" class="link">
                 <img class="localImg" src="/images/GG.png"/>
                 <p id="GG">경 기</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=GW)}|">
+            <a th:href="|@{/community/list(local=GW)}|" class="link">
                 <img class="localImg" src="/images/GW.png"/>
                 <p id="GW">강 원</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=CB)}|">
+            <a th:href="|@{/community/list(local=CB)}|" class="link">
                 <img class="localImg" src="/images/CB.png"/>
                 <p id="CB">충 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=CN)}|">
+            <a th:href="|@{/community/list(local=CN)}|" class="link">
                 <img class="localImg" src="/images/CN.png"/>
                 <p id="CN">충 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=JB)}|">
+            <a th:href="|@{/community/list(local=JB)}|" class="link">
                 <img class="localImg" src="/images/JB.png"/>
                 <p id="JB">전 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=JN)}|">
+            <a th:href="|@{/community/list(local=JN)}|" class="link">
                 <img class="localImg" src="/images/JN.png"/>
                 <p id="JN">전 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=GB)}|">
+            <a th:href="|@{/community/list(local=GB)}|" class="link">
                 <img class="localImg" src="/images/GB.png"/>
                 <p id="GB">경 북</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=GN)}|">
+            <a th:href="|@{/community/list(local=GN)}|" class="link">
                 <img class="localImg" src="/images/GN.png"/>
                 <p id="GN">경 남</p>
             </a>
         </div>
         <div class="localLinkBtn">
-            <a th:href="|@{/community/list(local=JJ)}|">
+            <a th:href="|@{/community/list(local=JJ)}|" class="link">
                 <img class="localImg" src="/images/JJ.png"/>
                 <p id="JJ">제 주</p>
             </a>
@@ -134,20 +134,20 @@
     </form>
 
     <block th:if="${communityPage.hasNoContents()}">
-        <hr/>
+        <hr class="hrClass"/>
         <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
     </block>
 
     <block th:each="community, iterStat : ${communityPage.communityList.communities}">
-        <hr/>
+        <hr class="hrClass"/>
         <div class="contentContainer">
-            <a th:href="|@{/community/detail(local=${local}, no=${community.bno}, page=${page}, search=${search})}|"><div class="title" th:text="${community.title}"></div></a>
+            <a th:href="|@{/community/detail(local=${local}, no=${community.bno}, page=${page}, search=${search})}|" class="link"><div class="title" th:text="${community.title}"></div></a>
             <div class="writer" th:text="${communityPage.communityList.nicknameList[iterStat.index]}"></div>
             <div class="writeTime" th:text="${community.getWriteTimeFormatted()}"></div>
         </div>
     </block>
 
-    <hr/>
+    <hr class="hrClass"/>
 
     <div id="doContainer">
         <block th:if="${communityPage.hasContents()}">
