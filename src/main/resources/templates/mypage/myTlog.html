@@ -40,8 +40,8 @@
                                         <img th:src="|/mypage/images/${myTlog.storeName}|" alt="여행기 섬네일" class="tlogImg img-gal"/>
                                     </div>
                                     <div class="writerContainer mt-2 mb-2 ms-2">
-                                        <img th:src="|/mypage/images/${myTlog.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg != null}">
-                                        <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg == null}">
+                                        <img th:src="|/mypage/images/${myTlog.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg != ''}">
+                                        <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myTlog.mCopyImg == ''}">
                                         <div class="ms-3 mb-1"><b>[[${myTlog.nickName}]]</b> 님의 일정</div>
                                     </div>
                                     <div class="card-body">

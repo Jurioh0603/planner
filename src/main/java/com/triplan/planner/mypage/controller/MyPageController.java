@@ -4,6 +4,7 @@ import com.triplan.planner.file.FileStore;
 import com.triplan.planner.file.UploadFile;
 import com.triplan.planner.mypage.dto.*;
 import com.triplan.planner.mypage.service.MyPageService;
+import com.triplan.planner.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +30,15 @@ public class MyPageController {
     @GetMapping("/mypage/myPage")
     public String MyPageForm(Model model,
                              HttpSession session) {
-        String memberId = "id1";
-        Profile profile = myPageService.getProfileList(memberId);
+        UserDto userInfo = (UserDto) session.getAttribute("loginMemberInfo");
+        if (userInfo == null || userInfo.getMemberId() == null || userInfo.getMemberId().isEmpty()) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
+        log.info("로그인정보 >>>>>>>> {} ",userInfo.toString());
+        log.info("로그인 아이디 정보 >>>>>>>> {} ",userInfo.getMemberId());
+        String memberId = userInfo.getMemberId();
         session.setAttribute("memberId", memberId);
+        Profile profile = myPageService.getProfileList(memberId);
         System.out.println(profile);
         model.addAttribute("profile", profile);
         return "/mypage/myPage";
@@ -67,8 +74,9 @@ public class MyPageController {
 
     // 마이페이지 내 정보 보기 요청
     @GetMapping("/mypage/myInfo")
-    public String myInfo(Model model) {
-        String memberId = "id1";
+    public String myInfo(HttpSession session,
+                         Model model) {
+        String memberId = (String) session.getAttribute("memberId");
         Profile profile = myPageService.getProfileList(memberId);
         model.addAttribute("profile", profile);
         return "/mypage/myInfo";
