@@ -22,5 +22,6 @@ public interface MyPageRepository {
 
     public List<MyTlogList> myTlogList(String memberId, int i, int size);
 
-    List<MyCommunityList> myComList(String memberId, int startRow, int size);
+    public List<MyCommunityList> myComList(String memberId, int startRow, int size);
+
 }

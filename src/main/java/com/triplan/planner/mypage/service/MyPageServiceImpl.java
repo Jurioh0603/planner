@@ -55,7 +55,7 @@ public class MyPageServiceImpl implements MyPageService{
     @Override
     public List<MyCommunityList> myComList(String memberId, int page) {
         int size = 6;
-        return myPageRepository.getTlogList(memberId,(page - 1) * size, size);
+        return myPageRepository.myComList(memberId,(page - 1) * size, size);
     }
 
 

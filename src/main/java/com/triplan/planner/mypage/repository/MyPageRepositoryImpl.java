@@ -53,5 +53,4 @@ public class MyPageRepositoryImpl implements MyPageRepository{
     public List<MyCommunityList> myComList(String memberId, int startRow, int size) {
         return myPageMapper.myComList(memberId, startRow, size);
     }
-
 }

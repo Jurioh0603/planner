@@ -56,5 +56,6 @@
     </select>
     <select id="myComList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyCommunityList">
         SELECT * FROM CB_COMMUNITY
+        WHERE MEMBER_ID=#{memberId}
     </select>
 </mapper>
