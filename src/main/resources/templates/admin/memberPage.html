@@ -24,7 +24,7 @@
 
 <!-- SIDEBAR -->
 <section id="sidebar">
-    <a href="#" class="brand">
+    <a th:href="@{/admin/memberPage}" class="brand">
         <i class='bx bxs-smile'></i>
         <span class="text">AdminHub</span>
     </a>
@@ -44,7 +44,12 @@
     </ul>
 
     <ul class="side-menu">
-        <br/>
+        <li>
+            <a th:href="@{/index}">
+                <i class='bx bxs-home' ></i>
+                <span class="text">Home</span>
+            </a>
+        </li>
         <li>
             <a th:href="@{/user/logout}" class="logout">
                 <i class='bx bxs-log-out-circle'></i>
