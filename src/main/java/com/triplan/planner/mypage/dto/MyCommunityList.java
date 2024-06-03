@@ -2,8 +2,8 @@ package com.triplan.planner.mypage.dto;
 
 import lombok.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +16,11 @@ public class MyCommunityList {
     private String content;
     private Date writeTime;
     private String memberId;
+    private String nickName;
+    private String communityType;
 
-    public MyCommunityList(int total, int page, int size, List<MyCommunityList> myCommunityList) {
+    public String getDateFormat(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+        return simpleDateFormat.format(writeTime);
     }
 }

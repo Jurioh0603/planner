@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Attravtion {
+public class Attraction {
     private int placeNo;
     private String placeName;
     private String placeAddress;
@@ -15,6 +15,6 @@ public class Attravtion {
     private String placeTel;
     private String placePage;
     private String placeIntro;
-    private String placeImg;
+    private Byte placeImg;
 
 }

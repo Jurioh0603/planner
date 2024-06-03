@@ -12,13 +12,11 @@ public class MyTlogPage {
     private int totalPages;
     private int startPage;
     private int endPage;
-    private int myTotal;
 
-    public MyTlogPage(int total, int currentPage, int size, int myTotal, List<MyTlogList> myTlogList) {
+    public MyTlogPage(int total, int currentPage, int size, List<MyTlogList> myTlogList) {
         this.total = total;
         this.currentPage = currentPage;
         this.myTlogLists = myTlogList;
-        this.myTotal = myTotal;
         if(total == 0) {
             totalPages = 0;
             startPage = 0;

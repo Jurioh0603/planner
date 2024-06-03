@@ -16,7 +16,7 @@ public interface MyPageRepository {
 
     public List<MyTlogList> myFavList(String memberId, int startRow, int size);
 
-    public int getCount();
+    public int tlogCount(String memberId);
 
     public int favCount(String memberId);
 
@@ -24,4 +24,7 @@ public interface MyPageRepository {
 
     public List<MyCommunityList> myComList(String memberId, int startRow, int size);
 
+    public int communityCount(String memberId);
+
+    public void memberLeave(String memberId);
 }

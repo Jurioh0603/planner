@@ -17,11 +17,15 @@ public interface MyPageService {
 
     public List<MyTlogList> myFavList(String memberId, int page);
 
-    public int getCount();
+    public int tlogCount(String memberId);
 
-    public int getFavCount(String memberId);
+    public int favCount(String memberId);
 
     public List<MyTlogList> myTlogList(String memberId, int page);
 
     public List<MyCommunityList> myComList(String memberId, int page);
+
+    public int communityCount(String memberId);
+
+    public void memberLeave(String memberId);
 }

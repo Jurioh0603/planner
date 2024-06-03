@@ -7,4 +7,14 @@
         INSERT INTO ATTRACTION(PLACE_NAME, PLACE_ADDRESS, PLACE_AREACODE, PLACE_TEL, PLACE_PAGE, PLACE_INTRO, PLACE_IMG)
         VALUES (#{title}, #{addr1}, #{areacode}, #{tel}, #{homepage}, #{overview}, #{firstimage})
     </insert>
+    <resultMap id="리절이름" type="hashMap">
+        <result property="IMG_THN" column="IMG_THN" jdbcType="BLOB" javaType="byte[]"></result>
+    </resultMap>
+    <select id="tourList" parameterType="list" resultType="com.triplan.planner.tour.dto.Attraction">
+        SELECT * FROM ATTRACTION
+        WHERE PLACE_AREACODE IN
+        <foreach collection="areaCode" item="item" open="(" close=")" separator=",">
+            #{areaCode}
+        </foreach>
+    </select>
 </mapper>

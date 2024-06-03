@@ -32,9 +32,34 @@
         ORDER BY C.FAV_DATE DESC
         LIMIT #{startRow}, #{size}
     </select>
-    <select id="getCount" resultType="int">
+    <select id="tlogCount" parameterType="String" resultType="int">
         SELECT COUNT(*)
         FROM TLOG
+        WHERE MEMBER_ID = #{memberId}
+    </select>
+    <select id="communityCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM (
+        SELECT A.*, 'CB_COMMUNITY' AS COMMUNITY_TYPE FROM CB_COMMUNITY A WHERE A.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT B.*, 'CN_COMMUNITY' AS COMMUNITY_TYPE FROM CN_COMMUNITY B WHERE B.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT C.*, 'GB_COMMUNITY' AS COMMUNITY_TYPE FROM GB_COMMUNITY C WHERE C.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT D.*, 'GG_COMMUNITY' AS COMMUNITY_TYPE FROM GG_COMMUNITY D WHERE D.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT E.*, 'GN_COMMUNITY' AS COMMUNITY_TYPE FROM GN_COMMUNITY E WHERE E.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT F.*, 'GW_COMMUNITY' AS COMMUNITY_TYPE FROM GW_COMMUNITY F WHERE F.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT G.*, 'JB_COMMUNITY' AS COMMUNITY_TYPE FROM JB_COMMUNITY G WHERE G.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT H.*, 'JJ_COMMUNITY' AS COMMUNITY_TYPE FROM JJ_COMMUNITY H WHERE H.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT I.*, 'JN_COMMUNITY' AS COMMUNITY_TYPE FROM JN_COMMUNITY I WHERE I.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT J.*, 'S_COMMUNITY' AS COMMUNITY_TYPE FROM S_COMMUNITY J WHERE J.MEMBER_ID = #{memberId}
+        ) AS ALL_POSTS
     </select>
     <select id="favCount" parameterType="String" resultType="int">
         SELECT COUNT(*)
@@ -55,7 +80,35 @@
         LIMIT #{startRow}, #{size}
     </select>
     <select id="myComList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyCommunityList">
-        SELECT * FROM CB_COMMUNITY
-        WHERE MEMBER_ID=#{memberId}
+        SELECT ALL_POSTS.*, A.NICKNAME
+        FROM (
+        SELECT A.*, 'CB' AS COMMUNITY_TYPE FROM CB_COMMUNITY A WHERE A.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT B.*, 'CN' AS COMMUNITY_TYPE FROM CN_COMMUNITY B WHERE B.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT C.*, 'GB' AS COMMUNITY_TYPE FROM GB_COMMUNITY C WHERE C.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT D.*, 'GG' AS COMMUNITY_TYPE FROM GG_COMMUNITY D WHERE D.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT E.*, 'GN' AS COMMUNITY_TYPE FROM GN_COMMUNITY E WHERE E.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT F.*, 'GW' AS COMMUNITY_TYPE FROM GW_COMMUNITY F WHERE F.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT G.*, 'JB' AS COMMUNITY_TYPE FROM JB_COMMUNITY G WHERE G.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT H.*, 'JJ' AS COMMUNITY_TYPE FROM JJ_COMMUNITY H WHERE H.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT I.*, 'JN' AS COMMUNITY_TYPE FROM JN_COMMUNITY I WHERE I.MEMBER_ID = #{memberId}
+        UNION ALL
+        SELECT J.*, 'S' AS COMMUNITY_TYPE FROM S_COMMUNITY J WHERE J.MEMBER_ID = #{memberId}
+        ) AS ALL_POSTS JOIN MEMBER A
+        ON ALL_POSTS.MEMBER_ID=A.MEMBER_ID
+        ORDER BY ALL_POSTS.WRITE_TIME DESC
+        LIMIT #{startRow}, #{size};
     </select>
+    <update id="memberLeave" parameterType="String">
+        UPDATE MEMBER
+        SET GRADE = 2222
+        WHERE MEMBER_ID = #{memberId};
+    </update>
 </mapper>

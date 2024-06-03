@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
+
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <div id="contents">
+
+        <h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3>
+
+        <div id="localLinkBtnContainer" class="mt-3">
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=S)}|">
+                    <img class="localImg" src="/images/S.png"/>
+                    <p id="S">서 울</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GG)}|">
+                    <img class="localImg" src="/images/GG.png"/>
+                    <p id="GG">경 기</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GW)}|">
+                    <img class="localImg" src="/images/GW.png"/>
+                    <p id="GW">강 원</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=CB)}|">
+                    <img class="localImg" src="/images/CB.png"/>
+                    <p id="CB">충 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=CN)}|">
+                    <img class="localImg" src="/images/CN.png"/>
+                    <p id="CN">충 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JB)}|">
+                    <img class="localImg" src="/images/JB.png"/>
+                    <p id="JB">전 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JN)}|">
+                    <img class="localImg" src="/images/JN.png"/>
+                    <p id="JN">전 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GB)}|">
+                    <img class="localImg" src="/images/GB.png"/>
+                    <p id="GB">경 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GN)}|">
+                    <img class="localImg" src="/images/GN.png"/>
+                    <p id="GN">경 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JJ)}|">
+                    <img class="localImg" src="/images/JJ.png"/>
+                    <p id="JJ">제 주</p>
+                </a>
+            </div>
+        </div>
+</body>
+</html>
