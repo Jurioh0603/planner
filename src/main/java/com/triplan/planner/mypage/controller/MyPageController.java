@@ -54,6 +54,10 @@ public class MyPageController {
     public String saveProfile(HttpSession session,
                               @ModelAttribute ProfileForm form,
                               Model model) throws IOException {
+        String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
         UploadFile uploadFile = fileStore.storeFile(form.getUploadFile());
         Profile profile = new Profile();
         profile.setMemberId((String) session.getAttribute("memberId"));
@@ -82,6 +86,9 @@ public class MyPageController {
     public String myInfo(HttpSession session,
                          Model model) {
         String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
         Profile profile = myPageService.getProfileList(memberId);
         model.addAttribute("profile", profile);
         return "/mypage/myInfo";
@@ -95,8 +102,9 @@ public class MyPageController {
                              @RequestParam String password2,
                              Model model) {
         Profile profile = new Profile();
-        if (!password1.equals(password2) || password1.trim().isEmpty()) {
-            return "/mypage/error";
+        String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
         } else {
             // 데이터베이스에 저장
             profile.setMemberId((String) session.getAttribute("memberId"));
@@ -111,6 +119,14 @@ public class MyPageController {
         }
     }
 
+    // 회원탈퇴
+    @GetMapping("/mypage/leave")
+    public String memberLeave(HttpSession session) {
+        String memberId = (String) session.getAttribute("memberId");
+        myPageService.memberLeave(memberId);
+        return "redirect:/index";
+    }
+
     // Get매핑 시도시 에러 페이지로 리다이렉트
     @GetMapping("/mypage/updateInfo")
     public String handleSpecificPath() {
@@ -122,19 +138,22 @@ public class MyPageController {
     public String myFavList(HttpSession session,
                             @ModelAttribute("page") String page,
                             Model model) {
+        String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
+
         if (page.isEmpty()) {
             page = "1";
         }
-        String memberId = (String) session.getAttribute("memberId");
         List<MyTlogList> myFavList = myPageService.myFavList(memberId, Integer.parseInt(page));
 
         // 페이지네이션
-        int total = myPageService.getCount();
+        int total = myPageService.favCount(memberId);
         int size = 6;
         // 즐겨찾기 총 갯수 가져오기
-        int myTotal = myPageService.getFavCount(memberId);
 
-        MyTlogPage myFavPage = new MyTlogPage(total, Integer.parseInt(page), size, myTotal, myFavList);
+        MyTlogPage myFavPage = new MyTlogPage(total, Integer.parseInt(page), size, myFavList);
         model.addAttribute("myFavPage", myFavPage);
         return "/mypage/myFav";
     }
@@ -145,17 +164,20 @@ public class MyPageController {
                          @ModelAttribute("page") String page,
                          Model model){
         String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
         if (page.isEmpty()) {
             page = "1";
         }
         List<MyTlogList> myTlogList = myPageService.myTlogList(memberId, Integer.parseInt(page));
         // 페이지네이션
-        int total = myPageService.getCount();
+        int total = myPageService.tlogCount(memberId);
         int size = 6;
         // 내가쓴 여행기 총 갯수
         int myTotal = total;
 
-        MyTlogPage myTlogPage = new MyTlogPage(total, Integer.parseInt(page), size, myTotal, myTlogList);
+        MyTlogPage myTlogPage = new MyTlogPage(total, Integer.parseInt(page), size, myTlogList);
         model.addAttribute("myTlogPage", myTlogPage);
         return "/mypage/myTlog";
     }
@@ -165,19 +187,24 @@ public class MyPageController {
     public String myBoard(HttpSession session,
                           @ModelAttribute("page") String page,
                           Model model) {
+
+        String memberId = (String) session.getAttribute("memberId");
+        if (memberId == null) {
+            return "redirect:/user/login";  // 리다이렉트
+        }
+
         if (page.isEmpty()) {
             page = "1";
         }
 
-        String memberId = (String) session.getAttribute("memberId");
         List<MyCommunityList> myCommunityList = myPageService.myComList(memberId, Integer.parseInt(page));
 
+        System.out.println(myCommunityList);
         // 페이지네이션
-        int total = myPageService.getCount();
+        int total = myPageService.communityCount(memberId);
         int size = 6;
         // 내가 쓴 글 총 갯수
-        int myTotal = total;
-        MyCommunityList myCommunityPage = new MyCommunityList(total,Integer.parseInt(page), size, myCommunityList);
+        MyCommunityPage myCommunityPage = new MyCommunityPage(total,Integer.parseInt(page), size, myCommunityList);
         model.addAttribute("myCommunityPage", myCommunityPage);
         return "/mypage/myCommunity";
     }

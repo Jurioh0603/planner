@@ -96,3 +96,20 @@
     display: none; /* 기본적으로 보이지 않게 설정 */
     margin-top: 5px;
 }
+
+.e-error-message {
+    color: red;
+    font-size: 17px;
+    display: none; /* 기본적으로 보이지 않게 설정 */
+    margin-top: 5px;
+}
+
+/*회원탈퇴*/
+.list-text-exit{
+    text-decoration: none;
+    color: inherit;
+}
+
+.list-text-exit:hover {
+    color: #6e6e6e; /* 호버 시 색상 변경 */
+}

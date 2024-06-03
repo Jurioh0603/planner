@@ -35,8 +35,8 @@ public class MyPageRepositoryImpl implements MyPageRepository{
     }
 
     @Override
-    public int getCount() {
-        return myPageMapper.getCount();
+    public int tlogCount(String memberId) {
+        return myPageMapper.tlogCount(memberId);
     }
 
     @Override
@@ -52,5 +52,15 @@ public class MyPageRepositoryImpl implements MyPageRepository{
     @Override
     public List<MyCommunityList> myComList(String memberId, int startRow, int size) {
         return myPageMapper.myComList(memberId, startRow, size);
+    }
+
+    @Override
+    public int communityCount(String memberId) {
+        return myPageMapper.communityCount(memberId);
+    }
+
+    @Override
+    public void memberLeave(String memberId) {
+        myPageMapper.memberLeave(memberId);
     }
 }

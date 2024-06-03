@@ -37,12 +37,12 @@ public class MyPageServiceImpl implements MyPageService{
     }
 
     @Override
-    public int getCount() {
-        return myPageRepository.getCount();
+    public int tlogCount(String memberId) {
+        return myPageRepository.tlogCount(memberId);
     }
 
     @Override
-    public int getFavCount(String memberId) {
+    public int favCount(String memberId) {
         return myPageRepository.favCount(memberId);
     }
 
@@ -56,6 +56,16 @@ public class MyPageServiceImpl implements MyPageService{
     public List<MyCommunityList> myComList(String memberId, int page) {
         int size = 6;
         return myPageRepository.myComList(memberId,(page - 1) * size, size);
+    }
+
+    @Override
+    public int communityCount(String memberId) {
+        return myPageRepository.communityCount(memberId);
+    }
+
+    @Override
+    public void memberLeave(String memberId) {
+        myPageRepository.memberLeave(memberId);
     }
 
 

@@ -1,22 +1,22 @@
-package com.triplan.planner.mypage.dto;
+package com.triplan.planner.tour.dto;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class MyTlogPage {
+public class AttractionPage {
     private int total;
     private int currentPage;
-    private List<MyTlogList> myTlogLists;
+    private List<Attraction> attraction;
     private int totalPages;
     private int startPage;
     private int endPage;
 
-    public MyTlogPage(int total, int currentPage, int size, List<MyTlogList> myTlogList) {
+    public AttractionPage(int total, int currentPage, int size, List<Attraction> attraction) {
         this.total = total;
         this.currentPage = currentPage;
-        this.myTlogLists = myTlogList;
+        this.attraction = attraction;
         if(total == 0) {
             totalPages = 0;
             startPage = 0;
@@ -42,4 +42,5 @@ public class MyTlogPage {
     public boolean hasContents() {
         return total > 0;
     }
+
 }

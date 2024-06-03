@@ -15,7 +15,6 @@
 }
 
 .line-container-end{
-    margin-top: 20px;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
@@ -55,7 +54,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 100%;
+    width: 92.3%;
 }
 
 .nickname {
@@ -68,7 +67,7 @@
 }
 
 .date {
-    font-size: 22px;
+    font-size: 16px;
     color: #6E6E6E;
     max-height: 1.5em;
     white-space: nowrap;
@@ -84,4 +83,43 @@
 
 .form-control {
     width: 200px
+}
+
+.hr-margin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+/*페이지네이션*/
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    margin-top: 16px;
+    margin-bottom: 0px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #0090F9;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }

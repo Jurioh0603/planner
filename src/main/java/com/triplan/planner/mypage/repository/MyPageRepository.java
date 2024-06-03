@@ -16,12 +16,15 @@ public interface MyPageRepository {
 
     public List<MyTlogList> myFavList(String memberId, int startRow, int size);
 
-    public int getCount();
+    public int tlogCount(String memberId);
 
     public int favCount(String memberId);
 
-    public List<MyTlogList> myTlogList(String memberId, int i, int size);
+    public List<MyTlogList> myTlogList(String memberId, int startRow, int size);
 
     public List<MyCommunityList> myComList(String memberId, int startRow, int size);
 
+    public int communityCount(String memberId);
+
+    public void memberLeave(String memberId);
 }

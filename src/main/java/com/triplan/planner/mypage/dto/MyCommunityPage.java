@@ -8,16 +8,15 @@ import java.util.List;
 public class MyCommunityPage {
     private int total;
     private int currentPage;
-    private List<MyCommunityList> myCommunityList;
+    private List<MyCommunityList> myCommunityLists;
     private int totalPages;
     private int startPage;
     private int endPage;
-    private int myTotal;
 
-    public MyCommunityPage(int total, int currentPage, int size, List<MyCommunityList> myCommunityList) {
+    public MyCommunityPage(int total, int currentPage, int size, List<MyCommunityList> myCommunityLists) {
         this.total = total;
         this.currentPage = currentPage;
-        this.myCommunityList = myCommunityList;
+        this.myCommunityLists = myCommunityLists;
         if(total == 0) {
             totalPages = 0;
             startPage = 0;

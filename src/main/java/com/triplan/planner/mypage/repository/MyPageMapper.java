@@ -17,7 +17,7 @@ public interface MyPageMapper {
                                       @Param("startRow") int startRow,
                                       @Param("size") int size);
 
-    public int getCount();
+    public int tlogCount(String memberId);
 
     public int favCount(String memberId);
 
@@ -28,4 +28,8 @@ public interface MyPageMapper {
     public List<MyCommunityList> myComList(@Param("memberId") String memberId,
                                            @Param("startRow") int startRow,
                                            @Param("size") int size);
+
+    public int communityCount(String memberId);
+
+    public void memberLeave(String memberId);
 }
