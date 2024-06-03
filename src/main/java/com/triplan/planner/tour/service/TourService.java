@@ -11,9 +11,9 @@ public interface TourService {
 
     public void saveTour(String contentId)throws URISyntaxException, JsonProcessingException;
 
-    public List<Attraction> tourList(List<String> areaCode, int page);
+    public List<Attraction> tourList(List<String> areaCode, int page, String search);
 
-    public int attractionCount(List<String> areaCode);
+    public int attractionCount(List<String> areaCode, String search);
 
     public AttractionDetail getTourDetail(int placeNo);
 }

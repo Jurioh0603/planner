@@ -6,9 +6,9 @@ import com.triplan.planner.tour.dto.AttractionDetail;
 import java.util.List;
 
 public interface TourRepository {
-    public List<Attraction> tourList(List<String> areaCode, int startRow, int size);
+    public List<Attraction> tourList(List<String> areaCode, int startRow, int size, String search);
 
-    public int attractionCount(List<String> areaCode);
+    public int attractionCount(List<String> areaCode, String search);
 
     public AttractionDetail getTourDetail(int placeNo);
 }

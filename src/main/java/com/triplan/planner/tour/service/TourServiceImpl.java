@@ -27,14 +27,14 @@ public class TourServiceImpl implements TourService{
     }
 
     @Override
-    public List<Attraction> tourList(List<String> areaCode, int page) {
+    public List<Attraction> tourList(List<String> areaCode, int page, String search) {
         int size = 6;
-        return tourRepository.tourList(areaCode,(page - 1) * size, size);
+        return tourRepository.tourList(areaCode,(page - 1) * size, size, search);
     }
 
     @Override
-    public int attractionCount(List<String> areaCode) {
-        return tourRepository.attractionCount(areaCode);
+    public int attractionCount(List<String> areaCode, String search) {
+        return tourRepository.attractionCount(areaCode, search);
     }
 
     @Override
