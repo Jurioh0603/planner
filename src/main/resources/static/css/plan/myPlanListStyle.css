@@ -21,6 +21,7 @@
 
 #addPlanBtn:hover {
     background-color: #DCDCDC;
+    color: black;
 }
 
 #addPlanBtn > div, .planListContainer > div {
@@ -70,8 +71,12 @@ input.deleteBtn {
     border: none;
 }
 
-a {
+.link {
     text-decoration: none;
+    color: black;
+}
+
+.link:hover {
     color: black;
 }
 

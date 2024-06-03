@@ -68,12 +68,12 @@
     align-items: center;
 }
 
-li {
+.liItem {
     margin: 20px 30px;
     padding: 20px;
 }
 
-ul {
+.ulItem {
     padding-right: 32px;
 }
 

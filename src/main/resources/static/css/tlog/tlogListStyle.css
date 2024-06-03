@@ -70,7 +70,7 @@ div > img {
     text-overflow: ellipsis;
 }
 
-a {
+.link {
     text-decoration: none;
     color: black;
 }
