@@ -106,15 +106,21 @@ public class TlogController {
         return "tlog/tlogDetail";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam("no") long tlogNo) {
         tlogService.delete(tlogNo);
         return "redirect:/tlog/list";
     }
 
     @GetMapping("/modify")
-    public String modify(@RequestParam("no") long tlogNo, Model model) {
+    public String modify(@RequestParam("no") long tlogNo, Model model, HttpSession session) {
         TlogModifyForm tlogModifyForm = tlogService.getTlogModifyInfo(tlogNo);
+
+        UserDto loginInfo = (UserDto) session.getAttribute("loginMemberInfo");
+        //로그인하지 않았거나 작성자가 아닌 경우 수정 불가 -> 에러 페이지 이동
+        if(loginInfo == null || !loginInfo.getMemberId().equals(tlogModifyForm.getMemberId())) {
+            return "redirect:/error/forbidden";
+        }
 
         model.addAttribute("tlogModifyForm", tlogModifyForm);
         model.addAttribute("no", tlogNo);

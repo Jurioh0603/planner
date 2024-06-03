@@ -112,6 +112,7 @@ public class TlogServiceImpl implements TlogService {
         imageList = imageList.substring(0, imageList.length() - 2);
         tlogModifyForm.setImageList(imageList);
         tlogModifyForm.setScheduleNo(tlogInfo.getTlog().getScheduleNo());
+        tlogModifyForm.setMemberId(tlogInfo.getTlog().getMemberId());
         return tlogModifyForm;
     }
 }

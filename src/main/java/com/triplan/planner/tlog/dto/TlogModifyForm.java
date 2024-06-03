@@ -10,4 +10,5 @@ public class TlogModifyForm {
     private String imageList;
     private String scheduleTitle;
     private long scheduleNo;
+    private String memberId;
 }
