@@ -80,7 +80,7 @@
         LIMIT #{startRow}, #{size}
     </select>
     <select id="myComList" parameterType="map" resultType="com.triplan.planner.mypage.dto.MyCommunityList">
-        SELECT ALL_POSTS.*, A.NICKNAME
+        SELECT ALL_POSTS.*, A.NICKNAME, A.M_COPY_IMG
         FROM (
         SELECT A.*, 'CB' AS COMMUNITY_TYPE FROM CB_COMMUNITY A WHERE A.MEMBER_ID = #{memberId}
         UNION ALL

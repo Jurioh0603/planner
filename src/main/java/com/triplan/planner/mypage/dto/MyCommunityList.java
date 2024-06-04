@@ -18,6 +18,7 @@ public class MyCommunityList {
     private String memberId;
     private String nickName;
     private String communityType;
+    private String mCopyImg;
 
     public String getDateFormat(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");

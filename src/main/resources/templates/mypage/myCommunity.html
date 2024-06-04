@@ -35,24 +35,30 @@
                 <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
             </block>
             <th:block th:each="myCommunity: ${myCommunityPage.myCommunityLists}">
-                <a th:href="|@{/community/detail(local=${myCommunity.communityType}, no=${myCommunity.bNo})}|">
-                    <div class="line-container-end">
-                        <div class="title">[[${myCommunity.title}]]</div>
-                        <div th:if="${myCommunity.communityType} == 'S'">서울게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'GG'">경기게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'JN'">전남게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'JJ'">제주게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'JB'">전북게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'GW'">강원게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'GN'">경남게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'CN'">충남게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'CB'">충북게시판</div>
-                        <div th:if="${myCommunity.communityType} == 'GB'">경북게시판</div>
-                    </div>
-                    <div class="nickname">[[${myCommunity.nickName}]]님</div>
-                    <div class="date">[[${myCommunity.getDateFormat}]]</div>
-                    <hr class="hr-margin"/>
-                </a>
+                <div class="gray-hover text-padding">
+                    <a th:href="|@{/community/detail(local=${myCommunity.communityType}, no=${myCommunity.bNo})}|" class="text-decoration">
+                        <div class="line-container-start">
+                            <div class="title" style="align-items: flex-start;">[[${myCommunity.title}]]</div>
+                            <div th:if="${myCommunity.communityType} == 'S'">서울게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GG'">경기게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JN'">전남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JJ'">제주게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JB'">전북게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GW'">강원게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GN'">경남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'CN'">충남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'CB'">충북게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GB'">경북게시판</div>
+                        </div>
+                        <div class="line-container-s">
+                            <img th:src="|/mypage/images/${myCommunity.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myCommunity.mCopyImg != ''}">
+                            <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myCommunity.mCopyImg == ''}">
+                            <div class="nickname">[[${myCommunity.nickName}]]님</div>
+                        </div>
+                        <div class="date">[[${myCommunity.getDateFormat}]]</div>
+                    </a>
+                </div>
+                <hr class="hr-margin"/>
             </th:block>
         </div>
         <!-- 페이지네이션 -->
