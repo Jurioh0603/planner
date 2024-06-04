@@ -124,7 +124,7 @@ public class MyPageController {
     public String memberLeave(HttpSession session) {
         String memberId = (String) session.getAttribute("memberId");
         myPageService.memberLeave(memberId);
-        return "redirect:/index";
+        return "redirect:/user/logout";
     }
 
     // Get매핑 시도시 에러 페이지로 리다이렉트

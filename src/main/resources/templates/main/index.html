@@ -187,8 +187,8 @@
             <em class="tag">여행지추천 ♥</em>
             <div class="recommand-title">
                 <h2>
-                    <a th:href="@{/}">
-                        이달의 추천 명소 <img src="/images/arrow.png">
+                    <a th:href="@{/tour/list}">
+                        지역 관광 정보 <img src="/images/arrow.png">
                     </a>
                 </h2>
                 <p style="margin-top: 15px;">
@@ -199,21 +199,21 @@
 
             <div class="recommand-wrap">
                 <div class="place-wrap">
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GG)}'|">
                         <img src="/images/거제도.jpg" alt="관광지1">
-                        <div class="place-caption">거제도</div>
+                        <div class="place-caption">경기</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GN)}'|">
                         <img src="/images/경주.jpg" alt="관광지2">
-                        <div class="place-caption">경주</div>
+                        <div class="place-caption">경남</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GW)}'|">
                         <img src="/images/여수.jpg" alt="관광지3">
-                        <div class="place-caption">여수</div>
+                        <div class="place-caption">강원</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=CN)}'|">
                         <img src="/images/전주.jpg" alt="관광지4">
-                        <div class="place-caption">전주</div>
+                        <div class="place-caption">충남</div>
                     </div>
                 </div>
             </div>
