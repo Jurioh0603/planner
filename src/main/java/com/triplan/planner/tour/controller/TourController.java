@@ -87,7 +87,6 @@ public class TourController {
         area.put("JB", Arrays.asList(jb));
         area.put("JJ", Arrays.asList(jj));
         List<String> areaCode = area.get(local);
-        System.out.println(areaCode);
 
         List<Attraction> attractions = tourService.tourList(areaCode, Integer.parseInt(page), search);
         // 페이지네이션
@@ -95,7 +94,10 @@ public class TourController {
         int size = 6;
         System.out.println("page="+page);
         AttractionPage attractionPage = new AttractionPage(total, Integer.parseInt(page), size, attractions);
+        System.out.println("areaCode="+areaCode);
         model.addAttribute("attractionPage", attractionPage);
+        System.out.println("local="+local);
+        model.addAttribute("local", local);
         return "/tour/tourList";
     }
 

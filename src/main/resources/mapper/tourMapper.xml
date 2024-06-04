@@ -13,7 +13,7 @@
         <foreach collection="areaCode" item="areaCode" open="(" close=")" separator=",">
             #{areaCode}
         </foreach>
-        AND PLACE_NAME LIKE CONCAT('%', #{search}, '%') OR PLACE_INTRO LIKE CONCAT('%', #{search}, '%')
+        AND (PLACE_NAME LIKE CONCAT('%', #{search}, '%') OR PLACE_INTRO LIKE CONCAT('%', #{search}, '%'))
         LIMIT #{startRow}, #{size}
     </select>
     <select id="attractionCount" parameterType="list" resultType="int">
