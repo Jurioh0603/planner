@@ -43,7 +43,12 @@ p {
 }
 
 .title {
-    width: 500px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 470px;
 }
 
 .title:hover {
@@ -52,6 +57,7 @@ p {
 }
 
 .writer {
+    margin-left: 60px;
     width: 200px;
 }
 
