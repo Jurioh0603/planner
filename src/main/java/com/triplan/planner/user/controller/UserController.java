@@ -3,6 +3,7 @@ package com.triplan.planner.user.controller;
 import com.triplan.planner.user.common.ReturnUtil;
 import com.triplan.planner.user.dto.UserDto;
 import com.triplan.planner.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,17 +49,24 @@ public class UserController {
     
     //공통 로그인 페이지 이동
 	@GetMapping("/login")
-	public String login(Model model, @RequestParam(defaultValue = "/index") String redirectURL) {
+	public String login(Model model, HttpServletRequest request, HttpSession session) {
     	log.info("Controller @GetMapping( /user/login ) 로그인 화면이동 >>>>>>>>>>>>>>> ");
     	model.addAttribute("kakaoCallbackUri", kakaoCallbackUri);
     	model.addAttribute("kakaoJavascriptKey", kakaoJavascriptKey);
-		model.addAttribute("redirectURL", redirectURL);
+
+		if(session.getAttribute("interceptorRedirectURL") == null) {
+			// 이전 페이지로 이동하기 위한 세션 값 redirectURL 저장
+			String requestURI = request.getHeader("Referer");
+			System.out.println(requestURI);
+			session.setAttribute("redirectURL", requestURI);
+		}
+
     	return "user/login";
 	}
 	
     //일반회원 로그인 처리
 	@PostMapping("/login")
-	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session, @RequestParam(defaultValue = "/index") String redirectURL) {
+	public void selectLogin(UserDto userDto, HttpServletResponse response, HttpSession session) {
 
 		UserDto loginInfo = userService.selectLogin(userDto);
 
@@ -70,6 +77,18 @@ public class UserController {
 			}else {
 				// 회원정보 세션담기
 				session.setAttribute("loginMemberInfo", loginInfo);
+
+				// 이전 페이지로 이동하기 위한 세션 값 redirectURL 가져오기
+				String redirectURL = (String) session.getAttribute("interceptorRedirectURL");
+				if(redirectURL != null) {
+					session.removeAttribute("interceptorRedirectURL");
+				} else {
+					redirectURL = (String) session.getAttribute("redirectURL");
+					if(redirectURL == null || redirectURL.contains("user"))
+						redirectURL = "/index";
+					session.removeAttribute("redirectURL");
+				}
+
 				ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", redirectURL);
 			}
 		}else {
