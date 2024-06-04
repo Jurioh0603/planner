@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/user/login.css}" rel="stylesheet" />
-    <title>login</title>
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
 </head>
 <body>
 <div class="login-wrapper">
@@ -25,7 +26,7 @@
                 <img height="48px;" alt="네이버로그인" src="/images/naver_login.png" onclick="javascript:loginWithNaver();">
             </div>
         </div>
-        <a class="snssimple" href="/user/passwordFind"> 비밀번호를 잊으셨나요?</a>
+        <p class="snssimple" ><a style="text-decoration: none; color:#BDBDBD;" href="/user/passwordFind"> 비밀번호를 잊으셨나요?</a></p>
         <input type="hidden" name="redirectURL" th:value="${redirectURL}"/>
     </form>
 </div>

@@ -99,15 +99,26 @@ public class NaverController {
 		
 	    // 분기
 		UserDto userDto = new UserDto();
-        
-        // 일치하는 snsId 없을 시 회원가입 처리
-        System.out.println(userService.selectSnsUser(snsId, SNS_TYPE));
 
-        if (userService.selectSnsUser(snsId, SNS_TYPE) == null) {
-            
-        	log.info(" ■■■naver■■■ 네이버로 회원가입 START");
+		// 회원정보 조회
+		UserDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
+		if (memberInfo != null) {
 
-        	userDto.setMemberId(email);
+			if ("2222".equals(memberInfo.getGrade()) || "3333".equals(memberInfo.getGrade()) ){
+				ReturnUtil.setReturnMessage(response, "로그인을 할 수 없습니다. ", "권한이 없습니다.", "error", "/user/login");
+			}else{
+				// 회원정보 조회
+				UserDto loginInfo = userService.selectSnsUser(snsId, SNS_TYPE);
+				// 회원정보 세션담기
+				session.setAttribute("loginMemberInfo", loginInfo);
+				// 로그아웃 처리 시, 사용할 토큰 값
+				session.setAttribute("naverToken", accessToken);
+				log.info(" ■■■naver■■■ naverToken : "+accessToken);
+				ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/index");
+			}
+		}else {
+			log.info(" ■■■naver■■■ 네이버로 회원가입 START");
+			userDto.setMemberId(email);
 			userDto.setPassword(userpw);
 			userDto.setName(userName);
 			userDto.setNickname(nickName);
@@ -117,21 +128,16 @@ public class NaverController {
 			userDto.setTel(mobile);
 			userDto.setSnsType(SNS_TYPE);
 
-            log.info(" ■■■naver■■■ insert 전 memberVo의 값 == > "+userDto.toString());
-            
-            userService.insertMember(userDto);
-        }
-        // 일치하는 snsId가 있으면 맴버 객체를 세션에 저장
-        UserDto memberInfo = userService.selectSnsUser(snsId, SNS_TYPE);
-        // 회원정보 세션담기
-		session.setAttribute("loginMemberInfo", memberInfo);
-		// 로그아웃 처리 시, 사용할 토큰 값
-		session.setAttribute("naverToken", accessToken);
-		log.info(" ■■■naver■■■ naverToken : "+accessToken);
-		
-		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/index");
-        
-    }
-	
-	
+			log.info(" ■■■naver■■■ insert 전 memberVo의 값 == > " + userDto.toString());
+			userService.insertMember(userDto);
+			// 회원정보 조회
+			UserDto loginInfo = userService.selectSnsUser(snsId, SNS_TYPE);
+			// 회원정보 세션담기
+			session.setAttribute("loginMemberInfo", loginInfo);
+			// 로그아웃 처리 시, 사용할 토큰 값
+			session.setAttribute("naverToken", accessToken);
+			log.info(" ■■■naver■■■ naverToken : "+accessToken);
+			ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "네이버회원 입니다.", "success", "/index");
+		}
+	}
 }
