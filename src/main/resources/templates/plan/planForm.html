@@ -154,7 +154,7 @@
 <body>
 <div id="contents">
     <div id="headerBar">
-        <div>
+        <div id="titleNDay">
             <div id="planTitle">
                 <h2 class="mt-3 mb-3" id="title" th:text="${scheduleList.schedule.scheduleTitle}" th:attr="data-title=${scheduleList.schedule.scheduleTitle}">나의 여행 스케줄</h2>
             </div>
@@ -380,9 +380,9 @@
             </div>
             <div class="modal-body">
                 <label for="editName" class="form-label"><strong>장소 이름</strong></label>
-                <input type="text" class="form-control" id="editName" name="editName"/>
+                <input type="text" class="form-control" id="editName" name="editName" onKeyUp="javascript:fnChkByte(this,'100')"/>
                 <label for="editMemo" class="form-label mt-2"><strong>메모</strong></label>
-                <input type="text" class="form-control" id="editMemo" name="editMemo"/>
+                <input type="text" class="form-control" id="editMemo" name="editMemo" onKeyUp="javascript:fnChkByte(this,'300')"/>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -460,6 +460,36 @@
         const modal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
         modal.hide();
     });
+
+    function fnChkByte(obj, maxByte) {
+        var str = obj.value;
+        var str_len = str.length;
+
+        var rbyte = 0;
+        var rlen = 0;
+        var one_char = "";
+        var str2 = "";
+
+        for(var i = 0; i < str_len; i++) {
+            one_char = str.charAt(i);
+            if (escape(one_char).length > 4) {
+                rbyte += 3;
+            } else {
+                rbyte++;
+            }
+
+            if(rbyte <= maxByte) {
+                rlen = i + 1;
+            }
+        }
+
+        if(rbyte > maxByte) {
+            alert("최대 " + maxByte + "byte를 초과할 수 없습니다.")
+            str2 = str.substr(0, rlen);
+            obj.value = str2;
+            return;
+        }
+    }
 </script>
 
 </body>

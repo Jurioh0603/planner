@@ -91,15 +91,19 @@
                 var placeName = prompt("장소 이름").trim();
                 if(placeName == '') {
                     alert('이름을 입력해주세요.');
+                } else if(!isValidByteLength(placeName, 100)) {
+                    alert('이름은 최대 100byte를 초과할 수 없습니다. 다시 입력해주세요.')
                 }
-            } while (placeName == '');
+            } while (placeName == '' || !isValidByteLength(placeName, 100));
 
             do {
                 var memo = prompt("장소 메모").trim();
                 if(memo == '') {
                     alert('메모를 입력해주세요.');
+                } else if(!isValidByteLength(memo, 300)) {
+                    alert('메모는 최대 300byte를 초과할 수 없습니다. 다시 입력해주세요.')
                 }
-            } while (memo == '');
+            } while (memo == '' || !isValidByteLength(memo, 300));
 
             sendSchedule(day, placeName, lat, lng, memo);
         });
@@ -110,6 +114,27 @@
 
             // 팝업 창 닫기
             window.close();
+        }
+
+        function isValidByteLength(str, maxByte) {
+            var str_len = str.length;
+            var rbyte = 0;
+            var one_char = "";
+
+            for (var i = 0; i < str_len; i++) {
+                one_char = str.charAt(i);
+                if (escape(one_char).length > 4) {
+                    rbyte += 3;
+                } else {
+                    rbyte++;
+                }
+
+                if (rbyte > maxByte) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     </script>
 
