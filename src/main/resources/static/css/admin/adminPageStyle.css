@@ -534,7 +534,9 @@ nav[aria-label="Page navigation example"] {
 	#content main .table-data .order table {
 		min-width: 420px;
 	}
+}
 
-
-
+.active>.page-link, .page-link.active{
+        background-color: #3CB371;
+        border-color: #3CB371;
 }
