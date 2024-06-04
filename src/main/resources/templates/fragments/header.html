@@ -10,7 +10,7 @@
     <style>
         body, .navbar-nav, .navbar-brand, .nav-link {
             font-family: 'Noto Sans KR', sans-serif !important;
-            font-size: 19px;
+            font-size: 19px !important;
         }
         .navbar {
             background-color: #EFEFEF !important;
@@ -24,11 +24,11 @@
 <th:block th:fragment="headerFragment">
     <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
         <div class="container px-5">
-            <a class="navbar-brand" href="/index"><img th:src="@{/images/여정1.png}" style="height: 80px; width: auto;"></a>
+            <a class="navbar-brand" href="/index"><img th:src="@{/images/여정4.png}" style="height: 60px; width: auto;"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: 19px;">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <!-- 모든 사용자가 보이는 메뉴 -->
                     <li class="nav-item me-3"><a class="nav-link" href="/community/list">지역게시판</a></li>
