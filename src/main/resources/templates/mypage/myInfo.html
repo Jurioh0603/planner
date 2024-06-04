@@ -52,8 +52,12 @@
                     <tr th:if="${profile.snsType != 'K' and profile.snsType != 'N'}" class="border-bottom">
                         <td class="t-padding-l">비밀번호 확인</td>
                         <td class="t-padding"><input type="password" id="password2" name="password2"/></td>
-                        <div id="error-message" class="error-message">비밀번호가 일치하지 않습니다.</div>
-                        <p id="errorMessage" style="display: none; color: red;">비밀번호는 필수 입력 항목입니다.</p>
+                        <div id="error-message" class="error-message"></div>
+                    </tr>
+                    <tr>
+                        <td class="t-padding-l">
+                            <a href="/mypage/leave" id="leaveForm" class="list-text-exit" onclick="confirmLeave()">회원탈퇴하기</a>
+                        </td>
                     </tr>
                 </tbody>
             </table>

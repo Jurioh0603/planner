@@ -7,4 +7,26 @@
         INSERT INTO ATTRACTION(PLACE_NAME, PLACE_ADDRESS, PLACE_AREACODE, PLACE_TEL, PLACE_PAGE, PLACE_INTRO, PLACE_IMG)
         VALUES (#{title}, #{addr1}, #{areacode}, #{tel}, #{homepage}, #{overview}, #{firstimage})
     </insert>
+    <select id="tourList" parameterType="map" resultType="com.triplan.planner.tour.dto.Attraction">
+        SELECT * FROM ATTRACTION
+        WHERE PLACE_AREACODE IN
+        <foreach collection="areaCode" item="areaCode" open="(" close=")" separator=",">
+            #{areaCode}
+        </foreach>
+        AND PLACE_NAME LIKE CONCAT('%', #{search}, '%') OR PLACE_INTRO LIKE CONCAT('%', #{search}, '%')
+        LIMIT #{startRow}, #{size}
+    </select>
+    <select id="attractionCount" parameterType="list" resultType="int">
+        SELECT COUNT(*)
+        FROM ATTRACTION
+        WHERE PLACE_AREACODE IN
+        <foreach collection="areaCode" item="areaCode" open="(" close=")" separator=",">
+            #{areaCode}
+        </foreach>
+        AND PLACE_NAME LIKE CONCAT('%', #{search}, '%') OR PLACE_INTRO LIKE CONCAT('%', #{search}, '%')
+    </select>
+    <select id="getTourDetail" parameterType="int" resultType="com.triplan.planner.tour.dto.AttractionDetail">
+        SELECT * FROM ATTRACTION
+        WHERE PLACE_NO = #{placeNo}
+    </select>
 </mapper>

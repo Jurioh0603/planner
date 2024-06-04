@@ -23,9 +23,12 @@
         <h2 class="text-h2">나의 여행기</h2>
         <hr class="border-height-2"/>
         <div>
-            <div>총[[${myTlogPage.myTotal}]]건</div>
+            <div>총[[${myTlogPage.total}]]건</div>
             <hr class="hr-margin"/>
             <br/>
+            <block th:if="${myTlogPage.hasNoContents()}">
+                <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+            </block>
         </div>
 
         <div class="album bg-body-tertiary mt-3">

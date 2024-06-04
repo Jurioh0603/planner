@@ -22,23 +22,48 @@
         </div>
         <div class="line-container">
             <h2 class="text-h2">내가 쓴 글</h2>
-            <form action="#" method="get" class="justify-content-end">
-                <input type="hidden" name="local" th:value="${local}"/>
-                <div class="line-container-end">
-                    <input class="form-control me-2" type="search" name="search" placeholder="검색" aria-label="Search">
-                    <button class="btn btn-outline-primary" type="submit">검색</button>
-                </div>
-            </form>
         </div>
         <hr class="border-height-2"/>
         <div>
-            <div>총n건</div>
+            <div>총[[${myCommunityPage.total}]]건</div>
             <hr class="hr-margin"/>
-            <div class="title">dd</div>
-            <div class="nickname">zz님</div>
-            <div class="date">1212-12-12</div>
-            <br/>
+            <block th:if="${myCommunityPage.hasNoContents()}">
+                <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+            </block>
+            <th:block th:each="myCommunity: ${myCommunityPage.myCommunityLists}">
+                <a th:href="|@{/community/detail(local=${myCommunity.communityType}, no=${myCommunity.bNo})}|">
+                    <div class="line-container-end">
+                        <div class="title">[[${myCommunity.title}]]</div>
+                        <div th:if="${myCommunity.communityType} == 'S'">서울게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'GG'">경기게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'JN'">전남게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'JJ'">제주게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'JB'">전북게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'GW'">강원게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'GN'">경남게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'CN'">충남게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'CB'">충북게시판</div>
+                        <div th:if="${myCommunity.communityType} == 'GB'">경북게시판</div>
+                    </div>
+                    <div class="nickname">[[${myCommunity.nickName}]]님</div>
+                    <div class="date">[[${myCommunity.getDateFormat}]]</div>
+                    <hr class="hr-margin"/>
+                </a>
+            </th:block>
         </div>
+        <!-- 페이지네이션 -->
+        <block th:if="${myCommunityPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${myCommunityPage.startPage > 5}" th:href="@{/mypage/myCommunity(page=${myCommunityPage.startPage - 5})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(myCommunityPage.startPage, myCommunityPage.endPage)}">
+                        <a th:if="${page == myCommunityPage.currentPage}" th:href="@{/mypage/myCommunity(page=${page})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != myCommunityPage.currentPage}" th:href="@{/mypage/myCommunity(page=${page})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${myCommunityPage.endPage < myCommunityPage.totalPages}" th:href="@{/mypage/myCommunity(page=${myCommunityPage.startPage + 5})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
     </div>
 </body>
 </html>
