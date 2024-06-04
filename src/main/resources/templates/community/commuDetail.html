@@ -40,12 +40,12 @@
     <hr/>
     <div class="doContainer">
         <div>
-            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local})}'|" style="border-color: black;">목록</button>
+            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local})}'|" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
         </div>
         <th:block th:if="${session.loginMemberInfo != null}">
             <div class="buttonContainer" th:if="${communityDetail.community.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
-                <button class="btn btn-sm btn-primary me-2" type="button" id="modifyBtn" th:onclick="|location.href='@{/community/modify(local=${local}, no=${communityDetail.community.bno})}'|">수정</button>
-                <button class="btn btn-sm btn-primary" type="button" id="deleteBtn">삭제</button>
+                <button class="btn btn-sm btn-primary me-2" type="button" id="modifyBtn" th:onclick="|location.href='@{/community/modify(local=${local}, no=${communityDetail.community.bno})}'|" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
+                <button class="btn btn-sm btn-primary" type="button" id="deleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
             </div>
         </th:block>
     </div>
@@ -67,10 +67,10 @@
 
         <div class="buttonContainer mt-1">
             <th:block th:if="${session.loginMemberInfo != null}">
-                <button class="btn btn-sm btn-primary" type="submit">댓글 쓰기</button>
+                <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371">댓글 쓰기</button>
             </th:block>
             <th:block th:if="${session.loginMemberInfo == null}">
-                <button class="btn btn-sm btn-primary" type="submit" disabled>댓글 쓰기</button>
+                <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371" disabled>댓글 쓰기</button>
             </th:block>
         </div>
     </form>
@@ -105,10 +105,10 @@
 
                 <div class="buttonContainer mt-1">
                     <th:block th:if="${session.loginMemberInfo != null}">
-                        <button class="btn btn-sm btn-primary" type="submit">댓글 쓰기</button>
+                        <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371">댓글 쓰기</button>
                     </th:block>
                     <th:block th:if="${session.loginMemberInfo == null}">
-                        <button class="btn btn-sm btn-primary" type="submit" disabled>댓글 쓰기</button>
+                        <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371" disabled>댓글 쓰기</button>
                     </th:block>
                 </div>
             </form>
@@ -123,7 +123,7 @@
                 <input type="hidden" name="local" th:value="${local}"/>
 
                 <div class="buttonContainer mt-1">
-                    <button class="btn btn-sm btn-primary" type="submit">수정</button>
+                    <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
                 </div>
             </form>
         </div>
@@ -146,8 +146,8 @@
                 <form action="/community/delete" method="post">
                     <input type="hidden" name="local" th:value="${local}"/>
                     <input type="hidden" name="no" th:value="${communityDetail.community.bno}"/>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="submit" class="btn btn-primary" id="confirmDeleteBtn">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                    <button type="submit" class="btn btn-primary" id="confirmDeleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
                 </form>
             </div>
         </div>
@@ -170,8 +170,8 @@
                     <input type="hidden" name="local" th:value="${local}"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="submit" class="btn btn-primary" id="confirmDeleteReplyBtn">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                    <button type="submit" class="btn btn-primary" id="confirmDeleteReplyBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
                 </div>
             </form>
         </div>
