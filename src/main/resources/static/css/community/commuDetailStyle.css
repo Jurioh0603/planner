@@ -51,11 +51,19 @@
     padding: 10px 20px;
 }
 
-.contentContainer {
+.contentContainer, .rcontentContainer {
     white-space: pre-wrap;
 }
 
 .replyBtn:hover {
     cursor: pointer;
     color: #0D6EFD;
+}
+
+.nicknameNwritetime {
+    display: flex;
+}
+
+.replyWritetime {
+    margin-left: auto;
 }
