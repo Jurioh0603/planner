@@ -50,8 +50,13 @@ hr {
 
 .selectBtn {
     margin-left: auto;
+    width: 30px;
 }
 
 p:hover {
     cursor: pointer;
+}
+
+p {
+    width: 30px;
 }
