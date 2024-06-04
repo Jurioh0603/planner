@@ -10,49 +10,61 @@
             <when test="category == 'S_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM S_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GG_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GG_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GW_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GW_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JJ_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JJ_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'CB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CB_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'CN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM CN_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JB_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM JN_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GB_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
                 FROM GN_COMMUNITY
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'travel_log'">
                 SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID as memberId, WRITE_TIME as writeTime
                 FROM TLOG
+                ORDER BY bno DESC
             </when>
         </choose>
     </select>
+
 
     <!-- 페이징 및 검색 -->
     <select id="getPagedPostsByCategory" parameterType="map" resultType="com.triplan.planner.admin.domain.Board">
@@ -71,7 +83,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GG_COMMUNITY'">
@@ -88,7 +100,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GW_COMMUNITY'">
@@ -105,7 +117,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JJ_COMMUNITY'">
@@ -122,7 +134,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'CB_COMMUNITY'">
@@ -139,7 +151,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'CN_COMMUNITY'">
@@ -156,7 +168,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JB_COMMUNITY'">
@@ -173,7 +185,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'JN_COMMUNITY'">
@@ -190,7 +202,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GB_COMMUNITY'">
@@ -207,7 +219,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'GN_COMMUNITY'">
@@ -224,7 +236,7 @@
                         </otherwise>
                     </choose>
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
             <when test="category == 'travel_log'">
@@ -233,7 +245,7 @@
                 <if test="searchQuery != null and searchQuery != ''">
                     WHERE TLOG_TITLE LIKE CONCAT('%', #{searchQuery}, '%')
                 </if>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
                 LIMIT #{startRow}, #{size}
             </when>
         </choose>
@@ -448,7 +460,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GG_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -462,7 +474,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GW_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -476,7 +488,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JJ_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -490,7 +502,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'CB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -504,7 +516,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'CN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -518,7 +530,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -532,7 +544,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'JN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -546,7 +558,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GB_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -560,7 +572,7 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'GN_COMMUNITY'">
                 SELECT BNO, TITLE, MEMBER_ID, WRITE_TIME
@@ -574,13 +586,13 @@
                         ${searchType} LIKE CONCAT('%', #{searchQuery}, '%')
                     </otherwise>
                 </choose>
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
             <when test="category == 'travel_log'">
                 SELECT TLOG_NO as bno, TLOG_TITLE as title, MEMBER_ID, WRITE_TIME
                 FROM TLOG
                 WHERE TLOG_TITLE LIKE CONCAT('%', #{searchQuery}, '%')
-                ORDER BY WRITE_TIME DESC
+                ORDER BY BNO DESC
             </when>
         </choose>
     </select>

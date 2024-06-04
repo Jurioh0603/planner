@@ -35,7 +35,7 @@
 }
 
 #plan:hover {
-    background-color: #4094f2;
+    background-color: #3CB371;
     color: #fff;
 }
 
@@ -150,7 +150,7 @@
     margin: 0px 20px;
 }
 
-.region:hover {
+.region:hover, .tlog-btn:hover {
     transform: scale(1.05);
     cursor: pointer;
 }

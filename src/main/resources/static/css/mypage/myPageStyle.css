@@ -259,13 +259,22 @@ h2{
     margin-bottom: 10px;
 }
 
+.nickName-width {
+    font-size: 40px;
+}
+
+.wrap-text {
+    width: 250px; /* 원하는 너비로 설정 */
+    word-wrap: break-word; /* 또는 overflow-wrap: break-word; */
+}
+
 .modal .modal_popup .update_btn {
     display: block;
     padding: 10px 20px;
-    background-color: #FAAC58;
+    background-color: #3CB371;
     border: none;
     border-radius: 5px;
-    color: black;
+    color: white;
     cursor: pointer;
     transition: box-shadow 0.2s;
     margin-top: 70px;
