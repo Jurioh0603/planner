@@ -24,23 +24,40 @@ const success = (position) => {
   getWeather(latitude, longitude);
 }
 
-const fail = (error) => {
-  let errorMessage;
-  switch (error.code) {
-    case error.PERMISSION_DENIED:
-      errorMessage = "User denied the request for Geolocation.";
-      break;
-    case error.POSITION_UNAVAILABLE:
-      errorMessage = "Location information is unavailable.";
-      break;
-    case error.TIMEOUT:
-      errorMessage = "The request to get user location timed out.";
-      break;
-    case error.UNKNOWN_ERROR:
-      errorMessage = "An unknown error occurred.";
-      break;
-  }
-  alert(errorMessage);
+const fail = () => {
+  // 위치 정보를 받아오지 못할 경우 강남구의 날씨 정보를 검색
+  getWeatherByCityName('Gangnam-gu');
+}
+
+const getWeatherByCityName = (cityName) => {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric&lang=kr`
+  )
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+    return response.json();
+  })
+  .then((json) => {
+    const temperature = json.main.temp;
+    const place = json.name;
+    const description = json.weather[0].description;
+    const icon = json.weather[0].icon;
+    const iconURL = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+
+    tempSection.innerText = `${temperature} °C`;
+    placeSection.innerText = place;
+    descSection.innerText = description;
+    if (iconSection.tagName === 'IMG') {
+      iconSection.setAttribute('src', iconURL);
+    } else {
+      iconSection.style.backgroundImage = `url(${iconURL})`;
+    }
+  })
+  .catch((error) => {
+    alert(`Error: ${error.message}`);
+  });
 }
 
 const getWeather = (lat, lon) => {
