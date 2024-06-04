@@ -60,6 +60,7 @@
     -webkit-line-clamp: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    width: 260px;
 }
 
 .content {

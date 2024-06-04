@@ -29,7 +29,7 @@
 }
 /*상단 라인선*/
 .top-line{
-    background-color: #FAAC58;
+    background-color: #3CB371;
     width: 480px;
     height: 5px;
     margin-top: 10px;
@@ -73,7 +73,8 @@
     padding-bottom: 10px;
     padding-left: 17px;
     padding-right: 17px;
-    background-color: #FAAC58;
+    background-color: #3CB371;
+    color: white;
     font-size: 17px;
     border: none;
     border-radius: 5px;
