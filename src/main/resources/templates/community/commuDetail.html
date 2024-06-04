@@ -78,8 +78,11 @@
 
     <th:block th:each="reply, iterStat : ${communityDetail.replyList}">
         <div class="replyContainer mt-2" th:classappend="${(reply.rstep == 1) ? '' : 'ms-5'}">
-            <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
-            <div class="mb-2 contentContainer">[[${reply.rcontent}]]</div>
+            <div class="nicknameNwritetime">
+                <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
+                <div class="replyWritetime">[[${reply.getWriteTimeFormatted()}]]</div>
+            </div>
+            <div class="mb-2 rcontentContainer">[[${reply.rcontent}]]</div>
             <div class="replyBtns">
                 <div class="replyBtn" onclick="toggleReplyForm(this)">댓글 쓰기</div>
                 <th:block th:if="${session.loginMemberInfo != null}">
