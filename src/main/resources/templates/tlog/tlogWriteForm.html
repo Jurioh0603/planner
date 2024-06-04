@@ -91,8 +91,8 @@
             <input type="hidden" name="scheduleNo" id="scheduleNo"/>
 
             <div id="buttonContainer" class="mt-5">
-                <button class="btn btn-light me-3" type="button" onclick="history.back()" style="border-color: black;">취소</button>
-                <button class="btn btn-primary" type="button" id="saveBtn">저장</button>
+                <button class="btn btn-light me-3" type="button" th:onclick="|location.href='/tlog/list'|" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                <button class="btn btn-primary" type="button" id="saveBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">저장</button>
             </div>
         </form>
 

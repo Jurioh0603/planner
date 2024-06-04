@@ -20,7 +20,7 @@
     <div th:if="${attractionDetail.placeTel} != ''">Tel : [[${attractionDetail.placeTel}]]</div>
     <hr/>
     <div style="text-align: center; margin: 25px;">
-        <img th:if="${attractionDetail.placeImg} != ''" th:src="${attractionDetail.placeImg}">
+        <img th:if="${attractionDetail.placeImg} != ''" th:src="${attractionDetail.placeImg}" style="width: 800px;">
     </div>
     <div class="contentContainer">[[${attractionDetail.placeIntro}]]</div>
 

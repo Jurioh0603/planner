@@ -302,20 +302,20 @@
         </th:block>
 
         <div id="listButtonContainer" th:if="${session.loginMemberInfo == null}">
-            <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="border-color: black;">목록</button>
+            <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
         </div>
 
         <div id="buttonContainer" th:if="${session.loginMemberInfo != null}">
             <div id="buttonContainer-left" class="mt-5">
-                <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="border-color: black;">목록</button>
+                <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
                 <th:block th:if="${tlogInfo.tlog.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
-                    <button class="btn btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|">수정</button>
-                    <button class="btn btn-primary" type="button" id="deleteBtn">삭제</button>
+                    <button class="btn btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
+                    <button class="btn btn-primary" type="button" id="deleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
                 </th:block>
             </div>
 
             <div id="buttonContainer-right" class="mt-5">
-                <button class="btn btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}">일정담기</button>
+                <button class="btn btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}" style="background-color: #3CB371; border-color: #3CB371; color:white;">일정담기</button>
             </div>
         </div>
 
@@ -334,8 +334,8 @@
                 <div class="modal-footer">
                     <form action="/tlog/delete" method="post">
                         <input type="hidden" name="no" th:value="${tlogInfo.tlog.tlogNo}"/>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary" id="confirmDeleteBtn">삭제</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                        <button type="submit" class="btn btn-primary" id="confirmDeleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
                     </form>
                 </div>
             </div>

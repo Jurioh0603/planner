@@ -131,7 +131,7 @@
     <form action="/community/list" method="get" class="d-flex mt-3 mb-3 searchContainer">
         <input type="hidden" name="local" th:value="${local}"/>
         <input class="form-control me-2" type="search" name="search" th:value="${search}" placeholder="검색" aria-label="Search" style="width: 200px">
-        <button class="btn btn-outline-primary" type="submit">검색</button>
+        <button class="btn btn-outline-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371; color: white;">검색</button>
     </form>
 
     <block th:if="${communityPage.hasNoContents()}">
@@ -165,7 +165,7 @@
         </block>
 
         <div class="buttonContainer mt-3">
-            <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|">글쓰기</button>
+            <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|" style="background-color: #3CB371; border-color: #3CB371">글쓰기</button>
         </div>
     </div>
 

@@ -44,7 +44,6 @@ public class MyPageController {
         String memberId = userInfo.getMemberId();
         session.setAttribute("memberId", memberId);
         Profile profile = myPageService.getProfileList(memberId);
-        System.out.println(profile);
         model.addAttribute("profile", profile);
         return "/mypage/myPage";
     }
@@ -112,10 +111,9 @@ public class MyPageController {
             // 비밀번호 암호화 후 저장
             profile.setPassword(passwordEncoder.encode(password1.replaceAll(" ", "")));
 
-            System.out.println(profile);
             myPageService.updateInfo(profile);
             model.addAttribute(profile);
-            return "redirect:/mypage/myPage";
+            return "redirect:/user/logout";
         }
     }
 
@@ -154,6 +152,7 @@ public class MyPageController {
         // 즐겨찾기 총 갯수 가져오기
 
         MyTlogPage myFavPage = new MyTlogPage(total, Integer.parseInt(page), size, myFavList);
+        System.out.println(myFavPage);
         model.addAttribute("myFavPage", myFavPage);
         return "/mypage/myFav";
     }

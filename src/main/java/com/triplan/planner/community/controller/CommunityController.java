@@ -54,7 +54,7 @@ public class CommunityController {
     }
 
     @GetMapping("/write")
-    public String write(@RequestParam("local") String local, Model model) {
+    public String write(@RequestParam(defaultValue = "S") String local, Model model) {
         model.addAttribute("local", local);
         return "community/writeForm";
     }
