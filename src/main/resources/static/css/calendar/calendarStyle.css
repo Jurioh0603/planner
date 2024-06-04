@@ -1,3 +1,13 @@
+        :root{
+          --litepicker-button-prev-month-color-hover: #3CB371;
+          --litepicker-button-next-month-color-hover: #3CB371;
+          --litepicker-day-color-hover: #3CB371;
+          --litepicker-is-start-color-bg: #3CB371;
+          --litepicker-is-end-color-bg: #3CB371;
+          --litepicker-is-in-range-color: #a3e6c1;
+
+
+        }
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background-color: #f8f9fa;
