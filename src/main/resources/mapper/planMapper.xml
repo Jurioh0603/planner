@@ -20,7 +20,7 @@
         <![CDATA[
         SELECT *
         FROM SCHEDULE
-        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') > DATE_FORMAT(NOW(), '%y-%m-%d')
               AND MEMBER_ID=#{memberId}
         ORDER BY START_DAY ASC;
         ]]>
@@ -30,7 +30,7 @@
         <![CDATA[
         SELECT *
         FROM SCHEDULE
-        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') < DATE_FORMAT(NOW(), '%y-%m-%d')
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') <= DATE_FORMAT(NOW(), '%y-%m-%d')
               AND MEMBER_ID=#{memberId}
         ORDER BY START_DAY DESC;
         ]]>
@@ -50,7 +50,7 @@
         SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
         FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
         ON A.SCHEDULE_NO=B.SCHEDULE_NO
-        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') >= DATE_FORMAT(NOW(), '%y-%m-%d')
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') > DATE_FORMAT(NOW(), '%y-%m-%d')
               AND MEMBER_ID=#{memberId}
         ORDER BY START_DAY ASC;
         ]]>
@@ -61,7 +61,7 @@
         SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
         FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
         ON A.SCHEDULE_NO=B.SCHEDULE_NO
-        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') < DATE_FORMAT(NOW(), '%y-%m-%d')
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') <= DATE_FORMAT(NOW(), '%y-%m-%d')
               AND MEMBER_ID=#{memberId}
         ORDER BY START_DAY DESC;
         ]]>
