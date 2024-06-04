@@ -65,10 +65,14 @@ public class UserController {
 
         //회원정보가 있으면 로그인 처리
         if(loginInfo != null) {
-            // 회원정보 세션담기
-    		session.setAttribute("loginMemberInfo", loginInfo);
-    		ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", redirectURL);
-        }else {
+			if ("2222".equals(loginInfo.getGrade()) || "3333".equals(loginInfo.getGrade()) ) {
+				ReturnUtil.setReturnMessage(response, "로그인을 할 수 없습니다. ", "권한이 없습니다.", "error", "/user/login");
+			}else {
+				// 회원정보 세션담기
+				session.setAttribute("loginMemberInfo", loginInfo);
+				ReturnUtil.setReturnMessage(response, "로그인을 성공하였습니다.", "", "success", redirectURL);
+			}
+		}else {
     		ReturnUtil.setReturnMessage(response, "로그인을 실패하였습니다.", "", "error", "/user/login");
         }
 	}
