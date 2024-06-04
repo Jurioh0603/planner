@@ -30,6 +30,7 @@
 
 .color-gray {
     color-gray;
+
 }
 
 .border-height-2 {
@@ -120,7 +121,7 @@
 }
 
 .pagination a.active {
-    background-color: #0090F9;
+    background-color: #3CB371;
     color: white;
 }
 

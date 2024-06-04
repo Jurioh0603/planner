@@ -18,7 +18,25 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+
 }
+
+.text-decoration{
+    text-decoration-line: none;
+    color:black;
+}
+
+.gray-hover:hover{
+    background-color: #F2F2F2;
+    color: black;
+}
+
+.text-padding {
+    padding: 5px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
+
 
 .decoration {
     color: inherit;
@@ -51,7 +69,6 @@
     text-decoration: none;
     color: inherit;
     max-height: 1.5em;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 92.3%;
@@ -70,7 +87,6 @@
     font-size: 16px;
     color: #6E6E6E;
     max-height: 1.5em;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 85%;
@@ -116,10 +132,28 @@ a {
 }
 
 .pagination a.active {
-    background-color: #0090F9;
+    background-color: #3CB371;
     color: white;
 }
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+}
+
+.line-container-s{
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    text-align: center;
+    margin-right: 15px;
+    margin-bottom: 5px;
+
 }
