@@ -27,8 +27,8 @@
         ON A.TLOG_NO=B.TLOG_NO JOIN FAV C
         ON B.TLOG_NO=C.TLOG_NO JOIN (SELECT MEMBER_ID, NICKNAME, M_COPY_IMG
                                      FROM MEMBER) D
-        ON C.MEMBER_ID=D.MEMBER_ID
-        WHERE A.MEMBER_ID = #{memberId}
+        ON A.MEMBER_ID=D.MEMBER_ID
+        WHERE C.MEMBER_ID = #{memberId}
         ORDER BY C.FAV_DATE DESC
         LIMIT #{startRow}, #{size}
     </select>

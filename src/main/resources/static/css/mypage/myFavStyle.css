@@ -58,17 +58,16 @@
     color: #6E6E6E;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%;
+    width: 100%;
 }
 
 .m-text {
     font-size: 20px;
     color: #6E6E6E;
     max-height: 1.5em;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%;
+    width: 100%;
 }
 
 .l-text {
@@ -77,8 +76,10 @@
 
 
 .img-size {
-    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
     height: 200px;
+    object-fit: cover;
 }
 
 .text-decoration {
@@ -91,7 +92,7 @@
     max-height: 1.5em;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 85%;
+    width: 100%;
 }
 
 .title:hover {
