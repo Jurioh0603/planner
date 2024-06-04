@@ -15,58 +15,86 @@
 }
 
 .box-wrap {
-    width: 350px;
-    padding: 30px;
+    width: 220px;
+    height: 280px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     border: 2px solid #D6D6D6;
-    border-radius: 15px;
-    margin-bottom: 20px;
+    border-radius: 5px;
     text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-
+.box-wrap img{
+    width: 35px;
+}
 .box-wrap:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
-.tlog-wrap {
-    width: 200px;
-    height: 260px;
-    padding: 40px;
-    border: 2px solid #D6D6D6;
-    border-radius: 15px;
-    text-align: center;
-    margin-left: 20px;
-    margin-right: 20px;
+#plan:hover {
+    background-color: #4094f2;
+    color: #fff;
 }
 
-.tlog-wrap:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+#chat:hover {
+    background-color: #FAAC58;
+    color: #fff;
 }
 
 .weather-wrapper {
-    width: 400px;
-    height: 260px;
+    width: 500px;
+    height: 280px;
     padding: 40px 60px;
     border: 2px solid #D6D6D6;
-    border-radius: 15px;
+    border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-weight: 600;
+    margin-left: 20px;
 }
 
 #boxContainer {
     display: flex;
+    margin-bottom: 20px;
 }
 
 .weather-content {
     display: flex;
     justify-content: space-between;
+    width: 80%;
+}
+
+.tlog-btn {
+    background: #bdd5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+}
+
+.tlog-btn .link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
 }
+
+.tlog-btn .text {
+    margin-left: 40px;
+    font-size: 1.6em;
+    color: black; /* text-color 속성을 color로 변경 */
+}
+
+.tlog-btn .text strong {
+    font-weight: bold;
+}
+
 
 .left-side, .right-side {
     width: 100px;
@@ -111,7 +139,7 @@
     height: 400px;
     padding: 40px;
     border: 2px solid #D6D6D6;
-    border-radius: 15px;
+    border-radius: 5px;
     margin-bottom: 50px;
 }
 
