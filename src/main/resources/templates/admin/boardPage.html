@@ -27,7 +27,7 @@
 <section id="sidebar">
     <a th:href="@{/admin/memberPage}" class="brand">
         <i class='bx bxs-smile'></i>
-        <span class="text">AdminHub</span>
+        <span class="text" style="text-color: #3CB371;">AdminHub</span>
     </a>
     <ul class="side-menu top">
         <li>
@@ -125,7 +125,7 @@
                 </div>
 
                 <table>
-                    <thead>
+                    <thead >
                     <tr>
                         <th>글번호</th>
                         <th>제목</th>
@@ -139,7 +139,7 @@
                     </tbody>
                 </table>
                 <div style="display: flex; justify-content: flex-end;">
-                    <button type="button" class="btn btn-primary" style="margin-top: 20px;" onclick="boardDelete()">삭제</button>
+                    <button type="button" class="btn btn-primary" style="margin-top: 20px; background-color: #3CB371; border-color: #3CB371;" onclick="boardDelete() ">삭제</button>
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center" id="pagination">

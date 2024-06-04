@@ -69,7 +69,7 @@ body {
 	height: 56px;
 	display: flex;
 	align-items: center;
-	color: var(--blue);
+	color: #3CB371;
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -133,7 +133,7 @@ body {
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--blue);
+	color: #3CB371;
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
@@ -143,7 +143,7 @@ body {
 	color: var(--red);
 }
 #sidebar .side-menu.top li a:hover {
-	color: var(--blue);
+	color: #3CB371;
 }
 #sidebar .side-menu li a .bx {
 	min-width: calc(60px  - ((4px + 6px) * 2));
@@ -201,7 +201,7 @@ body {
 	transition: .3s ease;
 }
 #content nav .nav-link:hover {
-	color: var(--blue);
+	color: #3CB371;
 }
 #content nav form {
 	max-width: 400px;
@@ -331,6 +331,11 @@ body {
 	cursor: pointer;
 }
 
+#content main .table-data .head .btn{
+    background-color: #3CB371;
+    border-color: #3CB371;
+}
+
 #content main .table-data .order {
 	flex-grow: 1;
 	flex-basis: 500px;
@@ -396,7 +401,7 @@ td{
 }
 
 th {
-    background-color: #3c91e6; /* 헤더 배경색 */
+    background-color: #3CB371; /* 헤더 배경색 */
     color: #ffffff; /* 제목 텍스트 하얀색 */
 }
 
@@ -529,5 +534,7 @@ nav[aria-label="Page navigation example"] {
 	#content main .table-data .order table {
 		min-width: 420px;
 	}
+
+
 
 }

@@ -19,9 +19,9 @@
     <div class="calendar-container">
         <div id="inline-calendar"></div>
         <div id="date-range" class="mt-3"></div>
-        <button id="get-schedule" class="btn btn-primary mt-3" disabled>여행일정 만들기</button>
+        <button id="get-schedule" class="btn btn-primary mt-3" disabled style="background-color: #3CB371; border-color: #3CB371;">여행일정 만들기</button>
     </div>
-    <form id="schedule-form" action="/plan/make" method="post" style="display:none;">
+    <form id="schedule-form" action="/plan/make" method="post" style="display:none; background-color: #3CB371; border-color: #3CB371;">
         <input type="hidden" id="startDay" name="startDay">
         <input type="hidden" id="endDay" name="endDay">
         <input type="hidden" id="title" name="title">
@@ -43,8 +43,8 @@
                 <input type="text" class="form-control" id="planTitle" placeholder="필수 입력" onKeyUp="javascript:fnChkByte(this,'200')">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" id="confirm-schedule">만들기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; text-color:black;">취소</button>
+                <button type="button" class="btn btn-primary" id="confirm-schedule" style="background-color: #3CB371; border-color: #3CB371;">만들기</button>
             </div>
         </div>
     </div>
