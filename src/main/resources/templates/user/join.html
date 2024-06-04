@@ -13,32 +13,32 @@
     <form method="post" action="/user/insertMember" id="login-form">
         <!--id / pw-->
         <div class="form-row">
-            <input type="text" name="memberId" placeholder="Id" class="input_box">
-            <input type="password" id="pw1" name="password" oninput="pwCheck()" class="input_box" placeholder="비밀번호">
+            <input type="text" name="memberId" placeholder="Id" class="input_box" onKeyUp="javascript:fnChkByte(this, 20)">
+            <input type="password" id="pw1" name="password" oninput="pwCheck()" class="input_box" placeholder="비밀번호" onKeyUp="javascript:fnChkByte(this, 20)">
         </div>
 
         <div class="form-row">
-            <input type="password" id="pw2" oninput="pwCheck()" class="input_box" placeholder="비밀번호 확인">
+            <input type="password" id="pw2" oninput="pwCheck()" class="input_box" placeholder="비밀번호 확인" onKeyUp="javascript:fnChkByte(this, 20)">
             <span id="pwConfirm">비밀번호를 입력하세요</span>
         </div>
 
         <!-- name / nickname -->
         <div class="form-row">
-            <input type="text" name="name" placeholder="Name" class="input_box">
-            <input type="text" name="nickname" placeholder="Nickname" class="input_box">
+            <input type="text" name="name" placeholder="Name" class="input_box" onKeyUp="javascript:fnChkByte(this, 20)">
+            <input type="text" name="nickname" placeholder="Nickname" class="input_box" onKeyUp="javascript:fnChkByte(this, 20)">
         </div>
 
         <!--email-->
         <div class="form-row">
-            <input type="email" name="email" placeholder="Email" class="input_box full-width">
+            <input type="email" name="email" placeholder="Email" class="input_box full-width" onKeyUp="javascript:fnChkByte(this, 20)">
         </div>
 
         <!--tel / gender-->
         <div class="form-row">
-            <input type="tel" name="tel" placeholder="Tel" class="input_box">
+            <input type="tel" name="tel" placeholder="Tel" class="input_box" onKeyUp="javascript:fnChkByte(this, 20)">
             <select name="gender" class="input_box genderselect">
-                <option value="W"> Woman</option>
-                <option value="M"> Man</option>
+                <option value="F">Female</option>
+                <option value="M">Male</option>
             </select>
         </div>
 
@@ -53,6 +53,39 @@
             $('#pwConfirm').text('비밀번호를 확인해주세요').css('color', 'red');
         }
     }
+
+    // byte 계산기
+    function fnChkByte(obj, maxByte) {
+        var str = obj.value;
+        var str_len = str.length;
+
+        var rbyte = 0;
+        var rlen = 0;
+        var one_char = "";
+        var str2 = "";
+
+        for(var i = 0; i < str_len; i++) {
+            one_char = str.charAt(i);
+            if (escape(one_char).length > 4) {
+                rbyte += 3;
+            } else {
+                rbyte++;
+            }
+
+            if(rbyte <= maxByte) {
+                rlen = i + 1;
+            }
+        }
+
+        if(rbyte > maxByte) {
+            alert("최대 " + maxByte + "byte를 초과할 수 없습니다.");
+            str2 = str.substr(0, rlen);
+            obj.value = str2;
+            fnChkByte(obj, maxByte);
+        }
+    }
+
+
 </script>
 </body>
 </html>
