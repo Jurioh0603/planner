@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,27 +46,22 @@
 
         <div id="boxContainer">
             <div>
-                <div>
-                    <a href="/plan/list" class="link">
-                        <div class="box-wrap">
-                            <p class="titleInfo">완벽한 여정을 위해</p>
-                            <h4 class="title">여행 일정 계획</h4>
-                        </div>
-                    </a>
-                    <a href="/chat/openChat" class="link">
-                        <div class="box-wrap">
-                            <p class="titleInfo">여행자들을 위한 오픈채팅</p>
-                            <h4 class="title">여행 TALK</h4>
-                        </div>
-                    </a>
+                <a href="/plan/list" class="link">
+                <div class="box-wrap" id="plan">
+                    <div><img src="/images/cal.png" class="traveler"/></div>
+                    <p class="titleInfo">완벽한 여정을 위한</p></br> <br/>
+                    <h4 class="title">여행 일정 계획</h4>
                 </div>
+                </a>
             </div>
             <div>
-                <a href="/tlog/list" class="link">
-                    <div class="tlog-wrap">
-                        <div><img src="/images/traveler.png" class="traveler"/></div>
-                        <h4>여행기</h4>
-                    </div>
+                <a href="/chat/openChat" class="link">
+                <div class="box-wrap" id="chat">
+                    <div><img src="/images/chat.png" class="traveler"  /></div>
+                    <p class="titleInfo">여행자들을 위한 <br/>오픈채팅</p><br/>
+
+                    <h4 class="title">여행 TALK</h4>
+                </div>
                 </a>
             </div>
             <div class="weather-wrapper">
@@ -82,6 +78,19 @@
                 </div>
             </div>
         </div>
+        <div class="tlog-btn">
+            <a href="/tlog/list" class="link">
+        <span class="text">
+            나의 <strong>여행기</strong> 공유하러 가기
+        </span>
+                <img src="/images/btn_theme_map.gif" />
+            </a>
+        </div>
+
+
+
+
+
         <div class="community-wrap">
             <h4 style="margin-bottom: 10px;">지역 커뮤니티</h4>
             <div>
@@ -187,8 +196,8 @@
             <em class="tag">여행지추천 ♥</em>
             <div class="recommand-title">
                 <h2>
-                    <a th:href="@{/}">
-                        이달의 추천 명소 <img src="/images/arrow.png">
+                    <a th:href="@{/tour/list}">
+                        지역 관광 정보 <img src="/images/arrow.png">
                     </a>
                 </h2>
                 <p style="margin-top: 15px;">
@@ -199,21 +208,21 @@
 
             <div class="recommand-wrap">
                 <div class="place-wrap">
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GG)}'|">
                         <img src="/images/거제도.jpg" alt="관광지1">
-                        <div class="place-caption">거제도</div>
+                        <div class="place-caption">경기</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GN)}'|">
                         <img src="/images/경주.jpg" alt="관광지2">
-                        <div class="place-caption">경주</div>
+                        <div class="place-caption">경남</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GW)}'|">
                         <img src="/images/여수.jpg" alt="관광지3">
-                        <div class="place-caption">여수</div>
+                        <div class="place-caption">강원</div>
                     </div>
-                    <div class="placeDiv" onclick="location.href='#'">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=CN)}'|">
                         <img src="/images/전주.jpg" alt="관광지4">
-                        <div class="place-caption">전주</div>
+                        <div class="place-caption">충남</div>
                     </div>
                 </div>
             </div>

@@ -109,7 +109,7 @@ span {
     filter: invert(50%);
 }
 
-.placeTag {
+.placeTag, .titleContainer {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;

@@ -2,7 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -36,15 +37,15 @@
                                     <div class="imgContainer">
                                         <img th:src="|/tlog/images/${tlog.storeName}|" alt="여행기 섬네일" class="tlogImg"/>
                                     </div>
-                                    <div class="writerContainer mt-2 mb-2 ms-2">
+                                    <div class="writerContainer mt-2 ms-2">
                                         <div>
-                                            <img th:if="${tlog.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
-                                            <img th:if="${tlog.writerProfile.mCopyImg != ''}" th:src="|/tlog/images/${tlog.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
+                                            <img th:if="${tlog.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img ms-1">
+                                            <img th:if="${tlog.writerProfile.mCopyImg != ''}" th:src="|/tlog/images/${tlog.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img ms-1">
                                         </div>
                                         <div class="ms-3 mb-1"><b>[[${tlog.writerProfile.nickname}]]</b> 님의 일정</div>
                                     </div>
                                     <div class="card-body">
-                                        <div class="title">
+                                        <div class="title mb-2">
                                             <h5>[[${tlog.tlogTitle}]]</h5>
                                         </div>
                                         <div class="content mt-1">
