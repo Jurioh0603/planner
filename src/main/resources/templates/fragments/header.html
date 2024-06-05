@@ -36,10 +36,11 @@
                     <li class="nav-item me-3"><a class="nav-link" href="/tour/list">여행정보</a></li>
                     <li class="nav-item me-3"><a class="nav-link" href="/plan/list">여행계획</a></li>
                 </ul>
-                <form class="d-flex ml-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="검색" aria-label="Search"/>
+                <form class="d-flex ml-auto" role="search" method="get" action="https://www.google.com/search">
+                    <input class="form-control me-2" type="search" name="q" placeholder="검색" aria-label="Search"/>
                     <button class="btn btn-outline-dark" type="submit">🔍</button>
                 </form>
+
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <!-- 비 로그인한 사용자가 보이는 메뉴 -->
                     <li class="nav-item" th:if="${session.loginMemberInfo == null}"><a class="nav-link" href="/user/login">로그인</a></li>
