@@ -14,8 +14,8 @@
     <link rel="stylesheet" type="text/css" href="/css/tlog/tlogWriteFormStyle.css">
 
     <script>
-        var imageUploadFlag = 1; //이미지를 업로드했는지 체크하기 위한 변수
-        var planUploadFlag = 1; //일정을 업로드했는지 체크하기 위한 변수
+        var imageUploadFlag = 1; // 이미지를 업로드했는지 체크하기 위한 변수
+        var planUploadFlag = 1; // 일정을 업로드했는지 체크하기 위한 변수
 
         function openPopup() {
             var url = "/tlog/select";
@@ -27,9 +27,9 @@
         }
 
         window.onload=function(){
-            var target=document.getElementById('file'); // file 아이디 선언
-            target.addEventListener('change',function(){ // change 함수
-                imageUploadFlag = 0;
+            var target=document.getElementById('file');
+            target.addEventListener('change',function(){
+                imageUploadFlag = 0; // 이미지 업로드
                 var fileInfo = '';
                 for(var i = 0; i < target.files.length; i++) {
                     fileInfo += target.files[i].name + ', ';
@@ -43,14 +43,14 @@
 
             var deleteImageBtn = document.getElementById('deleteImageBtn');
             deleteImageBtn.addEventListener('click', function () {
-                imageUploadFlag = 0;
+                imageUploadFlag = 0; // 업로드한 이미지 삭제
                 target.value = ''; // 파일 입력 필드 초기화
                 document.getElementById('fileName').innerText = '선택한 파일이 없습니다.'; // 표시된 파일 이름 제거
             });
 
             var deletePlanBtn = document.getElementById('deletePlanBtn');
             deletePlanBtn.addEventListener('click', function () {
-                planUploadFlag = 0;
+                planUploadFlag = 0; // 업로드한 일정 삭제
                 document.getElementById('scheduleNo').value = '';
                 document.getElementById('planName').innerText = '선택한 일정이 없습니다.';
             });
@@ -58,7 +58,7 @@
         }
 
         function addPlan(title, no) {
-            planUploadFlag = 0;
+            planUploadFlag = 0; // 일정 업로드
             document.getElementById('planName').innerText = title;
             document.getElementById('scheduleNo').value = no;
         }

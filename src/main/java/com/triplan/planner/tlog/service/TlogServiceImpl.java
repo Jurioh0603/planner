@@ -85,6 +85,7 @@ public class TlogServiceImpl implements TlogService {
         tlogRepository.deleteFav(tlogNo, memberId);
     }
 
+    //startDay부터 endDay까지 모든 날짜 추출
     private static void extracted(TlogDetailInfo tlogInfo) {
         List<Date> travelDay = new ArrayList<>();
         Date startDay = tlogInfo.getSchedule().getStartDay();
@@ -100,15 +101,18 @@ public class TlogServiceImpl implements TlogService {
         tlogInfo.setTravelDay(travelDay);
     }
 
+    //TLOG 수정 폼에서 보여주기 위한 데이터로 가공
     private static TlogModifyForm getTlogModifyForm(TlogDetailInfo tlogInfo) {
         TlogModifyForm tlogModifyForm = new TlogModifyForm();
         tlogModifyForm.setTitle(tlogInfo.getTlog().getTlogTitle());
         tlogModifyForm.setContent(tlogInfo.getTlog().getTlogContent());
         tlogModifyForm.setScheduleTitle(tlogInfo.getSchedule().getScheduleTitle());
+        //업로드한 이미지 목록을 ,(콤마)로 연결하여 하나의 문자열로 생성
         String imageList = "";
         for(int i = 0; i < tlogInfo.getTlogImageList().size(); i++) {
             imageList += tlogInfo.getTlogImageList().get(i).getUploadName() + ", ";
         }
+        //마지막 ,(콤마) 지우기
         imageList = imageList.substring(0, imageList.length() - 2);
         tlogModifyForm.setImageList(imageList);
         tlogModifyForm.setScheduleNo(tlogInfo.getTlog().getScheduleNo());

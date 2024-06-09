@@ -18,6 +18,7 @@ public class ReplyController {
     public String write(@ModelAttribute Reply reply, @RequestParam("local") String local, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
         String memberId = loginInfo.getMemberId();
         reply.setMemberId(memberId);
+        //댓글 -> rstep 1
         reply.setRstep(1);
         replyService.write(reply, local);
         return "redirect:/community/detail?local=" + local + "&no=" + reply.getBno();
@@ -27,6 +28,7 @@ public class ReplyController {
     public String rewrite(@ModelAttribute Reply reply, @RequestParam("local") String local, @SessionAttribute("loginMemberInfo") UserDto loginInfo) {
         String memberId = loginInfo.getMemberId();
         reply.setMemberId(memberId);
+        //대댓글 -> rstep 2
         reply.setRstep(2);
         replyService.rewrite(reply, local);
         return "redirect:/community/detail?local=" + local + "&no=" + reply.getBno();
