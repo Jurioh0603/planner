@@ -11,13 +11,13 @@
 
     <delete id="deleteOverSchedule" parameterType="long">
         DELETE FROM DETAILSCHEDULE
-        WHERE SCHEDULE_NO=#{scheduleNo} AND DETAIL_DAY > #{diffmodifyDays};
+        WHERE SCHEDULE_NO=#{scheduleNo} AND DETAIL_DAY > #{diffmodifyDays}
     </delete>
 
     <update id="updateDayByNo" parameterType="com.triplan.planner.calendar.dto.ModifyForm">
         UPDATE SCHEDULE
         SET START_DAY=#{startDay}, END_DAY=#{endDay}
-        WHERE SCHEDULE_NO=#{scheduleNo};
+        WHERE SCHEDULE_NO=#{scheduleNo}
     </update>
 
 </mapper>

@@ -77,6 +77,7 @@
     <hr/>
 
     <th:block th:each="reply, iterStat : ${communityDetail.replyList}">
+        <!-- rstep이 1이 아닌 경우 왼쪽 margin을 줘 댓글과 대댓글을 구분 -->
         <div class="replyContainer mt-2" th:classappend="${(reply.rstep == 1) ? '' : 'ms-5'}">
             <div class="nicknameNwritetime">
                 <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
@@ -92,6 +93,7 @@
                     </div>
                 </th:block>
             </div>
+            <!-- 대댓글 작성 폼 -->
             <form action="/community/reply/rewrite" method="post" class="replyForm" style="display: none;">
                 <div class="mt-3">
                     <th:block th:if="${session.loginMemberInfo != null}">
@@ -116,6 +118,7 @@
                 </div>
             </form>
 
+            <!-- 댓글 수정 폼-->
             <form action="/community/reply/modify" method="post" class="replyModifyForm" style="display: none;">
                 <div class="mt-3">
                     <textarea name="rcontent" class="form-control" onKeyUp="javascript:fnChkByte(this,'60000')">[[${reply.rcontent}]]</textarea>

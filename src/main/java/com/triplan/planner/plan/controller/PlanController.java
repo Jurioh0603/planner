@@ -91,7 +91,9 @@ public class PlanController {
     @PostMapping("/save")
     @ResponseBody
     public ResponseEntity<String> saveSchedule(@RequestBody Map<String, Object> jsonObj) {
+        //JSON 데이터에서 scheduleNo 값을 꺼냄
         String scheduleNo = (String) jsonObj.get("scheduleNo");
+        //JSON 데이터에서 scheduleArray(detailSchedule) 값을 꺼냄
         List<Map<String, String>> scheduleArray = (List<Map<String, String>>) jsonObj.get("scheduleArray");
 
         List<DetailSchedule> detailScheduleList = new ArrayList<>();

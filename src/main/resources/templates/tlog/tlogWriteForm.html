@@ -24,8 +24,8 @@
         }
 
         window.onload=function(){
-            var target=document.getElementById('file'); // file 아이디 선언
-            target.addEventListener('change',function(){ // change 함수
+            var target=document.getElementById('file');
+            target.addEventListener('change',function(){
                 var fileInfo = '';
                 for(var i = 0; i < target.files.length; i++) {
                     fileInfo += target.files[i].name + ', ';

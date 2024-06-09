@@ -14,7 +14,9 @@ public class ReplyRepositoryImpl implements ReplyRepository {
     public void insertReply(Reply reply, String local) {
         local += "_reply";
         Long lastRef = replyMapper.maxRef(reply.getBno(), local);
+        //첫 댓글 -> ref 1
         long ref = 1;
+        //첫 댓글X -> 가장 마지막 ref + 1
         if(lastRef != null)
             ref = lastRef + 1;
         replyMapper.insertReply(reply, ref, local);

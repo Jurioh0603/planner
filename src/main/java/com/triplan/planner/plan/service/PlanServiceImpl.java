@@ -26,6 +26,7 @@ public class PlanServiceImpl implements PlanService {
     public ScheduleList getScheduleList(Long scheduleNo) {
         ScheduleList scheduleList = planRepository.findScheduleList(scheduleNo);
 
+        //startDay부터 endDay까지 모든 여행 일자를 저장
         List<Date> travelDay = new ArrayList<>();
         Date startDay = scheduleList.getSchedule().getStartDay();
         Date endDay = scheduleList.getSchedule().getEndDay();

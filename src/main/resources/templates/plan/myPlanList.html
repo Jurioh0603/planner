@@ -59,6 +59,7 @@
                 document.getElementById('uploadForm_' + index).submit();
             });
 
+            // 확장자와 파일 크기 체크
             function validateForm() {
                 var fileInput = document.getElementById('file_' + index);
 
@@ -155,6 +156,7 @@
         </block>
     </div>
 
+    <!-- 일정 삭제 confirm 모달 -->
     <div class="modal" id="confirmDeleteModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -174,6 +176,7 @@
         </div>
     </div>
 
+    <!-- 제목 수정 폼(모달) -->
     <div class="modal" id="editTitleModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -214,15 +217,17 @@
             location.href = '/plan/delete?no=' + scheduleNo;
         });
 
-        //제목 수정
+        // 제목 수정
         document.querySelectorAll('.editTitleBtn').forEach(function(button) {
             button.addEventListener('click', function() {
                 const no = button.getAttribute('data-schedule-no');
                 const title = button.getAttribute('data-title');
 
+                // 수정할 요소 정보 수정 폼에 세팅
                 document.getElementById('no').value = no;
                 document.getElementById('editTitle').value = title;
 
+                // 모달 열기
                 const modal = new bootstrap.Modal(document.getElementById('editTitleModal'));
                 modal.show();
             });
@@ -231,14 +236,17 @@
         document.getElementById('edit').addEventListener('click', function() {
             const editTitle = document.getElementById('editTitle').value.trim();
 
+            // 입력되었는지 확인
             if (!editTitle) {
                 alert('제목을 입력해주세요.');
                 return;
             }
 
+            // 제출
             document.getElementById('editTitleForm').submit();
         });
 
+        //click 이벤트가 겹치기 때문에 div click 이벤트는 JS에서 처리
         const outerElements = document.querySelectorAll(".outer");
 
         outerElements.forEach(outer => {

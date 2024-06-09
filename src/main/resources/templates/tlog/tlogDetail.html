@@ -34,15 +34,13 @@
         });
 
         $(document).ready(function() {
-            // Initialize day
             $(".day").each(function() {
                 var $day = $(this);
 
-                // Call updateNumbers initially
                 updateNumbers($day);
             });
 
-            // Function to update the numbers
+            // num-span 값 설정
             function updateNumbers($day) {
                 $day.find("li").each(function(index) {
                     $(this).find(".num-span").text(index + 1);
@@ -50,11 +48,13 @@
             }
         });
 
+        // 'day #' 클릭시 해당 날짜 데이터로 지도 update
         function getMapByDay(index) {
             dayIdx = "day-" + index;
             updateMap();
         }
 
+        // 'day #' 클릭시 지도 위치로 smooth하게 스크롤
         function scrollToElement(elementId) {
             var element = document.getElementById(elementId);
             if (element) {
@@ -346,7 +346,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             var deleteBtn = document.getElementById("deleteBtn");
 
-            //작성자가 아닌 경우 삭제 버튼이 존재하지 않는다. 따라서 존재 여부를 파악하여 이벤트 리스너를 추가한다.
+            // 작성자가 아닌 경우 삭제 버튼이 존재하지 않는다. 따라서 존재 여부를 파악하여 이벤트 리스너를 추가한다.
             if (deleteBtn) {
                 deleteBtn.addEventListener("click", function () {
                     const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));

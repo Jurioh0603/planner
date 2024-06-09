@@ -18,28 +18,29 @@
 
     <script>
         $(function() {
-            // Initialize sortable
             $(".sortable").each(function() {
                 var $sortable = $(this);
+                // jQuery의 sortable을 사용하여 드래그 앤 드롭으로 정렬
                 $sortable.sortable({
+                    // 정렬을 마치면 num-span, map 정보 update
                     stop: function(event, ui) {
                         updateNumbers($sortable);
                         updateMap();
                     }
                 });
 
-                // Call updateNumbers initially
+                // num-span 초기화
                 updateNumbers($sortable);
             });
 
-            // Function to update the numbers
+            // num-span 값 설정, index 값은 jQuery의 each 메서드에서 제공
             function updateNumbers($sortable) {
                 $sortable.find("li").each(function(index) {
                     $(this).find(".num-span").text(index + 1);
                 });
             }
 
-            // Make updateNumbers function globally available
+            // updateNumbers 함수를 전역 범위에 추가하여 다른 곳에서도 호출할 수 있도록 함
             window.updateNumbers = updateNumbers;
         });
 
@@ -64,7 +65,6 @@
 
         function openPopup(day) {
             var url = "/plan/addAttr?keyword=강남+맛집&day=" + day;
-            //var url = "/plan/addOnMap?day=" + day;
             var width = 800;
             var height = 600;
             var left = (screen.width - width) / 2;
@@ -72,6 +72,7 @@
             var pop = window.open(url, "장소 추가", "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top + ",resizable=no");
         }
 
+        // 팝업창에서 입력한 데이터를 바탕으로 <li> 태그를 생성하여 해당 sortable-# 에 append
         function addLocation(day, placeName, placeLatitude, placeLongitude, memo) {
             var dayIndex = day - 1;
             var $sortable = $('#sortable-' + dayIndex);
@@ -88,6 +89,7 @@
 
             $sortable.append(newLi);
 
+            // num-span, map 정보 update
             updateNumbers($sortable);
             getMapByDay(dayIndex);
         }
@@ -143,10 +145,10 @@
         }
 
         document.addEventListener('keydown', function(event) {
-            // Check if Ctrl (or Command on Mac) and S are pressed together
+            // Ctrl + s 또는 Command + s 에 이벤트 추가
             if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-                event.preventDefault();  // Prevent the default save action
-                saveScheduleArray();  // Call the function directly or trigger the button click
+                event.preventDefault();  // default 액션 방지
+                saveScheduleArray();  // 저장 버튼 클릭과 동일한 액션
             }
         });
     </script>
@@ -371,6 +373,7 @@
     </th:block>
 </div>
 
+<!-- 장소 이름, 메모 수정 폼(모달) -->
 <div class="modal" id="editModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
