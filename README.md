@@ -152,18 +152,18 @@
 <br>
 
 ## 💾 프로젝트 구조
-https://ibb.co/Q8h7ZZf
-https://ibb.co/yY5Fz7k
-https://ibb.co/pjyDd0C
-https://ibb.co/dGTpHt3
-https://ibb.co/yQCb65q
-https://ibb.co/K9ff0rP
+![1](https://github.com/Jurioh0603/planner/assets/148063470/31e332fb-b8dc-47f7-b936-a5338e2ce5f8)
+![2](https://github.com/Jurioh0603/planner/assets/148063470/f9dfe1be-cbc4-43f0-bcab-2263457d9b69)
+![3](https://github.com/Jurioh0603/planner/assets/148063470/ee7b0258-330c-4031-97f1-e46161b6bdd6)
+![4](https://github.com/Jurioh0603/planner/assets/148063470/5e9d709b-4374-4e5f-9260-73bd6b158969)
+![5](https://github.com/Jurioh0603/planner/assets/148063470/48fe5070-e745-42f0-9eb3-9b2134c7880f)
+![6](https://github.com/Jurioh0603/planner/assets/148063470/91073d4b-3e0c-4a1c-bbba-ebbdc6fa373a)
 <br>
 <br>
 
 ## 💎 ERD 다이어그램
 [여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
-https://ibb.co/ZYSMySq
+![7](https://github.com/Jurioh0603/planner/assets/148063470/b36d41c2-885c-412e-88c8-372162fe0087)
 <br>
 <br>
 
