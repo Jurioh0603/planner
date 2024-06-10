@@ -142,21 +142,28 @@
 <br>
 <br>
 
-## 💾 사이트 주소
-<~~~><br>
-<br>
-
 ## 👬 팀 구성
 
 |  오주리 |  김경애 | 이윤서  | 최문영  |
 |---------|---------|---------|---------|
-|  팀장~   |  ~~    | ~~      |  ~~     |
+|   팀장  | 기술팀장 |   팀원  |   팀원  |
 
+<br>
+<br>
+
+## 💾 프로젝트 구조
+https://ibb.co/Q8h7ZZf
+https://ibb.co/yY5Fz7k
+https://ibb.co/pjyDd0C
+https://ibb.co/dGTpHt3
+https://ibb.co/yQCb65q
+https://ibb.co/K9ff0rP
 <br>
 <br>
 
 ## 💎 ERD 다이어그램
 [여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
+https://ibb.co/ZYSMySq
 <br>
 <br>
 
