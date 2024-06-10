@@ -23,14 +23,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const maxFileSize = 10 * 1024 * 1024; // 10MB
     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
+    // 초기 이미지 미리보기 설정
+    imagePreview.src = defaultImage;
+
     imageInput.addEventListener('change', function() {
         const file = imageInput.files[0];
 
         if (file) {
+            console.log("파일 선택됨:", file.name);
+
             if (!allowedExtensions.exec(file.name)) {
                 alert("올바른 확장자가 아닙니다. jpg, jpeg, png, gif 파일만 업로드할 수 있습니다.");
                 imageInput.value = ''; // 입력 필드 초기화
                 imagePreview.src = defaultImage; // 이미지 미리보기 기본 이미지로 변경
+                console.log("허용되지 않는 확장자");
                 return;
             }
 
@@ -38,16 +44,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 alert("사진은 10MB를 초과하였습니다.");
                 imageInput.value = ''; // 입력 필드 초기화
                 imagePreview.src = defaultImage; // 이미지 미리보기 기본 이미지로 변경
+                console.log("파일 크기 초과");
                 return;
             }
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 imagePreview.src = e.target.result; // 선택한 이미지로 미리보기 변경
+                console.log("미리보기 이미지 설정됨:", e.target.result);
             }
             reader.readAsDataURL(file);
         } else {
             imagePreview.src = defaultImage; // 파일이 선택되지 않았을 때 기본 이미지로 변경
+            console.log("파일이 선택되지 않음, 기본 이미지로 설정");
         }
     });
 
@@ -59,19 +68,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
             event.preventDefault(); // 폼 제출 중단
             imageInput.value = ''; // 입력 필드 초기화
             imagePreview.src = defaultImage; // 이미지 미리보기 기본 이미지로 변경
+            console.log("폼 제출 중단됨: 올바르지 않은 파일");
             return;
         }
 
-        const hiddenInput = document.createElement('input');
-        hiddenInput.setAttribute('type', 'hidden');
-        hiddenInput.setAttribute('name', 'defaultImage');
-        hiddenInput.setAttribute('value', defaultImage);
-        form.appendChild(hiddenInput);
-
-        if (!imageInput.value) {
-            hiddenInput.value = defaultImage; // 파일이 선택되지 않았을 때 기본 이미지 경로를 설정
-        } else {
-            hiddenInput.value = '';
+        if (!file) {
+            const hiddenInput = document.createElement('input');
+            hiddenInput.setAttribute('type', 'hidden');
+            hiddenInput.setAttribute('name', 'defaultImage');
+            hiddenInput.setAttribute('value', defaultImage);
+            form.appendChild(hiddenInput);
+            console.log("기본 이미지 설정됨:", defaultImage);
         }
     });
 });

@@ -63,4 +63,9 @@ public class MyPageRepositoryImpl implements MyPageRepository{
     public void memberLeave(String memberId) {
         myPageMapper.memberLeave(memberId);
     }
+
+    @Override
+    public void defaultImg(String memberId) {
+        myPageMapper.defaultImg(memberId);
+    }
 }

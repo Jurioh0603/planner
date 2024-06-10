@@ -4,7 +4,7 @@ document.getElementById('updateForm').addEventListener('submit', function(event)
     var errorMessage = document.getElementById('error-message');
 
     // 공백 확인
-    if (password1.trim() === "") {
+    if (password1.trim() === "" || password2.trim() === "") {
         errorMessage.textContent = '비밀번호는 필수항목입니다.(공백 제외한 문자 또는 숫자)';
         errorMessage.style.display = 'block';
         event.preventDefault(); // 폼 제출 막기

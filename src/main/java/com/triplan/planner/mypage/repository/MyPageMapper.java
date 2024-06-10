@@ -32,4 +32,6 @@ public interface MyPageMapper {
     public int communityCount(String memberId);
 
     public void memberLeave(String memberId);
+
+    public void defaultImg(String memberId);
 }
