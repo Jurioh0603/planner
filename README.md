@@ -151,7 +151,21 @@
 <br>
 <br>
 
-## 💾 프로젝트 구조
+## 💾 스토리보드
+
+<br>
+<br>
+
+## 💎 ERD 다이어그램
+<br>
+![7](https://github.com/Jurioh0603/planner/assets/148063470/b36d41c2-885c-412e-88c8-372162fe0087)
+<br>
+[여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
+<br>
+<br>
+
+## 🌲 여정 Tree
+<br>
 ![1](https://github.com/Jurioh0603/planner/assets/148063470/31e332fb-b8dc-47f7-b936-a5338e2ce5f8)
 ![2](https://github.com/Jurioh0603/planner/assets/148063470/f9dfe1be-cbc4-43f0-bcab-2263457d9b69)
 ![3](https://github.com/Jurioh0603/planner/assets/148063470/ee7b0258-330c-4031-97f1-e46161b6bdd6)
@@ -161,19 +175,15 @@
 <br>
 <br>
 
-## 💎 ERD 다이어그램
-[여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
-![7](https://github.com/Jurioh0603/planner/assets/148063470/b36d41c2-885c-412e-88c8-372162fe0087)
-<br>
-<br>
-
-## 🌲 여정 Tree
-
-
 ## 📘 API 명세서
 [API 명세서]<>
 <br>
 <br>
 
 ## 🍏와이어프레임
+<br>
+![8](https://github.com/Jurioh0603/planner/assets/148063470/83270189-66d0-46a9-8e41-c2a5ef4d73b9)
+![9](https://github.com/Jurioh0603/planner/assets/148063470/4228ce87-37d3-42d1-909b-7090bc276565)
+<br>
 [와이어프레임](https://www.figma.com/design/ewXga6d8KzCuF31UqQATXe/Untitled?node-id=0-1&t=i3AZFflWF7BajbuK-0)
+<br>
