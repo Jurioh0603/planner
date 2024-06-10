@@ -158,6 +158,7 @@
 
 ## 💎 ERD 다이어그램
 <br>
+
 ![7](https://github.com/Jurioh0603/planner/assets/148063470/93fb33a6-1198-4aa7-a36b-605b170aafbf)
 <br>
 [여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
@@ -166,6 +167,7 @@
 
 ## 🌲 여정 Tree
 <br>
+
 ![1](https://github.com/Jurioh0603/planner/assets/148063470/30d1fc74-8577-4ce3-8942-2e33ca4a826b)
 ![2](https://github.com/Jurioh0603/planner/assets/148063470/4675b970-6481-4639-9c39-70d1d98be291)
 ![3](https://github.com/Jurioh0603/planner/assets/148063470/a2b63058-9d3e-49d5-a864-500111773a58)
@@ -182,6 +184,7 @@
 
 ## 🍏와이어프레임
 <br>
+
 ![8](https://github.com/Jurioh0603/planner/assets/148063470/6cbc050b-85f3-44ec-a20c-351ad3bb33b0)
 ![9](https://github.com/Jurioh0603/planner/assets/148063470/34901df3-6e20-44b5-aca3-a26d7edabff1)
 <br>
