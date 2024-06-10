@@ -104,11 +104,17 @@
         ) AS ALL_POSTS JOIN MEMBER A
         ON ALL_POSTS.MEMBER_ID=A.MEMBER_ID
         ORDER BY ALL_POSTS.WRITE_TIME DESC
-        LIMIT #{startRow}, #{size};
+        LIMIT #{startRow}, #{size}
     </select>
     <update id="memberLeave" parameterType="String">
         UPDATE MEMBER
         SET GRADE = 2222
-        WHERE MEMBER_ID = #{memberId};
+        WHERE MEMBER_ID = #{memberId}
+    </update>
+
+    <update id="defaultImg" parameterType="String">
+        UPDATE MEMBER
+        SET M_COPY_IMG = '', M_IMG = ''
+        WHERE MEMBER_ID = #{memberId}
     </update>
 </mapper>

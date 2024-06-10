@@ -60,8 +60,9 @@ public class MyPageController {
         UploadFile uploadFile = fileStore.storeFile(form.getUploadFile());
         Profile profile = new Profile();
         profile.setMemberId((String) session.getAttribute("memberId"));
+
         if (form.getUploadFile().isEmpty()) {
-            myPageService.updateProfile(profile);
+            myPageService.defaultImg(memberId);
         } else {
             //변경된 파일 저장
             profile.setMImg(uploadFile.getUploadFileName());

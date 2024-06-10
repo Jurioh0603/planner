@@ -68,5 +68,10 @@ public class MyPageServiceImpl implements MyPageService{
         myPageRepository.memberLeave(memberId);
     }
 
+    @Override
+    public void defaultImg(String memberId) {
+        myPageRepository.defaultImg(memberId);
+    }
+
 
 }
