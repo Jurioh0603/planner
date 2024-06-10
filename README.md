@@ -158,7 +158,7 @@
 
 ## 💎 ERD 다이어그램
 <br>
-![7](https://github.com/Jurioh0603/planner/assets/148063470/b36d41c2-885c-412e-88c8-372162fe0087)
+![7](https://github.com/Jurioh0603/planner/assets/148063470/93fb33a6-1198-4aa7-a36b-605b170aafbf)
 <br>
 [여정 DB](https://www.erdcloud.com/d/Ss9pRDkpsm6kRXydg)
 <br>
@@ -166,12 +166,12 @@
 
 ## 🌲 여정 Tree
 <br>
-![1](https://github.com/Jurioh0603/planner/assets/148063470/31e332fb-b8dc-47f7-b936-a5338e2ce5f8)
-![2](https://github.com/Jurioh0603/planner/assets/148063470/f9dfe1be-cbc4-43f0-bcab-2263457d9b69)
-![3](https://github.com/Jurioh0603/planner/assets/148063470/ee7b0258-330c-4031-97f1-e46161b6bdd6)
-![4](https://github.com/Jurioh0603/planner/assets/148063470/5e9d709b-4374-4e5f-9260-73bd6b158969)
-![5](https://github.com/Jurioh0603/planner/assets/148063470/48fe5070-e745-42f0-9eb3-9b2134c7880f)
-![6](https://github.com/Jurioh0603/planner/assets/148063470/91073d4b-3e0c-4a1c-bbba-ebbdc6fa373a)
+![1](https://github.com/Jurioh0603/planner/assets/148063470/30d1fc74-8577-4ce3-8942-2e33ca4a826b)
+![2](https://github.com/Jurioh0603/planner/assets/148063470/4675b970-6481-4639-9c39-70d1d98be291)
+![3](https://github.com/Jurioh0603/planner/assets/148063470/a2b63058-9d3e-49d5-a864-500111773a58)
+![4](https://github.com/Jurioh0603/planner/assets/148063470/8786f277-f23c-47e7-aabf-e8c3b609196e)
+![5](https://github.com/Jurioh0603/planner/assets/148063470/bf1cdbe1-66c3-4fbf-9c31-21e8d59c40cf)
+![6](https://github.com/Jurioh0603/planner/assets/148063470/4c25ab9a-586f-43a6-94a5-2a90559e4462)
 <br>
 <br>
 
@@ -182,8 +182,8 @@
 
 ## 🍏와이어프레임
 <br>
-![8](https://github.com/Jurioh0603/planner/assets/148063470/83270189-66d0-46a9-8e41-c2a5ef4d73b9)
-![9](https://github.com/Jurioh0603/planner/assets/148063470/4228ce87-37d3-42d1-909b-7090bc276565)
+![8](https://github.com/Jurioh0603/planner/assets/148063470/6cbc050b-85f3-44ec-a20c-351ad3bb33b0)
+![9](https://github.com/Jurioh0603/planner/assets/148063470/34901df3-6e20-44b5-aca3-a26d7edabff1)
 <br>
 [와이어프레임](https://www.figma.com/design/ewXga6d8KzCuF31UqQATXe/Untitled?node-id=0-1&t=i3AZFflWF7BajbuK-0)
 <br>
