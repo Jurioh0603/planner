@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>여정 : 여행을 정하다</title>
@@ -14,6 +14,9 @@
     <link rel="stylesheet" type="text/css" href="/css/community/commuDetailStyle.css">
 </head>
 <body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
 <div id="contents">
     <h2 class="mt-5">[[${attractionDetail.placeName}]]</h2>
     <div class="mb-1">[[${attractionDetail.placeAddress}]]</div>
@@ -34,4 +37,5 @@
 </div>
 
 </body>
+</th:block>
 </html>
