@@ -47,10 +47,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// sockjs
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	// stomp
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	// gson
+	implementation 'com.google.code.gson:gson:2.9.0'
 	// SLF4J API
 	implementation 'org.slf4j:slf4j-api'
 	// Logback Classic Implementation
 	implementation 'ch.qos.logback:logback-classic'
+	implementation 'javax.annotation:javax.annotation-api:1.2-b01'
+
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
