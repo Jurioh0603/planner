@@ -33,13 +33,13 @@
 
 ✔️ Backend<br>
 - Java<br>
-- Spring Boot<br>
-- MyBatis<br>
-- Gradle
+- Spring Boot(V3.2.5)<br>
+- MyBatis(V3.0.3)<br>
+- Gradle(V8.7)
 <br>
 
 ✔️ DB<br>
-- MySQL
+- MySQL(V8.0.36)
 <br>
 
 ✔️ Communication<br>
@@ -56,9 +56,11 @@
 3️⃣ 여정 서비스<br>
 4️⃣ 실행방법<br>
 5️⃣ 팀 구성<br>
-6️⃣ 기술 아키텍쳐<br>
+6️⃣ 플로우차트<br>
 7️⃣ ERD 다이어그램<br>
-8️⃣ API 명세서
+8️⃣ 여정 tree
+9️⃣ API 명세서
+🔟 와이어프레임
 <br>
 <br>
 
@@ -151,8 +153,13 @@
 <br>
 <br>
 
-## 💾 스토리보드
+## 💾 플로우차트
+<br>
 
+![image](https://github.com/Jurioh0603/planner/assets/148063470/40632a09-6eac-46af-a1fc-160ce2b0bac3)
+![image](https://github.com/Jurioh0603/planner/assets/148063470/70ade9fa-e709-409f-9eb1-9704a74eeebf)
+![image](https://github.com/Jurioh0603/planner/assets/148063470/5720abde-5e88-412c-b209-9453ebc5118a)
+![image](https://github.com/Jurioh0603/planner/assets/148063470/d899877c-367c-4abd-9b17-6f79c95a4409)
 <br>
 <br>
 
