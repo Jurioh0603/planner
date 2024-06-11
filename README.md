@@ -185,7 +185,7 @@
 <br>
 
 ## 📘 API 명세서
-[API 명세서]<>
+![image](https://github.com/Jurioh0603/planner/assets/148063470/6e43ecfc-ccb5-47d2-bbc3-f64fb70858a7)
 <br>
 <br>
 
