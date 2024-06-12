@@ -1,16 +1,14 @@
 package com.triplan.planner.chat.service;
 
 import com.triplan.planner.chat.dto.ChatRoom;
-import com.triplan.planner.chat.repository.ChatRepositoryImpl;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-public class ChatService {
-    private final ChatRepositoryImpl chatRepositoryImpl;
+import java.util.List;
 
-    public ChatRoom createChatRoom(String roomName) {
-        return ChatRoom;
-    }
+public interface ChatService {
+
+    public void createChatRoom(String roomName);
+
+    public List<ChatRoom> findAllRoom();
+
+    public ChatRoom findRoomById(String roomId);
 }

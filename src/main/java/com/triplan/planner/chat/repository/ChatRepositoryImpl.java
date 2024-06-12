@@ -25,23 +25,23 @@ public class ChatRepositoryImpl implements ChatRepository{
         // 채팅방 생성 순서를 최근순으로 반환
         List chatRooms = new ArrayList<>(chatRoomMap.values());
         Collections.reverse(chatRooms);
-
-        return chatRooms;
+        return chatMapper.findAllRoom();
     }
 
     // roomID 기준으로 채팅방 찾기
     public ChatRoom findRoomById(String roomId){
-        return chatRoomMap.get(roomId);
+        return chatMapper.findRoomById(roomId);
     }
 
     // roomName 로 채팅방 만들기
-    public ChatRoom createChatRoom(String roomName){
+    public void createChatRoom(String roomName){
         ChatRoom chatRoom = new ChatRoom().create(roomName); // 채팅룸 이름으로 채팅 룸 생성 후
 
         // map 에 채팅룸 아이디와 만들어진 채팅룸을 저장
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
-        chatMapper.createChatRoom(roomName);
-        return chatRoom;
+        System.out.println(chatRoom.getRoomId());
+        System.out.println(chatRoom.getRoomName());
+        chatMapper.createChatRoom(chatRoom);
     }
 
     // 채팅방 인원+1

@@ -20,10 +20,9 @@
     <div class="room-count">총 3건</div>
     <hr class="thin-hr">
     <div class="d-flex">
-        <th:block th:each="room : ${list}">
-            <span class="hidden" th:id="${room.roomName}"></span>
 
-        </th:block>
+
+
         <button class="btn btn-info" href="/chat/createRoom" data-bs-target="#roomModal" data-bs-toggle="modal" type="button">방 생성</button>
         <!-- Modal -->
         <div class="modal fade" id="roomModal" tabindex="-1" aria-labelledby="roomModalLabel" aria-hidden="true">
@@ -48,19 +47,22 @@
                 </div>
             </div>
         </div>
-        <a th:href="|@{/chat/room(roomId=1)}|" class="chat-box" onclick="window.open(this.href, 'popup', 'width=450,height=550'); return false;">
-            <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
-            <div class="chat-container-50"></div>
-            <div class="text-container">
-                <div class="num-text">
-                    <div class="name-text">채팅방이름</div>
-                    <div class="num">참여자수</div>
+
+        <th:block th:each="room : ${roomList}">
+            <a th:href="|@{/chat/room(roomId=${room.roomId})}|" class="chat-box" onclick="window.open(this.href, 'popup', 'width=450,height=550'); return false;">
+                <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+                <div class="chat-container-50"></div>
+                <div class="text-container">
+                    <div class="num-text">
+                        <div class="name-text">[[${room.roomName}]]</div>
+                        <div class="num">[[${room.userCount}]]</div>
+                    </div>
+                    <div class="content-text">가장최근메시지</div>
                 </div>
-                <div class="content-text">가장최근메시지</div>
-            </div>
-            <div class="chat-container-10"></div>
-            <div class="date-text">보낸시간</div>
-        </a>
+                <div class="chat-container-10"></div>
+                <div class="date-text">보낸시간</div>
+            </a>
+        </th:block>
     </div>
 </div>
 <!-- Bootstrap JS and dependencies -->
