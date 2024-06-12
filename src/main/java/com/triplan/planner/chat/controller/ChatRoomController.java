@@ -35,11 +35,9 @@ public class ChatRoomController {
     @PostMapping("/chat/createRoom")
     public String createRoom(@RequestParam String name,
                              RedirectAttributes rttr) {
-        ChatRoom chatRoom = new ChatRoom();
-        chatService.createChatRoom(name);
+        ChatRoom chatRoom = chatService.createChatRoom(name);
         log.info("CREATE Chat Room {}", chatRoom);
         rttr.addFlashAttribute("roomName", chatRoom);
-
         return "redirect:/chat/chatList";
     }
 

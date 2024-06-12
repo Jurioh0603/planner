@@ -12,8 +12,8 @@ import java.util.List;
 public class ChatServiceImpl implements ChatService{
     private final ChatRepository chatRepository;
 
-    public void createChatRoom(String roomName) {
-        chatRepository.createChatRoom(roomName);
+    public ChatRoom createChatRoom(String roomName) {
+        return chatRepository.createChatRoom(roomName);
     }
 
     @Override
@@ -24,5 +24,10 @@ public class ChatServiceImpl implements ChatService{
     @Override
     public ChatRoom findRoomById(String roomId) {
         return chatRepository.findRoomById(roomId);
+    }
+
+    @Override
+    public void plusUserCnt(String roomId) {
+        chatRepository.plusUserCnt(roomId);
     }
 }

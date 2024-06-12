@@ -3,6 +3,7 @@ package com.triplan.planner.chat.controller;
 import com.triplan.planner.chat.dto.ChatMessage;
 import com.triplan.planner.chat.dto.MessageType;
 import com.triplan.planner.chat.repository.ChatRepositoryImpl;
+import com.triplan.planner.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,16 @@ public class ChatController {
     @Autowired
     ChatRepositoryImpl repository;
 
+    private final ChatService chatService;
+
     // MessageMapping 을 통해 webSocket 로 들어오는 메시지를 발신 처리한다.
     // 이때 클라이언트에서는 /pub/chat/message 로 요청하게 되고 이것을 controller 가 받아서 처리한다.
     // 처리가 완료되면 /sub/chat/room/roomId 로 메시지가 전송된다.
-    @MessageMapping("/chat/enterUser")
+    @MessageMapping("/chat/joinUser")
     public void enterUser(@Payload ChatMessage chat, SimpMessageHeaderAccessor headerAccessor) {
 
         // 채팅방 유저+1
-        repository.plusUserCnt(chat.getRoomId());
+        chatService.plusUserCnt(chat.getRoomId());
 
         // 채팅방에 유저 추가 및 UserUUID 반환
         String userUUID = repository.addUser(chat.getRoomId(), chat.getSender());

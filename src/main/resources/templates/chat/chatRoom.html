@@ -14,7 +14,7 @@
 </head>
 <body>
     <div id="contents">
-        <form method="get" action="#">
+            <div id="chat-page"></div>
             <div class="top">
                 <div class="line-container">
                     <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
@@ -24,6 +24,10 @@
                     </div>
                 </div>
             </div>
+        <div class-="connecting">Connecting....</div>
+        <ul id="messageArea">
+
+        </ul>
             <hr class="line">
             <div class="line-container bottom">
                 <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img-small">
@@ -41,11 +45,12 @@
                     발신메시지
                 </div>
             </div>
+        <form id="messageForm" name="messageForm" nameForm="messageForm">
             <div class="text-box">
                 <div class="input-container">
-                    <input type="text" id="chat" name="chat"/>
+                    <input type="text" id="message"/>
                 </div>
-                <input type="submit" id="send" name="send" value="전송"/>
+                <button type="submit" id="send" name="send">전송</button>
             </div>
 
         </form>

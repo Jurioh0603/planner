@@ -207,7 +207,7 @@ body {
     margin-bottom: -150px;;
 
 }
-#chat {
+#message {
     width: calc(100%); /* Send 버튼의 너비만큼 차지하지 않도록 설정 */
     height: 20%; /* 부모 요소 높이만큼 설정 */
     border: none;

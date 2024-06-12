@@ -12,4 +12,6 @@ public interface ChatMapper {
     public List<ChatRoom> findAllRoom();
 
     public ChatRoom findRoomById(String roomId);
+
+    public void plusUserCnt(ChatRoom chatRoom);
 }

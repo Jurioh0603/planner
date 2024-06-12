@@ -34,20 +34,23 @@ public class ChatRepositoryImpl implements ChatRepository{
     }
 
     // roomName 로 채팅방 만들기
-    public void createChatRoom(String roomName){
+    public ChatRoom createChatRoom(String roomName){
         ChatRoom chatRoom = new ChatRoom().create(roomName); // 채팅룸 이름으로 채팅 룸 생성 후
-
+        System.out.println(chatRoom.getMemberId());
         // map 에 채팅룸 아이디와 만들어진 채팅룸을 저장
         chatRoomMap.put(chatRoom.getRoomId(), chatRoom);
+        chatRoom.setMemberId("id1");
         System.out.println(chatRoom.getRoomId());
         System.out.println(chatRoom.getRoomName());
-        chatMapper.createChatRoom(chatRoom);
+        chatMapper.createChatRoom(chatRoom.create(roomName));
+        return chatRoom;
     }
 
     // 채팅방 인원+1
     public void plusUserCnt(String roomId){
-        ChatRoom room = chatRoomMap.get(roomId);
-        room.setUserCount(room.getUserCount()+1);
+        ChatRoom chatRoom = chatRoomMap.get(roomId);
+        chatRoom.setUserCount(chatRoom.getUserCount()+1);
+        chatMapper.plusUserCnt(chatRoom);
     }
 
     // 채팅방 인원-1

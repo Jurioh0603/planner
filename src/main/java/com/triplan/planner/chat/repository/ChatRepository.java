@@ -5,9 +5,11 @@ import com.triplan.planner.chat.dto.ChatRoom;
 import java.util.List;
 
 public interface ChatRepository {
-    public void createChatRoom(String roomName);
+    public ChatRoom createChatRoom(String roomName);
 
     public List<ChatRoom> findAllRoom();
 
     public ChatRoom findRoomById(String roomId);
+
+    public void plusUserCnt(String roomId);
 }

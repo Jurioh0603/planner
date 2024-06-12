@@ -16,27 +16,18 @@ var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
-var username = null;
+var memberId = null;
 
-var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
 
 // roomId 파라미터 가져오기
 const url = new URL(location.href).searchParams;
 const roomId = url.get('roomId');
 
 function connect(event) {
-    username = document.querySelector('#name').value.trim();
+    memberId = document.querySelector('#memberId').value.trim();
 
     // username 중복 확인
     isDuplicateName();
-
-    // usernamePage 에 hidden 속성 추가해서 가리고
-    // chatPage 를 등장시킴
-    usernamePage.classList.add('hidden');
-    chatPage.classList.remove('hidden');
 
     // 연결하고자하는 Socket 의 endPoint
     var socket = new SockJS('/ws);
@@ -57,12 +48,12 @@ function onConnected() {
 
     // 서버에 username 을 가진 유저가 들어왔다는 것을 알림
     // /app/chat/enterUser 로 메시지를 보냄
-    stompClient.send("/app/chat/enterUser",
+    stompClient.send("/app/chat/joinUser",
         {},
         JSON.stringify({
             "roomId": roomId,
-            sender: username,
-            type: 'ENTER'
+            sender: memberId,
+            type: 'JOIN'
         })
     )
 
@@ -77,13 +68,13 @@ function isDuplicateName() {
         type: "GET",
         url: "/chat/duplicateName",
         data: {
-            "username": username,
+            "memberId": memberId,
             "roomId": roomId
         },
         success: function (data) {
             console.log("함수 동작 확인 : " + data);
 
-            username = data;
+            memberId = data;
         }
     })
 
@@ -124,7 +115,7 @@ function sendMessage(event) {
     if (messageContent && stompClient) {
         var chatMessage = {
             "roomId": roomId,
-            sender: username,
+            sender: memberId,
             message: messageInput.value,
             type: 'TALK'
         };
@@ -143,7 +134,7 @@ function onMessageReceived(payload) {
 
     var messageElement = document.createElement('li');
 
-    if (chat.type === 'ENTER') {  // chatType 이 enter 라면 아래 내용
+    if (chat.type === 'JOIN') {  // chatType 이 enter 라면 아래 내용
         messageElement.classList.add('event-message');
         chat.content = chat.sender + chat.message;
         getUserList();

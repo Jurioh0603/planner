@@ -4,8 +4,8 @@
 
 <mapper namespace="com.triplan.planner.chat.repository.ChatMapper">
     <insert id="createChatRoom" parameterType="com.triplan.planner.chat.dto.ChatRoom">
-        INSERT INTO CHAT_ROOM(ROOM_ID, ROOM_NAME)
-        VALUES (#{roomId}, #{roomName})
+        INSERT INTO CHAT_ROOM(ROOM_ID, ROOM_NAME, MEMBER_ID)
+        VALUES (#{roomId}, #{roomName}, #{memberId})
     </insert>
     <select id="findAllRoom" parameterType="list" resultType="com.triplan.planner.chat.dto.ChatRoom">
         SELECT * FROM CHAT_ROOM
@@ -15,5 +15,10 @@
         SELECT * FROM CHAT_ROOM
         WHERE ROOM_ID = #{roomId}
     </select>
+    <update id="plusUserCnt" parameterType="com.triplan.planner.chat.dto.ChatRoom">
+        UPDATE CHAT_ROOM
+        SET USER_COUNT = #{userCount}
+        WHERE ROOM_ID = #{roomId}
+    </update>
 
 </mapper>
