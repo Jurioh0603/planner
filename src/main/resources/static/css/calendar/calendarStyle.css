@@ -1,0 +1,57 @@
+        :root{
+          --litepicker-button-prev-month-color-hover: #3CB371;
+          --litepicker-button-next-month-color-hover: #3CB371;
+          --litepicker-day-color-hover: #3CB371;
+          --litepicker-is-start-color-bg: #3CB371;
+          --litepicker-is-end-color-bg: #3CB371;
+          --litepicker-is-in-range-color: #a3e6c1;
+
+
+        }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+            display: flex; /* 추가 */
+            justify-content: center; /* 추가 */
+            align-items: center; /* 추가 */
+            height: 100vh; /* 추가 */
+            margin: 0; /* 추가 */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .calendar-container {
+            margin-bottom: 20px;
+            text-align: center;
+            width: 150%;
+        }
+        .date-range {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .day {
+            display: none;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .btn-container button {
+            width: 48%;
+            background-color:
+        }
+        .lp-buttons {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+        }

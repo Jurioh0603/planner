@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.plan.repository.PlanMapper">
+    <select id="getCount" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM SCHEDULE
+        WHERE MEMBER_ID=#{memberId}
+    </select>
+
+    <select id="getSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
+        SELECT *
+        FROM SCHEDULE
+        WHERE MEMBER_ID=#{memberId} AND SCHEDULE_TITLE LIKE CONCAT('%', #{search}, '%')
+        ORDER BY START_DAY ASC
+    </select>
+
+    <!-- D-day ~ -->
+    <select id="getPostSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
+        <![CDATA[
+        SELECT *
+        FROM SCHEDULE
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') > DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY ASC
+        ]]>
+    </select>
+
+    <!-- D+day ~ -->
+    <select id="getPreSchedules" parameterType="string" resultType="com.triplan.planner.plan.domain.Schedule">
+        <![CDATA[
+        SELECT *
+        FROM SCHEDULE
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') <= DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY DESC
+        ]]>
+    </select>
+
+    <!-- 일정에 저장된 장소 이름을 중복없이 -->
+    <select id="getPlaces" parameterType="long" resultType="com.triplan.planner.plan.dto.PlaceList">
+        SELECT DISTINCT SCHEDULE_NO, PLACE_NAME
+        FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO IN
+        <foreach collection="scheduleNoArray" item="scheduleNo" index="index" open="(" close=")" separator=",">
+            #{scheduleNo}
+        </foreach>
+    </select>
+
+    <!-- D-day ~ -->
+    <select id="getPostImages" parameterType="string" resultType="com.triplan.planner.plan.domain.ScheduleImage">
+        <![CDATA[
+        SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
+        FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
+        ON A.SCHEDULE_NO=B.SCHEDULE_NO
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') > DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY ASC
+        ]]>
+    </select>
+
+    <!-- D+day ~ -->
+    <select id="getPreImages" parameterType="string" resultType="com.triplan.planner.plan.domain.ScheduleImage">
+        <![CDATA[
+        SELECT A.SCHEDULE_NO, UPLOAD_NAME, STORE_NAME
+        FROM SCHEDULE A LEFT OUTER JOIN SCHEDULEIMAGE B
+        ON A.SCHEDULE_NO=B.SCHEDULE_NO
+        WHERE DATE_FORMAT(DATE_ADD(START_DAY, INTERVAL 1 DAY), '%y-%m-%d') <= DATE_FORMAT(NOW(), '%y-%m-%d')
+              AND MEMBER_ID=#{memberId}
+        ORDER BY START_DAY DESC
+        ]]>
+    </select>
+
+    <select id="getScheduleByNo" parameterType="long" resultType="com.triplan.planner.plan.domain.Schedule">
+        SELECT *
+        FROM SCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </select>
+
+    <select id="getDetailSchedules" parameterType="long" resultType="com.triplan.planner.plan.domain.DetailSchedule">
+        SELECT *
+        FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+        ORDER BY DETAIL_DAY ASC, PLACE_PROC ASC
+    </select>
+
+    <select id="isImageExist" parameterType="long" resultType="com.triplan.planner.plan.domain.ScheduleImage">
+        SELECT *
+        FROM SCHEDULEIMAGE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </select>
+
+    <delete id="deleteImage" parameterType="long">
+        DELETE FROM SCHEDULEIMAGE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </delete>
+
+    <insert id="save" parameterType="com.triplan.planner.plan.domain.ScheduleImage">
+        INSERT INTO SCHEDULEIMAGE
+        VALUES(#{uploadName}, #{storeName}, #{scheduleNo})
+    </insert>
+
+    <delete id="deleteScheduleByNo" parameterType="long">
+        DELETE FROM SCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </delete>
+
+    <delete id="deleteDetailScheduleByScheduleNo" parameterType="long">
+        DELETE FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO=#{schduleNo}
+    </delete>
+
+    <insert id="insertDetailSchedules" parameterType="list">
+        INSERT INTO DETAILSCHEDULE(SCHEDULE_NO, DETAIL_DAY, PLACE_PROC, PLACE_NAME, PLACE_LATITUDE, PLACE_LONGITUDE, PLACE_MEMO)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.scheduleNo}, #{item.detailDay}, #{item.placeProc}, #{item.placeName}, #{item.placeLatitude}, #{item.placeLongitude}, #{item.placeMemo})
+        </foreach>
+    </insert>
+
+    <update id="updateScheduleTitleByNo">
+        UPDATE SCHEDULE
+        SET SCHEDULE_TITLE=#{title}
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </update>
+
+    <select id="getLastScheduleNo" resultType="long">
+        SELECT MAX(SCHEDULE_NO)
+        FROM SCHEDULE
+    </select>
+
+    <insert id="insertSchedule" parameterType="com.triplan.planner.plan.domain.Schedule">
+        INSERT INTO SCHEDULE(START_DAY, END_DAY, SCHEDULE_TITLE, MEMBER_ID)
+        VALUES(#{startDay}, #{endDay}, #{scheduleTitle}, #{memberId})
+    </insert>
+</mapper>

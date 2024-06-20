@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/tour/tourListStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogListStyle.css">
+
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <div id="contents">
+
+        <h3 class="mt-4 mb-3" style="text-align: center;">지역 관광 정보</h3>
+
+        <div id="localLinkBtnContainer" class="mt-3">
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=S)}|">
+                    <img class="localImg" src="/images/S.png"/>
+                    <p id="S">서 울</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GG)}|">
+                    <img class="localImg" src="/images/GG.png"/>
+                    <p id="GG">경 기</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GW)}|">
+                    <img class="localImg" src="/images/GW.png"/>
+                    <p id="GW">강 원</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=CB)}|">
+                    <img class="localImg" src="/images/CB.png"/>
+                    <p id="CB">충 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=CN)}|">
+                    <img class="localImg" src="/images/CN.png"/>
+                    <p id="CN">충 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JB)}|">
+                    <img class="localImg" src="/images/JB.png"/>
+                    <p id="JB">전 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JN)}|">
+                    <img class="localImg" src="/images/JN.png"/>
+                    <p id="JN">전 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GB)}|">
+                    <img class="localImg" src="/images/GB.png"/>
+                    <p id="GB">경 북</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=GN)}|">
+                    <img class="localImg" src="/images/GN.png"/>
+                    <p id="GN">경 남</p>
+                </a>
+            </div>
+            <div class="localLinkBtn">
+                <a th:href="|@{/tour/list(local=JJ)}|">
+                    <img class="localImg" src="/images/JJ.png"/>
+                    <p id="JJ">제 주</p>
+                </a>
+            </div>
+        </div>
+
+    <form action="/tour/list" method="get" class="d-flex mt-3 mb-4 searchContainer">
+
+        <input type="hidden" name="local" th:value="${local}"/>
+        <input class="form-control me-2" type="search" name="search" th:value="${search}" placeholder="검색" aria-label="Search" style="width: 200px">
+        <button class="btn btn-outline-primary" type="submit">검색</button>
+    </form>
+
+    <div class="album bg-body-tertiary mt-3">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                <th:block th:each="tour: ${attractionPage.attraction}">
+                    <a th:href="|@{/tour/detail(local=${local}, placeNo=${tour.placeNo}, page=${page}, search=${search})}|" style="text-decoration: none;">
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="imgContainer">
+                                    <img th:if="${tour.placeImg} == ''" th:src="@{/images/no-image.png}" alt="관광지 섬네일" class="tlogImg">
+                                    <img th:if="${tour.placeImg} != ''" th:src="${tour.placeImg}" alt="관광지 섬네일" class="tlogImg"/>
+                                </div>
+                                <div class="writerContainer mt-2 mb-2 ms-2">
+                                    <div class="card-body">
+                                        <div class="title" style="overflow: hidden; text-overflow: ellipsis; width:170px;">
+                                            <h5>[[${tour.placeName}]]</h5>
+                                        </div>
+                                        <div class="content mt-1" style="width:170px;">
+                                            [[${tour.placeIntro}]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </th:block>
+                <hr style="width: 100%;"/>
+                <!-- 페이지네이션 -->
+                <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+                <div id="doContainer">
+                    <block th:if="${attractionPage.hasContents()}">
+                        <div class="pagination-container">
+                            <div class="pagination">
+                                <a th:if="${attractionPage.startPage > 5}" th:href="@{/tour/list(local=${local}, page=${attractionPage.startPage - 5}, search=${search})}">&laquo;</a>
+                                <block th:each="page : ${#numbers.sequence(attractionPage.startPage, attractionPage.endPage)}">
+                                    <a th:if="${page == attractionPage.currentPage}" th:href="@{/tour/list(local=${local}, page=${page}, search=${search})}" class="active">[[${page}]]</a>
+                                    <a th:if="${page != attractionPage.currentPage}" th:href="@{/tour/list(local=${local}, page=${page}, search=${search})}">[[${page}]]</a>
+                                </block>
+                                <a th:if="${attractionPage.endPage < attractionPage.totalPages}" th:href="@{/tour/list(local=${local}, page=${attractionPage.startPage + 5}, search=${search})}">&raquo;</a>
+                            </div>
+                        </div>
+                    </block>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script th:inline="javascript">
+    //선택된 지역 게시판 이름에 <strong> 부여
+    var local = [[${local}]];
+    var localP = document.getElementById(local);
+    localP.innerHTML = `<strong>${localP.innerHTML}</strong>`;
+</script>
+</body>
+</th:block>
+</html>

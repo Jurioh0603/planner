@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/mypage/myCommuStyle.css">
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <div class="container">
+        <div class="line-container-start">
+            <a class="decoration line-container-start" href="/mypage/myPage">
+                <img src="/images/ico_my.png" alt="my아이콘" class="ico-my">
+                <h5 class="color-gray">마이페이지</h5>
+            </a>
+        </div>
+        <div class="line-container">
+            <h2 class="text-h2">내가 쓴 글</h2>
+        </div>
+        <hr class="border-height-2"/>
+        <div>
+            <div>총[[${myCommunityPage.total}]]건</div>
+            <hr class="hr-margin"/>
+            <block th:if="${myCommunityPage.hasNoContents()}">
+                <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+            </block>
+            <th:block th:each="myCommunity: ${myCommunityPage.myCommunityLists}">
+                <div class="gray-hover text-padding">
+                    <a th:href="|@{/community/detail(local=${myCommunity.communityType}, no=${myCommunity.bNo})}|" class="text-decoration">
+                        <div class="line-container-start">
+                            <div class="title" style="align-items: flex-start;">[[${myCommunity.title}]]</div>
+                            <div th:if="${myCommunity.communityType} == 'S'">서울게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GG'">경기게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JN'">전남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JJ'">제주게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'JB'">전북게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GW'">강원게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GN'">경남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'CN'">충남게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'CB'">충북게시판</div>
+                            <div th:if="${myCommunity.communityType} == 'GB'">경북게시판</div>
+                        </div>
+                        <div class="line-container-s">
+                            <img th:src="|/mypage/images/${myCommunity.mCopyImg}|" alt="프로필 사진" class="profile-img" th:if="${myCommunity.mCopyImg != ''}">
+                            <img th:src="@{/images/profile.jpg}" alt="프로필 사진" class="profile-img" th:if="${myCommunity.mCopyImg == ''}">
+                            <div class="nickname">[[${myCommunity.nickName}]]님</div>
+                        </div>
+                        <div class="date">[[${myCommunity.getDateFormat}]]</div>
+                    </a>
+                </div>
+                <hr class="hr-margin"/>
+            </th:block>
+        </div>
+        <!-- 페이지네이션 -->
+        <block th:if="${myCommunityPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${myCommunityPage.startPage > 5}" th:href="@{/mypage/myCommunity(page=${myCommunityPage.startPage - 5})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(myCommunityPage.startPage, myCommunityPage.endPage)}">
+                        <a th:if="${page == myCommunityPage.currentPage}" th:href="@{/mypage/myCommunity(page=${page})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != myCommunityPage.currentPage}" th:href="@{/mypage/myCommunity(page=${page})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${myCommunityPage.endPage < myCommunityPage.totalPages}" th:href="@{/mypage/myCommunity(page=${myCommunityPage.startPage + 5})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
+    </div>
+</body>
+</th:block>
+</html>

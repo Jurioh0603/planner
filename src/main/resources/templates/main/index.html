@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main/indexStyle.css}">
+</head>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <body>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{/images/거제도.jpg}" class="d-block w-100" alt="관광지1">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/images/경주.jpg}" class="d-block w-100" alt="관광지2">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/images/여수.jpg}" class="d-block w-100" alt="관광지3">
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/images/전주.jpg}" class="d-block w-100" alt="관광지4">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <hr/>
+
+    <div id="contents">
+
+        <div id="boxContainer">
+            <div>
+                <a href="/plan/list" class="link">
+                <div class="box-wrap" id="plan">
+                    <div><img src="/images/cal.png" class="traveler"/></div>
+                    <p class="titleInfo">완벽한 여정을 위한</p></br> <br/>
+                    <h4 class="title">여행 일정 계획</h4>
+                </div>
+                </a>
+            </div>
+            <div>
+                <a href="/chat/openChat" class="link" onclick="window.open(this.href, 'popup', 'width=450,height=760'); return false;">
+                <div class="box-wrap" id="chat">
+                    <div><img src="/images/chat.png" class="traveler"  /></div>
+                    <p class="titleInfo">여행자들을 위한 <br/>오픈채팅</p><br/>
+                    <h4 class="title">여행 TALK</h4>
+                </div>
+                </a>
+            </div>
+            <div class="weather-wrapper">
+                <h4>지금 날씨는?</h4>
+                <div class="weather-content">
+                    <div class="left-side">
+                        <img class="icon" alt="Weather Icon" />
+                        <div class="desc"></div>
+                    </div>
+                    <div class="right-side">
+                        <div class="place">장소</div>
+                        <div class="temp">온도</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tlog-btn">
+            <a href="/tlog/list" class="link">
+        <span class="text">
+            나의 <strong>여행기</strong> 공유하러 가기
+        </span>
+                <img src="/images/btn_theme_map.gif" />
+            </a>
+        </div>
+
+
+
+
+
+        <div class="community-wrap">
+            <h4 style="margin-bottom: 10px;">지역 커뮤니티</h4>
+            <div>
+                <table style="margin: 0 auto;">
+                    <tr>
+                        <td>
+                            <a th:href="@{/community/list(local=S)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/S.png}" alt="서울">
+                                    <span>서 울</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=GG)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/GG.png}" alt="경기">
+                                    <span>경 기</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=GW)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/GW.png}" alt="강원">
+                                    <span>강 원</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=CB)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/CB.png}" alt="충북">
+                                    <span>충 북</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=CN)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/CN.png}" alt="충남">
+                                    <span>충 남</span>
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a th:href="@{/community/list(local=JB)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/JB.png}" alt="전북">
+                                    <span>전 북</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=JN)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/JN.png}" alt="전남">
+                                    <span>전 남</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=GB)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/GB.png}" alt="경북">
+                                    <span>경 북</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=GN)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/GN.png}" alt="경남">
+                                    <span>경 남</span>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/community/list(local=JJ)}" class="link">
+                                <div class="region">
+                                    <img th:src="@{/images/JJ.png}" alt="제주">
+                                    <span>제 주</span>
+                                </div>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        </div>
+
+
+    <div class="recommand-container">
+
+            <div class="bg">
+                <span class="bg-image"></span>
+            </div>
+            <div class="recommand-cont">
+            <em class="tag">여행지추천 ♥</em>
+            <div class="recommand-title">
+                <h2>
+                    <a th:href="@{/tour/list}">
+                        지역 관광 정보 <img src="/images/arrow.png">
+                    </a>
+                </h2>
+                <p style="margin-top: 15px;">
+                    "여행을 떠나 행운 가득한 혜택을 즐겨보세요~"
+                </p>
+                <br/>
+            </div>
+
+            <div class="recommand-wrap">
+                <div class="place-wrap">
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GG)}'|">
+                        <img src="/images/거제도.jpg" alt="관광지1">
+                        <div class="place-caption">경기</div>
+                    </div>
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GN)}'|">
+                        <img src="/images/경주.jpg" alt="관광지2">
+                        <div class="place-caption">경남</div>
+                    </div>
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=GW)}'|">
+                        <img src="/images/여수.jpg" alt="관광지3">
+                        <div class="place-caption">강원</div>
+                    </div>
+                    <div class="placeDiv" th:onclick="|location.href='@{/tour/list(local=CN)}'|">
+                        <img src="/images/전주.jpg" alt="관광지4">
+                        <div class="place-caption">충남</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script th:src="@{/js/dailyweather.js}" defer></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+    </script>
+    </body>
+</th:block>
+</html>

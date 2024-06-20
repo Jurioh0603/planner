@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/chat/chatListStyle.css">
+</head>
+<body>
+<div id="chat-contents">
+    <h1 class="main-text">여행톡</h1>
+    <hr class="bold-hr"/>
+    <div class="room-count">총 3건</div>
+    <hr class="thin-hr">
+    <div class="d-flex">
+        <a href="/chat/chatRoom" class="chat-box" onclick="window.open(this.href, 'popup', 'width=450,height=550'); return false;">
+            <img src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+            <div class="chat-container-50"></div>
+            <div class="text-container">
+                <div class="num-text">
+                    <div class="name-text">채팅방이름</div>
+                    <div class="num">참여자수</div>
+                </div>
+                <div class="content-text">가장최근메시지</div>
+            </div>
+            <div class="chat-container-10"></div>
+            <div class="date-text">보낸시간</div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

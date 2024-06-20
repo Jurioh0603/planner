@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.admin.repository.adminMemberRepository">
+
+    <!-- 회원정보조회 -->
+    <select id="selectAll" resultType="com.triplan.planner.admin.domain.Member">
+        SELECT MEMBER_ID as memId, NICKNAME, PASSWORD, NAME, EMAIL, GENDER, TEL, GRADE
+        FROM MEMBER
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 회원 등급 수정 -->
+    <update id="updateMemberGrade" parameterType="map">
+        UPDATE MEMBER
+        SET GRADE = #{grade}
+        WHERE MEMBER_ID = #{memId}
+    </update>
+
+    <!-- 회원 검색 -->
+    <select id="searchMembers" parameterType="map" resultType="com.triplan.planner.admin.domain.Member">
+        SELECT MEMBER_ID as memId, NICKNAME, NAME, EMAIL, GENDER, TEL, GRADE
+        FROM MEMBER
+        WHERE 1=1
+        <if test="searchType == 'id'">
+            AND MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'nickname'">
+            AND NICKNAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'name'">
+            AND NAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 회원 수 조회 -->
+    <select id="countMembers" resultType="int">
+        SELECT COUNT(*) FROM MEMBER
+    </select>
+
+    <!-- 검색된 회원 수 조회 -->
+    <select id="countSearchMembers" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM MEMBER
+        WHERE 1=1
+        <if test="searchType == 'id'">
+            AND MEMBER_ID LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'nickname'">
+            AND NICKNAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+        <if test="searchType == 'name'">
+            AND NAME LIKE CONCAT('%', #{searchQuery}, '%')
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <!-- css 설정 -->
+    <link rel="stylesheet" type="text/css" href="/css/admin/adminPageStyle.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<section id="sidebar">
+    <a th:href="@{/admin/memberPage}" class="brand">
+        <i class='bx bxs-smile'></i>
+        <span class="text" style="text-color: #3CB371;">AdminHub</span>
+    </a>
+    <ul class="side-menu top">
+        <li>
+            <a th:href="@{/admin/memberPage}">
+                <i class='bx bxs-group'></i>
+                <span class="text">회원관리</span>
+            </a>
+        </li>
+        <li class="active">
+            <a th:href="@{/admin/board}">
+                <i class='bx bxs-dashboard'></i>
+                <span class="text">게시판관리</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="side-menu">
+        <li>
+            <a th:href="@{/index}">
+                <i class='bx bxs-home' ></i>
+                <span class="text">Home</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/user/logout}" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+        </li>
+    </ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- CONTENT -->
+<section id="content">
+    <!-- NAVBAR -->
+    <nav>
+        <i class='bx bx-menu'></i>
+    </nav>
+    <!-- NAVBAR -->
+
+    <!-- MAIN -->
+    <main>
+        <div class="head-title">
+            <div class="left">
+                <h1>게시판관리</h1>
+                <br/>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">게시글관리</a>
+                    </li>
+                    <li>
+                        <select id="main-category" onchange="updateSubCategories()">
+                            <option value="none" disabled selected>게시판이름</option>
+                            <option value="community">지역 커뮤니티</option>
+                            <option value="travel_log">여행기</option>
+                        </select>
+                    </li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li>
+                        <select id="sub-category" onchange="loadPosts(this.value, 1)" disabled>
+                            <option value="none" disabled selected>세부 카테고리</option>
+                            <option value="S_COMMUNITY">서울</option>
+                            <option value="GG_COMMUNITY">경기</option>
+                            <option value="GW_COMMUNITY">강원</option>
+                            <option value="JJ_COMMUNITY">제주</option>
+                            <option value="CB_COMMUNITY">충북</option>
+                            <option value="CN_COMMUNITY">충남</option>
+                            <option value="JB_COMMUNITY">전북</option>
+                            <option value="JN_COMMUNITY">전남</option>
+                            <option value="GB_COMMUNITY">경북</option>
+                            <option value="GN_COMMUNITY">경남</option>
+                        </select>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="table-data">
+            <div class="order">
+                <div class="head">
+                    <h3>글관리</h3>
+
+                    <!-- 게시판 관리 페이지의 검색 양식 -->
+                    <form id="searchForm" class="d-flex" onsubmit="return searchPosts()">
+                        <select id="searchType" class="form-select me-2">
+                            <option value="title">제목</option>
+                            <option value="memberId">작성자</option>
+                        </select>
+                        <input id="searchQuery" type="text" class="form-control me-2" placeholder="검색어 입력">
+                        <button type="submit" class="btn btn-primary" style="width: 100px; height: 35px;">검색</button>
+
+                    </form>
+
+                </div>
+
+                <table>
+                    <thead >
+                    <tr>
+                        <th>글번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>변경 <input type="checkbox" id="allcheck" name="allcheck" onclick="allCheck()"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="post-list">
+                    <!-- AJAX로 데이터를 가져와서 여기에 채웁니다. -->
+                    </tbody>
+                </table>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button type="button" class="btn btn-primary" style="margin-top: 20px; background-color: #3CB371; border-color: #3CB371;" onclick="boardDelete() ">삭제</button>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <!-- 페이징 버튼이 여기 추가됩니다. -->
+                    </ul>
+
+                </nav>
+            </div>
+        </div>
+    </main>
+    <!-- MAIN -->
+</section>
+<!-- CONTENT -->
+
+<script>
+    function allCheck() {
+        const allCheckBox = document.getElementById("allcheck");
+        const checkboxes = document.querySelectorAll('input[name="check"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = allCheckBox.checked;
+        });
+    }
+
+    function updateSubCategories() {
+        const mainCategory = document.getElementById('main-category').value;
+        const subCategory = document.getElementById('sub-category');
+
+        if (mainCategory === 'community') {
+            subCategory.disabled = false;
+            subCategory.value = "none";
+        } else if (mainCategory === 'travel_log') {
+            subCategory.disabled = true;
+            subCategory.value = "none";
+            loadPagedPosts(mainCategory, 1);
+        } else {
+            subCategory.disabled = true;
+            subCategory.value = "none";
+            const postList = document.getElementById('post-list');
+            postList.innerHTML = "";
+        }
+
+        // 검색 필드를 초기화
+        resetSearchFields();
+    }
+
+    function resetSearchFields() {
+        document.getElementById('searchType').value = 'title';
+        document.getElementById('searchQuery').value = '';
+    }
+
+    function loadPagedPosts(category, page) {
+        if (category === "none") {
+            const postList = document.getElementById('post-list');
+            postList.innerHTML = "";
+            return;
+        }
+
+        $.ajax({
+            url: "/admin/board/posts/paged",
+            method: "GET",
+            data: {
+                category: category,
+                page: page,
+                searchType: document.getElementById('searchType').value,
+                searchQuery: document.getElementById('searchQuery').value
+            },
+            success: function(data) {
+                const postList = $("#post-list");
+                postList.empty();
+                data.boardList.forEach(post => {
+                    const row = `<tr>
+                        <td>${post.bno}</td>
+                        <td>${post.title}</td>
+                        <td>${post.memberId}</td>
+                        <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                        <td><input type="checkbox" name="check" value="${post.bno}"></td>
+                    </tr>`;
+                    postList.append(row);
+                });
+                setupPagination(data.totalPages, page, category);
+                updateUrl(category, page);
+            },
+            error: function() {
+                if (!document.querySelector('.error-alert')) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'error-alert';
+                    alertDiv.innerText = '게시글을 불러오는 중 오류가 발생했습니다.';
+                    document.body.appendChild(alertDiv);
+                    setTimeout(() => alertDiv.remove(), 3000);
+                }
+            }
+        });
+    }
+
+    function setupPagination(totalPages, currentPage, category) {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        if (currentPage > 1) {
+            const prev = document.createElement('li');
+            prev.classList.add('page-item');
+            prev.innerHTML = `<a class="page-link" href="#">&laquo;</a>`;
+            prev.addEventListener('click', function() {
+                loadPagedPosts(category, currentPage - 1);
+            });
+            pagination.appendChild(prev);
+        }
+
+        for (let i = 1; i <= totalPages; i++) {
+            const page = document.createElement('li');
+            page.classList.add('page-item');
+            if (i === currentPage) {
+                page.classList.add('active');
+            }
+            page.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+            page.addEventListener('click', function() {
+                loadPagedPosts(category, i);
+            });
+            pagination.appendChild(page);
+        }
+
+        if (currentPage < totalPages) {
+            const next = document.createElement('li');
+            next.classList.add('page-item');
+            next.innerHTML = `<a class="page-link" href="#">&raquo;</a>`;
+            next.addEventListener('click', function() {
+                loadPagedPosts(category, currentPage + 1);
+            });
+            pagination.appendChild(next);
+        }
+    }
+
+    function updateUrl(category, page) {
+        const searchType = document.getElementById('searchType').value;
+        const searchQuery = document.getElementById('searchQuery').value;
+        const newUrl = `${window.location.origin}${window.location.pathname}?category=${category}&page=${page}&searchType=${searchType}&searchQuery=${searchQuery}`;
+        history.pushState({path: newUrl}, '', newUrl);
+    }
+
+    function boardDelete() {
+        var boardIdxArray = [];
+        $("input:checkbox[name='check']:checked").each(function() {
+            boardIdxArray.push($(this).val());
+        });
+
+        console.log("선택된 게시글 번호:", boardIdxArray);
+
+        if (boardIdxArray.length === 0) {
+            alert("삭제할 항목을 선택해주세요.");
+            return false;
+        }
+
+        var confirmAlert = confirm('정말로 삭제하시겠습니까?');
+        if (confirmAlert) {
+            var category = document.getElementById('main-category').value;
+            var subCategory = document.getElementById('sub-category').value;
+            var targetCategory = category === 'community' ? subCategory : category;
+
+            $.ajax({
+                type: 'POST',
+                url: '/admin/board/delete',
+                dataType: 'json',
+                data: JSON.stringify({
+                    boardIdxArray: boardIdxArray,
+                    category: targetCategory
+                }),
+                contentType: 'application/json',
+                success: function(result) {
+                    console.log("삭제 성공:", result);
+                    alert("해당글이 정상적으로 삭제되었습니다.");
+                    loadPagedPosts(targetCategory, 1); // 삭제 후 글 목록 다시 로드
+                },
+                error: function(request, status, error) {
+                    console.error("삭제 오류 발생");
+                    console.error("Request:", request);
+                    console.error("Status:", status);
+                    console.error("Error:", error);
+                    alert("게시글 삭제 중 오류가 발생했습니다.");
+                }
+            });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function() {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        const menuBar = document.querySelector('#content nav .bx.bx-menu');
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function() {
+            sidebar.classList.toggle('hide');
+        });
+
+        if (window.innerWidth < 768) {
+            sidebar.classList.add('hide');
+        }
+
+        document.getElementById('sub-category').addEventListener('change', function() {
+            if (this.value !== 'none') {
+                loadPagedPosts(this.value, 1);
+            }
+        });
+
+        document.getElementById('main-category').addEventListener('change', function() {
+            updateSubCategories();
+        });
+
+        document.getElementById("allcheck").addEventListener('change', allCheck);
+
+        document.getElementById('main-category').value = "none";
+        document.getElementById('sub-category').value = "none";
+        const postList = document.getElementById('post-list');
+        postList.innerHTML = "";
+
+        // URL에서 파라미터를 읽어 초기 상태를 설정
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const page = urlParams.get('page') || 1;
+        const searchType = urlParams.get('searchType') || 'title';
+        const searchQuery = urlParams.get('searchQuery') || '';
+
+        if (category) {
+            document.getElementById('main-category').value = category === 'travel_log' ? 'travel_log' : 'community';
+            if (category !== 'travel_log') {
+                document.getElementById('sub-category').value = category;
+            }
+            document.getElementById('searchType').value = searchType;
+            document.getElementById('searchQuery').value = searchQuery;
+            loadPagedPosts(category, page);
+        }
+    });
+
+    function searchPosts() {
+        var category = document.getElementById('main-category').value === 'travel_log'
+            ? 'travel_log'
+            : document.getElementById('sub-category').value; // 게시판 카테고리
+        var searchType = document.getElementById('searchType').value; // 검색 타입
+        var searchQuery = document.getElementById('searchQuery').value; // 검색어
+
+        $.ajax({
+            url: "/admin/board/search",
+            method: "GET",
+            data: {
+                category: category,
+                searchType: searchType,
+                searchQuery: searchQuery
+            },
+            success: function(data) {
+                // 검색 결과를 게시글 목록에 표시하는 함수 호출
+                displaySearchResults(data);
+                updateUrl(category, 1); // 검색 후 URL 업데이트
+                setupPagination(1, 1, category); // 검색 결과에 맞춰 페이지네이션 설정
+            },
+            error: function() {
+                // 오류가 발생한 경우 알림 표시
+                alert("검색 중 오류가 발생했습니다.");
+            }
+        });
+
+        // 기본 동작 방지 (페이지 새로고침 방지)
+        return false;
+    }
+
+    // 검색 결과를 게시글 목록에 표시하는 함수
+    function displaySearchResults(data) {
+        // 검색 결과를 표시할 곳을 선택
+        var postList = $("#post-list");
+        // 이전에 표시된 게시글 목록 지우기
+        postList.empty();
+        // 받아온 검색 결과를 반복해서 표시
+        data.forEach(post => {
+            var row = `<tr>
+                <td>${post.bno}</td>
+                <td>${post.title}</td>
+                <td>${post.memberId}</td>
+                <td>${new Date(post.writeTime).toLocaleDateString()}</td>
+                <td><input type="checkbox" name="check" value="${post.bno}"></td>
+            </tr>`;
+            postList.append(row);
+        });
+    }
+</script>
+
+
+
+
+</body>
+</html>

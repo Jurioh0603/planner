@@ -1,0 +1,114 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#CollapseBtnContainer {
+    position: absolute;
+    top: 10px;
+    left: 100px;
+    z-index: 1000;
+}
+
+#mapContainer {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#sortable {
+    list-style-type: none;
+}
+
+li {
+    margin: 20px 30px;
+    padding: 20px;
+}
+
+ul {
+    padding-right: 32px;
+}
+
+.hamburgerMenu {
+    width: 30px;
+}
+
+.ui-state-default {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.planDetail {
+    margin-left: 20px;
+    width: 650px;
+}
+
+.centered-circle {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: #90bcf9;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+input.deleteBtn {
+    background: url("/images/close.svg") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 30px;
+    top: 10px;
+    right: 5px;
+    border: none;
+}
+
+input.modifyBtn {
+    background: url("/images/modify.png") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 35px;
+    top: 40px;
+    right: 1px;
+    border: none;
+}
+
+.deleteBtn:hover, .modifyBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}
+
+.ui-state-default:hover {
+    cursor: pointer;
+    background-color: #DCDCDC;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+}
+
+h3:hover {
+    color: #3e77b6;
+    cursor: pointer;
+}
+
+#headerBar {
+    display: flex;
+    justify-content: space-between;
+}
+
+#titleNDay {
+    width: 850px;
+}

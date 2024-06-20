@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogListStyle.css">
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <div id="contents">
+
+        <div id="titleContainer">
+            <div><h2 class="mt-3 mb-3">나의 멋진 여행기를 공유해요.</h2></div>
+            <div id="writeBtnContainer">
+                <button type="button" class="btn btn-primary writeTlogBtn" onclick="location.href='/tlog/write'" style="background-color: #3CB371; border-color: #3CB371; color:white;">여행기 작성</button>
+            </div>
+        </div>
+
+        <div class="album bg-body-tertiary mt-3">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    <th:block th:each="tlog: ${tlogPage.tlogList}">
+                        <a th:href="@{/tlog/detail(no=${tlog.tlogNo})}" class="link">
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <div class="imgContainer">
+                                        <img th:src="|/tlog/images/${tlog.storeName}|" alt="여행기 섬네일" class="tlogImg"/>
+                                    </div>
+                                    <div class="writerContainer mt-2 ms-2">
+                                        <div>
+                                            <img th:if="${tlog.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img ms-1">
+                                            <img th:if="${tlog.writerProfile.mCopyImg != ''}" th:src="|/tlog/images/${tlog.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img ms-1">
+                                        </div>
+                                        <div class="ms-3 mb-1"><b>[[${tlog.writerProfile.nickname}]]</b> 님의 일정</div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="title mb-2">
+                                            <h5>[[${tlog.tlogTitle}]]</h5>
+                                        </div>
+                                        <div class="content mt-1">
+                                            [[${tlog.tlogContent}]]
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+
+                </div>
+            </div>
+        </div>
+
+        <block th:if="${tlogPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${tlogPage.startPage > 5}" th:href="@{/tlog/list(page=${tlogPage.startPage - 5})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(tlogPage.startPage, tlogPage.endPage)}">
+                        <a th:if="${page == tlogPage.currentPage}" th:href="@{/tlog/list(page=${page})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != tlogPage.currentPage}" th:href="@{/tlog/list(page=${page})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${tlogPage.endPage < tlogPage.totalPages}" th:href="@{/tlog/list(page=${tlogPage.startPage + 5})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
+
+    </div>
+
+</body>
+</th:block>
+</html>

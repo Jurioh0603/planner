@@ -1,0 +1,324 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+.carousel-item img {
+    max-width: none;
+    height: 550px;
+    width: 100%;
+    object-fit: cover;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.box-wrap {
+    width: 220px;
+    height: 280px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border: 2px solid #D6D6D6;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.box-wrap img{
+    width: 35px;
+}
+.box-wrap:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+#plan:hover {
+    background-color: #3CB371;
+    color: #fff;
+}
+
+#chat:hover {
+    background-color: #FAAC58;
+    color: #fff;
+}
+
+.weather-wrapper {
+    width: 500px;
+    height: 280px;
+    padding: 40px 60px;
+    border: 2px solid #D6D6D6;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 600;
+    margin-left: 20px;
+}
+
+#boxContainer {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.weather-content {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.tlog-btn {
+    background: #bdd5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+}
+
+.tlog-btn .link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.tlog-btn .text {
+    margin-left: 40px;
+    font-size: 1.6em;
+    color: black; /* text-color 속성을 color로 변경 */
+}
+
+.tlog-btn .text strong {
+    font-weight: bold;
+}
+
+
+.left-side, .right-side {
+    width: 100px;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center; /* 자식 요소들을 세로로 가운데 정렬 */
+}
+
+.right-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center; /* 자식 요소들을 세로로 가운데 정렬 */
+    margin-top: auto;
+}
+
+.icon {
+    margin-bottom: 10px;
+}
+
+.desc, .place, .temp {
+    text-align: center; /* 텍스트 가운데 정렬 */
+    width: 100%; /* 요소가 부모의 전체 너비를 차지하도록 설정 */
+    margin: 5px 0; /* 위아래 여백 추가 */
+    font-size: 14px;
+}
+
+.place {
+    margin-bottom: 30px;
+}
+
+.traveler {
+    margin-bottom: 30px;
+}
+
+.community-wrap {
+    width: 100%;
+    height: 400px;
+    padding: 40px;
+    border: 2px solid #D6D6D6;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+.region {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 20px;
+}
+
+.region:hover, .tlog-btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.region img {
+    display: block;
+    margin-bottom: 5px; /* 이미지와 텍스트 간격 설정 */
+}
+
+.region span {
+    display: block;
+}
+
+.titleInfo {
+    margin-bottom: 5px;
+}
+
+.title {
+    margin-bottom: 0px;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    color: black;
+}
+
+.recommand-container {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    padding-top: 200px;
+    box-sizing: border-box;
+}
+
+
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 55%; /* 컨테이너 높이의 절반으로 설정 */
+    background: url('/images/bgBack.png')50% center no-repeat rgb(117, 225, 238);
+    z-index: 1;
+    display: flex;
+    justify-content: flex-end; /* 오른쪽에 배치하기 위해 설정 */
+}
+
+.bg span {
+    width: 50%; /* 절반 너비로 설정 */
+    height: 50%;
+    margin-top: 50px;
+    background: url('/images/bgImg.png') center center no-repeat;
+    transform: translate(-200px, -10px);
+}
+
+.recommand-cont {
+    position: relative;
+    padding: 60px 0 0;
+    width: 940px;
+    margin: -200px auto 0; /* 마진 값을 조정하여 컨테이너의 윗부분이 보이도록 설정 */
+    border-radius: 15px;
+    box-sizing: border-box;
+    z-index: 2; /* 컨텐츠가 배경 위에 오도록 설정 */
+}
+
+.recommand-cont em {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #333;
+    color: #fff;
+    height: 34px;
+    line-height: 34px;
+    padding: 0 15px;
+    border-radius: 0 0 10px 10px;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.recommand-title {
+    margin: 0; /* 필요에 따라 여백 설정 */
+}
+
+.recommand-title h2 {
+    font-size: 40px;
+    font-weight: bold;
+    color: #333;
+    margin: 0; /* 기본 마진 제거 */
+    display: flex; /* Flexbox 사용 */
+    align-items: center; /* 세로축 정렬을 가운데로 */
+}
+
+.recommand-title a {
+    display: flex;
+    align-items: center; /* 세로축 정렬을 가운데로 */
+    text-decoration: none; /* 링크의 밑줄 제거 */
+    color: inherit; /* 부모 요소의 글자 색상 상속 */
+}
+
+.recommand-title a img {
+    height: 24px; /* 이미지 크기 조정 */
+    margin-left: 10px; /* 텍스트와 이미지 사이 여백 */
+}
+
+
+.recommand-wrap {
+    width: 980px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative; /* 이 속성이 있어야 z-index가 적용됩니다 */
+    z-index: 2;
+    margin-top: 70px;
+}
+
+.recommand-wrap h4 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.recommand-wrap .place-wrap {
+    display: flex;
+    gap: 10px;
+    height: 400px;
+}
+
+.recommand-wrap .placeDiv {
+    flex: 1;
+    position: relative;
+    transition: flex 0.3s ease-in-out;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.recommand-wrap .placeDiv:hover {
+    flex: 2;
+    cursor: pointer;
+}
+
+.recommand-wrap .placeDiv img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recommand-wrap .place-caption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+

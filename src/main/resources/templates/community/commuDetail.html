@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/community/commuDetailStyle.css">
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+<div id="contents">
+    <div class="mt-5">
+        <h2>[[${communityDetail.community.title}]]</h2>
+    </div>
+
+    <div class="infoContainer mt-4">
+        <div class="profileContainer">
+            <div>
+                <img th:if="${communityDetail.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+                <img th:if="${communityDetail.writerProfile.mCopyImg != ''}" th:src="|/community/images/${communityDetail.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
+            </div>
+            <div class="ms-3 mb-1">[[${communityDetail.writerProfile.nickname}]]</div>
+        </div>
+
+        <div class="writeTime" id="writeTime"></div>
+    </div>
+    <hr/>
+
+    <div class="contentContainer">[[${communityDetail.community.content}]]</div>
+
+    <hr/>
+    <div class="doContainer">
+        <div>
+            <button class="btn btn-sm btn-light me-2" type="button" id="goListBtn" th:onclick="|location.href='@{/community/list(local=${local})}'|" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
+        </div>
+        <th:block th:if="${session.loginMemberInfo != null}">
+            <div class="buttonContainer" th:if="${communityDetail.community.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
+                <button class="btn btn-sm btn-primary me-2" type="button" id="modifyBtn" th:onclick="|location.href='@{/community/modify(local=${local}, no=${communityDetail.community.bno})}'|" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
+                <button class="btn btn-sm btn-primary" type="button" id="deleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
+            </div>
+        </th:block>
+    </div>
+
+    <form action="/community/reply/write" method="post">
+        <div class="mt-3">
+            <th:block th:if="${session.loginMemberInfo != null}">
+                <label for="rcontent1" class="form-label"><strong>댓글</strong></label>
+                <textarea name="rcontent" id="rcontent1" class="form-control" onKeyUp="javascript:fnChkByte(this,'60000')"></textarea>
+            </th:block>
+            <th:block th:if="${session.loginMemberInfo == null}">
+                <label for="rcontent2" class="form-label"><strong>댓글</strong></label>
+                <textarea name="rcontent" id="rcontent2" class="form-control" readonly>작성하려면 로그인이 필요합니다.</textarea>
+            </th:block>
+        </div>
+
+        <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+        <input type="hidden" name="local" th:value="${local}"/>
+
+        <div class="buttonContainer mt-1">
+            <th:block th:if="${session.loginMemberInfo != null}">
+                <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371">댓글 쓰기</button>
+            </th:block>
+            <th:block th:if="${session.loginMemberInfo == null}">
+                <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371" disabled>댓글 쓰기</button>
+            </th:block>
+        </div>
+    </form>
+    <hr/>
+
+    <th:block th:each="reply, iterStat : ${communityDetail.replyList}">
+        <!-- rstep이 1이 아닌 경우 왼쪽 margin을 줘 댓글과 대댓글을 구분 -->
+        <div class="replyContainer mt-2" th:classappend="${(reply.rstep == 1) ? '' : 'ms-5'}">
+            <div class="nicknameNwritetime">
+                <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
+                <div class="replyWritetime">[[${reply.getWriteTimeFormatted()}]]</div>
+            </div>
+            <div class="mb-2 rcontentContainer">[[${reply.rcontent}]]</div>
+            <div class="replyBtns">
+                <div class="replyBtn" onclick="toggleReplyForm(this)">댓글 쓰기</div>
+                <th:block th:if="${session.loginMemberInfo != null}">
+                    <div class="buttonContainer" th:if="${reply.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
+                        <div class="replyBtn me-2" onclick="toggleReplyModifyForm(this)">수정</div>
+                        <div class="replyBtn" th:id="'replyDeleteBtn-' + ${reply.rno}" th:attr="data-rno=${reply.rno}">삭제</div>
+                    </div>
+                </th:block>
+            </div>
+            <!-- 대댓글 작성 폼 -->
+            <form action="/community/reply/rewrite" method="post" class="replyForm" style="display: none;">
+                <div class="mt-3">
+                    <th:block th:if="${session.loginMemberInfo != null}">
+                        <textarea name="rcontent" class="form-control" onKeyUp="javascript:fnChkByte(this,'60000')"></textarea>
+                    </th:block>
+                    <th:block th:if="${session.loginMemberInfo == null}">
+                        <textarea name="rcontent" class="form-control" readonly>작성하려면 로그인이 필요합니다.</textarea>
+                    </th:block>
+                </div>
+
+                <input type="hidden" name="ref" th:value="${reply.ref}"/>
+                <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+                <input type="hidden" name="local" th:value="${local}"/>
+
+                <div class="buttonContainer mt-1">
+                    <th:block th:if="${session.loginMemberInfo != null}">
+                        <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371">댓글 쓰기</button>
+                    </th:block>
+                    <th:block th:if="${session.loginMemberInfo == null}">
+                        <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371" disabled>댓글 쓰기</button>
+                    </th:block>
+                </div>
+            </form>
+
+            <!-- 댓글 수정 폼-->
+            <form action="/community/reply/modify" method="post" class="replyModifyForm" style="display: none;">
+                <div class="mt-3">
+                    <textarea name="rcontent" class="form-control" onKeyUp="javascript:fnChkByte(this,'60000')">[[${reply.rcontent}]]</textarea>
+                </div>
+
+                <input type="hidden" name="rno" th:value="${reply.rno}"/>
+                <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+                <input type="hidden" name="local" th:value="${local}"/>
+
+                <div class="buttonContainer mt-1">
+                    <button class="btn btn-sm btn-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
+                </div>
+            </form>
+        </div>
+    </th:block>
+
+</div>
+
+<!-- 글 삭제 confirm 모달 -->
+<div class="modal" id="confirmDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">작성글 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                정말 삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+                <form action="/community/delete" method="post">
+                    <input type="hidden" name="local" th:value="${local}"/>
+                    <input type="hidden" name="no" th:value="${communityDetail.community.bno}"/>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                    <button type="submit" class="btn btn-primary" id="confirmDeleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 댓글 삭제 confirm 모달 -->
+<div class="modal" id="confirmDeleteReplyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">댓글 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/community/reply/delete" method="post" th:id="replyDeleteForm">
+                <div class="modal-body">
+                    정말 삭제하시겠습니까?
+                    <input type="hidden" name="rno" id="modalRno"/>
+                    <input type="hidden" name="bno" th:value="${communityDetail.community.bno}"/>
+                    <input type="hidden" name="local" th:value="${local}"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                    <button type="submit" class="btn btn-primary" id="confirmDeleteReplyBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    // 작성된 시간을 표시할 요소 선택
+    var writeTimeElement = document.getElementById('writeTime');
+
+    // 작성된 시간 가져오기
+    var writeTime = [[${communityDetail.community.writeTime}]];
+    var writeDate = new Date(writeTime);
+
+    // 현재 시간
+    var currentDate = new Date();
+
+    // 현재 시간과 작성된 시간의 차이 계산 (밀리초 단위)
+    var timeDiff = currentDate - writeDate;
+
+    // 밀리초를 시간으로 변환
+    var seconds = Math.floor(timeDiff / 1000);
+    var minutes = Math.floor(seconds / 60);
+    var hours = Math.floor(minutes / 60);
+    var days = Math.floor(hours / 24);
+
+    // 시간 전에 대한 표시를 작성된 시간 요소에 추가
+    var displayText = '';
+    if (days > 0) {
+        displayText = days + '일 전';
+    } else if (hours > 0) {
+        displayText = hours + '시간 전';
+    } else if (minutes > 0) {
+        displayText = minutes + '분 전';
+    } else if (seconds > 0) {
+        displayText = seconds + '초 전';
+    } else {
+        displayText = '방금 전';
+    }
+    writeTimeElement.innerText = displayText;
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteBtn = document.getElementById("deleteBtn");
+
+        //작성자가 아닌 경우 삭제 버튼이 존재하지 않는다. 따라서 존재 여부를 파악하여 이벤트 리스너를 추가한다.
+        if (deleteBtn) {
+            deleteBtn.addEventListener("click", function () {
+                const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+                modal.show();
+            });
+        }
+    });
+
+    function toggleReplyForm(button) {
+        //댓글 쓰기 버튼이 속한
+        var replyContainer = button.closest('.replyContainer');
+        //replyForm을 찾는다.
+        var replyForm = replyContainer.querySelector('.replyForm');
+        //보였다, 안보였다
+        if (replyForm.style.display == 'none') {
+            replyForm.style.display = 'block';
+            button.innerText = '댓글 취소';
+        } else {
+            replyForm.style.display = 'none';
+            button.innerText = '댓글 쓰기';
+        }
+    }
+
+    function toggleReplyModifyForm(button) {
+        //댓글 수정 버튼이 속한
+        var replyContainer = button.closest('.replyContainer');
+        //replyModifyForm을 찾는다.
+        var replyModifyForm = replyContainer.querySelector('.replyModifyForm');
+        //보였다, 안보였다
+        if (replyModifyForm.style.display == 'none') {
+            replyModifyForm.style.display = 'block';
+            button.innerText = '취소';
+        } else {
+            replyModifyForm.style.display = 'none';
+            button.innerText = '수정';
+        }
+    }
+
+    //'^=' 는 주어진 문자열로 시작하는 요소를 선택
+    document.querySelectorAll('div[id^="replyDeleteBtn-"]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const deleteRno = button.getAttribute('data-rno');
+            document.getElementById('modalRno').value = deleteRno;
+            const modal = new bootstrap.Modal(document.getElementById('confirmDeleteReplyModal'));
+            modal.show();
+        });
+    });
+
+    function fnChkByte(obj, maxByte) {
+        var str = obj.value;
+        var str_len = str.length;
+
+        var rbyte = 0;
+        var rlen = 0;
+        var one_char = "";
+        var str2 = "";
+
+        for(var i = 0; i < str_len; i++) {
+            one_char = str.charAt(i);
+            if (escape(one_char).length > 4) {
+                rbyte += 3;
+            } else {
+                rbyte++;
+            }
+
+            if(rbyte <= maxByte) {
+                rlen = i + 1;
+            }
+        }
+
+        if(rbyte > maxByte) {
+            alert("최대 " + maxByte + "byte를 초과할 수 없습니다.")
+            str2 = str.substr(0, rlen);
+            obj.value = str2;
+            return;
+        }
+    }
+</script>
+</body>
+</th:block>
+</html>

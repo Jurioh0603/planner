@@ -1,0 +1,122 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#plus {
+    width: 40px;
+    margin: 30px;
+}
+
+#addPlanBtn {
+    background-color: #F0F0F0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#addPlanBtn:hover {
+    background-color: #DCDCDC;
+    color: black;
+}
+
+#addPlanBtn > div, .planListContainer > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.planListImgBox {
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid gray;
+    align-items: center;
+}
+
+.planListImgBox:hover {
+    cursor: pointer;
+}
+
+.planListImg {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.planListContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.planListContainer:hover {
+    background-color: #F0F0F0;
+}
+
+input.deleteBtn {
+    background: url("/images/close.svg") no-repeat;
+    background-size: contain;
+    position: absolute;
+    width: 30px;
+    top: 10px;
+    right: 5px;
+    border: none;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+.link:hover {
+    color: black;
+}
+
+span {
+    margin-right: 10px;
+    color: #6f7070;
+}
+
+.dateInfo {
+    display: flex;
+    align-items: center;
+}
+
+.noImg {
+    color: gray;
+    margin-bottom: 0px;
+}
+
+.modal-body {
+    align-items: center;
+}
+
+#planTitle, #planDay {
+    display: flex;
+    align-items: center;
+}
+
+.editTitleBtn:hover, .editDayBtn:hover, .deleteBtn:hover {
+    cursor: pointer;
+    filter: invert(50%);
+}
+
+.placeTag, .titleContainer {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+hr {
+    margin: 0px;
+}

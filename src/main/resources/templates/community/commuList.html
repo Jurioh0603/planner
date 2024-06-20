@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/community/commuListStyle.css">
+
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+<div id="contents">
+
+    <h3 class="mt-3 mb-3">지역 사람들과 소통해요.</h3>
+
+    <div id="localLinkBtnContainer" class="mt-3">
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=S)}|" class="link">
+                <img class="localImg" src="/images/S.png"/>
+                <p id="S">서 울</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=GG)}|" class="link">
+                <img class="localImg" src="/images/GG.png"/>
+                <p id="GG">경 기</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=GW)}|" class="link">
+                <img class="localImg" src="/images/GW.png"/>
+                <p id="GW">강 원</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=CB)}|" class="link">
+                <img class="localImg" src="/images/CB.png"/>
+                <p id="CB">충 북</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=CN)}|" class="link">
+                <img class="localImg" src="/images/CN.png"/>
+                <p id="CN">충 남</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=JB)}|" class="link">
+                <img class="localImg" src="/images/JB.png"/>
+                <p id="JB">전 북</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=JN)}|" class="link">
+                <img class="localImg" src="/images/JN.png"/>
+                <p id="JN">전 남</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=GB)}|" class="link">
+                <img class="localImg" src="/images/GB.png"/>
+                <p id="GB">경 북</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=GN)}|" class="link">
+                <img class="localImg" src="/images/GN.png"/>
+                <p id="GN">경 남</p>
+            </a>
+        </div>
+        <div class="localLinkBtn">
+            <a th:href="|@{/community/list(local=JJ)}|" class="link">
+                <img class="localImg" src="/images/JJ.png"/>
+                <p id="JJ">제 주</p>
+            </a>
+        </div>
+    </div>
+
+    <div id="weatherContainer" class="mt-3">
+        <div class="weather-forecast">
+            <div id="forecast-container"></div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script th:inline="javascript">
+
+            $(document).ready(function(){
+                getTemp();
+            });
+
+            const getTemp = async () => {
+                let city = [[${weather}]];
+                console.log("city >>>> " +city);
+                let apiKey = 'cd4e311164901e06e47b3d8f546073fe'; // OpenWeatherMap API 키
+                let url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=kr`;
+                try {
+
+                    let response = await fetch(url);
+                    let data = await response.json();
+                    let dataList = data.list;
+
+                    dataList.filter((v)=>v.dt_txt.includes('12:00:00')).forEach((v)=>{
+                        let temp = v.main.temp;
+                        let icon = `http://openweathermap.org/img/wn/${v.weather[0].icon}@2x.png`;
+                        let date = v.dt_txt.substring(0, 10);
+                        //console.log(v.weather[0].description);
+                        let forecastHtml = `<div class="forecast-day">
+                                                <div class="date">${date}</div>
+                                                <div class="icon"><img src="${icon}"></div>
+                                                <div class="temp">${temp}</div>
+                                            </div>`;
+
+                        $('#forecast-container').append(forecastHtml);
+                    });
+                } catch (error) {
+                    console.error('날씨 예보 정보를 가져오는데 실패했습니다.', error);
+                }
+            }
+        </script>
+    </div>
+
+    <form action="/community/list" method="get" class="d-flex mt-3 mb-3 searchContainer">
+        <input type="hidden" name="local" th:value="${local}"/>
+        <input class="form-control me-2" type="search" name="search" th:value="${search}" placeholder="검색" aria-label="Search" style="width: 200px">
+        <button class="btn btn-outline-primary" type="submit" style="background-color: #3CB371; border-color: #3CB371; color: white;">검색</button>
+    </form>
+
+    <block th:if="${communityPage.hasNoContents()}">
+        <hr class="hrClass"/>
+        <div class="noContentsMsg">게시글이 존재하지 않습니다.</div>
+    </block>
+
+    <block th:each="community, iterStat : ${communityPage.communityList.communities}">
+        <hr class="hrClass"/>
+        <div class="contentContainer">
+            <a th:href="|@{/community/detail(local=${local}, no=${community.bno}, page=${page}, search=${search})}|" class="link"><div class="title" th:text="${community.title}"></div></a>
+            <div class="writer" th:text="${communityPage.communityList.nicknameList[iterStat.index]}"></div>
+            <div class="writeTime" th:text="${community.getWriteTimeFormatted()}"></div>
+        </div>
+    </block>
+
+    <hr class="hrClass"/>
+
+    <div id="doContainer">
+        <block th:if="${communityPage.hasContents()}">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a th:if="${communityPage.startPage > 5}" th:href="@{/community/list(local=${local}, page=${communityPage.startPage - 5}, search=${search})}">&laquo;</a>
+                    <block th:each="page : ${#numbers.sequence(communityPage.startPage, communityPage.endPage)}">
+                        <a th:if="${page == communityPage.currentPage}" th:href="@{/community/list(local=${local}, page=${page}, search=${search})}" class="active">[[${page}]]</a>
+                        <a th:if="${page != communityPage.currentPage}" th:href="@{/community/list(local=${local}, page=${page}, search=${search})}">[[${page}]]</a>
+                    </block>
+                    <a th:if="${communityPage.endPage < communityPage.totalPages}" th:href="@{/community/list(local=${local}, page=${communityPage.startPage + 5}, search=${search})}">&raquo;</a>
+                </div>
+            </div>
+        </block>
+
+        <div class="buttonContainer mt-3">
+            <button class="btn btn-sm btn-primary" type="button" th:attr="onclick=|location.href='@{/community/write(local=${local})}'|" style="background-color: #3CB371; border-color: #3CB371">글쓰기</button>
+        </div>
+    </div>
+
+</div>
+<script th:inline="javascript">
+    //선택된 지역 게시판 이름에 <strong> 부여
+    var local = [[${local}]];
+    var localP = document.getElementById(local);
+    localP.innerHTML = `<strong>${localP.innerHTML}</strong>`;
+</script>
+</body>
+</th:block>
+</html>

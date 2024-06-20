@@ -1,0 +1,69 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+.infoContainer, .doContainer {
+    display: flex;
+    align-items: end;
+}
+
+.profileContainer, .replyBtns {
+    display: flex;
+    align-items: end;
+}
+
+.writeTime {
+    margin-left: auto;
+    display: flex;
+    align-items: end;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    text-align: center;
+}
+
+.contentContainer {
+    min-height: 200px;
+}
+
+#content {
+    height: 100px;
+}
+
+.buttonContainer {
+    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.replyContainer {
+    border-radius: 5px;
+    background-color: #DCDCDC;
+    padding: 10px 20px;
+}
+
+.contentContainer, .rcontentContainer {
+    white-space: pre-wrap;
+}
+
+.replyBtn:hover {
+    cursor: pointer;
+    color: #0D6EFD;
+}
+
+.nicknameNwritetime {
+    display: flex;
+}
+
+.replyWritetime {
+    margin-left: auto;
+}

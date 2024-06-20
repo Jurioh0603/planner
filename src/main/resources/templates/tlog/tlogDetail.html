@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>여정 : 여행을 정하다</title>
+    <link href="/images/fav.png" rel="shortcut icon" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/css/tlog/tlogDetailStyle.css">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 모든 carousel-item 요소들을 선택
+            var carouselItems = document.getElementsByClassName('carousel-item');
+            var carouselBtns = document.getElementsByClassName('carouselBtn');
+
+            // 첫 번째 carousel-item 요소가 존재하는지 확인
+            if (carouselItems.length > 0) {
+                // 첫 번째 carousel-item 요소에 active 클래스 추가
+                carouselItems[0].classList.add('active');
+            }
+
+            if (carouselBtns.length > 0) {
+                carouselBtns[0].classList.add('active');
+            }
+        });
+
+        $(document).ready(function() {
+            $(".day").each(function() {
+                var $day = $(this);
+
+                updateNumbers($day);
+            });
+
+            // num-span 값 설정
+            function updateNumbers($day) {
+                $day.find("li").each(function(index) {
+                    $(this).find(".num-span").text(index + 1);
+                });
+            }
+        });
+
+        // 'day #' 클릭시 해당 날짜 데이터로 지도 update
+        function getMapByDay(index) {
+            dayIdx = "day-" + index;
+            updateMap();
+        }
+
+        // 'day #' 클릭시 지도 위치로 smooth하게 스크롤
+        function scrollToElement(elementId) {
+            var element = document.getElementById(elementId);
+            if (element) {
+                var elementPosition = element.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+            }
+        }
+    </script>
+</head>
+<body>
+<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="content">
+    <div id="contents">
+        <div class="mt-5">
+            <h2>[[${tlogInfo.tlog.tlogTitle}]]</h2>
+        </div>
+
+        <div class="infoContainer mt-4">
+            <div class="profileContainer">
+                <div>
+                    <img th:if="${tlogInfo.writerProfile.mCopyImg == ''}" src="/images/profile.jpg" alt="프로필 사진" class="profile-img">
+                    <img th:if="${tlogInfo.writerProfile.mCopyImg != ''}" th:src="|/tlog/images/${tlogInfo.writerProfile.mCopyImg}|" alt="프로필 사진" class="profile-img">
+                </div>
+                <div class="ms-3 mb-1"><b>[[${tlogInfo.writerProfile.nickname}]]</b> 님의 일정</div>
+            </div>
+            <div class="iconContainer" th:if="${session.loginMemberInfo != null}">
+                <div class="fav-img-box">
+                    <block th:if="${!isFav}">
+                        <img src="/images/heart_white.png" alt="즐겨찾기" class="fav-img mb-1">
+                        <a th:href="|@{/tlog/fav(tlogNo=${tlogInfo.tlog.tlogNo})}|"><img src="/images/heart_black.png" alt="즐겨찾기" class="fav-img-hover mb-1"></a>
+                    </block>
+                    <block th:if="${isFav}">
+                        <a th:href="|@{/tlog/notFav(tlogNo=${tlogInfo.tlog.tlogNo})}|"><img src="/images/heart_red.png" alt="즐겨찾기" class="fav-img-red mb-1"></a>
+                    </block>
+                </div>
+                <div><img src="/images/download.png" alt="일정담기" class="download-img ms-3 mb-1 scheduleSaveBtn saveIcon" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}"></div>
+            </div>
+        </div>
+        <hr/>
+
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <th:block th:each="image, iterStat: ${tlogInfo.tlogImageList}">
+                    <button type="button" class="carouselBtn" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-slide-to=${iterStat.index}, aria-label=|Slide ${iterStat.index + 1}|"></button>
+                </th:block>
+            </div>
+            <div class="carousel-inner">
+                <th:block th:each="image : ${tlogInfo.tlogImageList}">
+                    <div class="carousel-item">
+                        <img th:src="|/tlog/images/${image.storeName}|" class="d-block w-100" alt="첨부이미지">
+                    </div>
+                </th:block>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="mt-3 contentContainer">[[${tlogInfo.tlog.tlogContent}]]</div>
+        <hr/>
+
+        <div id="mapContainer">
+            <div id="map" style="width:800px; height:400px;"></div>
+        </div>
+        <script th:inline="javascript">
+            var appkey = [[${KAKAO_API_KEY}]];
+        </script>
+        <script>
+            var script = document.createElement('script');
+            script.type = "text/javascript";
+            script.src = "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + appkey + "&autoload=false";
+            document.head.appendChild(script);
+        </script>
+        <script>
+            var map = null;
+            var dayIdx = "day-0";
+            var markers = []; // 마커를 담을 배열입니다
+            var linePath = null; // 마커 연결선
+            var points = []; // 지도 범위를 재설정하기 위한 배열
+
+            script.onload = function() {
+                loadMap();
+            };
+
+            function loadMap() {
+                kakao.maps.load(function() {
+
+                    map = drawMap(); //지도 생성
+
+                    var positions = getPositions(dayIdx); //장소 정보 가져오기
+
+                    if(positions.length > 0) {
+                        setBounds();
+                    }
+
+                    displayPlaces(positions); //마커 생성 및 그리기
+                    displayLines(positions); //마커 연결선 생성 및 그리기
+                });
+            }
+
+            function updateMap() {
+
+                removeMarker(); //마커와 연결선 제거
+
+                var positions = getPositions(dayIdx); //장소 정보 가져오기
+
+                if(positions.length > 0) {
+                    setBounds();
+                }
+
+                displayPlaces(positions); //마커 생성 및 그리기
+                displayLines(positions); //마커 연결선 생성 및 그리기
+            }
+
+            function setBounds() {
+                var bounds = new kakao.maps.LatLngBounds();
+                for(var i = 0; i < points.length; i++) {
+                    bounds.extend(points[i]);
+                }
+                map.setBounds(bounds);
+            }
+
+            function drawMap() {
+                var container = document.getElementById('map'); //지도를 표시할 div
+                var options = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표
+                    level: 3 //지도의 확대 레벨
+                };
+
+                return new kakao.maps.Map(container, options);
+            }
+
+            function getPositions(dayIdx) {
+                var positions = [];
+                points = [];
+
+                $("#" + dayIdx + " li").each(function() {
+                    var placeName = $(this).data("place-name");
+                    var latitude = parseFloat($(this).data("latitude"));
+                    var longitude = parseFloat($(this).data("longitude"));
+
+                    if (placeName && !isNaN(latitude) && !isNaN(longitude)) {
+                        positions.push({
+                            title: placeName,
+                            latlng: new kakao.maps.LatLng(latitude, longitude)
+                        });
+                        points.push(new kakao.maps.LatLng(latitude, longitude));
+                    }
+                });
+
+                return positions;
+            }
+
+            function displayPlaces(positions) {
+                for(var i = 0; i < positions.length; i++) {
+                    var placePosition = positions[i].latlng;
+                    var placeTitle = positions[i].title;
+                    addMarker(placePosition, i, placeTitle);
+                }
+            }
+
+            function addMarker(position, idx, title) {
+                // 마커 이미지의 이미지 주소입니다
+                var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+                    imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
+                    imgOptions =  {
+                        spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+                        spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+                        offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+                    },
+                    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
+
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    map: map, // 마커를 표시할 지도
+                    position: position, // 마커를 표시할 위치
+                    title: title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                    image: markerImage // 마커 이미지
+                });
+
+                marker.setMap(map);
+                markers.push(marker);
+
+                return marker;
+            }
+
+            function displayLines(positions) {
+                    var polyline = [];
+                    for (var i = 0; i < positions.length; i++) {
+                        polyline.push(positions[i].latlng);
+                        if(polyline.length == 15) {
+                            break;
+                        }
+                    }
+
+                    //마커 연결
+                    drawLine(map, polyline);
+            }
+
+            function drawLine(map, polyline) {
+                    linePath = new kakao.maps.Polyline({
+                        path: polyline,       // 선을 구성하는 좌표배열입니다
+                        strokeWeight: 3,      // 선의 두께입니다
+                        strokeColor: 'black', // 선의 색깔입니다
+                        strokeOpacity: 0.7,   // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+                        strokeStyle: 'solid'  // 선의 스타일입니다
+                    });
+
+                    linePath.setMap(map);
+            }
+
+            // 지도 위에 표시되고 있는 마커를 모두 제거합니다
+            function removeMarker() {
+                for ( var i = 0; i < markers.length; i++ ) {
+                    markers[i].setMap(null);
+                }
+                linePath.setMap(null);
+
+                markers = [];
+                linePath = null;
+            }
+        </script>
+        <hr/>
+
+        <th:block th:each="day, dStat : ${tlogInfo.travelDay}">
+            <h3 th:attr="onclick=|getMapByDay(${dStat.index}); scrollToElement('mapContainer')|">day [[${dStat.index + 1}]]</h3>
+            <ul th:id="'day-'+${dStat.index}" class="day ulItem">
+                <th:block th:each="schedule, scStat : ${tlogInfo.detailScheduleList}">
+                    <th:block th:if="${schedule.detailDay == dStat.index}">
+                        <li class="ui-state-default liItem" th:id="'place-'+${dStat.index}" th:attr="data-place-name=${schedule.placeName}, data-latitude=${schedule.placeLatitude},data-longitude=${schedule.placeLongitude}">
+                            <div class="centered-circle"><span class="num-span" ></span></div>
+                            <div class="planDetail"><h4 th:text="${schedule.placeName}" class="placeName">해운대</h4><p class="m-0 memo">[[${schedule.placeMemo}]]</p></div>
+                        </li>
+                    </th:block>
+                </th:block>
+            </ul>
+            <hr/>
+        </th:block>
+
+        <div id="listButtonContainer" th:if="${session.loginMemberInfo == null}">
+            <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
+        </div>
+
+        <div id="buttonContainer" th:if="${session.loginMemberInfo != null}">
+            <div id="buttonContainer-left" class="mt-5">
+                <button class="btn btn-light me-2" type="button" onclick="location.href='/tlog/list'" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">목록</button>
+                <th:block th:if="${tlogInfo.tlog.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
+                    <button class="btn btn-primary me-2" type="button" th:attr="onclick=|location.href='@{/tlog/modify(no=${tlogInfo.tlog.tlogNo})}'|" style="background-color: #3CB371; border-color: #3CB371; color:white;">수정</button>
+                    <button class="btn btn-primary" type="button" id="deleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
+                </th:block>
+            </div>
+
+            <div id="buttonContainer-right" class="mt-5">
+                <button class="btn btn-primary scheduleSaveBtn" type="button" th:attr="scheduleNo=${tlogInfo.tlog.scheduleNo}" style="background-color: #3CB371; border-color: #3CB371; color:white;">일정담기</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal" id="confirmDeleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">여행기 삭제</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <form action="/tlog/delete" method="post">
+                        <input type="hidden" name="no" th:value="${tlogInfo.tlog.tlogNo}"/>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color: black;">취소</button>
+                        <button type="submit" class="btn btn-primary" id="confirmDeleteBtn" style="background-color: #3CB371; border-color: #3CB371; color:white;">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var deleteBtn = document.getElementById("deleteBtn");
+
+            // 작성자가 아닌 경우 삭제 버튼이 존재하지 않는다. 따라서 존재 여부를 파악하여 이벤트 리스너를 추가한다.
+            if (deleteBtn) {
+                deleteBtn.addEventListener("click", function () {
+                    const modal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+                    modal.show();
+                });
+            }
+        });
+
+        document.querySelectorAll('.scheduleSaveBtn').forEach(function(element) {
+            element.addEventListener('click', function(event) {
+                var scheduleNo = this.getAttribute('scheduleNo');
+                var data = {
+                    scheduleNo: scheduleNo
+                };
+
+                // AJAX 요청
+                fetch('/tlog/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    alert('저장 완료!');
+                })
+                .catch((error) => {
+                    alert('저장 실패');
+                });
+            });
+        });
+    </script>
+</body>
+</th:block>
+</html>

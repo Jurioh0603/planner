@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.triplan.planner.calendar.repository.CalendarMapper">
+
+    <insert id="saveDate" parameterType="com.triplan.planner.calendar.dto.DateDTO">
+        INSERT INTO SCHEDULE (START_DAY, END_DAY, SCHEDULE_TITLE, MEMBER_ID)
+        VALUES (#{startDay}, #{endDay}, #{title}, #{memberId})
+    </insert>
+
+    <delete id="deleteOverSchedule" parameterType="long">
+        DELETE FROM DETAILSCHEDULE
+        WHERE SCHEDULE_NO=#{scheduleNo} AND DETAIL_DAY > #{diffmodifyDays}
+    </delete>
+
+    <update id="updateDayByNo" parameterType="com.triplan.planner.calendar.dto.ModifyForm">
+        UPDATE SCHEDULE
+        SET START_DAY=#{startDay}, END_DAY=#{endDay}
+        WHERE SCHEDULE_NO=#{scheduleNo}
+    </update>
+
+</mapper>

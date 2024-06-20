@@ -1,0 +1,231 @@
+/*폰트*/
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 90%;
+    margin: 0 auto;
+}
+
+body {
+    background-color: #F8EEEE;
+}
+/*상단 정렬*/
+.top{
+    margin-top: 20px;
+    margin-left: 30px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.bottom{
+    margin-left: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.chat-container{
+    display: flex;
+}
+
+/*수직정렬*/
+.text-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-container-bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+/*수평정렬*/
+.line-container{
+    display: flex;
+    align-items: flex-start;
+}
+
+.line-container-end{
+     display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+}
+
+/*채팅참여자수*/
+.num-text{
+    margin-left: 10px;
+    margin-top: 3px;
+}
+
+/*닉네임*/
+.name-text{
+    font-weight: bold;
+    font-size: 20px;
+    color: #3c3c3c;
+    max-height: 2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.name-text-small{
+    font-weight: bold;
+    font-size: 15px;
+    color: #3c3c3c;
+    max-height: 2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*프로필 이미지*/
+.profile-img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.profile-img-small {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    padding: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.line{
+    width:95%;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+@media (max-width: 768px) {
+    .line {
+        width: 90%; /* 예시로 작은 화면 크기에 맞게 조정 */
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+}
+
+/*말풍선*/
+.bubble {
+    position: relative;
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 12px;
+    padding: 10px 15px;
+    max-width: 100%;
+    margin: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bubble::after {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    left: 0%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 15px 15px 0;
+    border-color: #ffffff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .bubble {
+        max-width: 70vw;
+    }
+}
+
+.bubble-me {
+    position: relative;
+    background-color: #ffffff;
+    color: #000;
+    border-radius: 12px;
+    padding: 10px 15px;
+    max-width: 100%;
+    margin: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    align-self: flex-end;
+}
+
+.bubble-me::after {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    right: -20%;
+    transform: translateX(-50%);
+    border-style: solid;
+    border-width: 15px 15px 0;
+    border-color: #ffffff transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .bubble-me {
+        max-width: 70vw;
+    }
+}
+ /*보낸시간*/
+.time-text{
+    font-size: 13px;
+    color: #3c3c3c;
+    align-items: flex-end;
+    margin-right: auto;
+    margin-bottom: 8px;
+    align-self: flex-end;
+}
+
+.time-text-me{
+    font-size: 13px;
+    color: #3c3c3c;
+    align-items: flex-end;
+    margin-left: auto;
+    margin-bottom: 8px;
+    align-self: flex-end;
+}
+
+
+/*채팅입력창*/
+.text-box{
+    display: flex;
+    align-items: flex-end;
+    align-self: flex-end;
+}
+
+.input-container {
+    margin-bottom: -150px;;
+
+}
+#chat {
+    width: calc(100%); /* Send 버튼의 너비만큼 차지하지 않도록 설정 */
+    height: 20%; /* 부모 요소 높이만큼 설정 */
+    border: none;
+    position: absolute;
+    bottom: 0; /* 아래쪽에 위치 */
+    left: 0;
+}
+
+#send {
+    background-color: #D7D7D7;
+    position: absolute; /* 절대적 위치 설정 */
+    right: 0; /* 오른쪽에 위치 */
+    bottom: 0; /* 아래쪽에 위치 */
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 17px;
+    padding-right: 17px;
+    border: none; /* 테두리 제거 */
+}

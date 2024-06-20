@@ -1,0 +1,21 @@
+* {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
+#contents {
+    width: 980px;
+    margin: 0 auto;
+}
+
+#title, #content {
+    width: 100%;
+}
+
+#content {
+    height: 500px;
+}
+
+#buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+}
