@@ -33,6 +33,30 @@
         WHERE RNO=#{reply.rno}
     </update>
 
+    <select id="getReplyByNo" resultType="com.triplan.planner.community.domain.Reply">
+        SELECT *
+        FROM ${local}
+        WHERE RNO=#{rno}
+    </select>
+
+    <select id="getReplyListByRef" resultType="com.triplan.planner.community.domain.Reply">
+        SELECT *
+        FROM ${local}
+        WHERE BNO=#{bno} AND REF=${ref}
+        ORDER BY RNO ASC
+    </select>
+
+    <update id="updateToDeleteReply">
+        UPDATE ${local}
+        SET RCONTENT='삭제된 댓글입니다.', RSTEP=0
+        WHERE RNO=${rno}
+    </update>
+
+    <delete id="deleteReplyByRef">
+        DELETE FROM ${local}
+        WHERE BNO=${bno} AND REF=${ref}
+    </delete>
+
     <delete id="deleteReplyByNo">
         DELETE FROM ${local}
         WHERE RNO=${rno}

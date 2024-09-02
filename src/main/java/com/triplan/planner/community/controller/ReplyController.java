@@ -42,7 +42,7 @@ public class ReplyController {
 
     @PostMapping("delete")
     public String delete(@RequestParam("rno") long rno, @RequestParam("bno") long bno, @RequestParam("local") String local) {
-        replyService.delete(rno, local);
+        replyService.delete(bno, rno, local);
         return "redirect:/community/detail?local=" + local + "&no=" + bno;
     }
 

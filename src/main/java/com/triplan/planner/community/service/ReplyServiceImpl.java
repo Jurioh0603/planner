@@ -27,7 +27,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void delete(long rno, String local) {
-        replyRepository.deleteReply(rno, local);
+    public void delete(long bno, long rno, String local) {
+        replyRepository.deleteReply(bno, rno, local);
     }
 }
