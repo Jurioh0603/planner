@@ -77,22 +77,27 @@
     <hr/>
 
     <th:block th:each="reply, iterStat : ${communityDetail.replyList}">
-        <!-- rstep이 1이 아닌 경우 왼쪽 margin을 줘 댓글과 대댓글을 구분 -->
-        <div class="replyContainer mt-2" th:classappend="${(reply.rstep == 1) ? '' : 'ms-5'}">
-            <div class="nicknameNwritetime">
-                <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
-                <div class="replyWritetime">[[${reply.getWriteTimeFormatted()}]]</div>
-            </div>
-            <div class="mb-2 rcontentContainer">[[${reply.rcontent}]]</div>
-            <div class="replyBtns">
-                <div class="replyBtn" onclick="toggleReplyForm(this)">댓글 쓰기</div>
-                <th:block th:if="${session.loginMemberInfo != null}">
-                    <div class="buttonContainer" th:if="${reply.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
-                        <div class="replyBtn me-2" onclick="toggleReplyModifyForm(this)">수정</div>
-                        <div class="replyBtn" th:id="'replyDeleteBtn-' + ${reply.rno}" th:attr="data-rno=${reply.rno}">삭제</div>
-                    </div>
-                </th:block>
-            </div>
+        <!-- rstep이 2인 경우 왼쪽 margin을 줘 댓글과 대댓글을 구분 -->
+        <div class="replyContainer mt-2" th:classappend="${(reply.rstep == 2) ? 'ms-5' : ''}">
+            <th:block th:if="${reply.rstep == 0}">
+                <div class="rcontentContainer">[[${reply.rcontent}]]</div>
+            </th:block>
+            <th:block th:if="${reply.rstep != 0}">
+                <div class="nicknameNwritetime">
+                    <div class="mb-2"><strong>[[${communityDetail.replyNicknameList[iterStat.index]}]]</strong></div>
+                    <div class="replyWritetime">[[${reply.getWriteTimeFormatted()}]]</div>
+                </div>
+                <div class="mb-2 rcontentContainer">[[${reply.rcontent}]]</div>
+                <div class="replyBtns">
+                    <div class="replyBtn" onclick="toggleReplyForm(this)">댓글 쓰기</div>
+                    <th:block th:if="${session.loginMemberInfo != null}">
+                        <div class="buttonContainer" th:if="${reply.memberId == session.loginMemberInfo.memberId || session.loginMemberInfo.grade == '9999'}">
+                            <div class="replyBtn me-2" onclick="toggleReplyModifyForm(this)">수정</div>
+                            <div class="replyBtn" th:id="'replyDeleteBtn-' + ${reply.rno}" th:attr="data-rno=${reply.rno}">삭제</div>
+                        </div>
+                    </th:block>
+                </div>
+            </th:block>
             <!-- 대댓글 작성 폼 -->
             <form action="/community/reply/rewrite" method="post" class="replyForm" style="display: none;">
                 <div class="mt-3">

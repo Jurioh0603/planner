@@ -17,5 +17,10 @@ public interface ReplyMapper {
 
     public void updateReply(Reply reply, String local);
 
+    public Reply getReplyByNo(long rno, String local);
+    public List<Reply> getReplyListByRef(long bno, long ref, String local);
+
+    public void updateToDeleteReply(long rno, String local);
+    public void deleteReplyByRef(long bno, long ref, String local);
     public void deleteReplyByNo(long rno, String local);
 }

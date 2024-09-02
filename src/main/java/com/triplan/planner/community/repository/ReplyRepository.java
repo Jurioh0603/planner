@@ -10,5 +10,5 @@ public interface ReplyRepository {
 
     public void updateReply(Reply reply, String local);
 
-    public void deleteReply(long rno, String local);
+    public void deleteReply(long bno, long rno, String local);
 }
