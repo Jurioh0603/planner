@@ -3,7 +3,8 @@ package com.triplan.planner.community.domain;
 import lombok.Data;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Data
@@ -16,12 +17,11 @@ public class Community {
     private String memberId;
 
     public String getWriteTimeFormatted() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        Date date = new Date(cal.getTimeInMillis());
+        LocalDate today = LocalDate.now();
+        LocalDate writeDate = writeTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
-        //하루 이상 전 -> 날짜
-        if(date.compareTo(writeTime) < 0) {
+        //오늘 작성한 글은 시간, 그 외는 날짜 출력
+        if(writeDate.isEqual(today)) {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             return format.format(writeTime);
         } else {
