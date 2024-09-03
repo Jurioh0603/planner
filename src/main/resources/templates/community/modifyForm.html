@@ -42,58 +42,8 @@
     </form>
 
 </div>
-<script>
-    document.getElementById("saveBtn").addEventListener("click", function () {
-        //제목 체크
-        var titleInput = document.getElementById('title');
-
-        if(titleInput.value == '') {
-            alert("제목은 필수 사항입니다.");
-            return false;
-        }
-
-        //내용 체크
-        var contentInput = document.getElementById('content');
-
-        if(contentInput.value == '') {
-            alert("내용은 필수 사항입니다.");
-            return false;
-        }
-
-        //제출
-        document.getElementById("form").submit();
-    });
-
-    function fnChkByte(obj, maxByte) {
-        var str = obj.value;
-        var str_len = str.length;
-
-        var rbyte = 0;
-        var rlen = 0;
-        var one_char = "";
-        var str2 = "";
-
-        for(var i = 0; i < str_len; i++) {
-            one_char = str.charAt(i);
-            if (escape(one_char).length > 4) {
-                rbyte += 3;
-            } else {
-                rbyte++;
-            }
-
-            if(rbyte <= maxByte) {
-                rlen = i + 1;
-            }
-        }
-
-        if(rbyte > maxByte) {
-            alert("최대 " + maxByte + "byte를 초과할 수 없습니다.")
-            str2 = str.substr(0, rlen);
-            obj.value = str2;
-            return;
-        }
-    }
-</script>
+<script src="/js/community/commuForm.js"></script>
+<script src="/js/checkSize.js"></script>
 </body>
 </th:block>
 </html>
