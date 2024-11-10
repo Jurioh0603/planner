@@ -14,7 +14,7 @@ public class ReplyRepositoryImpl implements ReplyRepository {
 
     @Override
     public void insertReply(Reply reply, String local) {
-        local += "_reply";
+        local += "_REPLY";
         Long lastRef = replyMapper.maxRef(reply.getBno(), local);
         //첫 댓글 -> ref 1
         long ref = 1;
@@ -26,19 +26,19 @@ public class ReplyRepositoryImpl implements ReplyRepository {
 
     @Override
     public void insertReReply(Reply reply, String local) {
-        local += "_reply";
+        local += "_REPLY";
         replyMapper.insertReReply(reply, local);
     }
 
     @Override
     public void updateReply(Reply reply, String local) {
-        local += "_reply";
+        local += "_REPLY";
         replyMapper.updateReply(reply, local);
     }
 
     @Override
     public void deleteReply(long bno, long rno, String local) {
-        local += "_reply";
+        local += "_REPLY";
         Reply reply = replyMapper.getReplyByNo(rno, local); //삭제할 댓글
         List<Reply> replyListByRef = replyMapper.getReplyListByRef(bno, reply.getRef(), local); //삭제할 댓글과 같은 그룹의 댓글들
 
