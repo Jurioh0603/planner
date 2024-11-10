@@ -98,7 +98,7 @@ public class TourController {
         model.addAttribute("attractionPage", attractionPage);
         System.out.println("local="+local);
         model.addAttribute("local", local);
-        return "/tour/tourList";
+        return "tour/tourList";
     }
 
     // 관광 정보 세부
@@ -107,6 +107,6 @@ public class TourController {
                              Model model) {
         AttractionDetail attractionDetail = tourService.getTourDetail(placeNo);
         model.addAttribute("attractionDetail", attractionDetail);
-        return "/tour/tourDetail";
+        return "tour/tourDetail";
     }
 }
