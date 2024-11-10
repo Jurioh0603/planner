@@ -32,6 +32,6 @@ public class ChatController {
 
     @GetMapping("/chat/openChat")
     public String openChat() {
-        return "/chat/openChat";
+        return "chat/openChat";
     }
 }

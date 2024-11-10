@@ -19,7 +19,7 @@
     <div class="calendar-container">
         <div id="inline-calendar"></div>
         <div id="date-range" class="mt-3"></div>
-        <button id="get-schedule" class="btn btn-primary mt-3" disabled>여행일정 수정하기</button>
+        <button id="get-schedule" class="btn btn-primary mt-3" style="background-color: #3CB371; border-color: #3CB371;" disabled>여행일정 수정하기</button>
     </div>
     <form id="schedule-form" action="/plan/modifyDay" method="post" style="display:none;">
         <input type="hidden" id="no" name="no" th:attr="value=${no}"/>
@@ -40,8 +40,8 @@
                 <p>여행 기간을 줄이신다면 기존에 작성하신 일정이 사라질 수 있습니다.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" id="confirm-schedule">수정하기</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #F2F2F2; border-color: #F2F2F2; color:black;">취소</button>
+                <button type="button" class="btn btn-primary" id="confirm-schedule" style="background-color: #3CB371; border-color: #3CB371;">수정하기</button>
             </div>
         </div>
     </div>

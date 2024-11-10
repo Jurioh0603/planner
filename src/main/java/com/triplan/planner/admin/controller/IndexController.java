@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class IndexController {
 
     @GetMapping("/index")
-    public String main(){return "/main/index";}
+    public String main(){return "main/index";}
 
     @GetMapping("/error/forbidden")
     public String forbidden() {
-        return "/error/403";
+        return "error/403";
     }
 
     @GetMapping("/error/notFound")
     public String notFound() {
-        return "/error/4xx";
+        return "error/4xx";
     }
 }
