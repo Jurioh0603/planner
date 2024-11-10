@@ -45,7 +45,7 @@ public class MyPageController {
         session.setAttribute("memberId", memberId);
         Profile profile = myPageService.getProfileList(memberId);
         model.addAttribute("profile", profile);
-        return "/mypage/myPage";
+        return "mypage/myPage";
     }
 
     // 프로필 사진 업데이트 요청
@@ -91,7 +91,7 @@ public class MyPageController {
         }
         Profile profile = myPageService.getProfileList(memberId);
         model.addAttribute("profile", profile);
-        return "/mypage/myInfo";
+        return "mypage/myInfo";
     }
 
     // 마이페이지 내 정보 수정 요청
@@ -155,7 +155,7 @@ public class MyPageController {
         MyTlogPage myFavPage = new MyTlogPage(total, Integer.parseInt(page), size, myFavList);
         System.out.println(myFavPage);
         model.addAttribute("myFavPage", myFavPage);
-        return "/mypage/myFav";
+        return "mypage/myFav";
     }
 
     // 나의 여행기 보기
@@ -179,7 +179,7 @@ public class MyPageController {
 
         MyTlogPage myTlogPage = new MyTlogPage(total, Integer.parseInt(page), size, myTlogList);
         model.addAttribute("myTlogPage", myTlogPage);
-        return "/mypage/myTlog";
+        return "mypage/myTlog";
     }
 
     // 내가 쓴 글 보기
@@ -206,7 +206,7 @@ public class MyPageController {
         // 내가 쓴 글 총 갯수
         MyCommunityPage myCommunityPage = new MyCommunityPage(total,Integer.parseInt(page), size, myCommunityList);
         model.addAttribute("myCommunityPage", myCommunityPage);
-        return "/mypage/myCommunity";
+        return "mypage/myCommunity";
     }
 
 }
