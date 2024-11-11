@@ -17,7 +17,7 @@ public class Community {
     private String memberId;
 
     public String getWriteTimeFormatted() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate writeDate = writeTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         //오늘 작성한 글은 시간, 그 외는 날짜 출력

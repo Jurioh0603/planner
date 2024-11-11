@@ -19,7 +19,7 @@ public class Reply {
     private long bno;
 
     public String getWriteTimeFormatted() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
         LocalDate writeDate = rwritetime.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
         //하루 이상 전 -> 날짜
